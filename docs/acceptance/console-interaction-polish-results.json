@@ -1,7 +1,7 @@
 {
   "scope": "Console interaction polish on the existing UI v3 prototype and API contracts",
-  "verifiedAt": "2026-10-29T17:43:05.928164+00:00",
-  "status": "local-passed-remote-ci-pending",
+  "verifiedAt": "2026-10-29T18:03:11.263064+00:00",
+  "status": "passed",
   "local": {
     "consoleBrowser": {
       "passed": 112,
@@ -36,12 +36,345 @@
     "servedIndexSha256": "bddae8527a735c354efcfde761823420403686e730482d62aa9c89db6d09ece0"
   },
   "remoteCi": {
-    "status": "pending",
+    "result": "passed",
     "repository": "monkeyozZ/ozz-ci-test",
     "branch": "ci/console-interaction-polish-20261030",
-    "expectedConsoleFixtures": 113,
-    "expectedE2e": 16,
-    "expectedPrototypeGroups": [18, 16]
+    "testedCommit": "21a351d807eab19570880e7ca0ab8790ab1edd86",
+    "testedTree": "3744adcc0e1e86246696aef1487af8ad5003cbe7",
+    "runId": 40924855549,
+    "runAttempt": 1,
+    "url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40924855549",
+    "jobId": 123627510330,
+    "successfulSteps": 25,
+    "backendUnitTests": 422,
+    "consoleUnitTests": 69,
+    "manualDataTests": 70,
+    "integrationTests": 283,
+    "consoleFixtures": {
+      "expectedTotal": 113,
+      "total": 113,
+      "executed": 113,
+      "passed": 113,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "unexecuted": 0,
+      "expectedFailures": 0,
+      "unknown": 0,
+      "attempts": {
+        "passed": 113
+      },
+      "files": {
+        "creation-config-polish.spec.ts": 9,
+        "creation-v3.spec.ts": 14,
+        "credentials-actions-polish.spec.ts": 9,
+        "foundation-polish.spec.ts": 9,
+        "infrastructure-data-polish.spec.ts": 8,
+        "logs-polish.spec.ts": 9,
+        "project-navigation-polish.spec.ts": 5,
+        "resource-navigation-polish.spec.ts": 5,
+        "s5-interface.spec.ts": 15,
+        "s6-interface.spec.ts": 12,
+        "service-workspace-v3.spec.ts": 10,
+        "workspace-details-polish.spec.ts": 7,
+        "zoom-polish.spec.ts": 1
+      },
+      "fileCountsMatch": true,
+      "statsMatch": true,
+      "startedWithinRun": true,
+      "durationMs": 172644.799,
+      "startTime": "2026-10-29T17:55:47.604Z",
+      "globalErrors": 0,
+      "failures": [],
+      "passedAllExpected": true
+    },
+    "realApiBrowser": {
+      "expectedTotal": 16,
+      "total": 16,
+      "executed": 16,
+      "passed": 16,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "unexecuted": 0,
+      "expectedFailures": 0,
+      "unknown": 0,
+      "attempts": {
+        "passed": 16
+      },
+      "files": {
+        "infrastructure.spec.ts": 4,
+        "interaction.spec.ts": 4,
+        "metadata.spec.ts": 2,
+        "operations.spec.ts": 2,
+        "races.spec.ts": 4
+      },
+      "fileCountsMatch": true,
+      "statsMatch": true,
+      "startedWithinRun": true,
+      "durationMs": 34919.838,
+      "startTime": "2026-10-29T17:58:44.107Z",
+      "globalErrors": 0,
+      "failures": [],
+      "passedAllExpected": true
+    },
+    "prototype": {
+      "fullGroups": 18,
+      "polishGroups": 16,
+      "scriptErrors": 0,
+      "fullHttpRequests": 0,
+      "polishConsoleErrors": 0,
+      "polishExternalRequests": 0,
+      "fullConsoleErrorsRecorded": false,
+      "bothReportsMatchCommitRuntimeHashes": true
+    },
+    "responsive": {
+      "s5": {
+        "expected": 66,
+        "observed": 66,
+        "unique": 66,
+        "variants": [
+          {
+            "width": 390,
+            "dark": false,
+            "count": 11
+          },
+          {
+            "width": 390,
+            "dark": true,
+            "count": 11
+          },
+          {
+            "width": 1024,
+            "dark": false,
+            "count": 11
+          },
+          {
+            "width": 1024,
+            "dark": true,
+            "count": 11
+          },
+          {
+            "width": 1440,
+            "dark": false,
+            "count": 11
+          },
+          {
+            "width": 1440,
+            "dark": true,
+            "count": 11
+          }
+        ],
+        "variantCountsMatch": true,
+        "maxOverflow": 0,
+        "failures": [],
+        "passedAllExpected": true
+      },
+      "s6": {
+        "expected": 10,
+        "observed": 10,
+        "unique": 10,
+        "variants": [
+          {
+            "width": 390,
+            "dark": true,
+            "count": 5
+          },
+          {
+            "width": 1440,
+            "dark": false,
+            "count": 5
+          }
+        ],
+        "variantCountsMatch": true,
+        "maxOverflow": 0,
+        "failures": [],
+        "passedAllExpected": true
+      }
+    },
+    "nativeZoom": {
+      "expectedCheckpoints": 5,
+      "observedCheckpoints": 5,
+      "checkpointNamesMatch": true,
+      "channel": "chromium",
+      "browserVersion": "156.0.8078.4",
+      "parametersMatch": true,
+      "nativeWindowMatches": true,
+      "nativeWindowBounds": {
+        "left": 10,
+        "top": 10,
+        "width": 1440,
+        "height": 1000,
+        "windowState": "normal"
+      },
+      "fixtureTestStartedAt": "2026-10-29T17:58:36.698Z",
+      "fixtureTestWithinRun": true,
+      "fixtureAttachmentMatchesReport": true,
+      "screenshotMatchesReportAndViewport": true,
+      "screenshotPixels": {
+        "width": 1440,
+        "height": 913
+      },
+      "noScriptOrUnexpectedApiErrors": true,
+      "checkpoints": [
+        {
+          "name": "service-settings-long-name",
+          "native200PercentAndNoOverflow": true,
+          "metrics": {
+            "outerWidth": 1440,
+            "outerHeight": 1000,
+            "innerWidth": 720,
+            "innerHeight": 456,
+            "devicePixelRatio": 2,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 720,
+            "visualViewportHeight": 456.5,
+            "documentWidth": 720,
+            "documentScrollWidth": 720,
+            "htmlZoom": "1",
+            "bodyZoom": "1"
+          }
+        },
+        {
+          "name": "service-settings-saved",
+          "native200PercentAndNoOverflow": true,
+          "metrics": {
+            "outerWidth": 1440,
+            "outerHeight": 1000,
+            "innerWidth": 720,
+            "innerHeight": 456,
+            "devicePixelRatio": 2,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 720,
+            "visualViewportHeight": 456.5,
+            "documentWidth": 720,
+            "documentScrollWidth": 720,
+            "htmlZoom": "1",
+            "bodyZoom": "1"
+          }
+        },
+        {
+          "name": "creation-source",
+          "native200PercentAndNoOverflow": true,
+          "metrics": {
+            "outerWidth": 1440,
+            "outerHeight": 1000,
+            "innerWidth": 720,
+            "innerHeight": 456,
+            "devicePixelRatio": 2,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 720,
+            "visualViewportHeight": 456.5,
+            "documentWidth": 720,
+            "documentScrollWidth": 720,
+            "htmlZoom": "1",
+            "bodyZoom": "1"
+          }
+        },
+        {
+          "name": "creation-configuration-long-name",
+          "native200PercentAndNoOverflow": true,
+          "metrics": {
+            "outerWidth": 1440,
+            "outerHeight": 1000,
+            "innerWidth": 720,
+            "innerHeight": 456,
+            "devicePixelRatio": 2,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 720,
+            "visualViewportHeight": 456.5,
+            "documentWidth": 720,
+            "documentScrollWidth": 720,
+            "htmlZoom": "1",
+            "bodyZoom": "1"
+          }
+        },
+        {
+          "name": "creation-review-long-name",
+          "native200PercentAndNoOverflow": true,
+          "metrics": {
+            "outerWidth": 1440,
+            "outerHeight": 1000,
+            "innerWidth": 720,
+            "innerHeight": 456,
+            "devicePixelRatio": 2,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 720,
+            "visualViewportHeight": 456.5,
+            "documentWidth": 720,
+            "documentScrollWidth": 720,
+            "htmlZoom": "1",
+            "bodyZoom": "1"
+          }
+        }
+      ],
+      "passedAllExpected": true
+    },
+    "sourceManifest": ".local/interaction-polish-ci-20261030/source-manifest-21a351d807ea.json",
+    "sourceManifestSha256": "a757234c876d667adaeee7da6956930dc1f6232e7610409753406e390798c4e5",
+    "sourceFilesMatchedBeforeResultDocumentation": 918,
+    "artifactReceipt": ".local/interaction-polish-ci-20261030/artifact-reader/run-40924855549-54b31b71-b25e-434d-a8eb-d13bcab60235/receipt.json",
+    "artifactReceiptSha256": "a3ccc59d2cf4437d323066a6727bd5393bf4abcc35e572981f38cfb22ecb487f",
+    "artifactSummary": ".local/interaction-polish-ci-20261030/artifact-reader/run-40924855549-54b31b71-b25e-434d-a8eb-d13bcab60235/summary.json",
+    "artifactSummarySha256": "9a3a160fed44ba874aa776bd378f6b366f45dafefe2f8ab4fe61b0627d80741f",
+    "jobLogReceipt": ".local/interaction-polish-ci-20261030/selected-job-log-be9d3a89-c094-4cd8-9ae7-347e32290f29/receipt.json",
+    "jobLogSha256": "299ccfa274ca795607c4c28c30cb47f447b51fbc9d9a99c682faabb93958c5d6",
+    "artifacts": {
+      "console-v3-browser-evidence": {
+        "id": 12919639922,
+        "bytes": 1500298,
+        "sha256": "02fe751e06c0773e93d60b883be58f0c1fdd283633b962ca3c3fd8a3c99a1ceb"
+      },
+      "console-browser-evidence": {
+        "id": 12921056115,
+        "bytes": 743798,
+        "sha256": "7ecf7e666b2675e7554547bf8bb5d810c2b185e6aeb57172a5ba3e48ff1c0dc3"
+      }
+    },
+    "reports": {
+      "fixtures": {
+        "member": "fixtures-ci/browser-results.json",
+        "bytes": 147099,
+        "sha256": "e0801ab5c4b532bc0d53238c21f138e2604191acdae789d978a0f5a44ba5a1c2"
+      },
+      "prototype": {
+        "member": "console-v3-prototype/full-index-results.json",
+        "bytes": 10520,
+        "sha256": "e9389a55ba85bbc629a078791727836468b0ea363accba242f3b099e406021ca"
+      },
+      "prototypePolish": {
+        "member": "console-v3-prototype/interaction-polish-results.json",
+        "bytes": 8406,
+        "sha256": "040d7e46b27c269d080999f00fb5b381e62d0a20ba87ecfc00a936672464ff48"
+      },
+      "s5Responsive": {
+        "member": "fixtures-ci/s5/responsive-results.json",
+        "bytes": 10922,
+        "sha256": "44e6f0d0689397f95cba5d80c0fed7e7b1487dca65e36a7a364810341993d237"
+      },
+      "s6Responsive": {
+        "member": "fixtures-ci/s6/responsive-results.json",
+        "bytes": 1699,
+        "sha256": "a54dbb18928562be9aea608fee925af9f7deaa3f2ed8c3bd55ee137f4b0a8d42"
+      },
+      "e2e": {
+        "member": "tests/artifacts/results.json",
+        "bytes": 25814,
+        "sha256": "ce9300aef31c98013fdda669a12d42965e2d6cfe9be8b50eb070503da5bd051a"
+      },
+      "nativeZoom": {
+        "member": "fixtures-ci/test-results/zoom-polish-原生-200-页面缩放保留服务设置、创建复核、长文本和普通键盘操作/native-zoom-evidence.json",
+        "bytes": 2786,
+        "sha256": "3f6c63cbdeeb3a6d8cf385def2fefe670f07603316ab78828b97cb50ef2186f5"
+      },
+      "nativeZoomAttachment": {
+        "member": "fixtures-ci/test-results/zoom-polish-原生-200-页面缩放保留服务设置、创建复核、长文本和普通键盘操作/attachments/native-zoom-evidence-26b8fe81d71fa78da79b5b985be89f178d4f7cbd.json",
+        "bytes": 2786,
+        "sha256": "3f6c63cbdeeb3a6d8cf385def2fefe670f07603316ab78828b97cb50ef2186f5"
+      }
+    },
+    "scope": "Production Console assets with controlled API fixtures plus an isolated real PostgreSQL/Redis/API/Worker test stack; no public cloud or SSH/K3s acceptance.",
+    "documentationFollowup": "Results are recorded after the tested implementation commit; the follow-up changes documentation only."
   },
   "prototypeRuntimeSha256": {
     "index.html": "d23af9e8c997fb9fc67f379caa448d7a8567f23837c5d1affc003b14ac0f3db1",

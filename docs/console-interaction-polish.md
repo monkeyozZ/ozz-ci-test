@@ -1,6 +1,6 @@
 # Ozz Console 交互精修记录
 
-**当前阶段：P0–P2 实际 Console 与完整 v3 原型已完成本地验收，本轮远端 CI 待执行。** Console 的 112 项完整回归、随后独立执行的原生 200% 缩放 1/1、原型原有 18 组与新增 16 组均通过。新 CI 将统一执行 113 项 Console 用例；本地两次执行仍分别记录。本文记录用户《Ozz 前端交互精修任务 — 以 Zeabur 为核心参考》的后续工作。[原始要求](/Users/monkeyozz/.codex/attachments/2c302f80-39bb-49df-a42b-d6e2d2f60b6a/pasted-text-1.txt)保存在本机附件中；执行范围和验证口径归纳如下。
+**当前阶段：P0–P2 实际 Console 与完整 v3 原型已完成精修，本地验证及本轮远端 CI 均通过。** Console 的 112 项完整回归、随后独立执行的原生 200% 缩放 1/1、原型原有 18 组与新增 16 组均通过。本轮 CI 已统一通过 113 项 Console 用例和 16 项真实 API 浏览器流程；本地两次执行仍分别记录。本文记录用户《Ozz 前端交互精修任务 — 以 Zeabur 为核心参考》的后续工作。[原始要求](/Users/monkeyozz/.codex/attachments/2c302f80-39bb-49df-a42b-d6e2d2f60b6a/pasted-text-1.txt)保存在本机附件中；执行范围和验证口径归纳如下。
 
 ## 基准与范围
 
@@ -112,8 +112,8 @@ P0–P2 已在现有五个运行文件中完成同步，原有 18 组与新增 1
 | P2 连续路径 | 服务器/集群等待、域名与数据库复制、基础设施任务日志、凭证保护、资源列表返回                 | 新增 22 项并纳入 112 项完整回归；真实 SSH/K3s、DNS/ACME、数据库和存储操作另记证据                                              |
 | 完整原型    | 新增状态、完整管理入口、脚本/控制台错误、外部请求和运行文件摘要                             | 最终原有 18 组与新增 16 组均通过，页面脚本错误与外部请求为 0；新增脚本另查控制台错误为 0                                       |
 | 主题与布局  | 明暗、390/1024/1440 px、长名称/地址、减少动效、正常键盘与 IME                               | 已有响应式、长文本和键盘结果；原生 200% Chrome 独立补验 1/1 通过。合成 composition 事件不等于真实中文输入法通过                |
-| 远端 CI     | 本轮提交、检查结论、下载报告及对应源码摘要                                                  | 新配置将包含 113 项 Console 用例，并运行原型新增脚本与原有脚本；尚未推送或执行，没有本轮远端通过结果                           |
-| 收尾        | 实际修改、命令/结果、报告路径、源码版本与未验证边界                                         | 本地 Console、缩放和最终原型证据已保存，体验站已更新；本轮远端 CI 待执行                                                       |
+| 远端 CI     | 本轮提交、检查结论、下载报告及对应源码摘要                                                  | 提交 `21a351d` 的 Actions 25 步通过；下载报告核对 113 项界面、16 项真实 API 浏览器、原型 18 + 16 组及原生缩放                  |
+| 收尾        | 实际修改、命令/结果、报告路径、源码版本与未验证边界                                         | 本地 Console、缩放和最终原型证据已保存，体验站已更新；本轮远端 CI 及报告核对均完成                                             |
 
 以上表格汇总当前状态，以下阶段结果记录实际修改、执行和边界。Console 界面用例使用全量受控 API，原型使用内存演示；未在用户数据库执行测试变更。
 
@@ -151,13 +151,13 @@ DNS A/AAAA/CNAME 和数据库 host/port/database/username 使用统一复制反�
 - 69 项 Console 单元、Console/测试类型、仓库 ESLint、仓库 Prettier 和生产构建通过。新增测试引入的旧 S4 镜像样本补齐当前 DTO 必需字段，不改变 API 或旧断言。
 - S5 的 66 个、S6 的 10 个响应式组合均无页面横向溢出；新增复制控件另覆盖长 DNS/数据库地址及复制失败后的 390/1024/1440 × 明暗主题共 12 组合。已查看当前桌面创建弹层和窄屏任务页面的截图。
 - 当前报告：`.local/interaction-polish/evidence/final-browser-results.json`、`p2-record.json`、`s5-responsive/`、`s6-responsive/`。生产构建 `.local/interaction-polish/final-dist` 已更新到本地体验地址，旧哈希资产保留，入口响应 200。
-- 这些用例以受控 API 证明界面行为；真实云端发布、SSH/K3s、DNS/ACME 与数据操作不由本轮结果证明。112 项完整回归结束后，另行完成下述 200% 实际页面缩放补验；本轮远端 CI 仍待推送和执行。
+- 这些用例以受控 API 证明界面行为；真实云端发布、SSH/K3s、DNS/ACME 与数据操作不由本轮结果证明。112 项完整回归结束后，另行完成下述 200% 实际页面缩放补验；本轮远端 CI 及报告核对已通过，结果见末节。
 
 ## 原生 200% Chrome 缩放补验（2026-10-30）
 
-本项在本地 **112 项完整回归之后单独执行，1/1 通过**，无失败、跳过或 flaky。它不是一次性 113 项本地回归；新 CI 配置通过 `*-polish.spec.ts` 将此项与原有 112 项共同收集为 113 项，远端结果尚待执行。
+本项在本地 **112 项完整回归之后单独执行，1/1 通过**，无失败、跳过或 flaky。它不是一次性 113 项本地回归；新 CI 配置通过 `*-polish.spec.ts` 将此项与原有 112 项共同收集为 113 项，本轮远端已统一通过这 113 项。
 
-[zoom-polish.spec.ts](../apps/console/tests/local-lab/zoom-polish.spec.ts) 仅使用一个新建临时 profile 的 Chrome context。本机浏览器为 Chrome `156.0.8078.48`，`viewport: null`，启动参数为 `--window-size=1440,1000 --force-device-scale-factor=1`。测试在临时 profile 的 `Default/Preferences` 中设置 Chrome 原生 `partition.default_zoom_level.x = log(2) / log(1.2)`；没有设置 CSS zoom、transform、较小的 Playwright viewport 或 pinch emulation。CI 分支使用 `channel: 'chromium'` 的完整 bundled Chromium，避免使用不具备同等 profile 行为的 headless shell；该 CI 分支尚待远端验证。
+[zoom-polish.spec.ts](../apps/console/tests/local-lab/zoom-polish.spec.ts) 仅使用一个新建临时 profile 的 Chrome context。本机浏览器为 Chrome `156.0.8078.48`，`viewport: null`，启动参数为 `--window-size=1440,1000 --force-device-scale-factor=1`。测试在临时 profile 的 `Default/Preferences` 中设置 Chrome 原生 `partition.default_zoom_level.x = log(2) / log(1.2)`；没有设置 CSS zoom、transform、较小的 Playwright viewport 或 pinch emulation。CI 分支使用 `channel: 'chromium'` 的完整 bundled Chromium，避免使用不具备同等 profile 行为的 headless shell；该 CI 分支已在本轮远端通过验证。
 
 服务设置初始/保存后、创建来源/配置/复核共 5 个检查点，均实际测得：
 
@@ -209,3 +209,26 @@ OZZ_PROTO_OUTPUT_DIR=.local/interaction-polish-prototype-recheck pnpm test:proto
 ```
 
 两条命令默认读取本地 `index.html`，无需后端。macOS 使用安装的 Chrome；Linux 先安装 Playwright Chromium。本机完整 Console 回归使用 `pnpm --filter @ozz/console exec playwright test --config tests/local-lab/interaction-polish.playwright.config.ts`，先按缩放补验章节启动唯一 5199 测试实例；当前配置会收集 113 项，使用本机 Chrome。CI 使用 `pnpm test:console-fixtures`，要求已有生产构建与 Playwright Chromium，并自动独占启动 5199 preview；报告写入 `apps/console/tests/artifacts/fixtures-ci/`。用户当前体验服务与测试实例相互独立。
+
+## 本轮远端 CI 与源码绑定（2026-10-30）
+
+[GitHub Actions run 40924855549](https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40924855549) 在提交 `21a351d807eab19570880e7ca0ab8790ab1edd86`、分支 `ci/console-interaction-polish-20261030` 上完成，attempt 1 的 **25 个步骤全部成功**。两个制品已实际下载，检查了报告时间、执行次数、跳过/失败/flaky、文件计数与运行源码摘要；不是只读取 Actions 的成功状态。
+
+| 检查             | 本轮实际结果                                                                                                      |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 构建与契约       | 生产构建、全仓类型、lint、格式、迁移、生成 API 契约差异、生产依赖审计全部通过                                     |
+| 单元与工具       | 后端 422、Console 69、手工数据工具 70 项通过                                                                      |
+| 后端集成         | 真实 PostgreSQL、Redis、安全与恢复 283 项通过                                                                     |
+| 生产页面受控交互 | 113/113 通过，含原生 200% 缩放；失败、跳过、flaky、未执行均为 0                                                   |
+| 真实 API 浏览器  | 隔离 API/Worker/PostgreSQL/Redis 环境的 16/16 通过；失败、跳过、flaky 均为 0                                      |
+| 完整原型         | 原有 18/18 + 新增 16/16 通过，两份报告的五个运行文件 SHA256 均匹配提交                                            |
+| 响应式           | S5 66 + S6 10 组合，无页面横向溢出                                                                                |
+| 原生缩放         | Chromium 156.0.8078.4，5 个检查点，1440 px 原生窗口对应约 720 CSS px、DPR 2、CSS zoom 1；报告附件与完整截图已核对 |
+
+UI 用例按文件计数为：创建配置 9、原创建 14、凭证/接入动作 9、基础反馈 9、域名/数据库/任务 8、日志 9、项目导航 5、资源导航 5、S5 15、S6 12、原工作区 10、工作区细节 7、原生缩放 1。原型旧脚本没有单独记录控制台错误；新增脚本的控制台错误为 0。
+
+[机器结果](acceptance/console-interaction-polish-results.json)保存 run/commit、报告与制品 SHA256 和上述范围。下载收据及报告位于 `.local/interaction-polish-ci-20261030/artifact-reader/run-40924855549-54b31b71-b25e-434d-a8eb-d13bcab60235/`；job 日志另存于该 CI 目录的 `selected-job-log-be9d3a89-c094-4cd8-9ae7-347e32290f29/`。推送曾遇到 HTTP/2 framing 连接错误，使用单次 HTTP/1.1 配置重试后成功；这是连接重试，本轮 Actions 只有一次执行。
+
+实现提交前核对了 918 个发布文件与源目录摘要，测试结束后再次逐字节核对一致。根工作区保持无 HEAD，提交与推送均在隔离 worktree 中完成。后续只补充本次结果文档，应用、测试和工作流仍绑定上述受测提交。当前本地体验站的 154 个构建文件与已验证构建一致，实际返回的入口 SHA256 为 `bddae8527a735c354efcfde761823420403686e730482d62aa9c89db6d09ece0`。
+
+此次完成的是现有 v3 前端与原型的交互精修。真实云端发布、SSH/K3s、公共 DNS/ACME 和数据操作仍按各自验收记录判断；没有在用户数据库执行测试变更，也没有启动本地虚拟机。S6/G-MVP 外部关口保持原状态。

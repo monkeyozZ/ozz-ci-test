@@ -6,7 +6,7 @@
 
 v3 改版基线 CI：[Console v3 Actions](https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40892518506) 已在提交 `095fc261faa508941ad8a69fc208ae29209a7980` 上通过全部 25 个步骤，包含完整原型、51 项受控交互和 16 项原有端到端流程；实际计数、首次格式失败与源码绑定见 [基线 CI 报告](docs/acceptance/console-v3-ci.md)和[机器结果](docs/acceptance/console-v3-ci-results.json)。[此前三轮记录](docs/acceptance/g-mvp-ci.md)保留，工程 CI 不替代真实云端关口。
 
-后续 UI v3 交互精修已完成本地 112 项浏览器回归、独立的原生 200% 缩放补验、69 项 Console 单元，以及完整原型 18 + 16 组复验。当前修改、验证边界和新增 CI 状态见 [交互精修记录](docs/console-interaction-polish.md)和[机器结果](docs/acceptance/console-interaction-polish-results.json)。
+后续 UI v3 交互精修已完成，[本轮 CI](https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40924855549) 在 `21a351d` 上通过全部 25 步：113 项前端交互、16 项真实 API 浏览器流程、原型 18 + 16 组，以及单元和后端集成检查。本地 112 项回归与独立 200% 缩放也通过，详见[交互精修记录](docs/console-interaction-polish.md)和[机器结果](docs/acceptance/console-interaction-polish-results.json)。
 
 ```sh
 pnpm install --frozen-lockfile
