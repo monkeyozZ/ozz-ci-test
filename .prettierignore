@@ -1,0 +1,10 @@
+designs/
+node_modules/
+dist/
+pnpm-lock.yaml
+packages/database/prisma/migrations/
+packages/api-client/src/schema.ts
+packages/infrastructure/assets/
+**/tests/artifacts/
+tests/probes/results/
+

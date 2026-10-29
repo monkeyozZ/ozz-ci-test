@@ -1,0 +1,17 @@
+{
+  "name": "@ozz/builder",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/main.js",
+  "engines": {
+    "node": ">=24.22.1 <25"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@ozz/infrastructure": "workspace:*"
+  }
+}

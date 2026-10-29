@@ -1,0 +1,140 @@
+{
+  "scope": "同一 GHCR 镜像的本地缓存辅助；不代表原 K3s 公网镜像拉取成功。",
+  "sourceReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+  "rootDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+  "platform": "linux/arm64",
+  "startedAt": "2026-10-25T16:17:27Z",
+  "status": "verified-cache-imported",
+  "k3sOriginalPullPassed": false,
+  "globalDnsOrProxyChanged": false,
+  "nodeCacheImported": true,
+  "downloadPolicy": "HTTPS with ordinary CA/SNI validation; only each curl process may resolve the GitHub CDN to 185.199.108.154 or 185.199.109.154; bounded attempts",
+  "originalPullFailureReport": "docs/acceptance/s3-workload-local-failure-1792943828459.json",
+  "reusedNodeContentEvidence": [
+    {
+      "digest": "sha256:8d0c5e5054411ef20720bbaee4f8b6ac0143f2aec5b7db613331efce58d410ee",
+      "alreadyVerifiedLocally": true
+    },
+    {
+      "digest": "sha256:5de55e5ef9c033997441461efe7ba23a986db059c0bb78b38f84ee0d72b99167",
+      "alreadyVerifiedLocally": true
+    },
+    {
+      "digest": "sha256:27a39ffe7ded1d327ff924ee5eaba2e006a2e08c7aeb9d452c295868467eafad",
+      "alreadyVerifiedLocally": true
+    },
+    {
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "alreadyVerifiedLocally": true
+    },
+    {
+      "digest": "sha256:ac3d56de623d81729302fd97ab892a367ab11cf2a0a9c28911732224897bb041",
+      "alreadyVerifiedLocally": true
+    },
+    {
+      "digest": "sha256:ecc83ece825ed5dbe3bcd4bf366cf6b37a68c997e3b74deaee21395f016a224e",
+      "size": 5062675,
+      "nodeContentAvailable": true,
+      "sha256Verified": true,
+      "source": "original A containerd content store"
+    },
+    {
+      "digest": "sha256:dec44e5aec7c1abe2562661c0f8a28d1acdee2a9ba356cc97bd41261645e4add",
+      "alreadyVerifiedLocally": true
+    },
+    {
+      "digest": "sha256:0d6b1db0d0df878010c6b7ec3e18d5e66003b07a63a63d270f27eaa5243a6532",
+      "size": 10477537,
+      "nodeContentAvailable": true,
+      "sha256Verified": true,
+      "source": "original A containerd content store"
+    }
+  ],
+  "platformDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+  "blobs": [
+    {
+      "digest": "sha256:8d0c5e5054411ef20720bbaee4f8b6ac0143f2aec5b7db613331efce58d410ee",
+      "size": 3526,
+      "sha256Verified": true,
+      "reused": true
+    },
+    {
+      "digest": "sha256:5de55e5ef9c033997441461efe7ba23a986db059c0bb78b38f84ee0d72b99167",
+      "size": 4183037,
+      "sha256Verified": true,
+      "reused": true
+    },
+    {
+      "digest": "sha256:27a39ffe7ded1d327ff924ee5eaba2e006a2e08c7aeb9d452c295868467eafad",
+      "size": 2793818,
+      "sha256Verified": true,
+      "reused": true
+    },
+    {
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "size": 32,
+      "sha256Verified": true,
+      "reused": true
+    },
+    {
+      "digest": "sha256:ac3d56de623d81729302fd97ab892a367ab11cf2a0a9c28911732224897bb041",
+      "size": 10475370,
+      "sha256Verified": true,
+      "reused": true
+    },
+    {
+      "digest": "sha256:ecc83ece825ed5dbe3bcd4bf366cf6b37a68c997e3b74deaee21395f016a224e",
+      "size": 5062675,
+      "sha256Verified": true,
+      "reused": true
+    },
+    {
+      "digest": "sha256:dec44e5aec7c1abe2562661c0f8a28d1acdee2a9ba356cc97bd41261645e4add",
+      "size": 2134,
+      "sha256Verified": true,
+      "reused": true
+    },
+    {
+      "digest": "sha256:0d6b1db0d0df878010c6b7ec3e18d5e66003b07a63a63d270f27eaa5243a6532",
+      "size": 10477537,
+      "sha256Verified": true,
+      "reused": true
+    }
+  ],
+  "archive": "/Users/monkeyozz/Desktop/code/ozz/.local/local-lab/cache/workload-podinfo-ec73780a8425/podinfo-ec73780a8425-arm64.oci.tar",
+  "archiveSha256": "sha256:e073ff03ff78d9930c0f06634bed33e640af7c6c09a2d4f02ed42666c206c9d0",
+  "finishedAt": "2026-10-25T16:17:30Z",
+  "nodeImport": {
+    "stage": "node-cache-imported",
+    "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+    "archiveSha256": "sha256:e073ff03ff78d9930c0f06634bed33e640af7c6c09a2d4f02ed42666c206c9d0",
+    "registeredRootDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "sourceReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "platform": "linux/arm64",
+    "importedAt": "2026-10-25T16:19:26Z"
+  },
+  "nodeImports": {
+    "a": {
+      "stage": "node-cache-imported",
+      "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+      "archiveSha256": "sha256:e073ff03ff78d9930c0f06634bed33e640af7c6c09a2d4f02ed42666c206c9d0",
+      "registeredRootDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+      "sourceReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+      "platform": "linux/arm64",
+      "importedAt": "2026-10-25T16:19:26Z"
+    },
+    "b": {
+      "stage": "node-cache-imported",
+      "node": "B",
+      "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+      "archiveSha256": "sha256:e073ff03ff78d9930c0f06634bed33e640af7c6c09a2d4f02ed42666c206c9d0",
+      "registeredRootDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+      "sourceReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+      "platform": "linux/arm64",
+      "nodeReadyAfterImport": true,
+      "importedAt": "2026-10-25T16:28:02Z"
+    }
+  },
+  "subsequentProbeAssertionFailureReport": "docs/acceptance/s3-workload-local-failure-1792945378216.json",
+  "aLifecycleResult": "docs/acceptance/s3-workload-local-results.json"
+}

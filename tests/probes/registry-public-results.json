@@ -1,0 +1,47 @@
+{
+  "scope": "真实公网 OCI manifest/config/digest/平台读取；不代表 Kubernetes 拉取运行或受限仓库验收。",
+  "startedAt": "2026-10-25T14:47:41.036Z",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "real index and both config blobs validate",
+      "passed": true
+    },
+    {
+      "name": "stored immutable artifact can be fetched again without re-resolving its tag",
+      "passed": true
+    }
+  ],
+  "inputReference": "ghcr.io/stefanprodan/podinfo:latest",
+  "image": {
+    "version": 1,
+    "inputReference": "ghcr.io/stefanprodan/podinfo:latest",
+    "registry": "ghcr.io",
+    "repository": "stefanprodan/podinfo",
+    "tag": "latest",
+    "requestedDigest": null,
+    "manifestDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "manifestMediaType": "application/vnd.oci.image.index.v1+json",
+    "indexDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "deployReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "platformManifests": [
+      {
+        "os": "linux",
+        "architecture": "amd64",
+        "manifestDigest": "sha256:72611294759dc6b304d1f3efa2d4b1de212ce422866244f31bc29f731e3b2079",
+        "manifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+        "configDigest": "sha256:f5a6a53d7251e85d075e16cd2c270fba7d90a2e864d60611d278d692256ffdcd"
+      },
+      {
+        "os": "linux",
+        "architecture": "arm64",
+        "manifestDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+        "manifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+        "configDigest": "sha256:8d0c5e5054411ef20720bbaee4f8b6ac0143f2aec5b7db613331efce58d410ee"
+      }
+    ],
+    "resolvedAt": "2026-10-25T14:47:48.410Z"
+  },
+  "finishedAt": "2026-10-25T14:47:56.168Z",
+  "toolchain": "0.1.0"
+}

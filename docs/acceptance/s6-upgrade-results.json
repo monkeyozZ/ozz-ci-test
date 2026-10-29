@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "status": "passed",
+  "checkedAt": "2026-10-26T03:09:43.673Z",
+  "baseline": ".local/local-lab/s6-upgrade/before-20261026T030846578Z-d4fdf1a4.json",
+  "migration": "202610260004_s6_git_build",
+  "migrationSha256": "8fa0194d7f50f872b196e2d8fd9269873b942765bff10a9168fb47d8f395f6cb",
+  "unchangedHistoricalMigrations": 8,
+  "unchangedEnvironmentAndMasterKey": true,
+  "preservedTables": [
+    {
+      "table": "Admin",
+      "rows": 1,
+      "status": "passed"
+    },
+    {
+      "table": "AuditEvent",
+      "rows": 971,
+      "status": "passed"
+    },
+    {
+      "table": "Cluster",
+      "rows": 3,
+      "status": "passed"
+    },
+    {
+      "table": "ClusterNetworking",
+      "rows": 2,
+      "status": "passed"
+    },
+    {
+      "table": "CommandReceipt",
+      "rows": 14,
+      "status": "passed"
+    },
+    {
+      "table": "ControlPlaneState",
+      "rows": 1,
+      "status": "passed"
+    },
+    {
+      "table": "DatabaseBinding",
+      "rows": 3,
+      "status": "passed"
+    },
+    {
+      "table": "DatabaseInstance",
+      "rows": 6,
+      "status": "passed"
+    },
+    {
+      "table": "Deployment",
+      "rows": 49,
+      "status": "passed"
+    },
+    {
+      "table": "DeploymentDatabaseReference",
+      "rows": 3,
+      "status": "passed"
+    },
+    {
+      "table": "DeploymentSecretReference",
+      "rows": 25,
+      "status": "passed"
+    },
+    {
+      "table": "DeploymentStage",
+      "rows": 176,
+      "status": "passed"
+    },
+    {
+      "table": "DeploymentVolumeReference",
+      "rows": 17,
+      "status": "passed"
+    },
+    {
+      "table": "Domain",
+      "rows": 3,
+      "status": "passed"
+    },
+    {
+      "table": "Environment",
+      "rows": 11,
+      "status": "passed"
+    },
+    {
+      "table": "KeyVerification",
+      "rows": 1,
+      "status": "passed"
+    },
+    {
+      "table": "LoginAttempt",
+      "rows": 2,
+      "status": "passed"
+    },
+    {
+      "table": "ManagedResource",
+      "rows": 112,
+      "status": "passed"
+    },
+    {
+      "table": "NetworkManagedResource",
+      "rows": 134,
+      "status": "passed"
+    },
+    {
+      "table": "Node",
+      "rows": 3,
+      "status": "passed"
+    },
+    {
+      "table": "Operation",
+      "rows": 98,
+      "status": "passed"
+    },
+    {
+      "table": "Outbox",
+      "rows": 147,
+      "status": "passed"
+    },
+    {
+      "table": "PlatformSettings",
+      "rows": 1,
+      "status": "passed"
+    },
+    {
+      "table": "Project",
+      "rows": 9,
+      "status": "passed"
+    },
+    {
+      "table": "SecretReference",
+      "rows": 23,
+      "status": "passed"
+    },
+    {
+      "table": "Server",
+      "rows": 1,
+      "status": "passed"
+    },
+    {
+      "table": "Service",
+      "rows": 19,
+      "status": "passed"
+    },
+    {
+      "table": "ServiceMutation",
+      "rows": 0,
+      "status": "passed"
+    },
+    {
+      "table": "ServicePort",
+      "rows": 17,
+      "status": "passed"
+    },
+    {
+      "table": "ServiceSecretReference",
+      "rows": 3,
+      "status": "passed"
+    },
+    {
+      "table": "Session",
+      "rows": 123,
+      "status": "passed"
+    },
+    {
+      "table": "Volume",
+      "rows": 10,
+      "status": "passed"
+    },
+    {
+      "table": "VolumeMaintenance",
+      "rows": 4,
+      "status": "passed"
+    },
+    {
+      "table": "VolumeMount",
+      "rows": 10,
+      "status": "passed"
+    },
+    {
+      "table": "VolumeMutation",
+      "rows": 0,
+      "status": "passed"
+    },
+    {
+      "table": "WorkerHeartbeat",
+      "rows": 23,
+      "status": "passed"
+    }
+  ],
+  "oldSourceDefaultsValid": true,
+  "backup": {
+    "databaseDirectory": ".local/backups/postgresql/before-s6-public-migration-20261026-0308",
+    "keyDirectory": ".local/key-backups/before-s6-public-migration-20261026-0308",
+    "status": "complete"
+  },
+  "preservedRowCount": 2025,
+  "runtimeRestartedDuringVerification": false,
+  "scope": "Only the additive public S5 to S6 migration and preservation of all existing columns/rows, original environment and master key. Git build execution is verified separately."
+}

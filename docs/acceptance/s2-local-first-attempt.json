@@ -1,0 +1,61 @@
+{
+  "scope": "真实本地 Linux + 产品 API/Worker + 三套 K3s；不代表云端 SSH/防火墙、公网入口或 Oracle 容量验收。",
+  "runId": "30b5385e-6cee-4ff0-8f43-fb6128cf5ee0",
+  "startedAt": "2026-10-25T13:43:36.446Z",
+  "checks": [
+    {
+      "name": "connect-a: durable acceptance",
+      "passed": true
+    },
+    {
+      "name": "import-a: verified identity and real nodes",
+      "passed": true,
+      "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+      "nodeCount": 1
+    },
+    {
+      "name": "connect-b: durable acceptance",
+      "passed": true
+    },
+    {
+      "name": "import-b: verified identity and real nodes",
+      "passed": true,
+      "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+      "nodeCount": 1
+    },
+    {
+      "name": "discover-c: durable acceptance",
+      "passed": true
+    },
+    {
+      "name": "server-c: discovered fingerprint equals independent VZ bootstrap channel",
+      "passed": true
+    },
+    {
+      "name": "preflight-c: durable acceptance",
+      "passed": true
+    },
+    {
+      "name": "server-c: actual clean Linux passed preflight",
+      "passed": true,
+      "architecture": "arm64",
+      "cpuCount": 2
+    },
+    {
+      "name": "initialize-c: durable acceptance",
+      "passed": true
+    }
+  ],
+  "status": "failed",
+  "retainedResources": true,
+  "failure": {
+    "stage": "initialize-c",
+    "errorType": "Error",
+    "ioCode": null,
+    "causeCode": null,
+    "code": "LOCAL_OPERATION_FAILED",
+    "httpStatus": null,
+    "problemCode": "SSH_ENCRYPTION_NOT_ENABLED"
+  },
+  "finishedAt": "2026-10-25T13:43:51.791Z"
+}

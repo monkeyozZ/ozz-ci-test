@@ -1,0 +1,83 @@
+{
+  "checkedAt": "2026-10-25T20:41:51.050Z",
+  "command": "pnpm check",
+  "exitCode": 0,
+  "steps": [
+    "db:generate",
+    "build",
+    "typecheck",
+    "lint",
+    "format:check",
+    "test:unit"
+  ],
+  "backendTests": {
+    "passed": 284,
+    "total": 284
+  },
+  "consoleTests": {
+    "passed": 25,
+    "total": 25
+  },
+  "outputSha256": "39c6db75abdfe25571a61760cec576a410f4c00d7b87f5ca2dcf109b1bd2351e",
+  "outputFile": ".local/s4-check-output.txt",
+  "scope": "S4 baseline after adapter integration; a subsequent mobile toast/modal layering fix will receive separate Console and browser verification before the release snapshot.",
+  "priorFailure": {
+    "reason": "Three existing files required Prettier formatting; formatting corrected before this complete successful rerun.",
+    "outputFile": ".local/s4-check-format-failure-20261026.txt"
+  },
+  "integration": {
+    "total": 141,
+    "passed": 141,
+    "failed": 0,
+    "report": "s4-integration-results.json",
+    "scope": "Versioned migrations, PostgreSQL and Redis; controlled external adapters. Metadata suite uses namespaced test fixtures in the local database; other suites own isolated schemas/databases and queue names.",
+    "priorFailure": {
+      "passed": 140,
+      "failed": 1,
+      "reason": "Production-cookie security test inherited the developer local ACME setting and was correctly rejected. The suite now explicitly owns empty networking test settings; the full 141-case rerun passed.",
+      "report": ".local/s4-integration-fixture-config-failure.json"
+    }
+  },
+  "postCheckChanges": [
+    {
+      "files": [
+        "apps/console/src/components/GlobalFeedback.vue",
+        "apps/console/tests/local-lab/s4-real.spec.ts"
+      ],
+      "reason": "Success toasts sit below modal overlays; Chromium header capture uses headerValue().",
+      "validation": [
+        "Console 25/25",
+        "vue-tsc",
+        "strict browser test tsc",
+        "ESLint",
+        "Prettier",
+        "Vite production build",
+        "real Chrome flow; four operations succeeded; seven Axe/overflow samples clean; mobile modal hit-test passed with three toasts"
+      ]
+    },
+    {
+      "files": [
+        "tests/probes/s4-local-lab.mjs",
+        "tests/probes/local-worker-crash.mjs"
+      ],
+      "reason": "Add actual network task recovery after a confirmed write.",
+      "validation": [
+        "ESLint",
+        "Prettier",
+        "node --check",
+        "33/33 real product probe checks including SIGKILL and same-task recovery"
+      ]
+    },
+    {
+      "files": [
+        "tests/integration/security.test.ts"
+      ],
+      "reason": "Isolate authentication fixture settings from optional developer ACME configuration.",
+      "validation": [
+        "ESLint",
+        "Prettier",
+        "complete 141/141 integration rerun"
+      ]
+    }
+  ]
+}

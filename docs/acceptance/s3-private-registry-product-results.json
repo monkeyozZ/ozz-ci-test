@@ -1,0 +1,693 @@
+{
+  "scope": "产品 API/Worker/PostgreSQL + 真实 K3s B + 真实 TLS/Basic 私仓；只创建并清理本次专用服务。节点 CA 为 fixture 显式安装，并非产品自动配置信任。",
+  "runId": "0ca560d9-d197-48a5-8e26-47cd8233a4d6",
+  "startedAt": "2026-10-25T18:03:19.622Z",
+  "checks": [
+    {
+      "name": "caOnly: credential API returns metadata without its write-only payload",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:19.839Z",
+      "credentialRefId": "a0007ced-34df-4460-b6bd-e95abbc838df"
+    },
+    {
+      "name": "wrong: credential API returns metadata without its write-only payload",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:19.850Z",
+      "credentialRefId": "e0b2a67f-6689-44ff-873e-93c3c06e0c86"
+    },
+    {
+      "name": "valid: credential API returns metadata without its write-only payload",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:19.862Z",
+      "credentialRefId": "6aded0e4-f91c-4cca-a5c2-981c0f7d6b57"
+    },
+    {
+      "name": "rotated: credential API returns metadata without its write-only payload",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:19.875Z",
+      "credentialRefId": "bd428d2d-a594-40c5-88d5-d6f7a1a75112"
+    },
+    {
+      "name": "expired: credential API returns metadata without its write-only payload",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:19.886Z",
+      "credentialRefId": "936afdfc-d70d-4f4b-878f-6df2fb88108f"
+    },
+    {
+      "name": "wrongKind: credential API returns metadata without its write-only payload",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:19.907Z",
+      "credentialRefId": "7ad9dc94-a836-434f-84b4-f70e4ff882d7"
+    },
+    {
+      "name": "wrongRegistry: credential API returns metadata without its write-only payload",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:19.915Z",
+      "credentialRefId": "406fdd2a-225d-41dc-9c68-4efbebab7a3f"
+    },
+    {
+      "name": "private test service inherits only project B and its production namespace",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:19.960Z",
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83"
+    },
+    {
+      "name": "new private layer, config and manifest are absent from the B runtime before publication",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:20.266Z",
+      "newLayer": false,
+      "config": false,
+      "manifest": false
+    },
+    {
+      "name": "CREDENTIAL_EXPIRED: reference admission leaves the service unchanged",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:20.315Z",
+      "httpStatus": 422,
+      "code": "CREDENTIAL_EXPIRED"
+    },
+    {
+      "name": "CREDENTIAL_KIND_MISMATCH: reference admission leaves the service unchanged",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:20.345Z",
+      "httpStatus": 422,
+      "code": "CREDENTIAL_KIND_MISMATCH"
+    },
+    {
+      "name": "REGISTRY_ACCESS_MISMATCH: reference admission leaves the service unchanged",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:20.372Z",
+      "httpStatus": 422,
+      "code": "REGISTRY_ACCESS_MISMATCH"
+    },
+    {
+      "name": "REGISTRY_AUTH_REQUIRED: failure is durable before any service workload reservation",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:20.960Z",
+      "deploymentId": "715d5c05-5400-4972-a7bf-fed1a4b79636",
+      "errorCode": "REGISTRY_AUTH_REQUIRED",
+      "managedResources": 0
+    },
+    {
+      "name": "REGISTRY_UNAUTHENTICATED: failure is durable before any service workload reservation",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:22.048Z",
+      "deploymentId": "ca2ac23c-4e05-4df7-986c-1a7d267931b5",
+      "errorCode": "REGISTRY_UNAUTHENTICATED",
+      "managedResources": 0
+    },
+    {
+      "name": "REGISTRY_PLATFORM_UNSUPPORTED: failure is durable before any service workload reservation",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:22.638Z",
+      "deploymentId": "297bb2c9-de60-436a-9a59-9daa8d4770f0",
+      "errorCode": "REGISTRY_PLATFORM_UNSUPPORTED",
+      "managedResources": 0
+    },
+    {
+      "name": "valid private publication reaches healthy Pods using a real managed imagePullSecret",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:26.728Z",
+      "deploymentId": "35fab9b6-cd27-4644-aad2-bdfbcef467a5",
+      "deploymentUid": "e94af7b4-67c3-4b15-9c05-7c22e8f884ae",
+      "pullSecretUid": "1fc90005-1442-4e64-a1e3-716a8c182b16",
+      "image": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo@sha256:11658be316f5327beabd5c19980c21176e17860afddd717b6e5939bba0a55de2"
+    },
+    {
+      "name": "containerd authenticates to the private registry and GETs the previously uncached layer and config",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:26.837Z",
+      "runtimeGets": [
+        {
+          "time": "2026-10-26T02:03:24.05038749+08:00",
+          "path": "/v2/ozz-fixture/runtime-3e71871bca8d48a9/podinfo/manifests/sha256:11658be316f5327beabd5c19980c21176e17860afddd717b6e5939bba0a55de2",
+          "status": 200
+        },
+        {
+          "time": "2026-10-26T02:03:24.12381585+08:00",
+          "path": "/v2/ozz-fixture/runtime-3e71871bca8d48a9/podinfo/blobs/sha256:cf40293ecdc4cf4d55ee865cd36d326896671d0695f1db7bd0c45f4c22610c1f",
+          "status": 200
+        },
+        {
+          "time": "2026-10-26T02:03:24.200829135+08:00",
+          "path": "/v2/ozz-fixture/runtime-3e71871bca8d48a9/podinfo/blobs/sha256:cc1d7dc2167d6bb13da7ff60d35ecf9bec8e5f173270d9d79be299718e0950bc",
+          "status": 200
+        }
+      ],
+      "inheritedBaseLayersMayBeCached": true
+    },
+    {
+      "name": "repeating the original private publication request returns the same durable task",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:26.850Z",
+      "deploymentId": "35fab9b6-cd27-4644-aad2-bdfbcef467a5",
+      "idempotencyKey": "fa3837e3-a6d7-49c6-857f-2bb92508f75d"
+    },
+    {
+      "name": "credential selection alone preserves the stopped published workload",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:32.057Z"
+    },
+    {
+      "name": "resume writes the current rotated authentication while preserving publication and resource UIDs",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:35.567Z",
+      "operationId": "c45d766a-5688-4b03-87ec-691140239592",
+      "pullSecretUid": "1fc90005-1442-4e64-a1e3-716a8c182b16",
+      "deploymentUid": "e94af7b4-67c3-4b15-9c05-7c22e8f884ae"
+    },
+    {
+      "name": "restart retains current private authentication and the published image template",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:41.081Z",
+      "operationId": "7fdfe871-0138-41d7-8957-6013e38947f2"
+    },
+    {
+      "name": "a new publication validates the current credential and never falls back to a previous working pull secret",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:42.072Z",
+      "failedDeploymentId": "acf868f3-f036-49bb-aca5-539b13cfe19d",
+      "unchangedPublishedDeploymentId": "35fab9b6-cd27-4644-aad2-bdfbcef467a5"
+    },
+    {
+      "name": "only the dedicated test service is deleted while the shared environment Namespace remains",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:49.593Z",
+      "deletedServiceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "deleteOperationId": "db0452a6-86b9-4b44-8fd4-a50440bb8a84",
+      "namespaceUid": "bd14b90a-42ec-489e-97db-596c38da7f60"
+    },
+    {
+      "name": "history 715d5c05-5400-4972-a7bf-fed1a4b79636: original task outcome survives service deletion",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:49.603Z",
+      "deploymentId": "715d5c05-5400-4972-a7bf-fed1a4b79636",
+      "status": "failed",
+      "errorCode": "REGISTRY_AUTH_REQUIRED"
+    },
+    {
+      "name": "history ca2ac23c-4e05-4df7-986c-1a7d267931b5: original task outcome survives service deletion",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:49.612Z",
+      "deploymentId": "ca2ac23c-4e05-4df7-986c-1a7d267931b5",
+      "status": "failed",
+      "errorCode": "REGISTRY_UNAUTHENTICATED"
+    },
+    {
+      "name": "history 297bb2c9-de60-436a-9a59-9daa8d4770f0: original task outcome survives service deletion",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:49.620Z",
+      "deploymentId": "297bb2c9-de60-436a-9a59-9daa8d4770f0",
+      "status": "failed",
+      "errorCode": "REGISTRY_PLATFORM_UNSUPPORTED"
+    },
+    {
+      "name": "history 35fab9b6-cd27-4644-aad2-bdfbcef467a5: original task outcome survives service deletion",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:49.629Z",
+      "deploymentId": "35fab9b6-cd27-4644-aad2-bdfbcef467a5",
+      "status": "succeeded",
+      "errorCode": null
+    },
+    {
+      "name": "history acf868f3-f036-49bb-aca5-539b13cfe19d: original task outcome survives service deletion",
+      "passed": true,
+      "observedAt": "2026-10-25T18:03:49.635Z",
+      "deploymentId": "acf868f3-f036-49bb-aca5-539b13cfe19d",
+      "status": "failed",
+      "errorCode": "REGISTRY_UNAUTHENTICATED"
+    }
+  ],
+  "status": "passed",
+  "registry": "127.0.0.1:50443",
+  "runtimeImage": {
+    "id": "3e71871b-ca8d-48a9-83c0-17ce28b296c8",
+    "repository": "ozz-fixture/runtime-3e71871bca8d48a9/podinfo",
+    "manifestDigest": "sha256:11658be316f5327beabd5c19980c21176e17860afddd717b6e5939bba0a55de2",
+    "configDigest": "sha256:cf40293ecdc4cf4d55ee865cd36d326896671d0695f1db7bd0c45f4c22610c1f",
+    "newLayer": {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:cc1d7dc2167d6bb13da7ff60d35ecf9bec8e5f173270d9d79be299718e0950bc",
+      "size": 228
+    },
+    "newLayerDiffId": "sha256:e6f4940bd41a6ad6bcb3c38dfd6a0517783db653c65eb46ea7d9b79b6dd1ee7d",
+    "baseLayers": [
+      "sha256:5de55e5ef9c033997441461efe7ba23a986db059c0bb78b38f84ee0d72b99167",
+      "sha256:27a39ffe7ded1d327ff924ee5eaba2e006a2e08c7aeb9d452c295868467eafad",
+      "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "sha256:ac3d56de623d81729302fd97ab892a367ab11cf2a0a9c28911732224897bb041",
+      "sha256:ecc83ece825ed5dbe3bcd4bf366cf6b37a68c997e3b74deaee21395f016a224e",
+      "sha256:dec44e5aec7c1abe2562661c0f8a28d1acdee2a9ba356cc97bd41261645e4add",
+      "sha256:0d6b1db0d0df878010c6b7ec3e18d5e66003b07a63a63d270f27eaa5243a6532"
+    ],
+    "reference": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo:v1",
+    "inheritedBaseLayersMayBeCached": true
+  },
+  "baseLayerCache": "保留并复用既有 Podinfo base blobs；新 config、marker layer 与 manifest 在发布前确认不存在于节点，并核验 runtime GET 200。",
+  "finishedAt": "2026-10-25T18:03:49.639Z",
+  "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+  "serviceDeleted": true,
+  "tasks": [
+    {
+      "id": "715d5c05-5400-4972-a7bf-fed1a4b79636",
+      "kind": "image_deploy",
+      "status": "failed",
+      "errorCode": "REGISTRY_AUTH_REQUIRED",
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "configRevision": 1,
+      "mutationRevision": 1,
+      "retryOfId": null,
+      "appliedAt": null,
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "image": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo:v1",
+      "resolvedImage": null,
+      "failureObservation": null
+    },
+    {
+      "id": "ca2ac23c-4e05-4df7-986c-1a7d267931b5",
+      "kind": "image_deploy",
+      "status": "failed",
+      "errorCode": "REGISTRY_UNAUTHENTICATED",
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "configRevision": 1,
+      "mutationRevision": 2,
+      "retryOfId": null,
+      "appliedAt": null,
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "image": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo:v1",
+      "resolvedImage": null,
+      "failureObservation": null
+    },
+    {
+      "id": "297bb2c9-de60-436a-9a59-9daa8d4770f0",
+      "kind": "image_deploy",
+      "status": "failed",
+      "errorCode": "REGISTRY_PLATFORM_UNSUPPORTED",
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "configRevision": 2,
+      "mutationRevision": 3,
+      "retryOfId": null,
+      "appliedAt": null,
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "image": "127.0.0.1:50443/ozz-fixture/amd64-only:v1",
+      "resolvedImage": null,
+      "failureObservation": null
+    },
+    {
+      "id": "35fab9b6-cd27-4644-aad2-bdfbcef467a5",
+      "kind": "image_deploy",
+      "status": "succeeded",
+      "errorCode": null,
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "configRevision": 3,
+      "mutationRevision": 4,
+      "retryOfId": null,
+      "appliedAt": "2026-10-25T18:03:23.542Z",
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "image": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo:v1",
+      "resolvedImage": {
+        "tag": "v1",
+        "version": 1,
+        "registry": "127.0.0.1:50443",
+        "repository": "ozz-fixture/runtime-3e71871bca8d48a9/podinfo",
+        "resolvedAt": "2026-10-25T18:03:23.154Z",
+        "indexDigest": null,
+        "inputReference": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo:v1",
+        "manifestDigest": "sha256:11658be316f5327beabd5c19980c21176e17860afddd717b6e5939bba0a55de2",
+        "deployReference": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo@sha256:11658be316f5327beabd5c19980c21176e17860afddd717b6e5939bba0a55de2",
+        "requestedDigest": null,
+        "manifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+        "platformManifests": [
+          {
+            "os": "linux",
+            "architecture": "arm64",
+            "configDigest": "sha256:cf40293ecdc4cf4d55ee865cd36d326896671d0695f1db7bd0c45f4c22610c1f",
+            "manifestDigest": "sha256:11658be316f5327beabd5c19980c21176e17860afddd717b6e5939bba0a55de2",
+            "manifestMediaType": "application/vnd.oci.image.manifest.v1+json"
+          }
+        ]
+      },
+      "published": {
+        "image": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo@sha256:11658be316f5327beabd5c19980c21176e17860afddd717b6e5939bba0a55de2",
+        "replicas": 1,
+        "rolloutId": "35fab9b6-cd27-4644-aad2-bdfbcef467a5",
+        "generation": 1,
+        "snapshotId": "35fab9b6-cd27-4644-aad2-bdfbcef467a5",
+        "deploymentUid": "e94af7b4-67c3-4b15-9c05-7c22e8f884ae",
+        "configRevision": 3,
+        "usesPullSecret": true,
+        "templateFingerprint": "c2e0fb8d2d254ed7f6acde397efa96538c99a026d5c30d9c1b8696027c6f0113",
+        "workloadFingerprint": "89378138f7b17658628a6386253ae6b5dcfa96397eddae0501bed0e73b1ef670"
+      },
+      "failureObservation": null
+    },
+    {
+      "id": "86505e33-2525-4aca-8ed2-a294c5dc3052",
+      "kind": "service_stop",
+      "status": "succeeded",
+      "errorCode": null,
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "retryOfId": null,
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      }
+    },
+    {
+      "id": "c45d766a-5688-4b03-87ec-691140239592",
+      "kind": "service_resume",
+      "status": "succeeded",
+      "errorCode": null,
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "retryOfId": null,
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      }
+    },
+    {
+      "id": "7fdfe871-0138-41d7-8957-6013e38947f2",
+      "kind": "service_restart",
+      "status": "succeeded",
+      "errorCode": null,
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "retryOfId": null,
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      }
+    },
+    {
+      "id": "acf868f3-f036-49bb-aca5-539b13cfe19d",
+      "kind": "image_deploy",
+      "status": "failed",
+      "errorCode": "REGISTRY_UNAUTHENTICATED",
+      "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "configRevision": 3,
+      "mutationRevision": 8,
+      "retryOfId": null,
+      "appliedAt": null,
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "image": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo:v1",
+      "resolvedImage": null,
+      "failureObservation": null
+    },
+    {
+      "id": "db0452a6-86b9-4b44-8fd4-a50440bb8a84",
+      "kind": "service_delete",
+      "status": "succeeded",
+      "errorCode": null,
+      "serviceId": null,
+      "retryOfId": null,
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceName": "ozz-s-2a023757dae74ca2a36676aa8e4ba27f",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      }
+    }
+  ],
+  "requests": [
+    {
+      "name": "credential-caOnly",
+      "path": "/secrets",
+      "method": "POST",
+      "idempotencyKey": "d9ed2841-4a7c-4e64-91ea-cefb26afa828",
+      "status": 201,
+      "resourceId": "a0007ced-34df-4460-b6bd-e95abbc838df"
+    },
+    {
+      "name": "credential-wrong",
+      "path": "/secrets",
+      "method": "POST",
+      "idempotencyKey": "94735e5c-7c6c-41be-9a51-7ca9d3b811fa",
+      "status": 201,
+      "resourceId": "e0b2a67f-6689-44ff-873e-93c3c06e0c86"
+    },
+    {
+      "name": "credential-valid",
+      "path": "/secrets",
+      "method": "POST",
+      "idempotencyKey": "6e9e57b6-ca3d-40fc-ba48-2474abe235fb",
+      "status": 201,
+      "resourceId": "6aded0e4-f91c-4cca-a5c2-981c0f7d6b57"
+    },
+    {
+      "name": "credential-rotated",
+      "path": "/secrets",
+      "method": "POST",
+      "idempotencyKey": "376b0f48-884d-46f9-b852-98f74b416a35",
+      "status": 201,
+      "resourceId": "bd428d2d-a594-40c5-88d5-d6f7a1a75112"
+    },
+    {
+      "name": "credential-expired",
+      "path": "/secrets",
+      "method": "POST",
+      "idempotencyKey": "5822b7a6-d3ef-49d7-a30b-c0f00e1f40f9",
+      "status": 201,
+      "resourceId": "936afdfc-d70d-4f4b-878f-6df2fb88108f"
+    },
+    {
+      "name": "credential-wrongKind",
+      "path": "/secrets",
+      "method": "POST",
+      "idempotencyKey": "8c31e9ea-6f4f-4227-b727-d2bf642f4494",
+      "status": 201,
+      "resourceId": "7ad9dc94-a836-434f-84b4-f70e4ff882d7"
+    },
+    {
+      "name": "credential-wrongRegistry",
+      "path": "/secrets",
+      "method": "POST",
+      "idempotencyKey": "38884a01-6b84-478f-b94c-2982508c5394",
+      "status": 201,
+      "resourceId": "406fdd2a-225d-41dc-9c68-4efbebab7a3f"
+    },
+    {
+      "name": "create-service",
+      "path": "/services",
+      "method": "POST",
+      "idempotencyKey": "f909d79d-5e85-4ad6-9498-f3dc206fc159",
+      "status": 201,
+      "resourceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f"
+    },
+    {
+      "name": "admission-expired",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "769f108e-0ed6-416b-9710-b76b3bf60539",
+      "status": 422,
+      "resourceId": null
+    },
+    {
+      "name": "admission-wrongKind",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "ff58be64-fa3c-493d-9664-e1535204faac",
+      "status": 422,
+      "resourceId": null
+    },
+    {
+      "name": "admission-wrongRegistry",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "c7702fd5-ade5-4ade-94db-e66b9178a63c",
+      "status": 422,
+      "resourceId": null
+    },
+    {
+      "name": "deploy-ca-only",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f/deployments",
+      "method": "POST",
+      "idempotencyKey": "6e6d5c07-9b34-4c4e-aa3d-b8cfbc23842e",
+      "status": 202,
+      "resourceId": "715d5c05-5400-4972-a7bf-fed1a4b79636"
+    },
+    {
+      "name": "bind-wrong",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "21bd29f2-434a-42ab-bbe5-9cab3de1292e",
+      "status": 200,
+      "resourceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f"
+    },
+    {
+      "name": "deploy-wrong-auth",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f/deployments",
+      "method": "POST",
+      "idempotencyKey": "835058f7-81e1-4f02-9de1-5c8c4d54744a",
+      "status": 202,
+      "resourceId": "ca2ac23c-4e05-4df7-986c-1a7d267931b5"
+    },
+    {
+      "name": "bind-amd64-only",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "c665b07c-f5d4-4ca9-bf89-49fa7dac2cef",
+      "status": 200,
+      "resourceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f"
+    },
+    {
+      "name": "deploy-amd64-only",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f/deployments",
+      "method": "POST",
+      "idempotencyKey": "9bdcfd5f-ac7a-409c-8610-eb22ffa1fafb",
+      "status": 202,
+      "resourceId": "297bb2c9-de60-436a-9a59-9daa8d4770f0"
+    },
+    {
+      "name": "bind-valid-arm",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "492a060e-b49e-4053-9ad8-02106cdd5cf8",
+      "status": 200,
+      "resourceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f"
+    },
+    {
+      "name": "deploy-valid-private",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f/deployments",
+      "method": "POST",
+      "idempotencyKey": "fa3837e3-a6d7-49c6-857f-2bb92508f75d",
+      "status": 202,
+      "resourceId": "35fab9b6-cd27-4644-aad2-bdfbcef467a5"
+    },
+    {
+      "name": "stop-private",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f/stop",
+      "method": "POST",
+      "idempotencyKey": "75905f30-09a8-4300-8dd5-6e6e3574253e",
+      "status": 202,
+      "resourceId": "86505e33-2525-4aca-8ed2-a294c5dc3052"
+    },
+    {
+      "name": "bind-current-rotated",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "9c7dc811-4006-43d6-bcfd-924d53a6ccbe",
+      "status": 200,
+      "resourceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f"
+    },
+    {
+      "name": "resume-private-rotated",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f/resume",
+      "method": "POST",
+      "idempotencyKey": "097f09de-fa87-423f-b563-cc7b86584b0c",
+      "status": 202,
+      "resourceId": "c45d766a-5688-4b03-87ec-691140239592"
+    },
+    {
+      "name": "restart-private",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f/restart",
+      "method": "POST",
+      "idempotencyKey": "e6e114cb-bc52-42fa-b838-7eed76a6ca5c",
+      "status": 202,
+      "resourceId": "7fdfe871-0138-41d7-8957-6013e38947f2"
+    },
+    {
+      "name": "bind-wrong-again",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "8c415a21-797e-45e6-81a5-b65caf05c2ff",
+      "status": 200,
+      "resourceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f"
+    },
+    {
+      "name": "deploy-current-wrong-auth",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f/deployments",
+      "method": "POST",
+      "idempotencyKey": "4c7f2182-e412-4985-ad1d-6a8dfb3c9b02",
+      "status": 202,
+      "resourceId": "acf868f3-f036-49bb-aca5-539b13cfe19d"
+    },
+    {
+      "name": "restore-current-rotated",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "PATCH",
+      "idempotencyKey": "3a9d1b63-7d65-4089-9f57-bdecb25a1ce8",
+      "status": 200,
+      "resourceId": "2a023757-dae7-4ca2-a366-76aa8e4ba27f"
+    },
+    {
+      "name": "delete-private-service",
+      "path": "/services/2a023757-dae7-4ca2-a366-76aa8e4ba27f",
+      "method": "DELETE",
+      "idempotencyKey": "d623f4c2-e0f9-4b81-b4bc-567f3c814505",
+      "status": 202,
+      "resourceId": "db0452a6-86b9-4b44-8fd4-a50440bb8a84"
+    }
+  ],
+  "credentialsRetainedEncrypted": {
+    "caOnly": "a0007ced-34df-4460-b6bd-e95abbc838df",
+    "wrong": "e0b2a67f-6689-44ff-873e-93c3c06e0c86",
+    "valid": "6aded0e4-f91c-4cca-a5c2-981c0f7d6b57",
+    "rotated": "bd428d2d-a594-40c5-88d5-d6f7a1a75112",
+    "expired": "936afdfc-d70d-4f4b-878f-6df2fb88108f",
+    "wrongKind": "7ad9dc94-a836-434f-84b4-f70e4ff882d7",
+    "wrongRegistry": "406fdd2a-225d-41dc-9c68-4efbebab7a3f"
+  }
+}

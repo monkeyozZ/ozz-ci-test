@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "owner": "ozz-gmvp-c-node-persistence-v1",
+  "recordedAt": "2026-10-26T06:22:30.936Z",
+  "status": "prepared-not-executed",
+  "executed": false,
+  "rootCoordinationRequired": true,
+  "resources": {
+    "reuse": {
+      "vm": "ozz-lab-c",
+      "clusterId": "4555faaf-8d4e-4841-b87c-e26a76895b95",
+      "serverId": "93fad728-3f1e-4af8-8d2e-0bd5f028a08c",
+      "sshConfiguration": ".local/local-lab/credentials/ssh_config",
+      "independentObserver": "ozz-lab-b"
+    },
+    "create": {
+      "projects": 1,
+      "services": 1,
+      "pvcs": 1,
+      "storageClass": "local-path",
+      "requestedBytes": "1073741824",
+      "hardQuotaClaim": false
+    },
+    "image": "docker.io/library/node@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53"
+  },
+  "boundaries": {
+    "builderMustBeStopped": true,
+    "prepareRequiresCAlreadyRunning": true,
+    "mayStopOrStartOnlyExistingC": true,
+    "initialMarkerWriteAttempts": 1,
+    "markerWriteUsesExclusiveCreateAndFsync": true,
+    "recoveryMarkerWrites": 0,
+    "ambiguousWriteResumesWithReadOnly": true,
+    "volumeDeletionSupported": false,
+    "recoveryWithoutProductApi": true,
+    "minimumLocalFreeBytes": 8589934592,
+    "preFaultLocalFreeBytes": 10737418240
+  },
+  "plannedAcceptance": [
+    "C whole VM stopped for at least 30 seconds with repeated independent B observations",
+    "C new boot ID and same kube-system/Node UID",
+    "same PVC UID/PV UID and unchanged marker bytes/inode/mtime",
+    "original marker served by the application HTTP endpoint after restart",
+    "B same kube-system/Node UID/boot ID and Ready throughout observed outage",
+    "same publication and no active task after product recovery"
+  ],
+  "staticValidation": {
+    "javascriptSyntax": "passed",
+    "eslint": "passed",
+    "pythonTemporaryFileAndIdentityTests": {
+      "passed": 5,
+      "failed": 0,
+      "command": "python3 -m unittest discover -s tests/unit -p node_persistence_probe_test.py"
+    },
+    "limaStopTtyOption": "verified using local --help only",
+    "planMode": "passed; executed=false",
+    "apiCalls": 0,
+    "sshCalls": 0,
+    "vmListOrTransitionCalls": 0
+  },
+  "commands": {
+    "prepare": "pnpm exec node tests/probes/g-mvp-node-persistence-local-lab.mjs prepare",
+    "fault": "pnpm exec node tests/probes/g-mvp-node-persistence-local-lab.mjs run",
+    "offlineRecovery": "pnpm exec node tests/probes/g-mvp-node-persistence-local-lab.mjs recover",
+    "readOnlyVerification": "pnpm exec node tests/probes/g-mvp-node-persistence-local-lab.mjs verify",
+    "stopDedicatedService": "pnpm exec node tests/probes/g-mvp-node-persistence-local-lab.mjs stop-service",
+    "report": "pnpm exec node tests/probes/g-mvp-node-persistence-local-lab.mjs report"
+  },
+  "files": [
+    {
+      "path": "tests/probes/g-mvp-node-persistence-local-lab.mjs",
+      "sha256": "073d7bfdb9106f4a654b43fa8c944d56a4f1b479e6b000b5dbf5ecdf297c4087"
+    },
+    {
+      "path": "tests/probes/support/g-mvp-node-persistence-host.py",
+      "sha256": "265867256edca3a5c06c637ed272bf4c5e1eed85a7350a7298c424ef4e55ecda"
+    },
+    {
+      "path": "tests/probes/g-mvp-node-persistence-matrix.md",
+      "sha256": "5af5b4930896a3701daec3a3eab06c77bc2998a09718ae0a9e06be314ad08f50"
+    },
+    {
+      "path": "tests/unit/node_persistence_probe_test.py",
+      "sha256": "c0d36db2e6d36e29134e1a57a38a2d1d52d925fb575fdd215a796bc863111b4d"
+    }
+  ]
+}

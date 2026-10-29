@@ -1,0 +1,36 @@
+{
+  "name": "@ozz/console",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "vue-tsc --noEmit",
+    "test:unit": "vitest run --config vitest.config.ts",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@lucide/vue": "1.61.0",
+    "@ozz/api-client": "workspace:*",
+    "@tanstack/vue-query": "5.104.5",
+    "@tanstack/vue-virtual": "3.13.48",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "pinia": "3.0.4",
+    "reka-ui": "2.11.0",
+    "tailwind-merge": "3.7.0",
+    "vue": "3.5.44",
+    "vue-router": "4.6.4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/vite": "4.3.3",
+    "@vitejs/plugin-vue": "6.0.10",
+    "tailwindcss": "4.3.3",
+    "vite": "8.3.5",
+    "vue-tsc": "3.3.13"
+  }
+}

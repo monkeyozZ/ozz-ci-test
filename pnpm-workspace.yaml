@@ -1,0 +1,22 @@
+packages:
+  - apps/*
+  - packages/*
+
+nodeVersion: 24.22.1
+
+overrides:
+  fastify: 5.12.7
+  js-yaml@^4: 4.3.2
+  js-yaml@^5: 5.5.0
+
+allowBuilds:
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@scarf/scarf': false
+  argon2: true
+  cpu-features: true
+  esbuild: true
+  msgpackr-extract: true
+  prisma: true
+  ssh2: true
+  vue-demi: true

@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "fixtures/s6-data.ts",
+    "unit/git-presentation.test.ts",
+    "local-lab/s6-fixture.ts",
+    "local-lab/s6-interface.spec.ts",
+    "local-lab/s6.playwright.config.ts"
+  ],
+  "exclude": []
+}

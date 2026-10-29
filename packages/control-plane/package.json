@@ -1,0 +1,70 @@
+{
+  "name": "@ozz/control-plane",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./audit": {
+      "types": "./dist/audit.d.ts",
+      "default": "./dist/audit.js"
+    },
+    "./recovery": {
+      "types": "./dist/recovery.d.ts",
+      "default": "./dist/recovery.js"
+    },
+    "./secrets": {
+      "types": "./dist/secrets.d.ts",
+      "default": "./dist/secrets.js"
+    },
+    "./tasks": {
+      "types": "./dist/tasks/index.d.ts",
+      "default": "./dist/tasks/index.js"
+    },
+    "./infrastructure": {
+      "types": "./dist/infrastructure/index.d.ts",
+      "default": "./dist/infrastructure/index.js"
+    },
+    "./services": {
+      "types": "./dist/services/index.d.ts",
+      "default": "./dist/services/index.js"
+    },
+    "./networking": {
+      "types": "./dist/networking/index.d.ts",
+      "default": "./dist/networking/index.js"
+    },
+    "./storage": {
+      "types": "./dist/storage/index.d.ts",
+      "default": "./dist/storage/index.js"
+    },
+    "./databases": {
+      "types": "./dist/databases/index.d.ts",
+      "default": "./dist/databases/index.js"
+    },
+    "./templates": {
+      "types": "./dist/templates/index.d.ts",
+      "default": "./dist/templates/index.js"
+    },
+    "./builds": {
+      "types": "./dist/builds/index.d.ts",
+      "default": "./dist/builds/index.js"
+    },
+    "./git": {
+      "types": "./dist/git/index.d.ts",
+      "default": "./dist/git/index.js"
+    },
+    "./integrations": {
+      "types": "./dist/integrations/index.d.ts",
+      "default": "./dist/integrations/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@ozz/config": "workspace:*",
+    "@ozz/database": "workspace:*",
+    "@ozz/infrastructure": "workspace:*",
+    "bullmq": "5.81.5",
+    "ioredis": "5.11.1"
+  }
+}

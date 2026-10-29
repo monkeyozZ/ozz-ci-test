@@ -1,0 +1,830 @@
+{
+  "version": 1,
+  "owner": "ozz-s6-builder-faults-v1",
+  "sessionId": "30ef1534-fa34-4c96-9f4e-fb60e02e8674",
+  "recordedAt": "2026-10-26T06:00:05.135Z",
+  "windowReleasedAt": "2026-10-26T06:00:05.135Z",
+  "status": "passed-after-retained-observed-failures",
+  "matrixAccepted": true,
+  "scope": "Seven product-registered Builder fault scenarios on dedicated fixtures; failures and retries retained. No stress execution occurred outside registered runs.",
+  "scenarioCount": 7,
+  "acceptedScenarioCount": 7,
+  "deploymentCount": 11,
+  "runCount": 13,
+  "cases": [
+    {
+      "case": "cancel",
+      "accepted": true,
+      "firstObservationPassed": false,
+      "priorFailure": "Initial observer login collided with another probe password verification (AUTH_BUSY); restarted sampler missed the live run. Product cancellation and closure passed, live isolation/CPU acceptance did not. Explicit retry captured the missing evidence.",
+      "attempts": [
+        {
+          "deploymentId": "444c83f2-ad3a-4717-9b6b-46f47dfe79f2",
+          "passed": false,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": false,
+            "controlledSourceObservedByKernel": false,
+            "sourceRootless": false,
+            "sourceProcessSandbox": false,
+            "actualKernelLimits": false,
+            "cancelled": true,
+            "cpuQuotaThrottled": false,
+            "cpuWithinQuota": false,
+            "explicitSecretOnly": true,
+            "canaryRedacted": true,
+            "sourceNetworkBoundary": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-cancel-1792991386650-420c6f1f.json",
+            "sha256": "341bb4fad43e24736a1803772dac283621ea5083114a099bccc45d5375d2e8bb"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-444c83f2-ad3a-4717-9b6b-46f47dfe79f2-1792991386069.json",
+            "sha256": "37721a7f4c449f93fda2065259d62144cc8d3dc00ba11ab72852d414543c222a"
+          }
+        },
+        {
+          "deploymentId": "d960a8d2-c033-43fa-ad6c-46bc9da1f8bc",
+          "passed": true,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": true,
+            "controlledSourceObservedByKernel": true,
+            "sourceRootless": true,
+            "sourceProcessSandbox": true,
+            "actualKernelLimits": true,
+            "cancelled": true,
+            "cpuQuotaThrottled": true,
+            "cpuWithinQuota": true,
+            "explicitSecretOnly": true,
+            "canaryRedacted": true,
+            "sourceNetworkBoundary": true,
+            "kernelProxyOnlyPolicy": true,
+            "parentCgroupWritesDenied": true,
+            "managerCredentialsInaccessible": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-cancel-1792991657749-dc7096a0.json",
+            "sha256": "53c4dd9ec60354fc5760356ca4ca2c8f6c138056265948abef1f49726d18d2bf"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-d960a8d2-c033-43fa-ad6c-46bc9da1f8bc-1792991641079.json",
+            "sha256": "ad2a8051a4c25508930cd368b448075f1838bdedd7d632d669450a57df975058"
+          }
+        }
+      ]
+    },
+    {
+      "case": "timeout",
+      "accepted": true,
+      "firstObservationPassed": false,
+      "priorFailure": "Original launcher rounded remaining RuntimeMaxSec down to whole seconds, terminating before the absolute deadline and reporting BUILD_SOLVE_FAILED. The reviewed microsecond-rounding fix was installed while idle; a new independent 40-second window and explicit retry verified BUILD_TIMED_OUT.",
+      "attempts": [
+        {
+          "deploymentId": "6afa349c-2404-4e64-9023-95021c1518ff",
+          "passed": false,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": true,
+            "controlledSourceObservedByKernel": true,
+            "sourceRootless": true,
+            "sourceProcessSandbox": true,
+            "actualKernelLimits": true,
+            "failed": true,
+            "shortFixedDeadline": true,
+            "timeoutReported": false
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-timeout-1792992829848-ea8dc500.json",
+            "sha256": "bc8b603e99a1fb1b899c99113526d1d8abb994ff4b9d68752155014a72265556"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-6afa349c-2404-4e64-9023-95021c1518ff-1792991753730.json",
+            "sha256": "4a81e327bcc24eedfa232e309cbfe07e80fcfff5f08611d46a857e41e5a38a64"
+          }
+        },
+        {
+          "deploymentId": "47d9b6b0-d26f-461b-bcba-ddeed762d335",
+          "passed": true,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": true,
+            "controlledSourceObservedByKernel": true,
+            "sourceRootless": true,
+            "sourceProcessSandbox": true,
+            "actualKernelLimits": true,
+            "failed": true,
+            "shortFixedDeadline": true,
+            "timeoutReported": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-timeout-1792994144708-7cdb42a1.json",
+            "sha256": "22e175409eee0347beb6fc0aeb84834419cf82c1c4e8206e30e23278d80c0f97"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-47d9b6b0-d26f-461b-bcba-ddeed762d335-1792994143191.json",
+            "sha256": "149f8f1e7cf11900a437f183014134cbb0335f02f223871d5bebb4254135b8cc"
+          }
+        }
+      ]
+    },
+    {
+      "case": "pids",
+      "accepted": true,
+      "firstObservationPassed": false,
+      "priorFailure": "Initial sampler read only parent pids.events, which stayed zero despite pids.current=256 and source EAGAIN. Explicit retry captured real denial events from descendant building-service pids.events; the original incomplete receipt remains failed.",
+      "attempts": [
+        {
+          "deploymentId": "d16fed47-9ec2-43cc-829b-458f2bb00533",
+          "passed": false,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": true,
+            "controlledSourceObservedByKernel": true,
+            "sourceRootless": true,
+            "sourceProcessSandbox": true,
+            "actualKernelLimits": true,
+            "failed": true,
+            "kernelPidLimit": false
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-pids-1792993000637-3f1f57e1.json",
+            "sha256": "328f47a5a3d7691c99bb40f5f30b768c6369713d4d41c0e425c5222a4831a1e4"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-d16fed47-9ec2-43cc-829b-458f2bb00533-1792992999262.json",
+            "sha256": "0a8579b3ff9a2e74b5d6f286b8f4639c0da45685b783e296cd205eea2fbe684c"
+          }
+        },
+        {
+          "deploymentId": "2f85e6df-1bfc-4a12-a106-f85dffb15474",
+          "passed": true,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": true,
+            "controlledSourceObservedByKernel": true,
+            "sourceRootless": true,
+            "sourceProcessSandbox": true,
+            "actualKernelLimits": true,
+            "failed": true,
+            "kernelPidLimit": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-pids-1792993324462-a5936aa2.json",
+            "sha256": "248190ae8183ae1aeaf79b6348e338147e1a89785b052a0685da8f88043b95ea"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-2f85e6df-1bfc-4a12-a106-f85dffb15474-1792993323275.json",
+            "sha256": "d3cf41ac35bafa9597597d27ab54fe535306fe4e327308a30743e14261fb2ca7"
+          }
+        }
+      ]
+    },
+    {
+      "case": "disk",
+      "accepted": true,
+      "firstObservationPassed": true,
+      "priorFailure": null,
+      "attempts": [
+        {
+          "deploymentId": "d1b23874-3974-4a37-98a7-c3b225015ee0",
+          "passed": true,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": true,
+            "controlledSourceObservedByKernel": true,
+            "sourceRootless": true,
+            "sourceProcessSandbox": true,
+            "actualKernelLimits": true,
+            "failed": true,
+            "fixedLoopCapacity": true,
+            "controlledWorkloadSawEnospc": true,
+            "kernelDiskFilled": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-disk-1792993121744-0a64e6d6.json",
+            "sha256": "bffb12acc7eb3daa5917c0da4c5239c2b3ab5ccf6207eaed6986e35b2fd1593d"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-d1b23874-3974-4a37-98a7-c3b225015ee0-1792993121093.json",
+            "sha256": "411ad90c8d16397b0d5804a169d36a1aa94ba46f3b3f70e5774022187bce7256"
+          }
+        }
+      ]
+    },
+    {
+      "case": "memory",
+      "accepted": true,
+      "firstObservationPassed": true,
+      "priorFailure": null,
+      "attempts": [
+        {
+          "deploymentId": "882ab525-68a4-4429-9af5-a3e0bd1199c3",
+          "passed": true,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": true,
+            "controlledSourceObservedByKernel": true,
+            "sourceRootless": true,
+            "sourceProcessSandbox": true,
+            "actualKernelLimits": true,
+            "failed": true,
+            "kernelOomKill": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-memory-1792993275023-ba0b19df.json",
+            "sha256": "e01b2d14e07ae5c30635347c6c3d70dd9da5ac468a96e31e678f372fc297fd5e"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-882ab525-68a4-4429-9af5-a3e0bd1199c3-1792993273337.json",
+            "sha256": "c629ccb4b40842becb3c177fe75cc50ab6f4b904844fda648ffac699903c60e8"
+          }
+        }
+      ]
+    },
+    {
+      "case": "disconnect",
+      "accepted": true,
+      "firstObservationPassed": true,
+      "priorFailure": null,
+      "attempts": [
+        {
+          "deploymentId": "51d007f8-4ac4-4c95-99bd-010cc9cee2be",
+          "passed": true,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "liveKernelSample": true,
+            "controlledSourceObservedByKernel": true,
+            "sourceRootless": true,
+            "sourceProcessSandbox": true,
+            "actualKernelLimits": true,
+            "hostClosedBeforeManagerResumed": true,
+            "managerResumed": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-disconnect-1792993405337-23d50920.json",
+            "sha256": "67cbc5dfeeeed71b8404551e6f3499d7fa0725f06e9ab0cb3b85ca42119087db"
+          },
+          "rawLinuxEvidence": {
+            "path": ".local/local-lab/builder/b-evidence/kernel-deployment-51d007f8-4ac4-4c95-99bd-010cc9cee2be-1792993402080.json",
+            "sha256": "5be7806863e044b7c33462af05af5db3f00ca389b3d08f86dce5a00e6fb7991b"
+          }
+        }
+      ]
+    },
+    {
+      "case": "artifact",
+      "accepted": true,
+      "firstObservationPassed": true,
+      "priorFailure": null,
+      "attempts": [
+        {
+          "deploymentId": "13d2a75c-1669-4fe6-b0a5-aa7fa802ba40",
+          "passed": true,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "pushFailed": true,
+            "exportedArtifactRetained": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-artifact-1792993455796-603ba50b.json",
+            "sha256": "81e4b585254ec4813b671ac293de5dfa372b5af8842cace7e8d27bdc3de430e5"
+          },
+          "rawLinuxEvidence": null
+        },
+        {
+          "deploymentId": "28de894b-ffc3-4617-b3f0-653f1679415e",
+          "passed": true,
+          "checks": {
+            "allRunsHaveVerifiedClosure": true,
+            "hostRunsClosed": true,
+            "succeeded": true,
+            "sameArtifact": true,
+            "noCheckoutOrSolve": true
+          },
+          "evidence": {
+            "path": ".local/local-lab/s6-builder-faults/observed-artifact-1792993508448-1403eb19.json",
+            "sha256": "03d0cba30ecabeed0afddac46320758768c2f30c20b274e0b0b0f26fdfb6719c"
+          },
+          "rawLinuxEvidence": null
+        }
+      ]
+    }
+  ],
+  "probeFailures": [
+    {
+      "mode": "observe",
+      "recordedAt": "2026-10-26T05:07:20.816Z",
+      "code": "S6_FAULT_API_FAILED_503",
+      "evidence": {
+        "path": ".local/local-lab/s6-builder-faults/failed-observe-1792991240816-81fb0b77.json",
+        "sha256": "29b40e11aba20728b1227ef24ffc735d9e7c55d737b1c14e4a02fb74e87b9291"
+      }
+    },
+    {
+      "mode": "observe",
+      "recordedAt": "2026-10-26T05:09:46.651Z",
+      "code": "S6_FAULT_ACCEPTANCE_NOT_ESTABLISHED",
+      "evidence": {
+        "path": ".local/local-lab/s6-builder-faults/failed-observe-1792991386651-aba0bed1.json",
+        "sha256": "2be3ae4fe3fb5bff085e02446ffe3692112342291ab1cb715ed957d24f280646"
+      }
+    },
+    {
+      "mode": "observe",
+      "recordedAt": "2026-10-26T05:15:12.188Z",
+      "code": "S6_FAULT_API_FAILED_429",
+      "evidence": {
+        "path": ".local/local-lab/s6-builder-faults/failed-observe-1792991712188-73794909.json",
+        "sha256": "d5cb04539c64323d0dd6e8998ccbae68e45eb8e06a5d199c5c2326228f26d0c1"
+      }
+    },
+    {
+      "mode": "observe",
+      "recordedAt": "2026-10-26T05:36:40.640Z",
+      "code": "S6_FAULT_ACCEPTANCE_NOT_ESTABLISHED",
+      "evidence": {
+        "path": ".local/local-lab/s6-builder-faults/failed-observe-1792993000640-278a877b.json",
+        "sha256": "e05a96ddf9dd657a396f60655f79f9736b38ae9ce2d64083920960919f5dd0d8"
+      }
+    },
+    {
+      "mode": "observe-saved",
+      "recordedAt": "2026-10-26T05:33:49.850Z",
+      "code": "S6_FAULT_ACCEPTANCE_NOT_ESTABLISHED",
+      "evidence": {
+        "path": ".local/local-lab/s6-builder-faults/failed-observe-saved-1792992829850-a3c6ef58.json",
+        "sha256": "94a094a269f6e9acece9a6b5cf2790940e819b97f9ade1c53e7ae01b14ec8ebf"
+      }
+    },
+    {
+      "mode": "prepare",
+      "recordedAt": "2026-10-26T05:00:40.651Z",
+      "code": "S6_FAULT_PROBE_FAILED",
+      "evidence": {
+        "path": ".local/local-lab/s6-builder-faults/failed-prepare-1792990840651-10383598.json",
+        "sha256": "dfe2aae9c7708c27cbae816f5f4ae6b0cd5e8cd05e79728905e9936d1b6454e6"
+      }
+    },
+    {
+      "mode": "prepare",
+      "recordedAt": "2026-10-26T05:01:49.631Z",
+      "code": "S6_FAULT_PROBE_FAILED",
+      "evidence": {
+        "path": ".local/local-lab/s6-builder-faults/failed-prepare-1792990909631-ba4d8497.json",
+        "sha256": "5fce3d7816ef11aa48771970672a2768d98240ba600ce56453cf0c16478003f0"
+      }
+    }
+  ],
+  "authenticationFindings": [
+    {
+      "apiCode": "AUTH_BUSY",
+      "at": "2026-10-26T05:07:20.816Z",
+      "cause": "Concurrent probe password checks triggered existing one-verification-per-process protection.",
+      "diagnosis": "Root read-only API log inspection found API/Worker healthy."
+    },
+    {
+      "apiCode": "LOGIN_RATE_LIMITED",
+      "at": "2026-10-26T05:15:12.188Z",
+      "cause": "Repeated probe logins consumed the existing ten-attempt fifteen-minute limit.",
+      "mitigation": "A 0600 fault-session-bound session cache is validated through GET /api/auth/me and reused. No rate-limit records or authentication limits were changed."
+    }
+  ],
+  "finalInventory": {
+    "evidence": {
+      "path": ".local/local-lab/s6-builder-faults/return-manifest-1792994165551-bc9d13e9.json",
+      "sha256": "1c6c5590dd89add626412486fca8f4f644bf22a9cd9a1841aae524e3f2dc36f4"
+    },
+    "checks": {
+      "everyScenarioRegistered": true,
+      "explicitArtifactRetryRegistered": true,
+      "allProductRunsClosed": true,
+      "endedProofsIndependentlyVerified": true,
+      "allTasksTerminal": true,
+      "noServiceTaskActive": true,
+      "hostHasNoOpenRun": true,
+      "hostConfigRestored": true,
+      "launcherMatchesRecordedBaseline": true,
+      "helperUnchanged": true,
+      "registryAclRestored": true,
+      "artifactServiceStopped": true,
+      "localDiskFloorPreserved": true
+    },
+    "services": [
+      {
+        "case": "cancel",
+        "serviceId": "77e9925b-ad82-4892-836a-e16fa2a2f5f6",
+        "desiredState": "running",
+        "runtimeState": "unpublished",
+        "activeTask": null,
+        "publishedDeploymentId": null
+      },
+      {
+        "case": "timeout",
+        "serviceId": "85fd58a4-c4b3-470b-a697-8d1d3cedfca6",
+        "desiredState": "running",
+        "runtimeState": "unpublished",
+        "activeTask": null,
+        "publishedDeploymentId": null
+      },
+      {
+        "case": "pids",
+        "serviceId": "1e38d912-8013-4d8b-9ba4-5ed1c2bd8c65",
+        "desiredState": "running",
+        "runtimeState": "unpublished",
+        "activeTask": null,
+        "publishedDeploymentId": null
+      },
+      {
+        "case": "disk",
+        "serviceId": "4a7e40da-ff8e-4c6c-ac10-8bd43dd54fa0",
+        "desiredState": "running",
+        "runtimeState": "unpublished",
+        "activeTask": null,
+        "publishedDeploymentId": null
+      },
+      {
+        "case": "memory",
+        "serviceId": "53e5713f-23c1-4484-8786-4f99dafd9ebe",
+        "desiredState": "running",
+        "runtimeState": "unpublished",
+        "activeTask": null,
+        "publishedDeploymentId": null
+      },
+      {
+        "case": "disconnect",
+        "serviceId": "d117dc4a-3fd2-46fc-bd34-68af9da2c4d1",
+        "desiredState": "running",
+        "runtimeState": "unpublished",
+        "activeTask": null,
+        "publishedDeploymentId": null
+      },
+      {
+        "case": "artifact",
+        "serviceId": "fc1c9d50-2d10-4b9e-b7ad-ef51f6ca0453",
+        "desiredState": "stopped",
+        "runtimeState": "stopped",
+        "activeTask": null,
+        "publishedDeploymentId": "28de894b-ffc3-4617-b3f0-653f1679415e"
+      }
+    ],
+    "deployments": [
+      {
+        "case": "cancel",
+        "deploymentId": "d960a8d2-c033-43fa-ad6c-46bc9da1f8bc",
+        "serviceId": "77e9925b-ad82-4892-836a-e16fa2a2f5f6",
+        "status": "cancelled",
+        "errorCode": null,
+        "retryOfId": "444c83f2-ad3a-4717-9b6b-46f47dfe79f2",
+        "runs": [
+          {
+            "runId": "0bed90d5-88b9-43ee-bb42-cc0f8c1862f1",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:14:01.314Z",
+            "proofVerifiedAt": "2026-10-26T05:14:03.927Z",
+            "signedProofSha256": "cdd93a7d4f91a560eaa2594fcaddb03a38e15b4bfb705e75ae08ca557785773a",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "cancel",
+        "deploymentId": "444c83f2-ad3a-4717-9b6b-46f47dfe79f2",
+        "serviceId": "77e9925b-ad82-4892-836a-e16fa2a2f5f6",
+        "status": "cancelled",
+        "errorCode": null,
+        "retryOfId": null,
+        "runs": [
+          {
+            "runId": "4f6deaf4-0365-4411-b3c7-15b87c4df3bc",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:07:43.551Z",
+            "proofVerifiedAt": "2026-10-26T05:07:46.373Z",
+            "signedProofSha256": "1cda184f044fc129a0f407d37ac3e3199df83a5f3a8305c38135f90e90f01048",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "timeout",
+        "deploymentId": "47d9b6b0-d26f-461b-bcba-ddeed762d335",
+        "serviceId": "85fd58a4-c4b3-470b-a697-8d1d3cedfca6",
+        "status": "failed",
+        "errorCode": "BUILD_TIMED_OUT",
+        "retryOfId": "6afa349c-2404-4e64-9023-95021c1518ff",
+        "runs": [
+          {
+            "runId": "c599f23d-52d2-4cf7-86c4-31a4cdce03ba",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:55:43.330Z",
+            "proofVerifiedAt": "2026-10-26T05:55:43.455Z",
+            "signedProofSha256": "305c537c9c1f7df94c33399eec9924e6f83568916df4e1794da7600aeb2729de",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "timeout",
+        "deploymentId": "6afa349c-2404-4e64-9023-95021c1518ff",
+        "serviceId": "85fd58a4-c4b3-470b-a697-8d1d3cedfca6",
+        "status": "failed",
+        "errorCode": "BUILD_SOLVE_FAILED",
+        "retryOfId": null,
+        "runs": [
+          {
+            "runId": "a5242460-2b98-431b-9d85-a5316cbd5b20",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:15:53.800Z",
+            "proofVerifiedAt": "2026-10-26T05:15:53.874Z",
+            "signedProofSha256": "c4b922bd79d750209d9d67f2a7dcdecf6f2c4f645b141a5806d899c52d785956",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "pids",
+        "deploymentId": "2f85e6df-1bfc-4a12-a106-f85dffb15474",
+        "serviceId": "1e38d912-8013-4d8b-9ba4-5ed1c2bd8c65",
+        "status": "failed",
+        "errorCode": "BUILD_SOLVE_FAILED",
+        "retryOfId": "d16fed47-9ec2-43cc-829b-458f2bb00533",
+        "runs": [
+          {
+            "runId": "a192fc17-0745-4d6c-84b1-2cf31fbd6c9d",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:42:03.324Z",
+            "proofVerifiedAt": "2026-10-26T05:42:03.622Z",
+            "signedProofSha256": "d1e9e75346cb5ecd8db81a2bb2cf9b04a1022f7d67434f4e9b5407105e216efd",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "pids",
+        "deploymentId": "d16fed47-9ec2-43cc-829b-458f2bb00533",
+        "serviceId": "1e38d912-8013-4d8b-9ba4-5ed1c2bd8c65",
+        "status": "failed",
+        "errorCode": "BUILD_SOLVE_FAILED",
+        "retryOfId": null,
+        "runs": [
+          {
+            "runId": "2183ae2c-b61e-4766-b417-146016899dd1",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:36:39.322Z",
+            "proofVerifiedAt": "2026-10-26T05:36:39.301Z",
+            "signedProofSha256": "ebdccc6b857006538abbfb5133df71992ff22deabf88bc16d2074a1728d8e4fc",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "disk",
+        "deploymentId": "d1b23874-3974-4a37-98a7-c3b225015ee0",
+        "serviceId": "4a7e40da-ff8e-4c6c-ac10-8bd43dd54fa0",
+        "status": "failed",
+        "errorCode": "BUILD_SOLVE_FAILED",
+        "retryOfId": null,
+        "runs": [
+          {
+            "runId": "fdae8216-adb9-423b-ab9f-d6a810f77fbf",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:38:41.193Z",
+            "proofVerifiedAt": "2026-10-26T05:38:41.280Z",
+            "signedProofSha256": "fc04dd27df876899ac709f864c7f03ca6d94755426dd1acea23df13e80a95c48",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "memory",
+        "deploymentId": "882ab525-68a4-4429-9af5-a3e0bd1199c3",
+        "serviceId": "53e5713f-23c1-4484-8786-4f99dafd9ebe",
+        "status": "failed",
+        "errorCode": "BUILD_SOLVE_FAILED",
+        "retryOfId": null,
+        "runs": [
+          {
+            "runId": "15376ad6-645f-4258-a882-22de3bae3793",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:41:13.490Z",
+            "proofVerifiedAt": "2026-10-26T05:41:13.726Z",
+            "signedProofSha256": "fc50e8450a0323e2c2b889bc9fe071c8065c98a270361ea465e9e250db195039",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "disconnect",
+        "deploymentId": "51d007f8-4ac4-4c95-99bd-010cc9cee2be",
+        "serviceId": "d117dc4a-3fd2-46fc-bd34-68af9da2c4d1",
+        "status": "cancelled",
+        "errorCode": null,
+        "retryOfId": null,
+        "runs": [
+          {
+            "runId": "9f8bee82-1024-4e03-a256-6f313fe11ffc",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:43:22.842Z",
+            "proofVerifiedAt": "2026-10-26T05:43:22.831Z",
+            "signedProofSha256": "f3ab4f1589727767e008ff2fc87b04cbd90a000d910c5089062260be76af8657",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "artifact",
+        "deploymentId": "28de894b-ffc3-4617-b3f0-653f1679415e",
+        "serviceId": "fc1c9d50-2d10-4b9e-b7ad-ef51f6ca0453",
+        "status": "succeeded",
+        "errorCode": null,
+        "retryOfId": "13d2a75c-1669-4fe6-b0a5-aa7fa802ba40",
+        "runs": [
+          {
+            "runId": "ccea7031-0852-4bda-8422-4290394ea1fc",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:45:03.551Z",
+            "proofVerifiedAt": "2026-10-26T05:45:04.053Z",
+            "signedProofSha256": "7d959145e686f2a80e91182c819d0513bced45f2d1be5b99247148913fe4a64d",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      },
+      {
+        "case": "artifact",
+        "deploymentId": "13d2a75c-1669-4fe6-b0a5-aa7fa802ba40",
+        "serviceId": "fc1c9d50-2d10-4b9e-b7ad-ef51f6ca0453",
+        "status": "failed",
+        "errorCode": "BUILD_ISOLATION_UNAVAILABLE",
+        "retryOfId": null,
+        "runs": [
+          {
+            "runId": "f42bafa8-8c95-4c94-9d6b-52ad7a870af6",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:44:07.262Z",
+            "proofVerifiedAt": "2026-10-26T05:44:07.353Z",
+            "signedProofSha256": "aa04e3aaad3054c318263db2366530ca089a0dc4d422efa2d740a5c5cd89c535",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          },
+          {
+            "runId": "86a5f1cd-b327-4fc2-9512-00e815221609",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:44:11.553Z",
+            "proofVerifiedAt": "2026-10-26T05:44:11.702Z",
+            "signedProofSha256": "063d121401f959786264f45d4f09e75360d0f426fec3b358b5c86d5a51be9fa9",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          },
+          {
+            "runId": "0fce827a-2a78-4bd4-81fd-9e2867333bff",
+            "executionState": "ended",
+            "executionClosedAt": "2026-10-26T05:44:14.906Z",
+            "proofVerifiedAt": "2026-10-26T05:44:14.918Z",
+            "signedProofSha256": "5a3db48ca10277ec3a30e1726bfa830ec8818b5e2f15063d419d58c1bdfa6c81",
+            "signatureAndIdentityVerified": true,
+            "hostClosed": true,
+            "hostTerminationConfirmed": true,
+            "proofErrorCode": null
+          }
+        ]
+      }
+    ]
+  },
+  "restoration": {
+    "hostConfigBeforeSha256": "e7430696be31475bde545d00eadfae9f920d0049509d9399921b76bef31475c4",
+    "hostConfigAfterSha256": "e7430696be31475bde545d00eadfae9f920d0049509d9399921b76bef31475c4",
+    "helperBeforeSha256": "c0eed81140ffac60be150f735457bae6758102b4227bc1dcd63fa243656e435a",
+    "helperAfterSha256": "c0eed81140ffac60be150f735457bae6758102b4227bc1dcd63fa243656e435a",
+    "registryAclBeforeSha256": "a57e9eaf7fcdfd501e36746c8b344aa614baf4d8c0eae2bc7e975fadff0a663e",
+    "registryAclAfterSha256": "a57e9eaf7fcdfd501e36746c8b344aa614baf4d8c0eae2bc7e975fadff0a663e",
+    "hostOpenRunCount": 0,
+    "localAvailableBytes": 13888315392,
+    "minimumLocalAvailableBytes": 8589934592,
+    "timeoutRestoreEvidence": {
+      "path": ".local/local-lab/s6-builder-faults/limits-restore-1792994162316-28555eda.json",
+      "sha256": "876db7e642b7b59a5bcd5f03f21110cf80c2463c635ade9f536eb840afb14a7b"
+    },
+    "aclRestoreEvidence": {
+      "path": ".local/local-lab/s6-builder-faults/registry-restore-1792993605315-805a7e73.json",
+      "sha256": "719346332f548e1688cd556e35be6967567e39d4611f86f2c8924110aaf7eae0"
+    }
+  },
+  "authorizedLauncherFix": {
+    "evidence": {
+      "path": ".local/local-lab/s6-builder-faults/s6-timeout-launcher-6a499477-70a4-42be-b9a5-6618410deb30.json",
+      "sha256": "c7134408420fcc247ee988bc613bc19fd8ba62de2cdbc2d5dd9ba7fa4beeb2e7"
+    },
+    "beforeSha256": "4dd94f338e9b1e0e87d662675e8c43d1644998a886ed847bd5b412891215a435",
+    "afterSha256": "6c20a2e29d121f749f73b9824446a710fd29b7fd95079e3f752acc90ede0f603",
+    "backupDirectory": "/etc/ozz-builder/s6-timeout-launcher-6a499477-70a4-42be-b9a5-6618410deb30",
+    "preflightPassed": true,
+    "managerIdentityUnchanged": true,
+    "serviceRestarted": false,
+    "vmRestarted": false,
+    "retestWindowEvidence": {
+      "path": ".local/local-lab/s6-builder-faults/timeout-retest-window-1792994100922-1bc6125b.json",
+      "sha256": "143f2892ec337e4e7efc749084fec7d6abc4a613947480f94349f957220b0865"
+    },
+    "finalApiErrorCode": "BUILD_TIMED_OUT",
+    "finalProofs": [
+      {
+        "runId": "c599f23d-52d2-4cf7-86c4-31a4cdce03ba",
+        "deadlineAt": "2026-10-26T05:55:42.800Z",
+        "endedAt": "2026-10-26T05:55:43.330Z",
+        "disposition": {
+          "outcome": "timed_out",
+          "phase": "building"
+        },
+        "afterDeadlineMilliseconds": 530
+      }
+    ]
+  },
+  "retainedImage": {
+    "artifactId": "7a3a26d5-e7a5-4e99-88a4-1f44c44c31e4",
+    "producedByRunId": "f42bafa8-8c95-4c94-9d6b-52ad7a870af6",
+    "digest": "sha256:ae57ced52f60386535964a9e26f8ece2cd0490a84323c0510433a50039f7ab0c",
+    "reference": "host.lima.internal:50444/ozz-s6/fault-30ef1534-fa34-4c96-9f4e-fb60e02e8674@sha256:ae57ced52f60386535964a9e26f8ece2cd0490a84323c0510433a50039f7ab0c",
+    "archiveBytes": "2334208",
+    "binary": "/s6-workload",
+    "serveArgs": [
+      "serve"
+    ],
+    "port": 8080,
+    "path": "/",
+    "memoryArgs": [
+      "memory"
+    ],
+    "repositoryAclRestored": true
+  },
+  "sourceFiles": [
+    {
+      "path": "tests/probes/s6-builder-fault-local-lab.mjs",
+      "sha256": "b991c932e040ca57e436d88e1469b422a7faf0cc54e9dd07601580b8a17aff3b"
+    },
+    {
+      "path": "tests/probes/support/s6-builder-fault-host.py",
+      "sha256": "044ce4e999218ce235532fd78934c1e30dc76cd84930fd4052e4f275123573dc"
+    },
+    {
+      "path": "tests/probes/support/s6-builder-fault-workload.go",
+      "sha256": "881c2af8f79602e92659160bdbf326260c6e2ece8911ed737aa7475b5dddd1fc"
+    },
+    {
+      "path": "tests/probes/s6-builder-kernel-sample.mjs",
+      "sha256": "b1e09b0e4231217c9250a192529684ee11b8a458427b869a88fdb6605b0b80a0"
+    },
+    {
+      "path": "tests/probes/support/s6-builder-kernel-sample.py",
+      "sha256": "6464abe69b572d4c5dd4cffb302a227fcb659324831ae18cc9bd9f4c1e5e3f19"
+    },
+    {
+      "path": "infra/builder/launcher.py",
+      "sha256": "6c20a2e29d121f749f73b9824446a710fd29b7fd95079e3f752acc90ede0f603"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "kind": "g-mvp-snapshot-observation-increment",
+  "version": 1,
+  "recordedAt": "2026-10-29T02:58:51.803695+00:00",
+  "status": "passed",
+  "scope": "Current host backup/restore tools record and verify the exported PostgreSQL MVCC boundary. This increment is not the joint Builder/K3s RTO result or overall S6/G-MVP acceptance.",
+  "sourceFiles": [
+    {
+      "path": "scripts/backup-snapshot.mjs",
+      "sha256": "570973dfa256a15a79c6c9cdc4a35384baaaaf897e485c5c07a7471e3a94d1aa",
+      "bytes": 5712
+    },
+    {
+      "path": "scripts/backup-helpers.mjs",
+      "sha256": "bf25d214ced7fa643a4bc909a03be871be5bb5a6ab614d60112e6e5380df6ed9",
+      "bytes": 19425
+    },
+    {
+      "path": "scripts/backup-control-plane.mjs",
+      "sha256": "ac450f343819a7bb91afe955773912aeac9a90c14a6f4137b826694fb69b12de",
+      "bytes": 4560
+    },
+    {
+      "path": "scripts/restore-control-plane.mjs",
+      "sha256": "ac6a45b70c1791f6418b743b2d8f211cc5226ddee3a94a35ef891582019e62d2",
+      "bytes": 8825
+    },
+    {
+      "path": "tests/integration/recovery.test.ts",
+      "sha256": "d124bd6a3ac479763a91e03ecb1f4ff0dbf1f547f7e4b0a9788aaa6a1630f38e",
+      "bytes": 32326
+    },
+    {
+      "path": "tests/manual-data/backup-snapshot.test.mjs",
+      "sha256": "4bf06f2dddb75d7c649eca936e1207ed81b8d59e38abfd139684c27fc87a6d8f",
+      "bytes": 5232
+    }
+  ],
+  "sourceStableDuringPostgresValidation": true,
+  "behavior": {
+    "sharedExportedSnapshotPreserved": true,
+    "logicalMvccBoundaryRecorded": true,
+    "databaseAndClientTimeBoundsRecordedSeparately": true,
+    "physicalSnapshotInstantClaimed": false,
+    "observationBoundToDumpAndBothManifests": true,
+    "restoreReceiptPreservesObservationHash": true,
+    "legacyFormatOneRestoreVerified": true,
+    "incompleteMalformedOrChangedObservationRejectedBeforeImport": true
+  },
+  "validation": {
+    "boundaryUnit": {
+      "passed": 6,
+      "failed": 0,
+      "evidence": {
+        "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/unit-01-summary.json",
+        "sha256": "90c788228ff72cc1913dad6e6ad5faded0ea68c968d6e1653b3b5b596304c35a",
+        "bytes": 325
+      }
+    },
+    "realPostgres": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": {
+        "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/integration-02.json",
+        "sha256": "aa57781ef8a22a38ffa77495588dc63d6bb9aa6edb2cbef3c8dc75e3042ba71c",
+        "bytes": 1734
+      },
+      "rawResults": {
+        "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/integration-02-vitest.json",
+        "sha256": "5c743a0352a8404b11b22033c793f3b1dd449ac062a5b8475b69eecf978e4381",
+        "bytes": 5117
+      },
+      "concurrencyScope": "The production exporter and dumper retain a committed pre-export row and omit a pending-at-export row and a later committed row. That controlled case assembles a test pair; normal CLI backup and restore are exercised separately in the same suite.",
+      "truncatedArchiveScope": "The test pair is rebound to its intentionally truncated dump, then DATABASE_ARCHIVE_INVALID and an empty target prove pg_restore rejection rather than an earlier manifest refusal."
+    }
+  },
+  "artifact": {
+    "path": ".local/local-lab/linux-build-c/artifacts/s6-recovery-tools-20261029-snapshot-observation.tar.gz",
+    "bytes": 22420,
+    "sha256": "b786f370d790453a6aaca329c93b3c83a05285254275646bd309dcba71a10c3b"
+  },
+  "packageValidation": {
+    "filesVerified": 7,
+    "entrypointsVerified": [
+      {
+        "entrypoint": "backup-control-plane.mjs",
+        "exitCode": 0
+      },
+      {
+        "entrypoint": "restore-control-plane.mjs",
+        "exitCode": 0
+      }
+    ],
+    "evidence": {
+      "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/package-proof-01.json",
+      "sha256": "9c91221583ef1fc2d8ec20ea9a3d30e4004ea8cbb020f1b062a9f9ec678865a2",
+      "bytes": 825
+    }
+  },
+  "knownSecretScan": {
+    "status": "passed",
+    "knownPatterns": 94,
+    "inventoryFiles": 57,
+    "matches": 0,
+    "evidence": {
+      "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/recovery-tools-secret-scan-01.json",
+      "sha256": "66c9be9bb30444dcdf00272e5e21b489658fec1390a39bca691344c6e32540d5",
+      "bytes": 1638
+    },
+    "unknownSecretsCovered": false
+  },
+  "frozenL07": {
+    "runId": "s6-20261028T173714Z-f8b90388",
+    "unchanged": true,
+    "containsThisLaterIncrement": false,
+    "scope": "No control-plane image or Builder package was rebuilt. These host recovery scripts are delivered as an additional bounded archive."
+  },
+  "limitations": [
+    "Exact MVCC visibility and a physical snapshot timestamp are different facts. exactAcquisitionTimeKnown remains false.",
+    "Database wall-clock reversal is retained as ordered=false and cannot be used as a time interval. Client monotonic durations belong to their own process.",
+    "This report does not measure full local recovery, real screen-reader behavior, target VPS capacity or external deployment gates."
+  ]
+}

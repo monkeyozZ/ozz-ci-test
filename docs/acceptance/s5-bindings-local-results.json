@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "status": "passed",
+  "mode": "run",
+  "startedAt": "2026-10-25T23:28:56.217Z",
+  "scope": "Dedicated S5 consumers on retained local ARM64 K3s A, real product API/Worker, PostgreSQL and Redis authentication. Existing fixed-image cache assistance; no cloud or backup/restore acceptance.",
+  "credentials": "Admin password and SSH configuration are read from existing protected files. Database credentials stay inside the dedicated guest/container; reports contain only checks and resource identities.",
+  "controlledLogProbe": "A dedicated consumer emits its own injected URI once. Only redaction/absence booleans are retained; raw Kubernetes and SSE logs are not persisted.",
+  "checks": [
+    {
+      "name": "cross_environment_rejected_without_draft_change",
+      "passed": true,
+      "observedAt": "2026-10-25T23:26:50.330Z",
+      "serviceId": "9bf79083-1f30-488b-84e0-46f00500f678",
+      "environmentId": "6e1ac0d0-14df-4714-859b-934c5da09a10"
+    },
+    {
+      "name": "postgresql_baseline_has_no_database_environment",
+      "passed": true,
+      "observedAt": "2026-10-25T23:28:58.327Z",
+      "serviceId": "9bf79083-1f30-488b-84e0-46f00500f678",
+      "deploymentId": "96539f18-52e5-443c-a262-bd4724d883a5",
+      "podUid": "9cebe1d5-e384-45e0-a89b-277711a736fc"
+    },
+    {
+      "name": "postgresql_saving_binding_does_not_hot_update",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:01.082Z",
+      "serviceId": "9bf79083-1f30-488b-84e0-46f00500f678",
+      "bindingId": "fb8a89ff-de35-47f2-b705-89d3494a2efb",
+      "deploymentId": "96539f18-52e5-443c-a262-bd4724d883a5",
+      "podUid": "9cebe1d5-e384-45e0-a89b-277711a736fc",
+      "draftConfigRevision": 3
+    },
+    {
+      "name": "postgresql_explicit_publication_authenticates_original_data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:09.608Z",
+      "serviceId": "9bf79083-1f30-488b-84e0-46f00500f678",
+      "deploymentId": "3120440b-66cb-4290-a4a3-0043aa2e78cb",
+      "podUid": "16363026-897f-4146-9251-897f0a96f5f7",
+      "databaseId": "a5ecad00-1950-49d2-ae67-a6a622d712f2",
+      "providerDeploymentId": "1da232dc-9cd9-4c08-9249-715a6dfeb76b",
+      "providerServiceUid": "e2ca13f4-0176-44ee-858a-84c6f21c7bfb",
+      "credentialRefId": "bceeb4ac-4e48-4b1c-94df-1d2004167cef",
+      "credentialContentRevision": 1
+    },
+    {
+      "name": "postgresql_real_uri_is_redacted_in_product_sse",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:11.574Z",
+      "serviceId": "9bf79083-1f30-488b-84e0-46f00500f678",
+      "podUid": "16363026-897f-4146-9251-897f0a96f5f7",
+      "deploymentId": "3120440b-66cb-4290-a4a3-0043aa2e78cb",
+      "sseBytes": 403,
+      "rawLogsPersisted": false
+    },
+    {
+      "name": "postgresql_in_use_provider_delete_is_rejected",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:11.746Z",
+      "providerServiceId": "efb929e9-7488-4d25-9d76-d42afa8ce338",
+      "consumerServiceId": "9bf79083-1f30-488b-84e0-46f00500f678",
+      "httpStatus": 409
+    },
+    {
+      "name": "postgresql_ordinary_image_and_credential_updates_are_blocked",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:11.926Z",
+      "providerServiceId": "efb929e9-7488-4d25-9d76-d42afa8ce338",
+      "databaseId": "a5ecad00-1950-49d2-ae67-a6a622d712f2",
+      "pvcUid": "92d8ff4c-33aa-4aa3-9b01-5768c8267dbc",
+      "credentialRefId": "bceeb4ac-4e48-4b1c-94df-1d2004167cef",
+      "credentialContentRevision": 1
+    },
+    {
+      "name": "redis_baseline_has_no_database_environment",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:20.426Z",
+      "serviceId": "413c7d49-2102-4e52-aa81-311bd34357eb",
+      "deploymentId": "a66fe5ec-f09f-4dc5-9688-c984fa00d6d6",
+      "podUid": "7faef028-f1e6-4cd2-8401-fddf3c3e1b02"
+    },
+    {
+      "name": "redis_saving_binding_does_not_hot_update",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:23.858Z",
+      "serviceId": "413c7d49-2102-4e52-aa81-311bd34357eb",
+      "bindingId": "651b0a0a-fd42-41ac-9f95-20ed94c459d6",
+      "deploymentId": "a66fe5ec-f09f-4dc5-9688-c984fa00d6d6",
+      "podUid": "7faef028-f1e6-4cd2-8401-fddf3c3e1b02",
+      "draftConfigRevision": 3
+    },
+    {
+      "name": "redis_explicit_publication_authenticates_original_data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:33.607Z",
+      "serviceId": "413c7d49-2102-4e52-aa81-311bd34357eb",
+      "deploymentId": "17f983e8-79fb-428e-b024-133aaad9cefb",
+      "podUid": "69bfc6f8-940d-4c02-8a52-b292438b94d4",
+      "databaseId": "1d027656-8f3a-45f4-aa44-aa9590adc8d2",
+      "providerDeploymentId": "48a4e52c-2835-4c13-9a6d-9a2685f9d2e1",
+      "providerServiceUid": "7944fee6-a2f3-4959-86da-802554151ab8",
+      "credentialRefId": "8814492b-915e-433e-ad60-6734d97138fa",
+      "credentialContentRevision": 1
+    },
+    {
+      "name": "redis_real_uri_is_redacted_in_product_sse",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:35.584Z",
+      "serviceId": "413c7d49-2102-4e52-aa81-311bd34357eb",
+      "podUid": "69bfc6f8-940d-4c02-8a52-b292438b94d4",
+      "deploymentId": "17f983e8-79fb-428e-b024-133aaad9cefb",
+      "sseBytes": 403,
+      "rawLogsPersisted": false
+    },
+    {
+      "name": "redis_in_use_provider_delete_is_rejected",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:35.760Z",
+      "providerServiceId": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c",
+      "consumerServiceId": "413c7d49-2102-4e52-aa81-311bd34357eb",
+      "httpStatus": 409
+    },
+    {
+      "name": "redis_ordinary_image_and_credential_updates_are_blocked",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:35.919Z",
+      "providerServiceId": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c",
+      "databaseId": "1d027656-8f3a-45f4-aa44-aa9590adc8d2",
+      "pvcUid": "1ebeaab4-6cfa-4d67-9771-a58b3aebed61",
+      "credentialRefId": "8814492b-915e-433e-ad60-6734d97138fa",
+      "credentialContentRevision": 1
+    },
+    {
+      "name": "postgresql_final_live_binding_authentication",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:37.135Z",
+      "serviceId": "9bf79083-1f30-488b-84e0-46f00500f678",
+      "podUid": "16363026-897f-4146-9251-897f0a96f5f7",
+      "deploymentId": "3120440b-66cb-4290-a4a3-0043aa2e78cb"
+    },
+    {
+      "name": "redis_final_live_binding_authentication",
+      "passed": true,
+      "observedAt": "2026-10-25T23:29:38.198Z",
+      "serviceId": "413c7d49-2102-4e52-aa81-311bd34357eb",
+      "podUid": "69bfc6f8-940d-4c02-8a52-b292438b94d4",
+      "deploymentId": "17f983e8-79fb-428e-b024-133aaad9cefb"
+    }
+  ],
+  "runId": "afc8c7a5-863d-4028-9f89-106b184d1426",
+  "parentRunId": "ddaabb56-0393-4076-a636-126a6caa22f4",
+  "completedAt": "2026-10-25T23:29:38.201Z",
+  "resources": {
+    "sourceProjectId": "fbd1c8ed-aee3-421a-bff7-be7f63a16002",
+    "sourceEnvironmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+    "consumerServices": {
+      "postgresql": "9bf79083-1f30-488b-84e0-46f00500f678",
+      "redis": "413c7d49-2102-4e52-aa81-311bd34357eb"
+    },
+    "crossEnvironmentId": "6e1ac0d0-14df-4714-859b-934c5da09a10",
+    "bindings": {
+      "postgresql": "fb8a89ff-de35-47f2-b705-89d3494a2efb",
+      "redis": "651b0a0a-fd42-41ac-9f95-20ed94c459d6"
+    },
+    "released": false
+  }
+}

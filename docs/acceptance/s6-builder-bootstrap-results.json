@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "id": "identity-20261026T031111284Z-07141063",
+  "startedAt": "2026-10-26T03:11:11.287Z",
+  "status": "passed",
+  "scope": "Actual dedicated Ubuntu ARM64 installation, native Node loading, rootless namespace/kernel preflight, mTLS and signed complete inventory. Resource/quota/network claims are only preflight capabilities until a source execution test verifies enforcement.",
+  "checks": [
+    {
+      "name": "signed-real-kernel-identity",
+      "status": "passed",
+      "instanceId": "943452d4-89b3-48cc-8271-3b8d928b1d08",
+      "platform": {
+        "os": "linux",
+        "architecture": "arm64"
+      },
+      "limits": {
+        "cpuMillis": 1000,
+        "memoryMiB": 1024,
+        "pids": 256,
+        "diskBytes": "1073741824",
+        "timeoutSeconds": 1200
+      },
+      "highGeneration": 0,
+      "isolation": {
+        "rootless": true,
+        "processSandbox": true,
+        "separateUids": true,
+        "cgroupV2": true,
+        "hardDiskQuota": true,
+        "egressPolicy": true,
+        "independentWatchdog": true
+      }
+    },
+    {
+      "name": "signed-complete-installation-inventory",
+      "status": "passed",
+      "totalRuns": 0,
+      "pages": 1,
+      "highGeneration": 0
+    },
+    {
+      "name": "same-ca-unlisted-client-denied",
+      "status": "passed",
+      "code": "BUILD_AUTH_INVALID"
+    },
+    {
+      "name": "missing-client-certificate-denied",
+      "status": "passed",
+      "code": "ERR_SSL_TLSV13_ALERT_CERTIFICATE_REQUIRED"
+    },
+    {
+      "name": "wrong-server-trust-denied",
+      "status": "passed",
+      "code": "BUILD_TLS_INVALID"
+    },
+    {
+      "name": "authorized-unknown-run-is-null",
+      "status": "passed",
+      "returnedNull": true
+    }
+  ],
+  "completedAt": "2026-10-26T03:11:12.518Z",
+  "bundle": {
+    "name": "s6-final-1792984031543",
+    "manifestSha256": "d292de48db792ba03d04849fce0dce9ee9b4b7e5004eb066e01bbc4734470bfc",
+    "archiveSha256": "1bfdf9b5fbcbd92a7ad08d7ea521e72c979b603e29e52d03ac01e36b2b83b2d0",
+    "verifiedFiles": 32,
+    "linuxNodeVersion": "24.22.1",
+    "linuxLoadVerified": true
+  },
+  "launcherSha256": "f8c9dab906c08d5ba6b794bf3bd0f691b9cf14c05d8d7274ab92359a4e3b6df4",
+  "sourceBuildVerified": false,
+  "limitsExecutionVerified": false,
+  "firstInstallationFailure": {
+    "reason": "uidmap 1:4.13+dfsg1-4ubuntu3.3 absent from signed stable Ubuntu suites; corrected to authenticated 3.2",
+    "retainedAt": ".local/local-lab/builder/installations/install-20261026T025001430Z-441f9423",
+    "oldFilesRetained": true
+  }
+}

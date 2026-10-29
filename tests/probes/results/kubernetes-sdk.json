@@ -1,0 +1,699 @@
+{
+  "runId": "b16ef32a",
+  "startedAt": "2026-10-25T13:52:39.455Z",
+  "node": "v24.22.1",
+  "sdk": "2.0.1",
+  "environment": "local Lima VZ / real K3s APIs",
+  "cloudValidated": false,
+  "checks": [
+    {
+      "name": "two_actual_apis_and_same_named_nodes",
+      "passed": true,
+      "durationMs": 99,
+      "details": {
+        "sameNodeName": true,
+        "distinctNodeUid": true,
+        "distinctClusterUid": true,
+        "distinctCa": true,
+        "nodes": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "same_named_namespace_isolation",
+      "passed": true,
+      "durationMs": 33,
+      "details": {
+        "sameName": "ozz-b04-b16ef32a",
+        "differentUids": true
+      }
+    },
+    {
+      "name": "real_serviceaccount_revocation_and_replacement",
+      "passed": true,
+      "durationMs": 10218,
+      "details": {
+        "oldTokenRevoked": true,
+        "replacementAccepted": true,
+        "clusterUidPreserved": true,
+        "broadPrivileges": false
+      }
+    },
+    {
+      "name": "official_watch_resume_after_disconnect",
+      "passed": true,
+      "durationMs": 370,
+      "details": {
+        "added": true,
+        "recoveredMissedModification": true,
+        "doneCalledExactlyOncePerWatch": true
+      }
+    },
+    {
+      "name": "old_resource_version_and_relist",
+      "passed": true,
+      "durationMs": 88,
+      "details": {
+        "source": "real API",
+        "expired410": true,
+        "relistSucceeded": true
+      }
+    },
+    {
+      "name": "real_stream_pod",
+      "passed": true,
+      "durationMs": 1485,
+      "details": {
+        "uid": "aff9c9b8-72af-427c-9b19-f652170bcfc2",
+        "image": "docker.io/rancher/mirrored-library-traefik@sha256:f86a2cab1b5c649070c49f883c743dd32d8485a56e3368c5f93b9e91f1e91259",
+        "imageSource": "already-running local lab Traefik image, reused only for shell stream probes"
+      }
+    },
+    {
+      "name": "official_finite_log_slow_consumer",
+      "passed": true,
+      "durationMs": 182,
+      "details": {
+        "bytes": 74270,
+        "maxBufferedBytes": 13037,
+        "finiteBody": true,
+        "slowConsumerFinished": true
+      }
+    },
+    {
+      "name": "native_live_log_abort_characterization",
+      "passed": true,
+      "durationMs": 641,
+      "details": {
+        "exitCode": 1,
+        "signal": null,
+        "connected": true,
+        "unhandledAbort": true,
+        "nativeHelperHandledAbort": false,
+        "target": "https://127.0.0.1:16443"
+      }
+    },
+    {
+      "name": "guarded_log_disconnect_closes_source_and_sink",
+      "passed": true,
+      "durationMs": 302,
+      "details": {
+        "bytes": 18450,
+        "maxBufferedBytes": 9225,
+        "received": 24600,
+        "sourceClosed": true,
+        "sinkDestroyed": true,
+        "implementation": "bounded HTTPS + pipeline spike, not the native Log helper"
+      }
+    },
+    {
+      "name": "official_exec_with_bounded_slow_consumer",
+      "passed": true,
+      "durationMs": 3572,
+      "details": {
+        "bytes": 2097152,
+        "maxBufferedBytes": 47182,
+        "pauses": 77,
+        "socketClosed": true,
+        "status": "Success",
+        "disconnectedByConsumer": false,
+        "maxPayloadBytes": 262144,
+        "implementation": "SDK Exec + public WebSocket pause/resume Adapter"
+      }
+    },
+    {
+      "name": "exec_consumer_disconnect_closes_socket",
+      "passed": true,
+      "durationMs": 537,
+      "details": {
+        "bytes": 188472,
+        "maxBufferedBytes": 109547,
+        "pauses": 16,
+        "socketClosed": true,
+        "status": null,
+        "disconnectedByConsumer": true,
+        "maxPayloadBytes": 262144,
+        "implementation": "SDK Exec + public WebSocket pause/resume Adapter"
+      }
+    }
+  ],
+  "inspections": [
+    {
+      "name": "a",
+      "endpoint": "https://127.0.0.1:16443",
+      "version": "v1.35.9+k3s1",
+      "identity": {
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "caFingerprint": "SHA256:ed153942fbe774ecfe5297b6dd591e7c3493fc713da2b5599774f11fcb5ffe78"
+      },
+      "credential": {
+        "authentication": "client_certificate",
+        "expiresAt": "2027-10-25T11:09:36.000Z"
+      },
+      "nodes": [
+        {
+          "uid": "b4f891f5-12ab-4076-9d5f-005cc798e89d",
+          "name": "ozz-node",
+          "resourceVersion": "2490",
+          "createdAt": "2026-10-25T12:09:39.000Z",
+          "architecture": "arm64",
+          "operatingSystem": "linux",
+          "osImage": "Ubuntu 24.04.5 LTS",
+          "kubeletVersion": "v1.35.9+k3s1",
+          "containerRuntimeVersion": "containerd://2.2.7-k3s1",
+          "machineId": "281bde1859c140098cea096d468dbfa0",
+          "systemUuid": "cb835b5c-79f6-f84d-a456-c9c2e27ce85d",
+          "roles": [
+            "control-plane"
+          ],
+          "addresses": [
+            {
+              "type": "InternalIP",
+              "address": "192.168.5.15"
+            },
+            {
+              "type": "Hostname",
+              "address": "lima-ozz-lab-a"
+            }
+          ],
+          "unschedulable": false,
+          "conditions": {
+            "ready": "true",
+            "diskPressure": "false",
+            "memoryPressure": "false",
+            "pidPressure": "false",
+            "networkUnavailable": "unknown"
+          },
+          "capacity": {
+            "cpuCores": 2,
+            "memoryBytes": 2312286208,
+            "ephemeralStorageBytes": 19682557952,
+            "pods": 110
+          },
+          "allocatable": {
+            "cpuCores": 2,
+            "memoryBytes": 2312286208,
+            "ephemeralStorageBytes": 18698430040,
+            "pods": 110
+          },
+          "metrics": {
+            "state": "available",
+            "cpuCores": 0.14475127100000001,
+            "memoryBytes": 1378893824,
+            "observedAt": "2026-10-25T13:52:28.000Z",
+            "windowSeconds": 10.031
+          }
+        }
+      ],
+      "metrics": {
+        "state": "available",
+        "errorCode": null,
+        "observedAt": "2026-10-25T13:52:28.000Z"
+      },
+      "capabilities": {
+        "ingress": {
+          "state": "available",
+          "errorCode": null,
+          "classes": [
+            {
+              "name": "traefik",
+              "controller": "traefik.io/ingress-controller",
+              "isDefault": true
+            }
+          ]
+        },
+        "traefik": {
+          "namespace": "kube-system",
+          "deployment": "traefik",
+          "state": "available",
+          "ready": true,
+          "desiredReplicas": 1,
+          "readyReplicas": 1,
+          "availableReplicas": 1,
+          "errorCode": null
+        },
+        "storage": {
+          "state": "available",
+          "errorCode": null,
+          "classes": [
+            {
+              "name": "local-path",
+              "provisioner": "rancher.io/local-path",
+              "isDefault": true,
+              "volumeBindingMode": "WaitForFirstConsumer",
+              "reclaimPolicy": "Delete",
+              "allowVolumeExpansion": null
+            }
+          ]
+        },
+        "metrics": {
+          "state": "available",
+          "errorCode": null,
+          "observedAt": "2026-10-25T13:52:28.000Z"
+        }
+      },
+      "workloads": {
+        "state": "available",
+        "collections": [
+          {
+            "kind": "Deployment",
+            "state": "available",
+            "listedCount": 4,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "StatefulSet",
+            "state": "available",
+            "listedCount": 0,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "DaemonSet",
+            "state": "available",
+            "listedCount": 1,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "Job",
+            "state": "available",
+            "listedCount": 2,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "CronJob",
+            "state": "available",
+            "listedCount": 0,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "Pod",
+            "state": "available",
+            "listedCount": 7,
+            "truncated": false,
+            "errorCode": null
+          }
+        ]
+      },
+      "permissions": {
+        "clusterWideAdmin": true,
+        "checks": [
+          {
+            "apiGroup": "",
+            "resource": "namespaces",
+            "verb": "get",
+            "resourceName": "kube-system",
+            "namespace": null,
+            "allowed": true,
+            "evidence": "successful_request",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "",
+            "resource": "nodes",
+            "verb": "list",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "successful_request",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "*",
+            "resource": "*",
+            "verb": "*",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "self_subject_access_review",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "",
+            "resource": "namespaces",
+            "verb": "create",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "self_subject_access_review",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "apps",
+            "resource": "deployments",
+            "verb": "create",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "self_subject_access_review",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "",
+            "resource": "secrets",
+            "verb": "create",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "self_subject_access_review",
+            "errorCode": null
+          }
+        ]
+      },
+      "observedAt": "2026-10-25T13:52:39.565Z"
+    },
+    {
+      "name": "b",
+      "endpoint": "https://127.0.0.1:26443",
+      "version": "v1.35.9+k3s1",
+      "identity": {
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "caFingerprint": "SHA256:1be65db2bc5d07f6dcb9023520d71f188ac51b16adab373e57c0fd0ea19abfd5"
+      },
+      "credential": {
+        "authentication": "client_certificate",
+        "expiresAt": "2027-10-25T11:14:17.000Z"
+      },
+      "nodes": [
+        {
+          "uid": "abfbe31a-76dc-41d3-8c2a-e223f12d4cf4",
+          "name": "ozz-node",
+          "resourceVersion": "1899",
+          "createdAt": "2026-10-25T12:14:23.000Z",
+          "architecture": "arm64",
+          "operatingSystem": "linux",
+          "osImage": "Ubuntu 24.04.5 LTS",
+          "kubeletVersion": "v1.35.9+k3s1",
+          "containerRuntimeVersion": "containerd://2.2.7-k3s1",
+          "machineId": "b1301c8eef8e4b13a6ab7ee37eb89cee",
+          "systemUuid": "8fcad18c-00e2-f64e-839e-eb642e07cc15",
+          "roles": [
+            "control-plane"
+          ],
+          "addresses": [
+            {
+              "type": "InternalIP",
+              "address": "192.168.5.15"
+            },
+            {
+              "type": "Hostname",
+              "address": "lima-ozz-lab-b"
+            }
+          ],
+          "unschedulable": false,
+          "conditions": {
+            "ready": "true",
+            "diskPressure": "false",
+            "memoryPressure": "false",
+            "pidPressure": "false",
+            "networkUnavailable": "unknown"
+          },
+          "capacity": {
+            "cpuCores": 2,
+            "memoryBytes": 2312286208,
+            "ephemeralStorageBytes": 19682557952,
+            "pods": 110
+          },
+          "allocatable": {
+            "cpuCores": 2,
+            "memoryBytes": 2312286208,
+            "ephemeralStorageBytes": 18698430040,
+            "pods": 110
+          },
+          "metrics": {
+            "state": "available",
+            "cpuCores": 0.141137855,
+            "memoryBytes": 1383849984,
+            "observedAt": "2026-10-25T13:52:27.000Z",
+            "windowSeconds": 10.054
+          }
+        }
+      ],
+      "metrics": {
+        "state": "available",
+        "errorCode": null,
+        "observedAt": "2026-10-25T13:52:27.000Z"
+      },
+      "capabilities": {
+        "ingress": {
+          "state": "available",
+          "errorCode": null,
+          "classes": [
+            {
+              "name": "traefik",
+              "controller": "traefik.io/ingress-controller",
+              "isDefault": true
+            }
+          ]
+        },
+        "traefik": {
+          "namespace": "kube-system",
+          "deployment": "traefik",
+          "state": "available",
+          "ready": true,
+          "desiredReplicas": 1,
+          "readyReplicas": 1,
+          "availableReplicas": 1,
+          "errorCode": null
+        },
+        "storage": {
+          "state": "available",
+          "errorCode": null,
+          "classes": [
+            {
+              "name": "local-path",
+              "provisioner": "rancher.io/local-path",
+              "isDefault": true,
+              "volumeBindingMode": "WaitForFirstConsumer",
+              "reclaimPolicy": "Delete",
+              "allowVolumeExpansion": null
+            }
+          ]
+        },
+        "metrics": {
+          "state": "available",
+          "errorCode": null,
+          "observedAt": "2026-10-25T13:52:27.000Z"
+        }
+      },
+      "workloads": {
+        "state": "available",
+        "collections": [
+          {
+            "kind": "Deployment",
+            "state": "available",
+            "listedCount": 4,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "StatefulSet",
+            "state": "available",
+            "listedCount": 0,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "DaemonSet",
+            "state": "available",
+            "listedCount": 1,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "Job",
+            "state": "available",
+            "listedCount": 2,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "CronJob",
+            "state": "available",
+            "listedCount": 0,
+            "truncated": false,
+            "errorCode": null
+          },
+          {
+            "kind": "Pod",
+            "state": "available",
+            "listedCount": 7,
+            "truncated": false,
+            "errorCode": null
+          }
+        ]
+      },
+      "permissions": {
+        "clusterWideAdmin": true,
+        "checks": [
+          {
+            "apiGroup": "",
+            "resource": "namespaces",
+            "verb": "get",
+            "resourceName": "kube-system",
+            "namespace": null,
+            "allowed": true,
+            "evidence": "successful_request",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "",
+            "resource": "nodes",
+            "verb": "list",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "successful_request",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "*",
+            "resource": "*",
+            "verb": "*",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "self_subject_access_review",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "",
+            "resource": "namespaces",
+            "verb": "create",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "self_subject_access_review",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "apps",
+            "resource": "deployments",
+            "verb": "create",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "self_subject_access_review",
+            "errorCode": null
+          },
+          {
+            "apiGroup": "",
+            "resource": "secrets",
+            "verb": "create",
+            "resourceName": null,
+            "namespace": null,
+            "allowed": true,
+            "evidence": "self_subject_access_review",
+            "errorCode": null
+          }
+        ]
+      },
+      "observedAt": "2026-10-25T13:52:39.563Z"
+    }
+  ],
+  "cleanup": [
+    {
+      "kind": "NamespacedServiceAccount",
+      "name": "same-user",
+      "requested": true,
+      "uidPinned": true,
+      "confirmedAbsent": true
+    },
+    {
+      "kind": "NamespacedPod",
+      "name": "streams",
+      "requested": true,
+      "uidPinned": true,
+      "confirmedAbsent": true
+    },
+    {
+      "kind": "ClusterRoleBinding",
+      "name": "ozz-b04-b16ef32a",
+      "requested": true,
+      "uidPinned": true,
+      "confirmedAbsent": true
+    },
+    {
+      "kind": "ClusterRole",
+      "name": "ozz-b04-b16ef32a",
+      "requested": true,
+      "uidPinned": true,
+      "confirmedAbsent": true
+    },
+    {
+      "kind": "Namespace",
+      "name": "ozz-b04-b16ef32a",
+      "requested": true,
+      "uidPinned": true,
+      "confirmedAbsent": true
+    },
+    {
+      "kind": "Namespace",
+      "name": "ozz-b04-b16ef32a",
+      "requested": true,
+      "uidPinned": true,
+      "confirmedAbsent": true
+    }
+  ],
+  "limitations": [
+    "This is a dependency/protocol probe, not the log or interactive terminal product.",
+    "IngressClass and StorageClass discovery does not validate public routing or PVC durability.",
+    "Native SDK Log abort exits its isolated process nonzero; use owned HTTPS/pipeline transport for S3 live logs."
+  ],
+  "currentCheck": "exec_consumer_disconnect_closes_socket",
+  "lastPodWait": {
+    "phase": "Running",
+    "containers": [
+      {
+        "name": "stream",
+        "waitingReason": null,
+        "exitCode": null
+      }
+    ],
+    "conditions": [
+      {
+        "type": "PodReadyToStartContainers",
+        "status": "True",
+        "reason": null
+      },
+      {
+        "type": "Initialized",
+        "status": "True",
+        "reason": null
+      },
+      {
+        "type": "Ready",
+        "status": "True",
+        "reason": null
+      },
+      {
+        "type": "ContainersReady",
+        "status": "True",
+        "reason": null
+      },
+      {
+        "type": "PodScheduled",
+        "status": "True",
+        "reason": null
+      }
+    ]
+  },
+  "lastExec": {
+    "connected": true,
+    "protocol": "v5.channel.k8s.io",
+    "disconnect": true,
+    "bytes": 188472,
+    "maxBufferedBytes": 109547,
+    "closed": true,
+    "status": null,
+    "paused": 16
+  },
+  "finishedAt": "2026-10-25T13:53:08.369Z",
+  "passed": true
+}

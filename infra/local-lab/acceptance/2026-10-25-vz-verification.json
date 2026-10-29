@@ -1,0 +1,254 @@
+{
+  "verifiedAt": "2026-10-25T12:25:10.159Z",
+  "host": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "macOS": "14.8"
+  },
+  "status": "verified-local-api-and-ssh",
+  "scope": "Two actual local Linux VMs and independent K3s APIs; no claim of product S2, public ingress, DNS/ACME, cloud firewall or Oracle capacity acceptance.",
+  "clusters": [
+    {
+      "instance": "ozz-lab-a",
+      "apiEndpoint": "https://127.0.0.1:16443",
+      "version": "v1.35.9+k3s1",
+      "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+      "isolationNamespaceUid": "bcbc8951-c1f2-406d-9e2b-9e0709ecce78",
+      "caSha256": "33f586a93b101fbca71b65edf84f81b4891c10ca24616c6ab92b95e4283dcf7a",
+      "node": {
+        "name": "ozz-node",
+        "uid": "b4f891f5-12ab-4076-9d5f-005cc798e89d",
+        "architecture": "arm64",
+        "ready": true
+      },
+      "pods": [
+        {
+          "name": "coredns-b644fd95b-cxs7m",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        },
+        {
+          "name": "helm-install-traefik-crd-wxp7t",
+          "phase": "Succeeded",
+          "ready": false,
+          "waitingReasons": []
+        },
+        {
+          "name": "helm-install-traefik-qnqdv",
+          "phase": "Succeeded",
+          "ready": false,
+          "waitingReasons": []
+        },
+        {
+          "name": "local-path-provisioner-d9d8769b6-rx82v",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        },
+        {
+          "name": "metrics-server-7f4b6d9bd7-dzj9z",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        },
+        {
+          "name": "svclb-traefik-7d765fbc-wd9ks",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        },
+        {
+          "name": "traefik-5869c87968-sn7jn",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        }
+      ],
+      "secretEncryptionEnabled": true,
+      "metricsAvailable": true,
+      "machine": {
+        "os": "ubuntu",
+        "version": "24.04",
+        "architecture": "aarch64",
+        "kernel": "6.8.0-147-generic",
+        "hostname": "lima-ozz-lab-a",
+        "cpus": 2,
+        "memoryBytes": 2312286208,
+        "rootDiskBytes": 19682557952,
+        "rootDiskAvailableBytes": 16209985536,
+        "init": "systemd",
+        "k3sInstalled": true,
+        "labOwned": true
+      }
+    },
+    {
+      "instance": "ozz-lab-b",
+      "apiEndpoint": "https://127.0.0.1:26443",
+      "version": "v1.35.9+k3s1",
+      "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+      "isolationNamespaceUid": "070f1f03-e6f7-4238-a5dc-fe0aefd7fa2f",
+      "caSha256": "faaf9af94c5984b28ee7ec8f3356b81dce42fac3c4a4193bd79466adc3e3df1b",
+      "node": {
+        "name": "ozz-node",
+        "uid": "abfbe31a-76dc-41d3-8c2a-e223f12d4cf4",
+        "architecture": "arm64",
+        "ready": true
+      },
+      "pods": [
+        {
+          "name": "coredns-b644fd95b-5dn5c",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        },
+        {
+          "name": "helm-install-traefik-8wtnc",
+          "phase": "Succeeded",
+          "ready": false,
+          "waitingReasons": []
+        },
+        {
+          "name": "helm-install-traefik-crd-h6z5f",
+          "phase": "Succeeded",
+          "ready": false,
+          "waitingReasons": []
+        },
+        {
+          "name": "local-path-provisioner-d9d8769b6-74xzs",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        },
+        {
+          "name": "metrics-server-7f4b6d9bd7-9xjjb",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        },
+        {
+          "name": "svclb-traefik-5daaaa51-996qk",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        },
+        {
+          "name": "traefik-5869c87968-5tpm5",
+          "phase": "Running",
+          "ready": true,
+          "waitingReasons": []
+        }
+      ],
+      "secretEncryptionEnabled": true,
+      "metricsAvailable": true,
+      "machine": {
+        "os": "ubuntu",
+        "version": "24.04",
+        "architecture": "aarch64",
+        "kernel": "6.8.0-147-generic",
+        "hostname": "lima-ozz-lab-b",
+        "cpus": 2,
+        "memoryBytes": 2312220672,
+        "rootDiskBytes": 19682557952,
+        "rootDiskAvailableBytes": 16286023680,
+        "init": "systemd",
+        "k3sInstalled": true,
+        "labOwned": true
+      }
+    }
+  ],
+  "systemPodsReady": true,
+  "faultCheck": {
+    "oneVmOutageIsolated": true,
+    "restartPreservedClusterIdentity": true,
+    "restartedVmSshTrustPreserved": true,
+    "checkedAt": "2026-10-25T12:23:17.894Z",
+    "restartedInstance": "ozz-lab-a"
+  },
+  "installationIdempotence": {
+    "instance": "ozz-lab-a",
+    "command": "pnpm exec node scripts/local-lab.mjs install a",
+    "commandExitCode": 0,
+    "clusterNodeNamespaceAndCaIdentityPreserved": true,
+    "comparedWith": "2026-10-25T12:14:52.403Z",
+    "verifiedAt": "2026-10-25T12:25:10.159Z"
+  },
+  "sshHostKeyPersistence": {
+    "checkedAt": "2026-10-25T12:22:38.895144+00:00",
+    "reason": "Lima refreshes NoCloud instance-id at startup; default cloud-init SSH key regeneration was detected and rejected. Only verified Ozz-local guests were repaired through the trusted local bootstrap channel. General SSH trust remains fail-closed.",
+    "changes": [
+      {
+        "instance": "ozz-lab-a",
+        "oldFingerprint": "SHA256:oRdTyfo3nNKKwYu6qRzk1mCope+y7fY/Opgi1V9MR3E",
+        "currentFingerprint": "SHA256:FQ/5eA2dfjwEUpfFlEzimmZ0igOs9DIIL/wRsQwxag4",
+        "kubeSystemUidPreserved": true,
+        "cloudInstanceId": "iid-1792930640",
+        "preserveConfigInstalled": true,
+        "manualTrustRepair": true
+      },
+      {
+        "instance": "ozz-lab-b",
+        "oldFingerprint": "SHA256:aGLd7UzQMPySLxlaBlKTtm7DLlT4v7+VRchhiVjcBPA",
+        "currentFingerprint": "SHA256:aGLd7UzQMPySLxlaBlKTtm7DLlT4v7+VRchhiVjcBPA",
+        "kubeSystemUidPreserved": true,
+        "cloudInstanceId": "iid-1792930409",
+        "preserveConfigInstalled": true,
+        "manualTrustRepair": false
+      }
+    ]
+  },
+  "assetsLockSha256": "1d1e5a4599bbf19271f5c42a801f2002ecef1d78dd118144b8fddb7b865865b1",
+  "limaVersion": "2.2.1",
+  "vmConfiguration": {
+    "vmType": "vz",
+    "cpusPerVm": 2,
+    "memoryBytesPerVm": 2415919104,
+    "sparseDiskBytesPerVm": 21474836480,
+    "hostHomeMounted": false,
+    "sshAgentForwarded": false,
+    "loopbackOnlyPublishedPorts": true
+  },
+  "publishedEndpointsVerified": [
+    "127.0.0.1:16443",
+    "127.0.0.1:26443",
+    "127.0.0.1:60122",
+    "127.0.0.1:60222"
+  ],
+  "applicationIngress": {
+    "status": "not-verified",
+    "configuredReservedHostPorts": [18080, 18443, 28080, 28443],
+    "listenersObserved": [],
+    "note": "Lima did not observe listening sockets for the K3s ServiceLB host ports. This run verifies SSH and Kubernetes APIs, not application ingress or public certificates."
+  },
+  "finalState": {
+    "checkedAt": "2026-10-25T12:29:42.777735+00:00",
+    "vms": [
+      {
+        "name": "ozz-lab-a",
+        "status": "Stopped",
+        "cpus": 2,
+        "memory": 2415919104,
+        "disk": 21474836480,
+        "sshLocalPort": 60122
+      },
+      {
+        "name": "ozz-lab-b",
+        "status": "Stopped",
+        "cpus": 2,
+        "memory": 2415919104,
+        "disk": 21474836480,
+        "sshLocalPort": 60222
+      }
+    ],
+    "bothStopped": true,
+    "disksPreserved": true,
+    "dockerClustersStarted": false
+  },
+  "unverifiedScopes": [
+    "Product S2 SSH/cluster/deployment orchestration",
+    "Application ingress and public DNS/ACME",
+    "Remote VPS/cloud firewall networking",
+    "Oracle capacity and availability",
+    "Docker backup cluster runtime"
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "scope": "Local Pebble and DNS fixture lifecycle only; no issuance or HTTP-01 acceptance implied.",
+  "authority": "local_test",
+  "pebbleVersion": "v2.10.1",
+  "completedAt": "2026-10-25T20:20:04.971Z",
+  "lifecycle": {
+    "filesRetainedAfterStop": true,
+    "privateModesAfterStop": true,
+    "idempotentStartPreservedPids": true,
+    "idempotentStartPreservedSigningRoots": true,
+    "restartResetInMemorySigningRoots": true,
+    "filesRetainedAfterRestart": true,
+    "privateModesAfterRestart": true
+  },
+  "status": {
+    "owner": "ozz-local-networking-lab-v1",
+    "checkedAt": "2026-10-25T20:18:56.851Z",
+    "authority": "local_test",
+    "identitiesUnchanged": true,
+    "existingResourcesUnchanged": true,
+    "sharedConfigurationHashesUnchanged": true,
+    "identities": {
+      "a": {
+        "instance": "ozz-lab-a",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "nodes": [
+          {
+            "name": "ozz-node",
+            "uid": "b4f891f5-12ab-4076-9d5f-005cc798e89d",
+            "internalIPs": [
+              "192.168.5.15"
+            ]
+          }
+        ],
+        "baselineResourceCount": 17
+      },
+      "b": {
+        "instance": "ozz-lab-b",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "nodes": [
+          {
+            "name": "ozz-node",
+            "uid": "abfbe31a-76dc-41d3-8c2a-e223f12d4cf4",
+            "internalIPs": [
+              "192.168.5.15"
+            ]
+          }
+        ],
+        "baselineResourceCount": 19
+      }
+    },
+    "guests": {
+      "a": {
+        "instance": "ozz-lab-a",
+        "state": "ready",
+        "units": [
+          {
+            "name": "ozz-local-networking-a-dns.service",
+            "MainPID": "26973",
+            "ActiveState": "active",
+            "SubState": "running",
+            "FragmentPath": "/etc/systemd/system/ozz-local-networking-a-dns.service"
+          },
+          {
+            "name": "ozz-local-networking-a-staging.service",
+            "MainPID": "26974",
+            "ActiveState": "active",
+            "SubState": "running",
+            "FragmentPath": "/etc/systemd/system/ozz-local-networking-a-staging.service"
+          },
+          {
+            "name": "ozz-local-networking-a-production.service",
+            "MainPID": "26975",
+            "ActiveState": "active",
+            "SubState": "running",
+            "FragmentPath": "/etc/systemd/system/ozz-local-networking-a-production.service"
+          }
+        ],
+        "listeners": [
+          {
+            "unit": "ozz-local-networking-a-production.service",
+            "protocol": "tcp",
+            "address": "127.0.0.1:15100"
+          },
+          {
+            "unit": "ozz-local-networking-a-staging.service",
+            "protocol": "tcp",
+            "address": "127.0.0.1:15000"
+          },
+          {
+            "unit": "ozz-local-networking-a-dns.service",
+            "protocol": "tcp",
+            "address": "127.0.0.1:8055"
+          },
+          {
+            "unit": "ozz-local-networking-a-dns.service",
+            "protocol": "tcp",
+            "address": "*:1053"
+          },
+          {
+            "unit": "ozz-local-networking-a-production.service",
+            "protocol": "tcp",
+            "address": "*:14100"
+          },
+          {
+            "unit": "ozz-local-networking-a-staging.service",
+            "protocol": "tcp",
+            "address": "*:14000"
+          },
+          {
+            "unit": "ozz-local-networking-a-dns.service",
+            "protocol": "udp",
+            "address": "*:1053"
+          }
+        ],
+        "dns": {
+          "udpA": [
+            "192.168.5.15"
+          ],
+          "tcpA": [
+            "192.168.5.15"
+          ],
+          "udpAAAA": []
+        },
+        "directories": [
+          {
+            "environment": "staging",
+            "url": "https://192.168.5.15:14000/dir",
+            "status": 200,
+            "tlsVerifiedWithExplicitCA": true,
+            "defaultTrustRejected": true,
+            "directoryFields": [
+              "newNonce",
+              "newAccount",
+              "newOrder",
+              "revokeCert",
+              "keyChange"
+            ],
+            "leafValiditySeconds": 240,
+            "signingRootSha256": "c762714d9c70146f35ca9e8941cc24530db8bb2c0696224e774b2f9e550f7a51"
+          },
+          {
+            "environment": "production",
+            "url": "https://192.168.5.15:14100/dir",
+            "status": 200,
+            "tlsVerifiedWithExplicitCA": true,
+            "defaultTrustRejected": true,
+            "directoryFields": [
+              "newNonce",
+              "newAccount",
+              "newOrder",
+              "revokeCert",
+              "keyChange"
+            ],
+            "leafValiditySeconds": 240,
+            "signingRootSha256": "740315300d0f733889398db49fddf54b6d3e67d6813b500977b0131c84eda2ad"
+          }
+        ],
+        "httpChallengeMocksDisabled": true,
+        "validationBypassEnabled": false,
+        "validationProxyEnabled": false
+      },
+      "b": {
+        "instance": "ozz-lab-b",
+        "state": "ready",
+        "units": [
+          {
+            "name": "ozz-local-networking-b-dns.service",
+            "MainPID": "28578",
+            "ActiveState": "active",
+            "SubState": "running",
+            "FragmentPath": "/etc/systemd/system/ozz-local-networking-b-dns.service"
+          },
+          {
+            "name": "ozz-local-networking-b-staging.service",
+            "MainPID": "28579",
+            "ActiveState": "active",
+            "SubState": "running",
+            "FragmentPath": "/etc/systemd/system/ozz-local-networking-b-staging.service"
+          },
+          {
+            "name": "ozz-local-networking-b-production.service",
+            "MainPID": "28580",
+            "ActiveState": "active",
+            "SubState": "running",
+            "FragmentPath": "/etc/systemd/system/ozz-local-networking-b-production.service"
+          }
+        ],
+        "listeners": [
+          {
+            "unit": "ozz-local-networking-b-production.service",
+            "protocol": "tcp",
+            "address": "127.0.0.1:15100"
+          },
+          {
+            "unit": "ozz-local-networking-b-staging.service",
+            "protocol": "tcp",
+            "address": "127.0.0.1:15000"
+          },
+          {
+            "unit": "ozz-local-networking-b-dns.service",
+            "protocol": "tcp",
+            "address": "127.0.0.1:8055"
+          },
+          {
+            "unit": "ozz-local-networking-b-dns.service",
+            "protocol": "tcp",
+            "address": "*:1053"
+          },
+          {
+            "unit": "ozz-local-networking-b-staging.service",
+            "protocol": "tcp",
+            "address": "*:14000"
+          },
+          {
+            "unit": "ozz-local-networking-b-production.service",
+            "protocol": "tcp",
+            "address": "*:14100"
+          },
+          {
+            "unit": "ozz-local-networking-b-dns.service",
+            "protocol": "udp",
+            "address": "*:1053"
+          }
+        ],
+        "dns": {
+          "udpA": [
+            "192.168.5.15"
+          ],
+          "tcpA": [
+            "192.168.5.15"
+          ],
+          "udpAAAA": []
+        },
+        "directories": [
+          {
+            "environment": "staging",
+            "url": "https://192.168.5.15:14000/dir",
+            "status": 200,
+            "tlsVerifiedWithExplicitCA": true,
+            "defaultTrustRejected": true,
+            "directoryFields": [
+              "newNonce",
+              "newAccount",
+              "newOrder",
+              "revokeCert",
+              "keyChange"
+            ],
+            "leafValiditySeconds": 240,
+            "signingRootSha256": "62d7e99db2a727ae7590d6defee9fecc5feb09a4e8ab30efcb453a97b8c938de"
+          },
+          {
+            "environment": "production",
+            "url": "https://192.168.5.15:14100/dir",
+            "status": 200,
+            "tlsVerifiedWithExplicitCA": true,
+            "defaultTrustRejected": true,
+            "directoryFields": [
+              "newNonce",
+              "newAccount",
+              "newOrder",
+              "revokeCert",
+              "keyChange"
+            ],
+            "leafValiditySeconds": 240,
+            "signingRootSha256": "53c30d0b97056fa7c0e2dd21f3fb7efd637614e05f651022e4ee26fd4f09724d"
+          }
+        ],
+        "httpChallengeMocksDisabled": true,
+        "validationBypassEnabled": false,
+        "validationProxyEnabled": false
+      }
+    },
+    "mac": {
+      "state": "ready",
+      "pid": 20067,
+      "listeners": [
+        "127.0.0.1:10553",
+        "127.0.0.1:18055",
+        "127.0.0.1:10553"
+      ],
+      "resolver": "127.0.0.1:10553",
+      "probeName": "networking-fixture.apps.example.test",
+      "addresses": [
+        "192.168.5.15"
+      ],
+      "ipv6": [],
+      "httpChallengeMocksDisabled": true
+    },
+    "workerConfiguration": "/Users/monkeyozz/Desktop/code/ozz/.local/local-lab/networking-lab/worker-test-config.json",
+    "systemDnsModified": false,
+    "systemTrustModified": false,
+    "kubernetesWrites": false,
+    "issuanceVerified": false,
+    "http01Verified": false
+  }
+}

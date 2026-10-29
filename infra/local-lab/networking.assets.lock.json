@@ -1,0 +1,30 @@
+{
+  "formatVersion": 1,
+  "verifiedAt": "2026-10-26",
+  "scope": "Local ACME/DNS fixtures only; these roots are not publicly trusted.",
+  "pebbleVersion": "v2.10.1",
+  "source": "https://api.github.com/repos/letsencrypt/pebble/releases/tags/v2.10.1",
+  "assets": {
+    "pebbleLinuxArm64": {
+      "filename": "pebble-v2.10.1-linux-arm64.tar.gz",
+      "url": "https://github.com/letsencrypt/pebble/releases/download/v2.10.1/pebble-linux-arm64.tar.gz",
+      "apiUrl": "https://api.github.com/repos/letsencrypt/pebble/releases/assets/401025617",
+      "sha256": "b53fd072a69eb7692451de4e8b0667e0bdf5cccd7e36fc51b8eaf2fcc135ed9f",
+      "bytes": 2980141
+    },
+    "dnsLinuxArm64": {
+      "filename": "pebble-challtestsrv-v2.10.1-linux-arm64.tar.gz",
+      "url": "https://github.com/letsencrypt/pebble/releases/download/v2.10.1/pebble-challtestsrv-linux-arm64.tar.gz",
+      "apiUrl": "https://api.github.com/repos/letsencrypt/pebble/releases/assets/401025552",
+      "sha256": "db8e1a79ccdb2195c489fbe4f40fddb7f30e86f9cd8a07912566ee5025094d6c",
+      "bytes": 2629805
+    },
+    "dnsDarwinArm64": {
+      "filename": "pebble-challtestsrv-v2.10.1-darwin-arm64.tar.gz",
+      "url": "https://github.com/letsencrypt/pebble/releases/download/v2.10.1/pebble-challtestsrv-darwin-arm64.tar.gz",
+      "apiUrl": "https://api.github.com/repos/letsencrypt/pebble/releases/assets/401025510",
+      "sha256": "59bf917fe39c96e2edca980fc2899f4f04aa1ce5485f28d419d18237b902cf82",
+      "bytes": 2740331
+    }
+  }
+}

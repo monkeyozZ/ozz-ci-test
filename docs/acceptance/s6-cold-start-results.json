@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "recordedAt": "2026-10-28T10:50:25.746Z",
+  "status": "passed",
+  "scope": "Resume the existing local S6 control plane and A/B labs after all owned runtimes had stopped. This is a cold-start check, separate from the earlier backup recovery drill.",
+  "origin": "https://127.0.0.1:51448",
+  "originalControlPlane": {
+    "id": "control-plane",
+    "generation": 5,
+    "restoreLocked": false
+  },
+  "activeTasks": {
+    "activeDeployments": 0,
+    "activeOperations": 0
+  },
+  "api": {
+    "status": 200,
+    "body": {
+      "status": "ready",
+      "mode": "read_write",
+      "queue": "ready"
+    },
+    "tls": {
+      "authorized": true,
+      "leafFingerprint256": "C6:AA:01:CD:FB:51:72:5F:A1:98:A8:09:E9:76:BD:25:07:A2:2B:EF:D6:17:63:A5:E8:63:6E:BB:D9:D3:62:1E",
+      "caSha256": "56abf9e306feae118969e10d62a9ca1c7a6c08f897f1186a09261c8d64da221f"
+    }
+  },
+  "worker": {
+    "status": "ready",
+    "database": true,
+    "queueConnected": true,
+    "recoveryMode": false,
+    "activeOperations": 0,
+    "lastHeartbeatAt": "2026-10-28T10:50:24.314Z",
+    "errorCode": null
+  },
+  "network": {
+    "identitiesUnchanged": true,
+    "existingResourcesUnchanged": true,
+    "systemDnsModified": false,
+    "systemTrustModified": false,
+    "explicitCaChecks": 4,
+    "defaultTrustRejections": 4,
+    "systemCaBundles": {
+      "a": {
+        "initialSha256": "ecd9dc38bc3efb7dbd6431f57e29d2f8d6a0f0d211e1464b3fef2cbfe266fcd2",
+        "currentSha256": "0e4c9a8eb123513b1c131c0aec2d3f9ddaad02b77b8af53bff30e1e7fc3c6b71",
+        "usedToTrustFixture": false
+      },
+      "b": {
+        "initialSha256": "ecd9dc38bc3efb7dbd6431f57e29d2f8d6a0f0d211e1464b3fef2cbfe266fcd2",
+        "currentSha256": "0e4c9a8eb123513b1c131c0aec2d3f9ddaad02b77b8af53bff30e1e7fc3c6b71",
+        "usedToTrustFixture": false
+      }
+    }
+  },
+  "fix": {
+    "source": "infra/local-lab/networking-lab.mjs",
+    "sha256": "d70035eb84c1ccecc6306780087b0d087b3da058eef7dea03756c818679a7698",
+    "reason": "Ubuntu automatically upgraded ca-certificates from 20260601~24.04.1 to 20260816ubuntu0.24.04.1 on 2026-10-27. The unrelated public CA bundle changed; DNS, K3s and Traefik configuration hashes and existing resource identities stayed fixed.",
+    "behavior": "Retain strict configuration and identity checks; report initial/current public CA bundle hashes while requiring the fixture explicit-CA success and default-trust rejection.",
+    "checks": [
+      "Node 24 syntax passed",
+      "ESLint passed",
+      "Prettier passed",
+      "Actual A/B startup and four explicit-CA/default-trust checks passed"
+    ],
+    "staticCheckStdoutArchived": false
+  },
+  "evidence": [
+    {
+      "path": ".local/local-lab/session-resume/20261028T105025597Z-ca44d71f/network-start.json",
+      "sha256": "852c0c5ba7e2f50164767a7c5c5701e456d6f5a7a8c0aca3c9fbfa2014fb7819"
+    },
+    {
+      "path": ".local/local-lab/session-resume/20261028T105025597Z-ca44d71f/clusters.json",
+      "sha256": "b549e93daf35b59e27dc33e7546bc8325e21eed0ebdafccc9053d99da96bad82"
+    },
+    {
+      "path": ".local/local-lab/session-resume/20261028T105025597Z-ca44d71f/runtime.json",
+      "sha256": "472b61f554b78b7784e494de659b974035ab21714cf90cfb677e0e01dbe39caa"
+    }
+  ],
+  "limitations": [
+    "A/B and Pebble were stopped before this session; new in-memory ACME signing roots are not represented as the old roots.",
+    "Authenticated Console checks, isolated RPO/RTO and Linux release verification have separate results.",
+    "This is a local development profile, not a target-VPS or public-ACME result."
+  ]
+}

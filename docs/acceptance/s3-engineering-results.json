@@ -1,0 +1,180 @@
+{
+  "scope": "S3 local engineering and browser verification; Linux production deployment and cloud capacity are separate evidence.",
+  "recordedAt": "2026-10-25T18:55:22.107509+00:00",
+  "check": {
+    "command": "pnpm check",
+    "exitCode": 0,
+    "steps": [
+      "db:generate",
+      "build",
+      "typecheck",
+      "lint",
+      "format:check",
+      "test:unit"
+    ],
+    "unitAndProtocolTests": 215,
+    "consoleUnitTests": 16,
+    "log": ".local/s3-engineering-final-check.log",
+    "logSha256": "94e47a710f80c68e21c6f275097d8fe5f2b45b8bfcb4ee966765af05ae1781c2"
+  },
+  "openapiGeneration": {
+    "command": "pnpm api:generate",
+    "startedAt": "2026-10-25T18:48:08.357120+00:00",
+    "finishedAt": "2026-10-25T18:48:16.325625+00:00",
+    "exitCode": 0,
+    "before": {
+      "docs/openapi.json": "f326dd02f71ef92f315c0463e06efb8cc4dcc939ea25856dd9cccf503ca1d38b",
+      "packages/api-client/src/schema.ts": "9a017d78a3e25db76aeb21bc42a9aa779a91a6f6ad6494bb6e9d29e09d0cbac1"
+    },
+    "after": {
+      "docs/openapi.json": "f326dd02f71ef92f315c0463e06efb8cc4dcc939ea25856dd9cccf503ca1d38b",
+      "packages/api-client/src/schema.ts": "9a017d78a3e25db76aeb21bc42a9aa779a91a6f6ad6494bb6e9d29e09d0cbac1"
+    },
+    "unchanged": true,
+    "log": ".local/s3-final-api-generate.log"
+  },
+  "integration": {
+    "source": ".local/s3-integration-final-results.json",
+    "sha256": "14d1ee3751f1ce710bf686662e325a02981fb6153a8e8b522522d19206245d6e",
+    "success": true,
+    "totalTests": 110,
+    "passedTests": 110,
+    "failedTests": 0,
+    "pendingTests": 0,
+    "startedAt": "2026-10-25T17:37:02.496000+00:00",
+    "suites": [
+      {
+        "file": "tests/integration/http-protocols.test.ts",
+        "status": "passed",
+        "tests": 6
+      },
+      {
+        "file": "tests/integration/metadata.test.ts",
+        "status": "passed",
+        "tests": 9
+      },
+      {
+        "file": "tests/integration/observer.test.ts",
+        "status": "passed",
+        "tests": 8
+      },
+      {
+        "file": "tests/integration/recovery.test.ts",
+        "status": "passed",
+        "tests": 8
+      },
+      {
+        "file": "tests/integration/s2-infrastructure.test.ts",
+        "status": "passed",
+        "tests": 13
+      },
+      {
+        "file": "tests/integration/security.test.ts",
+        "status": "passed",
+        "tests": 17
+      },
+      {
+        "file": "tests/integration/services-s3.test.ts",
+        "status": "passed",
+        "tests": 17
+      },
+      {
+        "file": "tests/integration/tasks-s3.test.ts",
+        "status": "passed",
+        "tests": 14
+      },
+      {
+        "file": "tests/integration/tasks.test.ts",
+        "status": "passed",
+        "tests": 18
+      }
+    ]
+  },
+  "serviceIntegrationSubset": {
+    "source": ".local/s3-services-integration-final-results.json",
+    "sha256": "f4e15b8ee6e751c22e0f223f9304009d0c06136ae9155b23813e517213d61abd",
+    "success": true,
+    "totalTests": 17,
+    "passedTests": 17,
+    "failedTests": 0,
+    "pendingTests": 0,
+    "startedAt": "2026-10-25T17:30:58.039000+00:00",
+    "suites": [
+      {
+        "file": "tests/integration/services-s3.test.ts",
+        "status": "passed",
+        "tests": 17
+      }
+    ]
+  },
+  "browser": {
+    "report": "apps/console/tests/artifacts/s3-local-lab/browser-results.json",
+    "stats": {
+      "startTime": "2026-10-25T18:38:44.327Z",
+      "duration": 74775.70999999999,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "pageVariantChecks": 70,
+    "basePageVariantChecks": 66,
+    "expandedFailureVariantChecks": 4,
+    "sha256": "108f83f69e1e29c29f74b05a9da2e0073fa9143064972502e9a250c91ea44bbc"
+  },
+  "frontendPerformance": {
+    "report": "apps/console/tests/artifacts/s3-performance/final-frontend-performance.json",
+    "actualLogDurationMs": 600157.24,
+    "summary": {
+      "feedbackSamples": 259,
+      "maxFeedbackEstimateMs": 83.9,
+      "p95FeedbackEstimateMs": 45.9,
+      "feedbackWithin100ms": 259,
+      "maxSessionInpEstimateMs": 80,
+      "maxSessionCls": 0.008954166666666666,
+      "maxBufferedCharacters": 200000,
+      "maxBufferedLines": 10000,
+      "maxBufferedUtf8Bytes": 211594,
+      "maxRenderedRows": 41
+    },
+    "targets": {
+      "feedback100ms": true,
+      "sessionInp200ms": true,
+      "clsPointOne": true
+    },
+    "sha256": "dfce0ec916ef462e6ba6dafd00916e0700dc4f51bb73b100cc979b652c81e95b"
+  },
+  "productionBuildSource": {
+    "archive": ".local/local-lab/linux-build-c/snapshots/s3-http413-20261025T193554Z-b9c3411e/source.tar.gz",
+    "sha256": "b29ff98a295c999c7e92c22aad31ea4a746269f53e5242bb7aeaa17960003fb0",
+    "files": 279,
+    "status": "Linux ARM64 build, Compose and exported layer verification passed",
+    "baselineSha256": "577495678a125ca8c8ce0a600c80756f7971ce51b0071e14c7305d9c2ed7e633",
+    "patchValidation": {
+      "baselineRootCheck": "root reported pnpm check exit 0 immediately before capture",
+      "patchRealTcpTestsPassed": 2,
+      "patchStrictTypecheckExitCode": 0,
+      "patchEslintExitCode": 0,
+      "patchPrettierExitCode": 0
+    }
+  },
+  "baselineProductionBuildSource": {
+    "archive": ".local/local-lab/linux-build-c/snapshots/s3-20261025T184613Z-bdea4186/source.tar.gz",
+    "sha256": "577495678a125ca8c8ce0a600c80756f7971ce51b0071e14c7305d9c2ed7e633",
+    "status": "immutable S3 baseline; subsequent HTTP-only patch separately verified"
+  },
+  "linuxDeployment": {
+    "status": "passed",
+    "report": "docs/acceptance/s3-deployment-results.json",
+    "buildTargetsPassed": 4,
+    "composeChecksPassed": 16,
+    "httpBodyBoundaryTcpTestsPassed": 2,
+    "httpFramingCasesPassed": 16,
+    "egressAllowedConnections": 6,
+    "dataLayerDeniedConnections": 6,
+    "exportedConfigDigestsVerified": 4,
+    "exportedUniqueLayersVerified": 36,
+    "exportedArchiveSha256": "d1751fd7e4d7355f6d32ae2572cbc3f1d6792df451d44fdfe1ecca42bdc5aef1",
+    "scope": "Frozen S3 plus separately validated HTTP-only patch. No S4 code, public cloud or AMD64 acceptance."
+  }
+}

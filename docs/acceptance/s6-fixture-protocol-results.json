@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "status": "fixture_protocols_passed",
+  "scope": "Local controlled protocol fixtures only; not S6 product acceptance.",
+  "checksPassed": 18,
+  "results": [
+    {
+      "kind": "github_git",
+      "path": ".local/local-lab/s6-github/s6-github-20261026t012812700z-69e72bc4/results.json",
+      "sha256": "3f0df9ea25ba0c4954fac8589b2b4212ff52bfcd6b6943e1981d28d43d78a2a9",
+      "passed": 10,
+      "report": {
+        "version": 1,
+        "runId": "s6-github-20261026t012812700z-69e72bc4",
+        "owner": "ozz-s6-github-fixture-v1",
+        "status": "passed",
+        "startedAt": "2026-10-26T01:28:12.706Z",
+        "scope": "Controlled GitHub HTTPS API and real local bare-Git upload-pack only; no real GitHub authorization/delivery, Builder, Registry, or K3s acceptance.",
+        "checks": [
+          {
+            "name": "real_tls_and_explicit_private_ca",
+            "passed": true
+          },
+          {
+            "name": "authentication_and_repository_authorization",
+            "passed": true
+          },
+          {
+            "name": "real_git_branches_commit_and_contents",
+            "passed": true
+          },
+          {
+            "name": "native_git_fetches_exact_commit_over_verified_tls",
+            "passed": true
+          },
+          {
+            "name": "branch_advance_does_not_change_pinned_checkout",
+            "passed": true
+          },
+          {
+            "name": "native_git_rejects_unauthorized_read_and_all_pushes",
+            "passed": true
+          },
+          {
+            "name": "explicit_hook_write_is_persisted_and_secret_is_omitted",
+            "passed": true
+          },
+          {
+            "name": "current_credentials_rotate_without_fixture_restart",
+            "passed": true
+          },
+          {
+            "name": "stable_repository_id_survives_name_change",
+            "passed": true
+          },
+          {
+            "name": "fixture_events_do_not_expose_credentials_or_hook_secrets",
+            "passed": true
+          }
+        ],
+        "fixtureStopped": true,
+        "finishedAt": "2026-10-26T01:28:16.728Z",
+        "passed": 10,
+        "repository": {
+          "id": "100001",
+          "firstCommit": "1af3be3f1ea63f51a97c77e2d30da091dc315ed9",
+          "secondCommit": "2d01193f7645dd09753aefaff41f5b139955b17a"
+        },
+        "fixtureSourceSha256": "90dcdc673ada54a6ee56785958871e7f52913df2b8060447169de2ed7d09eb36"
+      }
+    },
+    {
+      "kind": "registry_token",
+      "path": ".local/local-lab/s6-registry-token/s6-token-20261026t010359130z-6133c5b7/results.json",
+      "sha256": "df4c0a5b6b4dfabc835749ffd0b757b99850b3ff0e8618a0894306bed985f11f",
+      "passed": 8,
+      "report": {
+        "version": 1,
+        "runId": "s6-token-20261026t010359130z-6133c5b7",
+        "status": "passed",
+        "scope": "Real local HTTPS/RS256 issuer protocol only; Distribution scope enforcement is not yet tested.",
+        "startedAt": "2026-10-26T01:03:59.200Z",
+        "checks": [
+          {
+            "name": "loopback_https_with_scoped_ca",
+            "passed": true
+          },
+          {
+            "name": "system_trust_rejects_fixture_ca",
+            "passed": true
+          },
+          {
+            "name": "invalid_authentication_cannot_obtain_token",
+            "passed": true
+          },
+          {
+            "name": "runtime_user_requested_push_is_reduced_to_pull",
+            "passed": true
+          },
+          {
+            "name": "uploader_gets_only_its_authorized_repository_actions",
+            "passed": true
+          },
+          {
+            "name": "duplicate_service_and_unrequested_token_methods_rejected",
+            "passed": true
+          },
+          {
+            "name": "password_rotation_changes_auth_without_changing_repository_identity",
+            "passed": true
+          },
+          {
+            "name": "events_contain_no_credentials_or_issued_tokens",
+            "passed": true
+          }
+        ],
+        "finishedAt": "2026-10-26T01:04:07.092Z"
+      }
+    }
+  ],
+  "limitations": [
+    "GitHub itself has not authorized a PAT or delivered a webhook in these checks.",
+    "Distribution has not yet enforced the signed token scopes in a real push/pull test.",
+    "Production GitHub adapter, isolated Builder execution, Registry image delivery and Kubernetes deployment are separate remaining acceptance."
+  ],
+  "retention": "Private keys, credentials and fixture repositories remain in protected .local directories; fixture processes have stopped."
+}

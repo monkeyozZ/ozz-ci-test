@@ -1,0 +1,12 @@
+{
+  "verifiedAt": "2026-10-25",
+  "verifiedPlatform": "linux/arm64",
+  "postgres": {
+    "version": "17.11",
+    "image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24"
+  },
+  "redis": {
+    "version": "7.4.9",
+    "image": "redis@sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99"
+  }
+}

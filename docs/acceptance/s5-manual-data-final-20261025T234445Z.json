@@ -1,0 +1,381 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-25T23:44:45.658Z",
+  "status": "passed",
+  "runtime": {
+    "node": "v24.22.1",
+    "pnpm": "12.14.0",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "scope": {
+    "localManualSuite": "Temporary HTTPS/WebSocket protocol fixtures, private artifact/archive checks, real local process stubs, recovery-journal and record reconciliation tests.",
+    "realManualRecordIntegration": "Real HTTP and PostgreSQL in a unique isolated schema, with controlled Kubernetes effects.",
+    "businessRecovery": "Real product API/Worker and retained local ARM64 K3s A/B; no database or cluster mocks in the three recovery executions.",
+    "copyLocation": {
+      "label": "local-mac-outside-source-vm",
+      "outsideSourceVm": true,
+      "samePhysicalMac": true,
+      "physicalLocationVerification": "operator_reported"
+    },
+    "controlPlaneRuntimeRestartDuringRecovery": false,
+    "sourceDataCleared": false,
+    "preExistingTargetReused": false,
+    "failedTargetOrArtifactDeleted": false
+  },
+  "results": {
+    "manualSuite": {
+      "passed": 60,
+      "failed": 0,
+      "skipped": 0,
+      "archiveAndArtifacts": 25,
+      "databaseProofAndProcessLifecycle": 7,
+      "httpsAndWebSocketProtocols": 19,
+      "recoveryJournalAndRecordReconciliation": 9
+    },
+    "manualRecordIntegration": {
+      "selected": 6,
+      "passed": 6,
+      "failed": 0,
+      "otherTestsExcludedByName": 27,
+      "newIdentityRegressions": 3,
+      "changedIdentityFieldsChecked": 12
+    },
+    "realAtoB": {
+      "checksPassed": 9,
+      "journaledCliSteps": 18,
+      "journaledCliExitZero": 18,
+      "additionalReadOnlyCopyIntegrityCommands": 3,
+      "operatorRecordsPassed": 6,
+      "failures": 0,
+      "retries": 0,
+      "oneFreshTargetPerEngine": true
+    },
+    "privateOutputs": { "files": 91, "directories": 39, "permissionViolations": 0 },
+    "validations": [
+      {
+        "command": "pnpm exec node --test tests/manual-data/*.test.mjs",
+        "startedAt": "2026-10-25T23:41:40.862Z",
+        "completedAt": "2026-10-25T23:41:47.415Z",
+        "exitCode": 0,
+        "output": "✔ private files, atomic publication and copy never overwrite retained bytes (50.419542ms)\n✔ source and restore target require independent Volume, PVC and Service identities (0.642459ms)\n✔ USTAR inventory verifies bytes, root ownership, directories and ordinary file modes (26.76ms)\n✔ rejects unsafe tar path \"../escape\" (8.381ms)\n✔ rejects unsafe tar path \"./../escape\" (21.021041ms)\n✔ rejects unsafe tar path \"/absolute\" (28.886792ms)\n✔ rejects unsafe tar path \"a/../escape\" (6.570834ms)\n✔ rejects unsafe tar path \"a//b\" (5.409791ms)\n✔ rejects unsafe tar path \"a\\\\b\" (7.68525ms)\n✔ rejects unsafe tar path \"a\\nb\" (13.08225ms)\n✔ rejects tar links, devices and extension type 1 (30.061458ms)\n✔ rejects tar links, devices and extension type 2 (10.521417ms)\n✔ rejects tar links, devices and extension type 3 (7.901542ms)\n✔ rejects tar links, devices and extension type 4 (11.715541ms)\n✔ rejects tar links, devices and extension type 6 (9.460625ms)\n✔ rejects tar links, devices and extension type x (16.137292ms)\n✔ rejects tar links, devices and extension type g (12.220042ms)\n✔ rejects tar links, devices and extension type L (25.878666ms)\n✔ rejects tar links, devices and extension type S (35.709291ms)\n✔ rejects equivalent paths, file/directory collisions and special mode bits (31.915209ms)\n✔ rejects corrupted checksums, truncation, nonzero padding and trailing concatenated archives (34.5015ms)\n✔ rejects ambiguous NUL paths, hidden link targets and entry-count overflow (20.335125ms)\n✔ seal, verify and copy preserve the manifest byte-for-byte and verify the destination (108.798833ms)\n✔ modified artifact or manifest metadata cannot pass local verification (48.369083ms)\n✔ database signatures are only early rejection, never a semantic-validation claim (48.593542ms)\n✔ postgresql: complete operator workflow across HTTPS and binary WebSocket, without real engine/cluster execution (1304.662583ms)\n✔ redis: complete operator workflow across HTTPS and binary WebSocket, without real engine/cluster execution (917.409875ms)\n✔ files: complete operator workflow across HTTPS and binary WebSocket, without real engine/cluster execution (428.919958ms)\n✔ product staleness, maintenance loss and parallel mutation block before remote writes (131.361417ms)\n✔ same-name Node replacement, changed PV binding and replaced runtime Secret fail closed (104.744375ms)\n✔ typed Kubernetes lists may omit item TypeMeta but explicit wrong kinds are rejected (107.913708ms)\n✔ truncated, forbidden and unrelated Pod mounts never become a zero-mount claim (62.045958ms)\n✔ active attachment and stale controller fingerprint block helper creation (82.7055ms)\n✔ helper creation intent precedes POST; lost response recovers only matching nonce and UID (96.129875ms)\n✔ admission-added sidecar/init container is never accepted as a helper (141.547167ms)\n✔ helper rejects added exec surfaces and subPath while accepting API omitted readOnly false (118.19825ms)\n✔ expired session and recovery lock are rechecked between remote phases (95.370958ms)\n✔ nonempty PostgreSQL restore retains the target/helper and never imports (463.37825ms)\n✔ Redis rewrite failure cannot publish a completed restore or start the formal StatefulSet (586.366ms)\n✔ failed import helper can be gracefully removed under the original overdue lock without releasing maintenance (361.566917ms)\n✔ manual records use the source Volume route and remain operator_reported for incomplete restores (547.07625ms)\n✔ WebSocket stdin sends the complete bounded artifact and an explicit v5 EOF (96.926625ms)\n✔ WebSocket requires binary frames, bounded bytes and explicit successful process status (127.830375ms)\n✔ HTTP redirect responses do not forward authentication to another origin (66.856792ms)\n✔ backup ledger reconciliation requires both passed result and passed integrity (0.757625ms)\n✔ restore ledger reconciliation requires both passed result and passed integrity (0.107292ms)\n✔ recovery journal persists the intent before a single import and verifies its receipt on re-entry (2.136833ms)\n✔ a completed import with a lost process response is recovered without another execution (0.141958ms)\n✔ an import in started state without a valid completion receipt cannot be replayed (0.509ms)\n✔ an import in failed state without a valid completion receipt cannot be replayed (0.083041ms)\n✔ an import in succeeded state without a valid completion receipt cannot be replayed (0.075542ms)\n✔ failed import evidence remains durable and an ordinary rerun cannot retry it (1.631458ms)\n✔ a never-started intent can renew its session but cannot change its retained output directory (0.686083ms)\n✔ PostgreSQL checks actual version, bounded selected rows and structural/constraint digests (6.183208ms)\n✔ Redis hashes values without storing bytes and compares absolute expiry across elapsed time (1.427208ms)\n✔ Redis refuses invalid clocks, malformed proofs, wrong versions and incomplete AOF conversion (0.451542ms)\n✔ Redis string proofs accept empty bytes and reject internal collection encodings (0.11275ms)\n✔ PostgreSQL snapshot EXIT trap stops the real client on success and dump failure (1870.045541ms)\n✔ structured probes cannot inject SQL, commands or unsupported system targets (0.281ms)\n✔ every fixed shell program parses and engine import commands preserve the required order/flags (212.370125ms)\nℹ tests 60\nℹ suites 0\nℹ pass 60\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6043.237458\n"
+      },
+      {
+        "command": "pnpm exec eslint 'scripts/manual-data-*.mjs' 'tests/manual-data/*.mjs' tests/probes/s5-recovery-local-lab.mjs packages/control-plane/src/storage/commands.ts tests/integration/storage-s5.test.ts",
+        "startedAt": "2026-10-25T23:41:40.865Z",
+        "completedAt": "2026-10-25T23:41:43.205Z",
+        "exitCode": 0,
+        "output": ""
+      },
+      {
+        "command": "pnpm exec prettier --check 'scripts/manual-data-*.mjs' 'tests/manual-data/*.mjs' tests/probes/s5-recovery-local-lab.mjs packages/control-plane/src/storage/commands.ts tests/integration/storage-s5.test.ts docs/manual-data-recovery.md docs/manual-data-recovery-probe.md",
+        "startedAt": "2026-10-25T23:41:40.865Z",
+        "completedAt": "2026-10-25T23:41:42.470Z",
+        "exitCode": 0,
+        "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+      },
+      {
+        "command": "git diff --check",
+        "startedAt": "2026-10-25T23:41:40.865Z",
+        "completedAt": "2026-10-25T23:41:41.033Z",
+        "exitCode": 0,
+        "output": ""
+      },
+      {
+        "command": "pnpm exec node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts tests/integration/storage-s5.test.ts --testNamePattern 'S5 storage HTTP and manual record contract'",
+        "startedAt": "2026-10-25T23:17:20.495Z",
+        "completedAt": "2026-10-25T23:17:30.284Z",
+        "exitCode": 0,
+        "output": "\n RUN  v3.2.7 /Users/monkeyozz/Desktop/code/ozz\n\n ✓ tests/integration/storage-s5.test.ts (33 tests | 27 skipped) 7090ms\n   ✓ S5 storage HTTP and manual record contract > returns accepted identities, exact mount revisions and complete list filters through the authenticated HTTP API  1318ms\n   ✓ S5 storage HTTP and manual record contract > records operator evidence without claiming platform verification and preserves the original backup manifest on restore  1557ms\n   ✓ S5 storage HTTP and manual record contract > accepts reordered source and target identities after a real PostgreSQL JSONB round trip  707ms\n   ✓ S5 storage HTTP and manual record contract > rejects a change to any source or target identity field without appending a manual record  1022ms\n   ✓ S5 storage HTTP and manual record contract > rejects unbound source and target volumes without a registered PVC identity  413ms\n   ✓ S5 storage HTTP and manual record contract > keeps read endpoints available while recovery mode blocks every storage mutation  371ms\n\n Test Files  1 passed (1)\n      Tests  6 passed | 27 skipped (33)\n   Start at  07:17:21\n   Duration  8.82s (transform 374ms, setup 0ms, collect 1.42s, tests 7.09s, environment 0ms, prepare 128ms)\n\n"
+      },
+      {
+        "command": "pnpm exec prettier --check docs/manual-data-recovery.md docs/manual-data-recovery-probe.md",
+        "exitCode": 0,
+        "note": "Run after the final acceptance-result documentation update."
+      }
+    ]
+  },
+  "recoveries": {
+    "postgresql": {
+      "backupId": "a7b10b60-16e4-4442-8ea0-81a70aa09d15",
+      "artifactSha256": "5887cda3ec01965afa69401edf906ab9d6fcfb9ba002727472443dde8f52b0d7",
+      "manifestSha256": "2acce27c67278d3f5b03fe46a1b4cd68ecfc0d2130ee9951d37df37a67f64221",
+      "sizeBytes": "1721",
+      "backupCompletedAt": "2026-10-25T23:34:39.797Z",
+      "sourceServiceId": "efb929e9-7488-4d25-9d76-d42afa8ce338",
+      "sourceIdentity": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "volumeId": "61c28353-0831-47ac-9c1b-419983417eec",
+        "pvcUid": "92d8ff4c-33aa-4aa3-9b01-5768c8267dbc"
+      },
+      "targetServiceId": "c5971e92-b897-4789-b85a-42c137871054",
+      "targetIdentity": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+        "volumeId": "9866c7f4-6e40-44de-816c-79bdc6c6fb2f",
+        "pvcUid": "bb125e53-e9fb-4a87-a08a-5eb49dedebf4"
+      },
+      "targetServiceCreatedAt": "2026-10-25T23:34:40.328Z",
+      "targetVolumeCreatedAt": "2026-10-25T23:34:40.352Z",
+      "restoreOperationId": "08894acd-e3b4-4e0b-9f7d-c4ef2359259c",
+      "durationMs": 16305,
+      "durationDefinition": "Restore CLI start through formal verification completion; includes maintenance exit/resume/wait, excludes backup and new-target creation.",
+      "backupRecordId": "0c96b7eb-43f9-45f8-8be1-a94be993d8f8",
+      "restoreRecordId": "ab2af949-25f7-42f6-8bf4-eaf1710e1a25",
+      "verificationSource": "operator_reported",
+      "sourceRetained": true,
+      "formalBusinessCheck": { "verified": true, "podUid": "9bba865f-0c12-4bf4-bf33-3553ffbeef9c" }
+    },
+    "redis": {
+      "backupId": "8b0b1bfa-ca60-4b3c-b7d1-9c22822f029b",
+      "artifactSha256": "45108aa369fc96164150a39da3648825cb389c0469bdb8cd82ba80f36e7ef593",
+      "manifestSha256": "d7e13cf86e91322ceeb442e3bc6fb84e88af45866c80131ba9505b101f5f14c2",
+      "sizeBytes": "233",
+      "backupCompletedAt": "2026-10-25T23:36:07.508Z",
+      "sourceServiceId": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c",
+      "sourceIdentity": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "volumeId": "336ee757-62f7-4bf4-bdd9-09b486c412d9",
+        "pvcUid": "1ebeaab4-6cfa-4d67-9771-a58b3aebed61"
+      },
+      "targetServiceId": "9b3b7de6-5aec-4dc7-ba37-dd2e11d0b942",
+      "targetIdentity": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+        "volumeId": "446ac582-6cd3-40e9-bf0f-c93c94a619ee",
+        "pvcUid": "f7a2cdb3-627c-4d52-b09d-64bbb92560c8"
+      },
+      "targetServiceCreatedAt": "2026-10-25T23:36:07.992Z",
+      "targetVolumeCreatedAt": "2026-10-25T23:36:08.013Z",
+      "restoreOperationId": "b242ed69-b78f-401b-8c46-ee3fb4263389",
+      "durationMs": 17585,
+      "durationDefinition": "Restore CLI start through formal verification completion; includes maintenance exit/resume/wait, excludes backup and new-target creation.",
+      "backupRecordId": "4a221bda-47a0-4846-821c-83b1d5148bc9",
+      "restoreRecordId": "21b5d364-2d4e-451b-b49d-e85ccb9ceb3c",
+      "verificationSource": "operator_reported",
+      "sourceRetained": true,
+      "formalBusinessCheck": { "verified": true, "podUid": "89e2ea47-7b74-40bc-976d-b33731104467" }
+    },
+    "files": {
+      "backupId": "ffc810d7-7e6c-4add-8823-b6baa824942e",
+      "artifactSha256": "a4fadc026962ea7242e77938e491f13d974ac63ae4e6858faf235fd743148413",
+      "manifestSha256": "d4cc70cb7ae031a046e9a66255b1d5bb8e3c09cca5d22376fe4b79939be56a0d",
+      "sizeBytes": "10240",
+      "backupCompletedAt": "2026-10-25T23:37:58.276Z",
+      "sourceServiceId": "bfd2b0d3-16bb-44e0-af21-19b30c180ac0",
+      "sourceIdentity": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "volumeId": "605410b8-8099-4a8c-a185-3c37c18d06cb",
+        "pvcUid": "9b7e488c-791c-47e0-a182-9b83a7ac9da8"
+      },
+      "targetServiceId": "6b97886a-5344-4145-8116-10222f5b276e",
+      "targetIdentity": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+        "volumeId": "c29436c5-48c1-4040-8415-23e316e75d1f",
+        "pvcUid": "0dfe4388-b631-4ce4-8120-44be39db2760"
+      },
+      "targetServiceCreatedAt": "2026-10-25T23:38:08.801Z",
+      "targetVolumeCreatedAt": "2026-10-25T23:38:08.869Z",
+      "restoreOperationId": "8b3f83c7-2777-472d-a859-a16e9f721bca",
+      "durationMs": 15811,
+      "durationDefinition": "Restore CLI start through formal verification completion; includes maintenance exit/resume/wait, excludes backup and new-target creation.",
+      "backupRecordId": "1ca06d73-aa6e-4147-a27a-851c847040b2",
+      "restoreRecordId": "18e31d76-8616-40b5-9fed-af72ac1f8aa9",
+      "verificationSource": "operator_reported",
+      "sourceRetained": true,
+      "formalBusinessCheck": {
+        "verified": true,
+        "podUid": "e7af9441-1c44-44ea-85d6-fcb8cac7680b",
+        "fileSha256": "839e148ab7aefc7b2f55ea0a8333a8b32509b89c40cf0b72355b6f0a12ea7261",
+        "httpSha256": "839e148ab7aefc7b2f55ea0a8333a8b32509b89c40cf0b72355b6f0a12ea7261"
+      }
+    }
+  },
+  "identityComparison": {
+    "implementation": "Explicit comparison of installationId, clusterId, kubeSystemUid, environmentId, volumeId and pvcUid; null registered identity is rejected.",
+    "formerOrderBugReproduced": false,
+    "reason": "Existing input and view builders already constructed the same six fields in fixed order. The change removes the serialization dependency rather than claiming a reproduced JSONB bug at this call site."
+  },
+  "limitations": [
+    "The A/B VMs and Mac backup copies share one physical Mac. This is not physical off-host or cloud disaster-recovery acceptance.",
+    "Business acceptance uses small synthetic persistent markers, not a production-size throughput or recovery-time guarantee.",
+    "Redis real acceptance selected a permanent string marker; expiration semantics and malformed clocks/TTL remain covered by the local protocol suite.",
+    "The product manual-record API persists operator evidence and does not claim independent platform verification.",
+    "Recovery re-entry and failed/unknown-import refusal are covered by journal tests. No failed real import was forced and no real import was replayed.",
+    "Existing public-image cache assistance remains part of the local-lab environment; this does not claim unassisted registry access."
+  ],
+  "executionReports": [
+    {
+      "path": "docs/acceptance/s5-recovery-local-results-b247d3cb-7a88-40d5-bb85-6fa96e8168d7.json",
+      "sha256": "fe6c1932ef43ddc496facb318f6504208503a3514057f513709ddbb8728324c6",
+      "status": "passed",
+      "selectedEngines": ["files"],
+      "startedAt": "2026-10-25T23:37:21.057Z",
+      "completedAt": "2026-10-25T23:39:20.207Z"
+    },
+    {
+      "path": "docs/acceptance/s5-recovery-local-results-cbe255a0-8932-4c3c-b272-209eac07a495.json",
+      "sha256": "0b7a60ad188799a4e3cfbb9417d5e989e7887ffe908f5458aada99fe33e373e0",
+      "status": "partial",
+      "selectedEngines": ["postgresql"],
+      "startedAt": "2026-10-25T23:34:38.130Z",
+      "completedAt": "2026-10-25T23:35:19.487Z"
+    },
+    {
+      "path": "docs/acceptance/s5-recovery-local-results-f2c4562e-79ec-4c6b-881e-56303e0b6d20.json",
+      "sha256": "36986549809cb2cf5925732e3de7792d8a59bbdbc38f00cc82c3a5bf416a0c7c",
+      "status": "partial",
+      "selectedEngines": ["redis"],
+      "startedAt": "2026-10-25T23:36:00.784Z",
+      "completedAt": "2026-10-25T23:36:48.105Z"
+    }
+  ],
+  "latestExecutionReport": {
+    "path": "docs/acceptance/s5-recovery-local-results.json",
+    "sha256": "fe6c1932ef43ddc496facb318f6504208503a3514057f513709ddbb8728324c6"
+  },
+  "priorProtocolReport": {
+    "path": "docs/acceptance/s5-manual-data-protocol-20261025T231846Z.json",
+    "sha256": "c0d15daa737a646923fa2fbe3f6f3af95074c997dba4949ca917460104ecf4d6",
+    "note": "Historical protocol-only snapshot before real A/B execution and the recovery runner were added."
+  },
+  "runbooks": ["docs/manual-data-recovery.md", "docs/manual-data-recovery-probe.md"],
+  "files": [
+    {
+      "path": "docs/manual-data-recovery-probe.md",
+      "sizeBytes": 7385,
+      "sha256": "2edef58cc4334fa73376bd89240e4a5845014fcf69894460fde0e3a7c201d63d"
+    },
+    {
+      "path": "docs/manual-data-recovery.md",
+      "sizeBytes": 21552,
+      "sha256": "b7a97e6221ab7ba237393bba6628bc71cb48922caf7a9b73a468450f6a11d9c6"
+    },
+    {
+      "path": "packages/control-plane/src/storage/commands.ts",
+      "sizeBytes": 21878,
+      "sha256": "d941e7cc623cb66076632bdba966849747bf86ab8c683f6fd0cca61c6e1f2d24"
+    },
+    {
+      "path": "scripts/manual-data-artifact.mjs",
+      "sizeBytes": 11614,
+      "sha256": "7f9210807a4cae5c589ac060e38d0ea66cccab5149eadca648f86b9622986264"
+    },
+    {
+      "path": "scripts/manual-data-backup.mjs",
+      "sizeBytes": 875,
+      "sha256": "992c1ee8684b8e3b857588f82f2d23a10b49c4c29103fd73efec06ed059e007f"
+    },
+    {
+      "path": "scripts/manual-data-commands.mjs",
+      "sizeBytes": 15955,
+      "sha256": "5fc8e358acfc03d7c4db03a4c0b413adfa6800bb92c89dc04b7fce7898cc82c1"
+    },
+    {
+      "path": "scripts/manual-data-core.mjs",
+      "sizeBytes": 10464,
+      "sha256": "4bc88f87e8f56176842c62e00586acd2a9942ab4ffaa24e019fa32844749b36d"
+    },
+    {
+      "path": "scripts/manual-data-exec.mjs",
+      "sizeBytes": 7991,
+      "sha256": "5de82841c009ba026b9a81f1c5c15c9442226a312b1d3050235c396ec59b313b"
+    },
+    {
+      "path": "scripts/manual-data-helper.mjs",
+      "sizeBytes": 5019,
+      "sha256": "668358f9b3fce6d562a9656e57d124c1bf9fc4b210483c67962da9c818c783fa"
+    },
+    {
+      "path": "scripts/manual-data-operations.mjs",
+      "sizeBytes": 24540,
+      "sha256": "dcd24e730d7e8c2f4fd22a430c4b127c4107e61b9138c07cc065c10e63805350"
+    },
+    {
+      "path": "scripts/manual-data-record.mjs",
+      "sizeBytes": 5725,
+      "sha256": "c61c277572f6d58d06eb34edc68d5a2ec920cf8a56b08b1fe98c9ab3b389b821"
+    },
+    {
+      "path": "scripts/manual-data-restore.mjs",
+      "sizeBytes": 1067,
+      "sha256": "78bbb94f34bcc58004c1e767a1ac57a4781f0613261408cb58b7079d50d93eeb"
+    },
+    {
+      "path": "scripts/manual-data-runtime.mjs",
+      "sizeBytes": 40786,
+      "sha256": "a23b2a85e157c9e9247f409d9808a438d9d87bd5b9440af075439738e6ac855c"
+    },
+    {
+      "path": "scripts/manual-data-tar.mjs",
+      "sizeBytes": 6606,
+      "sha256": "e4b2df7b14f74e22d7a00539fb9b645dc6ba2347f3d9f4bff02f9f4fc8628625"
+    },
+    {
+      "path": "scripts/manual-data-verification.mjs",
+      "sizeBytes": 8716,
+      "sha256": "ef0a9a1108f551993c138b8a9cad3502cc43b56d77ed28820c458375381a7cf4"
+    },
+    {
+      "path": "scripts/manual-data-verify.mjs",
+      "sizeBytes": 1045,
+      "sha256": "3a7ab2909b1e38cc0d5ef77a48ff0fa5601d54ad490f232ebcff96c4fcc61ff3"
+    },
+    {
+      "path": "tests/integration/storage-s5.test.ts",
+      "sizeBytes": 73202,
+      "sha256": "b46d649f7a62db201ee3584d4086565884995c4fa18911e9ff8ba40a9505a89e"
+    },
+    {
+      "path": "tests/manual-data/archive-fixture.mjs",
+      "sizeBytes": 2483,
+      "sha256": "2ac7b737224f2a163435591685af730f5c043e7c359e14cb541dc1e462df8e56"
+    },
+    {
+      "path": "tests/manual-data/artifact.test.mjs",
+      "sizeBytes": 8366,
+      "sha256": "14ccf7b48767ebb9fe6541b07f26d3e96f2e3494b3fa70da60c29ae52735594c"
+    },
+    {
+      "path": "tests/manual-data/protocol-fixture.mjs",
+      "sizeBytes": 28602,
+      "sha256": "3b7b4e6da3292da9bfa7ad353dae0ed2cb6d7ece7c9dc4fab2edf911f27e2273"
+    },
+    {
+      "path": "tests/manual-data/protocol.test.mjs",
+      "sizeBytes": 20206,
+      "sha256": "aa827dd1589b809d7c2b1a6dda13709796e9fdd2eafcc39d09a25fd4de0b69cc"
+    },
+    {
+      "path": "tests/manual-data/recovery-probe.test.mjs",
+      "sizeBytes": 5991,
+      "sha256": "1664d01c556e14cf81e163ba8438b012fec32ff5059713965a0b78bf29e32910"
+    },
+    {
+      "path": "tests/manual-data/verification.test.mjs",
+      "sizeBytes": 10025,
+      "sha256": "e261d8c4ad2f76e734047bda7428297a8b84ea6a7c9e10e8587e842a01e80ee6"
+    },
+    {
+      "path": "tests/probes/s5-recovery-local-lab.mjs",
+      "sizeBytes": 49185,
+      "sha256": "a01964fa8b97b71bd440903fe86e4bc46ca4ae8cd89fc9fbbfbe3757605ab8ab"
+    }
+  ]
+}

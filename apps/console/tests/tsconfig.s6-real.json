@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["vite/client", "node"]
+  },
+  "include": [
+    "local-lab/s6-real-support.ts",
+    "local-lab/s6-real.playwright.config.ts",
+    "local-lab/s6-real.spec.ts"
+  ],
+  "exclude": []
+}

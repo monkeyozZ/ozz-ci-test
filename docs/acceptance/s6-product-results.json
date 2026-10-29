@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-26T04:47:37.184545+00:00",
+  "status": "passed",
+  "scope": "本地固定 Git 提交、真实 Dockerfile 构建、OCI 推送、K3s 健康发布、测试 CA HTTPS 与真实浏览器只读验收；不是 S6/G-MVP 总验收",
+  "environment": {
+    "platform": "linux/arm64",
+    "apiOrigin": "https://127.0.0.1:51448",
+    "applicationCluster": "local B",
+    "githubTransport": "本地 HTTPS 协议提供方，生产 API/Worker 装配",
+    "certificateAuthority": "local_test",
+    "sessionConfiguration": "development"
+  },
+  "identity": {
+    "id": "e5968684-0d49-49fa-8dfd-ce0b035d73ad",
+    "projectId": "fa0944d7-4bf7-4873-96dc-4046fd88609b",
+    "environmentId": "14322423-6cd6-4829-b3e7-d0670d7d14da",
+    "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83"
+  },
+  "deployment": {
+    "id": "7f089683-1eb7-40cb-bb98-e982b4be1c5b",
+    "sourceRevisionId": "1cf6c51a-330e-49dc-a2fc-7d7082a676b3",
+    "artifactId": "8bf540db-d8be-4745-a5fe-fc480c8b8d4d",
+    "status": "succeeded",
+    "createdAt": "2026-10-26T04:24:32.544Z",
+    "startedAt": "2026-10-26T04:24:32.734Z",
+    "appliedAt": "2026-10-26T04:25:02.340Z",
+    "finishedAt": "2026-10-26T04:25:04.834Z",
+    "attempts": 1
+  },
+  "buildRuns": [
+    {
+      "id": "2b30a514-a799-4a09-9504-266ad493f048",
+      "runNumber": 1,
+      "builderId": "06a9ba8d-d4b3-43ea-9420-0d646a46c7e7",
+      "builderInstanceId": "943452d4-89b3-48cc-8271-3b8d928b1d08",
+      "specHash": "8f208d47ac538ff886988d3178aec9d408d3d92002743f8a5af07d87553a6b32",
+      "epoch": {
+        "generation": 0,
+        "ownershipEpoch": 1
+      },
+      "executionState": "ended",
+      "executionClosedAt": "2026-10-26T04:25:01.250Z",
+      "closureReason": null,
+      "proofVerifiedAt": "2026-10-26T04:25:01.235Z"
+    }
+  ],
+  "artifact": {
+    "id": "8bf540db-d8be-4745-a5fe-fc480c8b8d4d",
+    "state": "registry",
+    "producedByRunId": "2b30a514-a799-4a09-9504-266ad493f048",
+    "sourceRevisionId": "1cf6c51a-330e-49dc-a2fc-7d7082a676b3",
+    "commitSha": "f8365500cab6bb6a682966cb32327d84a84967fe",
+    "recipeHash": "b348b859f9b29106714544042abb4cda33ff95600916840a6c3ac3f5cf84b218",
+    "rootDigest": "sha256:760634892091f28780bf76cf6573d3e5e80d843879e860de3a97c95ebdef9ba5",
+    "rootMediaType": "application/vnd.oci.image.manifest.v1+json",
+    "platforms": [
+      {
+        "os": "linux",
+        "architecture": "arm64",
+        "manifestDigest": "sha256:760634892091f28780bf76cf6573d3e5e80d843879e860de3a97c95ebdef9ba5",
+        "manifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+        "configDigest": "sha256:73609cd125f18f9a489ba36b7a167dfc03af3003682934abf48ff8d40a58d2fd"
+      }
+    ],
+    "archiveBytes": "25803264",
+    "availability": "available",
+    "pushedAt": "2026-10-26T04:25:01.250Z",
+    "lastVerifiedAt": "2026-10-26T04:25:01.346Z"
+  },
+  "workload": {
+    "desiredState": "running",
+    "configurationState": "consistent",
+    "runtimeState": "running",
+    "deploymentReference": "host.lima.internal:50444/ozz-s6/application@sha256:760634892091f28780bf76cf6573d3e5e80d843879e860de3a97c95ebdef9ba5",
+    "readyPods": [
+      {
+        "uid": "e2ec9388-adf5-40c2-be62-f0adb875e76b",
+        "namespace": "ozz-e-143224236cd64829b3e7d0670d7d14da",
+        "name": "ozz-s-e59686840d4949fa8dfdce0b035d73ad-7cc97654c-4dl7m",
+        "rolloutId": "7f089683-1eb7-40cb-bb98-e982b4be1c5b",
+        "containers": [
+          {
+            "name": "app",
+            "imageId": "host.lima.internal:50444/ozz-s6/application@sha256:760634892091f28780bf76cf6573d3e5e80d843879e860de3a97c95ebdef9ba5",
+            "ready": true,
+            "state": "running"
+          }
+        ]
+      }
+    ]
+  },
+  "https": [
+    {
+      "name": "https-content-matches-fixed-source-commit",
+      "status": "passed",
+      "at": "2026-10-26T04:33:43.048Z",
+      "httpsStatus": 200,
+      "hostnameVerified": true,
+      "localChainVerified": true,
+      "certificateSha256": "67e6945a7b59396a4d5a2eec32d4f5200658b4097f069d17977c65f265aab782",
+      "bodySha256": "f93256218f1412b3e117f365f5bd389176717d70c6c83fa78f2879228e5a2104",
+      "markerMatched": true,
+      "hostname": "source-app-f889ec49-c05888287480.b.apps.ozz.test",
+      "domainId": "c0588828-7480-46a4-8dc5-8b1df83fc233",
+      "commitSha": "f8365500cab6bb6a682966cb32327d84a84967fe",
+      "image": "host.lima.internal:50444/ozz-s6/application@sha256:760634892091f28780bf76cf6573d3e5e80d843879e860de3a97c95ebdef9ba5",
+      "certificateAuthority": "local_test"
+    }
+  ],
+  "browser": {
+    "status": "passed",
+    "completedStages": [
+      "development-session",
+      "baseline-resource-identity",
+      "saved-integration-verification",
+      "fixed-preview-not-published",
+      "persisted-build-artifact-and-logs",
+      "default-domain-observations",
+      "no-task-or-lifecycle-side-effects"
+    ],
+    "audit": {
+      "writes": [
+        {
+          "method": "POST",
+          "path": "/api/auth/login",
+          "status": 200,
+          "kind": "login",
+          "origin": "https://127.0.0.1:51448",
+          "hasCsrfToken": false
+        },
+        {
+          "method": "POST",
+          "path": "/api/services/e5968684-0d49-49fa-8dfd-ce0b035d73ad/git-source/preview",
+          "status": 200,
+          "kind": "preview",
+          "origin": "https://127.0.0.1:51448",
+          "hasCsrfToken": true
+        }
+      ],
+      "pageErrors": 0,
+      "failures": [],
+      "foreignApiOrigins": []
+    },
+    "deploymentAndOperationInventoryUnchanged": true,
+    "publishedDeploymentIdUnchanged": "7f089683-1eb7-40cb-bb98-e982b4be1c5b",
+    "screenshotCount": 9,
+    "runnerExited": true,
+    "browserProcessesRemaining": 0
+  },
+  "regressions": {
+    "networkRegression": {
+      "passed": 49,
+      "failed": 0,
+      "scope": "真实 PostgreSQL/API：V3 域名端口与既有网络回归"
+    },
+    "configurationReviewRegression": {
+      "passed": 3,
+      "failed": 0,
+      "scope": "配置预览单元：JSON键序、实际差异、尚未发布"
+    }
+  },
+  "evidence": [
+    {
+      "kind": "publication",
+      "path": ".local/local-lab/s6-product/publish-20261026T042431349Z-66978344-published.json",
+      "sha256": "40792fb7f1007b8768837fa894f369d50b1ee16fca4a042f819641c419486e5e"
+    },
+    {
+      "kind": "publicationReceipt",
+      "path": ".local/local-lab/s6-product/publish-20261026T042431349Z-66978344.json",
+      "sha256": "0d163d6a97250640a09569abe13d6de891f005b31d99933b27b82cfd7285c929"
+    },
+    {
+      "kind": "https",
+      "path": ".local/local-lab/s6-product/https-20261026T043304918Z-40322985.json",
+      "sha256": "34606b48a96635dbdf90d7ef5af294ab4eb9240e534f489aa89f2a46ee0bd40b"
+    },
+    {
+      "kind": "browser",
+      "path": "apps/console/tests/artifacts/s6-real-product/attempt-2-2026-10-26T04-40-09-522Z/acceptance-summary.json",
+      "sha256": "d3044e440f03ba36e44c8d818412ffcfd8bc0387b885b61ccf58c0c5c1dea9f4"
+    },
+    {
+      "kind": "networkRegression",
+      "path": ".local/local-lab/s6-product/v3-network-after-fix.json",
+      "sha256": "4b889ea8595da8673b5c230118016f34ceb0c506cac05bcaca7ac29f66177b1c"
+    },
+    {
+      "kind": "configurationReviewRegression",
+      "path": "apps/console/tests/artifacts/s6-real-product/configuration-review-regression.json",
+      "sha256": "8aa93d978a38fcea61116a2ae1db3849eeeca86c7120dace610d0c303e41eed9"
+    }
+  ],
+  "notCovered": [
+    "停止/运行状态下 Webhook 自动部署另行验收",
+    "Linux Builder 故障矩阵另行验收",
+    "S6 Linux 发布包和 G-MVP 联合验证未完成",
+    "GitHub SaaS 公网投递、真实 VPS、公开 DNS/ACME 与目标容量未验证",
+    "当前浏览器入口使用 development Cookie，不代表生产 Secure Cookie 已验证",
+    "本地 VM 共用一台物理 Mac，不代表独立故障域或生产 RPO/RTO"
+  ]
+}

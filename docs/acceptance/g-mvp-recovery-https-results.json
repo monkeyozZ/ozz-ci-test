@@ -1,0 +1,311 @@
+{
+  "version": 1,
+  "stage": "G-MVP L06 / recovered original control-plane HTTPS acceptance",
+  "recordedAt": "2026-10-28T14:39:34.717974+00:00",
+  "status": "passed",
+  "scope": "Recovered original local control plane: strict HTTPS, fresh API and browser login, retained identities, and read-only key pages.",
+  "sourceReportVersion": 1,
+  "sourceReportOwner": "ozz-g-mvp-recovery-https-v1",
+  "originalReport": {
+    "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/report.json",
+    "sha256": "cc97abe70790657113a41db642d23ab6366a9d09eea8852a3b84f40d01c14e6f",
+    "bytes": 13400
+  },
+  "runId": "20261028T124749292Z-0a939cf0",
+  "startedAt": "2026-10-28T12:47:49.293Z",
+  "finishedAt": "2026-10-28T12:47:53.004Z",
+  "origin": "https://127.0.0.1:51448",
+  "runtime": {
+    "nodeRequiredByProbe": "24.22.1",
+    "browserVersion": "156.0.8078.48"
+  },
+  "sourceBinding": {
+    "sourceHashRecordedDuringRun": false,
+    "reviewedAt": "2026-10-28T14:39:34.717974+00:00",
+    "reviewedSourceFiles": [
+      {
+        "path": "apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+        "sha256": "3ff766014a2b8b306ceb633e02f2df21fd59727ab30611d0319d77219a564bdf",
+        "bytes": 24138
+      },
+      {
+        "path": "apps/console/tests/local-lab/s6-real-support.ts",
+        "sha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
+        "bytes": 5414
+      }
+    ],
+    "servedEntryHtmlSha256": "3c8d62dee4d1060d84ddf5add134309439742f77799034fc608648962d5f815a",
+    "scope": "The original report binds the served HTML, recovery state, step evidence and screenshots. These probe/helper source hashes are a later read-only review and do not establish the exact source revision or complete application bundle used during the run."
+  },
+  "recoveryBaseline": {
+    "path": ".local/local-lab/g-mvp-recovery/state.json",
+    "sha256": "13e0a488317e9a71fc93c835e8993a896343cbc6b67dd43bc76397578eb98979",
+    "recoveryId": "d222fddb-7a8c-478b-9624-e9942e94e335",
+    "returnedGeneration": 5
+  },
+  "checks": [
+    {
+      "name": "strict-entry-tls",
+      "status": "passed",
+      "startedAt": "2026-10-28T12:47:49.294Z",
+      "finishedAt": "2026-10-28T12:47:49.306Z",
+      "origin": "https://127.0.0.1:51448",
+      "chainAndHostnameVerified": true,
+      "caSha256": "56abf9e306feae118969e10d62a9ca1c7a6c08f897f1186a09261c8d64da221f",
+      "leafFingerprint256": "C6:AA:01:CD:FB:51:72:5F:A1:98:A8:09:E9:76:BD:25:07:A2:2B:EF:D6:17:63:A5:E8:63:6E:BB:D9:D3:62:1E",
+      "validFrom": "Oct 26 03:02:00 2026 GMT",
+      "validTo": "Nov 25 03:02:00 2026 GMT",
+      "htmlSha256": "3c8d62dee4d1060d84ddf5add134309439742f77799034fc608648962d5f815a",
+      "bytes": 1261,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/01-strict-entry-tls.json",
+        "sha256": "36bd3fd1c8d0ae7cc369c179440d2cecf17822d66208194dfc06c2f22632808c"
+      }
+    },
+    {
+      "name": "fresh-strict-https-api-login",
+      "status": "passed",
+      "startedAt": "2026-10-28T12:47:49.401Z",
+      "finishedAt": "2026-10-28T12:47:49.606Z",
+      "loginStatus": 200,
+      "meStatus": 200,
+      "user": {
+        "id": "b123494d-b4c7-47d4-a0d2-a8e48c685300",
+        "username": "admin"
+      },
+      "restoreMode": false,
+      "control": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "generation": 5,
+        "restoreLocked": false
+      },
+      "cookieAttributes": {
+        "httpOnly": true,
+        "sameSite": "Strict",
+        "path": "/api",
+        "secure": false
+      },
+      "credentialsSaved": false,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/02-fresh-strict-https-api-login.json",
+        "sha256": "9ef2df042c35f3edc132a1aeba2caea27b38cb5fd2889a41c0218c1b485234de"
+      }
+    },
+    {
+      "name": "retained-public-identities",
+      "status": "passed",
+      "startedAt": "2026-10-28T12:47:49.607Z",
+      "finishedAt": "2026-10-28T12:47:49.762Z",
+      "projects": 16,
+      "services": 33,
+      "deployments": 85,
+      "identitiesEvidence": {
+        "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/retained-identities.json",
+        "sha256": "e8503f16d0bc87f00e4d66f5df21be0e1fd450b0fb5c48038fc34d407745bb33"
+      },
+      "projectId": "fa0944d7-4bf7-4873-96dc-4046fd88609b",
+      "serviceId": "e5968684-0d49-49fa-8dfd-ce0b035d73ad",
+      "publishedDeploymentId": "19cf6191-2ac5-44ce-a69f-8f6182d25c6b",
+      "latestDeploymentId": "19cf6191-2ac5-44ce-a69f-8f6182d25c6b",
+      "firstDeploymentId": "7f089683-1eb7-40cb-bb98-e982b4be1c5b",
+      "selectedFrom": "current service.published.deploymentId, checked against retained sourceSnapshot",
+      "sourceRevisionId": "1cf6c51a-330e-49dc-a2fc-7d7082a676b3",
+      "artifactId": "5c1003e5-bedc-4c04-9572-1fb674913396",
+      "snapshotSha256": "b048df9e2fb325be739b03182a3c6115c7757b09310bca64a66169d5fe76398a",
+      "health": {
+        "status": "ready",
+        "mode": "read_write",
+        "queue": "ready"
+      },
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/03-retained-public-identities.json",
+        "sha256": "98309e50960587b5e266244002c4e45e7d90a8700333e56e68f5c5d79b33e212"
+      }
+    },
+    {
+      "name": "fresh-browser-login",
+      "status": "passed",
+      "startedAt": "2026-10-28T12:47:49.762Z",
+      "finishedAt": "2026-10-28T12:47:51.057Z",
+      "loginStatus": 200,
+      "meStatus": 200,
+      "user": {
+        "id": "b123494d-b4c7-47d4-a0d2-a8e48c685300",
+        "username": "admin"
+      },
+      "restoreMode": false,
+      "independentlyCreatedSession": true,
+      "cookieAttributes": {
+        "httpOnly": true,
+        "path": "/api",
+        "sameSite": "Strict",
+        "secure": false
+      },
+      "browserVersion": "156.0.8078.48",
+      "storageStateSaved": false,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/04-fresh-browser-login.json",
+        "sha256": "42ab125412ea72d40ac1460abc1b3c77b1ed5f6f372e3958f2efbb6eab0b4e4c"
+      }
+    },
+    {
+      "name": "key-pages-read-only",
+      "status": "passed",
+      "startedAt": "2026-10-28T12:47:51.058Z",
+      "finishedAt": "2026-10-28T12:47:52.676Z",
+      "pages": [
+        "/projects",
+        "/projects/fa0944d7-4bf7-4873-96dc-4046fd88609b",
+        "/projects/fa0944d7-4bf7-4873-96dc-4046fd88609b/services/e5968684-0d49-49fa-8dfd-ce0b035d73ad",
+        "/deployments/19cf6191-2ac5-44ce-a69f-8f6182d25c6b"
+      ],
+      "screenshotCount": 5,
+      "projectId": "fa0944d7-4bf7-4873-96dc-4046fd88609b",
+      "serviceId": "e5968684-0d49-49fa-8dfd-ce0b035d73ad",
+      "deploymentId": "19cf6191-2ac5-44ce-a69f-8f6182d25c6b",
+      "snapshotVersion": 3,
+      "realNetwork": true,
+      "responseFixturesUsed": false,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/05-key-pages-read-only.json",
+        "sha256": "1ee4b05d5c204892a1dd7d8dee47f7080e286f993757c46498f0ff3d0b6e8696"
+      }
+    },
+    {
+      "name": "identities-preserved-after-browser",
+      "status": "passed",
+      "startedAt": "2026-10-28T12:47:52.677Z",
+      "finishedAt": "2026-10-28T12:47:52.830Z",
+      "publicIdentitySha256Before": "3c5a6788f2ba37b53b9917e170845023c5f2e6e0bd6adc68453efc7c3e46567c",
+      "publicIdentitySha256After": "3c5a6788f2ba37b53b9917e170845023c5f2e6e0bd6adc68453efc7c3e46567c",
+      "databaseIdentitySha256Before": "a36f760f85c3add51167cf8fc262981bd6c5749fbd5edb97a970aadfad3f4d0a",
+      "databaseIdentitySha256After": "a36f760f85c3add51167cf8fc262981bd6c5749fbd5edb97a970aadfad3f4d0a",
+      "control": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "generation": 5,
+        "restoreLocked": false
+      },
+      "unchanged": true,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/06-identities-preserved-after-browser.json",
+        "sha256": "044886b6c815cd9d7e24b39ce50b5208012d21113f65fe79d15c4f2ee9b1f302"
+      }
+    }
+  ],
+  "counts": {
+    "passed": 6,
+    "failed": 0,
+    "screenshots": 5
+  },
+  "screenshots": [
+    {
+      "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/01-fresh-login-empty.png",
+      "sha256": "b4c3c632dd0bd8c7b84417dfab8a7cde7e7307ea19935f91191e69b5b49c6fda",
+      "url": "https://127.0.0.1:51448/login?returnTo=%2Fprojects",
+      "viewportWidth": 1440,
+      "documentWidth": 1440
+    },
+    {
+      "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/02-projects-after-login.png",
+      "sha256": "43fd6853b3a8f77f22b1d9bd911b2d7210ea82884b59a4e6c71da5c42235e645",
+      "url": "https://127.0.0.1:51448/projects",
+      "viewportWidth": 1440,
+      "documentWidth": 1440
+    },
+    {
+      "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/03-recovered-project-services.png",
+      "sha256": "895d75262046b79967c2d511b2a2b27228e4f4154040aaa39be746f2e273199b",
+      "url": "https://127.0.0.1:51448/projects/fa0944d7-4bf7-4873-96dc-4046fd88609b?environment=production",
+      "viewportWidth": 1440,
+      "documentWidth": 1440
+    },
+    {
+      "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/04-recovered-git-service.png",
+      "sha256": "6163714105f4d91c1535023cca3645bcc0df7851bbcd7ee8077f5f0cd15b27ad",
+      "url": "https://127.0.0.1:51448/projects/fa0944d7-4bf7-4873-96dc-4046fd88609b/services/e5968684-0d49-49fa-8dfd-ce0b035d73ad?environment=production&tab=overview",
+      "viewportWidth": 1440,
+      "documentWidth": 1440
+    },
+    {
+      "path": ".local/local-lab/g-mvp-recovery-https/20261028T124749292Z-0a939cf0/05-current-published-git-deployment.png",
+      "sha256": "b16f4a790f72d66f98eb1978a39acd8ce4c7a067c5e9b4df565053aead47bb9f",
+      "url": "https://127.0.0.1:51448/deployments/19cf6191-2ac5-44ce-a69f-8f6182d25c6b",
+      "viewportWidth": 1440,
+      "documentWidth": 1440
+    }
+  ],
+  "network": {
+    "nodeRequestCount": 14,
+    "browserRequestCount": 17,
+    "allNodeRequestsUsedStrictTls": true,
+    "allowedWriteEndpoints": ["/api/auth/login", "/api/auth/logout"],
+    "businessWriteRequests": 0,
+    "blockedWrites": 0,
+    "foreignRequests": 0,
+    "unexpectedApiFailures": 0,
+    "pageErrors": 0
+  },
+  "browserTrust": "A private browser context permits this local fixture certificate only after independent strict Node CA and IP SAN verification; browser trust-store validation is not claimed.",
+  "productionSecureCookieVerified": false,
+  "credentialEvidence": {
+    "passwordSaved": false,
+    "cookieSaved": false,
+    "csrfSaved": false,
+    "storageStateSaved": false,
+    "tracesSaved": false,
+    "videoSaved": false,
+    "harSaved": false
+  },
+  "cleanup": {
+    "browserSessionRevoked": true,
+    "browserContextClosed": true,
+    "ownBrowserClosed": true,
+    "nodeSessionRevoked": true,
+    "databaseDisconnected": true
+  },
+  "evidenceVerification": {
+    "verifiedAt": "2026-10-28T14:39:34.717974+00:00",
+    "referencedFiles": 13,
+    "allSha256Match": true,
+    "originalReportsUnchanged": true
+  },
+  "previousFailedAttempts": [
+    {
+      "originalReport": {
+        "path": ".local/local-lab/g-mvp-recovery-https/20261028T124124318Z-76871bf0/report.json",
+        "sha256": "86c9de880de3d5a7576b3b7d4e15b3b5be9393c40c5721c33f88dd99e4660ca8",
+        "bytes": 9420
+      },
+      "status": "failed",
+      "startedAt": "2026-10-28T12:41:24.320Z",
+      "finishedAt": "2026-10-28T12:41:28.630Z",
+      "failure": {
+        "stage": "key-pages-read-only",
+        "summary": "The heading locator matched both the navigation heading and the page h1, so Playwright strict mode rejected the locator. The original full failure is retained in the private report.",
+        "rawFailureRetainedInOriginalReport": true
+      },
+      "completedChecks": [
+        "strict-entry-tls",
+        "fresh-strict-https-api-login",
+        "retained-public-identities",
+        "fresh-browser-login"
+      ],
+      "screenshotCount": 2,
+      "cleanup": {
+        "browserSessionRevoked": true,
+        "browserContextClosed": true,
+        "ownBrowserClosed": true,
+        "nodeSessionRevoked": true,
+        "databaseDisconnected": true
+      },
+      "retained": true
+    }
+  ],
+  "limits": [
+    "This verifies recovery of the original local control plane at generation 5, using the current retained Git publication and real HTTP responses. It does not repeat application deployment or data recovery.",
+    "The API client strictly verifies the private CA chain and IP SAN. The browser context permits that local certificate after the independent check; browser/system trust-store validation is not claimed.",
+    "The shared local runtime uses development cookie settings, with Secure false. Production Secure Cookie, Origin and CSRF acceptance belongs to the final Linux package.",
+    "Public GitHub delivery, public CA/DNS, target VPS capacity and physical fault-domain recovery are outside this result.",
+    "Retained application metadata identity checks do not substitute for a fresh combined A-image/B-Git Kubernetes and HTTPS runtime identity check."
+  ]
+}

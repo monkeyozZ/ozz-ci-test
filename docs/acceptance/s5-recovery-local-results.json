@@ -1,0 +1,700 @@
+{
+  "version": 1,
+  "status": "passed",
+  "invocationId": "b247d3cb-7a88-40d5-bb85-6fa96e8168d7",
+  "startedAt": "2026-10-25T23:37:21.057Z",
+  "scope": "Real local ARM64 K3s A to fresh K3s B targets through product API/Worker and the manual-data CLIs. Existing fixed-image cache assistance; no cloud or physical off-host disaster-recovery claim.",
+  "copyLocation": {
+    "label": "local-mac-outside-source-vm",
+    "outsideSourceVm": true,
+    "samePhysicalMac": true,
+    "physicalLocationVerification": "operator_reported"
+  },
+  "selectedEngines": [
+    "files"
+  ],
+  "node": "v24.22.1",
+  "runId": "2554d8a4-771d-4a0e-9030-14bea6acb4c7",
+  "sourceRunId": "ddaabb56-0393-4076-a636-126a6caa22f4",
+  "completedAt": "2026-10-25T23:39:20.207Z",
+  "checks": [
+    {
+      "name": "postgresql: source marker verified before backup",
+      "passed": true,
+      "observedAt": "2026-10-25T23:34:38.920Z",
+      "serviceId": "efb929e9-7488-4d25-9d76-d42afa8ce338",
+      "volumeId": "61c28353-0831-47ac-9c1b-419983417eec",
+      "podUid": "8395e690-ca93-4d6b-bd01-9135ce11bbb3"
+    },
+    {
+      "name": "postgresql: immutable backup and Mac copy verified",
+      "passed": true,
+      "observedAt": "2026-10-25T23:34:39.952Z",
+      "backupId": "a7b10b60-16e4-4442-8ea0-81a70aa09d15",
+      "sha256": "5887cda3ec01965afa69401edf906ab9d6fcfb9ba002727472443dde8f52b0d7",
+      "sizeBytes": "1721",
+      "manifestSha256": "2acce27c67278d3f5b03fe46a1b4cd68ecfc0d2130ee9951d37df37a67f64221",
+      "copyId": "0fc28853-7ee0-4821-8ee0-bd4b1c057e39"
+    },
+    {
+      "name": "postgresql: fresh B target restored and formal data verified; source retained",
+      "passed": true,
+      "observedAt": "2026-10-25T23:35:19.474Z",
+      "backupId": "a7b10b60-16e4-4442-8ea0-81a70aa09d15",
+      "source": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "volumeId": "61c28353-0831-47ac-9c1b-419983417eec",
+        "pvcUid": "92d8ff4c-33aa-4aa3-9b01-5768c8267dbc"
+      },
+      "target": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+        "volumeId": "9866c7f4-6e40-44de-816c-79bdc6c6fb2f",
+        "pvcUid": "bb125e53-e9fb-4a87-a08a-5eb49dedebf4"
+      },
+      "sourceServiceId": "efb929e9-7488-4d25-9d76-d42afa8ce338",
+      "targetServiceId": "c5971e92-b897-4789-b85a-42c137871054",
+      "durationMs": 16305,
+      "backupRecordId": "0c96b7eb-43f9-45f8-8be1-a94be993d8f8",
+      "restoreRecordId": "ab2af949-25f7-42f6-8bf4-eaf1710e1a25",
+      "verificationSource": "operator_reported"
+    },
+    {
+      "name": "redis: source marker verified before backup",
+      "passed": true,
+      "observedAt": "2026-10-25T23:36:01.315Z",
+      "serviceId": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c",
+      "volumeId": "336ee757-62f7-4bf4-bdd9-09b486c412d9",
+      "podUid": "59f7c7a5-71a0-4f26-9653-ffee7d2d52ee"
+    },
+    {
+      "name": "redis: immutable backup and Mac copy verified",
+      "passed": true,
+      "observedAt": "2026-10-25T23:36:07.683Z",
+      "backupId": "8b0b1bfa-ca60-4b3c-b7d1-9c22822f029b",
+      "sha256": "45108aa369fc96164150a39da3648825cb389c0469bdb8cd82ba80f36e7ef593",
+      "sizeBytes": "233",
+      "manifestSha256": "d7e13cf86e91322ceeb442e3bc6fb84e88af45866c80131ba9505b101f5f14c2",
+      "copyId": "7aad85ad-0961-4b42-88a6-1a435ab464b0"
+    },
+    {
+      "name": "redis: fresh B target restored and formal data verified; source retained",
+      "passed": true,
+      "observedAt": "2026-10-25T23:36:48.091Z",
+      "backupId": "8b0b1bfa-ca60-4b3c-b7d1-9c22822f029b",
+      "source": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "volumeId": "336ee757-62f7-4bf4-bdd9-09b486c412d9",
+        "pvcUid": "1ebeaab4-6cfa-4d67-9771-a58b3aebed61"
+      },
+      "target": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+        "volumeId": "446ac582-6cd3-40e9-bf0f-c93c94a619ee",
+        "pvcUid": "f7a2cdb3-627c-4d52-b09d-64bbb92560c8"
+      },
+      "sourceServiceId": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c",
+      "targetServiceId": "9b3b7de6-5aec-4dc7-ba37-dd2e11d0b942",
+      "durationMs": 17585,
+      "backupRecordId": "4a221bda-47a0-4846-821c-83b1d5148bc9",
+      "restoreRecordId": "21b5d364-2d4e-451b-b49d-e85ccb9ceb3c",
+      "verificationSource": "operator_reported"
+    },
+    {
+      "name": "files: source marker verified before backup",
+      "passed": true,
+      "observedAt": "2026-10-25T23:37:21.852Z",
+      "serviceId": "bfd2b0d3-16bb-44e0-af21-19b30c180ac0",
+      "volumeId": "605410b8-8099-4a8c-a185-3c37c18d06cb",
+      "podUid": "6fb14238-ced0-491b-8317-85de185bc26b"
+    },
+    {
+      "name": "files: immutable backup and Mac copy verified",
+      "passed": true,
+      "observedAt": "2026-10-25T23:37:58.486Z",
+      "backupId": "ffc810d7-7e6c-4add-8823-b6baa824942e",
+      "sha256": "a4fadc026962ea7242e77938e491f13d974ac63ae4e6858faf235fd743148413",
+      "sizeBytes": "10240",
+      "manifestSha256": "d4cc70cb7ae031a046e9a66255b1d5bb8e3c09cca5d22376fe4b79939be56a0d",
+      "copyId": "ff5bd6f9-e518-4891-9dd7-48c06e5e74c0"
+    },
+    {
+      "name": "files: fresh B target restored and formal data verified; source retained",
+      "passed": true,
+      "observedAt": "2026-10-25T23:39:20.186Z",
+      "backupId": "ffc810d7-7e6c-4add-8823-b6baa824942e",
+      "source": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "volumeId": "605410b8-8099-4a8c-a185-3c37c18d06cb",
+        "pvcUid": "9b7e488c-791c-47e0-a182-9b83a7ac9da8"
+      },
+      "target": {
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+        "volumeId": "c29436c5-48c1-4040-8415-23e316e75d1f",
+        "pvcUid": "0dfe4388-b631-4ce4-8120-44be39db2760"
+      },
+      "sourceServiceId": "bfd2b0d3-16bb-44e0-af21-19b30c180ac0",
+      "targetServiceId": "6b97886a-5344-4145-8116-10222f5b276e",
+      "durationMs": 15811,
+      "backupRecordId": "1ca06d73-aa6e-4147-a27a-851c847040b2",
+      "restoreRecordId": "18e31d76-8616-40b5-9fed-af72ac1f8aa9",
+      "verificationSource": "operator_reported",
+      "httpSha256": "839e148ab7aefc7b2f55ea0a8333a8b32509b89c40cf0b72355b6f0a12ea7261"
+    }
+  ],
+  "resources": {
+    "postgresql": {
+      "source": {
+        "serviceId": "efb929e9-7488-4d25-9d76-d42afa8ce338",
+        "volumeId": "61c28353-0831-47ac-9c1b-419983417eec",
+        "identity": {
+          "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+          "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+          "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+          "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+          "volumeId": "61c28353-0831-47ac-9c1b-419983417eec",
+          "pvcUid": "92d8ff4c-33aa-4aa3-9b01-5768c8267dbc"
+        },
+        "deploymentId": "1da232dc-9cd9-4c08-9249-715a6dfeb76b",
+        "requestedBytes": "4294967296",
+        "projectId": "fbd1c8ed-aee3-421a-bff7-be7f63a16002",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3"
+      },
+      "backup": {
+        "backupId": "a7b10b60-16e4-4442-8ea0-81a70aa09d15",
+        "sha256": "5887cda3ec01965afa69401edf906ab9d6fcfb9ba002727472443dde8f52b0d7",
+        "sizeBytes": "1721",
+        "completedAt": "2026-10-25T23:34:39.797Z",
+        "manifestSha256": "2acce27c67278d3f5b03fe46a1b4cd68ecfc0d2130ee9951d37df37a67f64221"
+      },
+      "copy": {
+        "formatVersion": 1,
+        "kind": "verified-copy",
+        "copyId": "0fc28853-7ee0-4821-8ee0-bd4b1c057e39",
+        "backupId": "a7b10b60-16e4-4442-8ea0-81a70aa09d15",
+        "artifactSha256": "5887cda3ec01965afa69401edf906ab9d6fcfb9ba002727472443dde8f52b0d7",
+        "manifestSha256": "2acce27c67278d3f5b03fe46a1b4cd68ecfc0d2130ee9951d37df37a67f64221",
+        "sizeBytes": "1721",
+        "locationLabel": "local-mac-outside-source-vm",
+        "completedAt": "2026-10-25T23:34:39.888Z",
+        "physicalLocationVerification": "operator_reported"
+      },
+      "backupRecordId": "0c96b7eb-43f9-45f8-8be1-a94be993d8f8",
+      "targets": [
+        {
+          "attemptId": "f3c5f43c-1aa8-41c8-ae86-f84d10256c3a",
+          "serviceId": "c5971e92-b897-4789-b85a-42c137871054",
+          "volumeId": "9866c7f4-6e40-44de-816c-79bdc6c6fb2f",
+          "identity": {
+            "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+            "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+            "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+            "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+            "volumeId": "9866c7f4-6e40-44de-816c-79bdc6c6fb2f",
+            "pvcUid": "bb125e53-e9fb-4a87-a08a-5eb49dedebf4"
+          },
+          "deploymentId": "e3f7f090-e144-4423-96d4-9e88532e12ea",
+          "serviceCreatedAt": "2026-10-25T23:34:40.328Z",
+          "volumeCreatedAt": "2026-10-25T23:34:40.352Z",
+          "restoreOperationId": "08894acd-e3b4-4e0b-9f7d-c4ef2359259c",
+          "result": "passed",
+          "durationMs": 16305,
+          "restoreRecordId": "ab2af949-25f7-42f6-8bf4-eaf1710e1a25",
+          "sourceRetained": true,
+          "business": {
+            "verified": true,
+            "podUid": "9bba865f-0c12-4bf4-bf33-3553ffbeef9c"
+          },
+          "failure": null,
+          "failureHold": null,
+          "replaces": null
+        }
+      ]
+    },
+    "redis": {
+      "source": {
+        "serviceId": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c",
+        "volumeId": "336ee757-62f7-4bf4-bdd9-09b486c412d9",
+        "identity": {
+          "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+          "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+          "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+          "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+          "volumeId": "336ee757-62f7-4bf4-bdd9-09b486c412d9",
+          "pvcUid": "1ebeaab4-6cfa-4d67-9771-a58b3aebed61"
+        },
+        "deploymentId": "48a4e52c-2835-4c13-9a6d-9a2685f9d2e1",
+        "requestedBytes": "1073741824",
+        "projectId": "fbd1c8ed-aee3-421a-bff7-be7f63a16002",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3"
+      },
+      "backup": {
+        "backupId": "8b0b1bfa-ca60-4b3c-b7d1-9c22822f029b",
+        "sha256": "45108aa369fc96164150a39da3648825cb389c0469bdb8cd82ba80f36e7ef593",
+        "sizeBytes": "233",
+        "completedAt": "2026-10-25T23:36:07.508Z",
+        "manifestSha256": "d7e13cf86e91322ceeb442e3bc6fb84e88af45866c80131ba9505b101f5f14c2"
+      },
+      "copy": {
+        "formatVersion": 1,
+        "kind": "verified-copy",
+        "copyId": "7aad85ad-0961-4b42-88a6-1a435ab464b0",
+        "backupId": "8b0b1bfa-ca60-4b3c-b7d1-9c22822f029b",
+        "artifactSha256": "45108aa369fc96164150a39da3648825cb389c0469bdb8cd82ba80f36e7ef593",
+        "manifestSha256": "d7e13cf86e91322ceeb442e3bc6fb84e88af45866c80131ba9505b101f5f14c2",
+        "sizeBytes": "233",
+        "locationLabel": "local-mac-outside-source-vm",
+        "completedAt": "2026-10-25T23:36:07.621Z",
+        "physicalLocationVerification": "operator_reported"
+      },
+      "backupRecordId": "4a221bda-47a0-4846-821c-83b1d5148bc9",
+      "targets": [
+        {
+          "attemptId": "7bebe418-5e3b-4115-bdda-722be5f7cdf1",
+          "serviceId": "9b3b7de6-5aec-4dc7-ba37-dd2e11d0b942",
+          "volumeId": "446ac582-6cd3-40e9-bf0f-c93c94a619ee",
+          "identity": {
+            "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+            "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+            "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+            "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+            "volumeId": "446ac582-6cd3-40e9-bf0f-c93c94a619ee",
+            "pvcUid": "f7a2cdb3-627c-4d52-b09d-64bbb92560c8"
+          },
+          "deploymentId": "21473b2c-f73d-4521-b50a-ab7255a6b249",
+          "serviceCreatedAt": "2026-10-25T23:36:07.992Z",
+          "volumeCreatedAt": "2026-10-25T23:36:08.013Z",
+          "restoreOperationId": "b242ed69-b78f-401b-8c46-ee3fb4263389",
+          "result": "passed",
+          "durationMs": 17585,
+          "restoreRecordId": "21b5d364-2d4e-451b-b49d-e85ccb9ceb3c",
+          "sourceRetained": true,
+          "business": {
+            "verified": true,
+            "podUid": "89e2ea47-7b74-40bc-976d-b33731104467"
+          },
+          "failure": null,
+          "failureHold": null,
+          "replaces": null
+        }
+      ]
+    },
+    "files": {
+      "source": {
+        "serviceId": "bfd2b0d3-16bb-44e0-af21-19b30c180ac0",
+        "volumeId": "605410b8-8099-4a8c-a185-3c37c18d06cb",
+        "identity": {
+          "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+          "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+          "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+          "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+          "volumeId": "605410b8-8099-4a8c-a185-3c37c18d06cb",
+          "pvcUid": "9b7e488c-791c-47e0-a182-9b83a7ac9da8"
+        },
+        "deploymentId": "eb6d0ed4-6903-4588-a526-9ed1040976c0",
+        "requestedBytes": "1073741824",
+        "projectId": "fbd1c8ed-aee3-421a-bff7-be7f63a16002",
+        "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3"
+      },
+      "backup": {
+        "backupId": "ffc810d7-7e6c-4add-8823-b6baa824942e",
+        "sha256": "a4fadc026962ea7242e77938e491f13d974ac63ae4e6858faf235fd743148413",
+        "sizeBytes": "10240",
+        "completedAt": "2026-10-25T23:37:58.276Z",
+        "manifestSha256": "d4cc70cb7ae031a046e9a66255b1d5bb8e3c09cca5d22376fe4b79939be56a0d"
+      },
+      "copy": {
+        "formatVersion": 1,
+        "kind": "verified-copy",
+        "copyId": "ff5bd6f9-e518-4891-9dd7-48c06e5e74c0",
+        "backupId": "ffc810d7-7e6c-4add-8823-b6baa824942e",
+        "artifactSha256": "a4fadc026962ea7242e77938e491f13d974ac63ae4e6858faf235fd743148413",
+        "manifestSha256": "d4cc70cb7ae031a046e9a66255b1d5bb8e3c09cca5d22376fe4b79939be56a0d",
+        "sizeBytes": "10240",
+        "locationLabel": "local-mac-outside-source-vm",
+        "completedAt": "2026-10-25T23:37:58.405Z",
+        "physicalLocationVerification": "operator_reported"
+      },
+      "backupRecordId": "1ca06d73-aa6e-4147-a27a-851c847040b2",
+      "targets": [
+        {
+          "attemptId": "e2837721-5303-4cc7-b37b-6be06accd75f",
+          "serviceId": "6b97886a-5344-4145-8116-10222f5b276e",
+          "volumeId": "c29436c5-48c1-4040-8415-23e316e75d1f",
+          "identity": {
+            "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972",
+            "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+            "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+            "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20",
+            "volumeId": "c29436c5-48c1-4040-8415-23e316e75d1f",
+            "pvcUid": "0dfe4388-b631-4ce4-8120-44be39db2760"
+          },
+          "deploymentId": "761a729d-ef36-4119-9eda-ce466911c28f",
+          "serviceCreatedAt": "2026-10-25T23:38:08.801Z",
+          "volumeCreatedAt": "2026-10-25T23:38:08.869Z",
+          "restoreOperationId": "8b3f83c7-2777-472d-a859-a16e9f721bca",
+          "result": "passed",
+          "durationMs": 15811,
+          "restoreRecordId": "18e31d76-8616-40b5-9fed-af72ac1f8aa9",
+          "sourceRetained": true,
+          "business": {
+            "verified": true,
+            "podUid": "e7af9441-1c44-44ea-85d6-fcb8cac7680b",
+            "fileSha256": "839e148ab7aefc7b2f55ea0a8333a8b32509b89c40cf0b72355b6f0a12ea7261",
+            "httpSha256": "839e148ab7aefc7b2f55ea0a8333a8b32509b89c40cf0b72355b6f0a12ea7261"
+          },
+          "failure": null,
+          "failureHold": null,
+          "replaces": null
+        }
+      ]
+    }
+  },
+  "evidence": [
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/06f80289-0f62-48ae-a596-d248855269e6/a7b10b60-16e4-4442-8ea0-81a70aa09d15/manifest.json",
+      "sha256": "2acce27c67278d3f5b03fe46a1b4cd68ecfc0d2130ee9951d37df37a67f64221",
+      "sizeBytes": "3653"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/b4cafc8b-e6f6-4073-96d3-b995c3e9b068/a7b10b60-16e4-4442-8ea0-81a70aa09d15/copy-receipt-0fc28853-7ee0-4821-8ee0-bd4b1c057e39.json",
+      "sha256": "9abf768cbb7cfa28a200846f035c722e465540dba1215ec206546199dcce7e8f",
+      "sizeBytes": "507"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/36be48cd-b6cb-4d9c-bc54-9ceb7407de9e/2125e625-1dc1-4e87-a5c7-c90f823c46fd/manual-record-receipt.json",
+      "sha256": "3bf9cb82e717369374d2e47785f97ef2dac9f1ef62487e322fa4ded2ad62e9af",
+      "sizeBytes": "2012"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/0e1a5e13-6bb8-48f7-8c3a-e22fe1b28c6f/08894acd-e3b4-4e0b-9f7d-c4ef2359259c/restore-prepared.json",
+      "sha256": "96046ba9cef5d9373baf39f9c4b19cf4df03b72b75942e9a9214843c3d72c4ed",
+      "sizeBytes": "8292"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/0e1a5e13-6bb8-48f7-8c3a-e22fe1b28c6f/08894acd-e3b4-4e0b-9f7d-c4ef2359259c/restore-complete.json",
+      "sha256": "e874638e5bd0037b0f3338eba1931290c42bd83fd71994f3d9f6c104e9caab56",
+      "sizeBytes": "9561"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/b850b4f2-4bf0-4ec7-a774-e540040e95b5/d6a099ba-7ccd-4e4c-a530-9eec99e1f911/manual-record-receipt.json",
+      "sha256": "22332e698e613339286b5e5912c8c843662f379f9bfd5e328150ecf180dfb803",
+      "sizeBytes": "3061"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/f1b34ec3-8013-4dd1-b157-d7629127308b/8b0b1bfa-ca60-4b3c-b7d1-9c22822f029b/manifest.json",
+      "sha256": "d7e13cf86e91322ceeb442e3bc6fb84e88af45866c80131ba9505b101f5f14c2",
+      "sizeBytes": "3451"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/7652af89-f36b-4d20-8264-dd98afec0e8b/8b0b1bfa-ca60-4b3c-b7d1-9c22822f029b/copy-receipt-7aad85ad-0961-4b42-88a6-1a435ab464b0.json",
+      "sha256": "2ce327da7cd8ccc5fe1ca65a3e7f8a7d446dffcce56b099c03781b629ff57145",
+      "sizeBytes": "506"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/f05736fb-5b73-4b47-9de8-ad121a32b5f3/0d58a9c0-65e6-4b18-9b53-ffe2b93aaf6d/manual-record-receipt.json",
+      "sha256": "42d8331dfc73cc83591d06af461846ce0b57e617c4060cb96352d267babcc4de",
+      "sizeBytes": "2111"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/fe96ec97-fced-4750-a940-a4932e6f7874/b242ed69-b78f-401b-8c46-ee3fb4263389/restore-prepared.json",
+      "sha256": "8569d7de58e6c8f4cd880f04d3b9811eb385691b34fe7db299dc09c2243370c5",
+      "sizeBytes": "8618"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/fe96ec97-fced-4750-a940-a4932e6f7874/b242ed69-b78f-401b-8c46-ee3fb4263389/restore-complete.json",
+      "sha256": "cd1a461e377a70357343c62e693360a581b38af8a76562543032023edb1cc3a0",
+      "sizeBytes": "10017"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/b1547c61-d730-4e2d-9f5d-4e3d1c4bc703/80cf4db0-c596-4d06-9fcd-ed17de6ad8e6/manual-record-receipt.json",
+      "sha256": "ec952d7bb40866f71d8a776f2f23da183cbfe730eecfaab459b4a4a661d0b521",
+      "sizeBytes": "3269"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/9d66f43c-cd8d-42db-9c80-a3feda88e291/ffc810d7-7e6c-4add-8823-b6baa824942e/manifest.json",
+      "sha256": "d4cc70cb7ae031a046e9a66255b1d5bb8e3c09cca5d22376fe4b79939be56a0d",
+      "sizeBytes": "3584"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/db7a8dac-7282-4cf6-8c9b-2faeef32e1c6/ffc810d7-7e6c-4add-8823-b6baa824942e/copy-receipt-ff5bd6f9-e518-4891-9dd7-48c06e5e74c0.json",
+      "sha256": "2cebd4dc340163d25e7ea4c4cc206914102787f98d3888a3b88832194ebed7d8",
+      "sizeBytes": "508"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/8f6f282b-ad48-4b8e-9ff8-e6c81b97f27d/73d1ab00-62a4-48f1-bb47-924f853165cc/manual-record-receipt.json",
+      "sha256": "0a32a504beb1181761107d70b626275c38669dd1bc02f6954994c80bbf900276",
+      "sizeBytes": "2124"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/9419e42e-8263-49ed-8eb9-593835117126/8b3f83c7-2777-472d-a859-a16e9f721bca/restore-prepared.json",
+      "sha256": "cbcc874e5675caae6500653ffbadf614757c23660bbf00c940b5d98f56e0b7e6",
+      "sizeBytes": "6843"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/9419e42e-8263-49ed-8eb9-593835117126/8b3f83c7-2777-472d-a859-a16e9f721bca/restore-complete.json",
+      "sha256": "6b3f4b755b91caaf454663f3d66a165a65de07a3636e6ba1c24db4d4970ec325",
+      "sizeBytes": "7398"
+    },
+    {
+      "path": ".local/local-lab/s5-recovery/2554d8a4-771d-4a0e-9030-14bea6acb4c7/cli/2923ecad-9507-4cf6-b989-d9e81078bab2/d40ffffc-0c4c-4584-9b96-d81ea9a28cce/manual-record-receipt.json",
+      "sha256": "6f829a1437f8262c2c70cc061e778846010a4433675ca99ccbac58558c7dacbd",
+      "sizeBytes": "2949"
+    }
+  ],
+  "cliAttempts": [
+    {
+      "label": "backup:postgresql",
+      "id": "06f80289-0f62-48ae-a596-d248855269e6",
+      "kind": "backup",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "1d32a34b69db50773749e477225c8152331906c2e30305f65d24151de94201da",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:34:39.814Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "copy:postgresql",
+      "id": "b4cafc8b-e6f6-4073-96d3-b995c3e9b068",
+      "kind": "artifact",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "7d01369154b13e1de19de9823db7eacaf11367d7b32f47450bb58bfec0232c54",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:34:39.899Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "record:backup:postgresql",
+      "id": "36be48cd-b6cb-4d9c-bc54-9ceb7407de9e",
+      "kind": "record",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "5883f5aa6bc1986f962ddaba9299af8ebe147d55f39bb54e554809e863e3845e",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:34:40.292Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "restore:postgresql:f3c5f43c-1aa8-41c8-ae86-f84d10256c3a",
+      "id": "0e1a5e13-6bb8-48f7-8c3a-e22fe1b28c6f",
+      "kind": "restore",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "b15baf679bfa47347fd3f0174a7a80b95487920b1822b3b67771e6053e7215e0",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:35:09.124Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "verify:postgresql:f3c5f43c-1aa8-41c8-ae86-f84d10256c3a",
+      "id": "422c8505-5b6e-43e9-82cc-51cab6d6a5d5",
+      "kind": "verify",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "e3c9fff54b04f4b173a69ca19f64e34609a1dc9c0c963fba5a49e05165872b55",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:35:18.921Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "record:restore:postgresql:08894acd-e3b4-4e0b-9f7d-c4ef2359259c",
+      "id": "b850b4f2-4bf0-4ec7-a774-e540040e95b5",
+      "kind": "record",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "4a49206f8766ad43952845d9848e091146576d675d551e45a51925ad10e996c9",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:35:19.238Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "backup:redis",
+      "id": "f1b34ec3-8013-4dd1-b157-d7629127308b",
+      "kind": "backup",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "924f90b173ea5db86524fe240e44d765928dfa9e41490c37bb4f04f1f637a69f",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:36:07.536Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "copy:redis",
+      "id": "7652af89-f36b-4d20-8264-dd98afec0e8b",
+      "kind": "artifact",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "eadb43db9ac1f28d5bbe2a598148b75222a7225f6bc54d5dd92b70c01a0007f6",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:36:07.634Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "record:backup:redis",
+      "id": "f05736fb-5b73-4b47-9de8-ad121a32b5f3",
+      "kind": "record",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "6f1d778f3e2b811d19259a8c2cca28d6b34c8ab85c4c04feb58339a65b3e1125",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:36:07.952Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "restore:redis:7bebe418-5e3b-4115-bdda-722be5f7cdf1",
+      "id": "fe96ec97-fced-4750-a940-a4932e6f7874",
+      "kind": "restore",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "c0338562987257fbb50987c0cb6b96d547f08ce3b74e5ec16a7f6d665a3c8cb0",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:36:37.644Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "verify:redis:7bebe418-5e3b-4115-bdda-722be5f7cdf1",
+      "id": "683da9c4-ce84-4d44-91b2-ef4dcf290867",
+      "kind": "verify",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "857b81adb87584698bb3367b1b92510db9019f740dccd39a27e89b987557c246",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:36:47.666Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "record:restore:redis:b242ed69-b78f-401b-8c46-ee3fb4263389",
+      "id": "b1547c61-d730-4e2d-9f5d-4e3d1c4bc703",
+      "kind": "record",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "de9d33fea760ab6302b3a76539dc2ddf8f4ea43452aa0eb22e09621e1805ba47",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:36:47.941Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "backup:files",
+      "id": "9d66f43c-cd8d-42db-9c80-a3feda88e291",
+      "kind": "backup",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "b5fce8e5cf1e4f0dc7fa80394aa159bd94ab36f0e9723cc3c8678699827bbb39",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:37:58.307Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "copy:files",
+      "id": "db7a8dac-7282-4cf6-8c9b-2faeef32e1c6",
+      "kind": "artifact",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "5f3a8d41d8867deda51b13e67bf832888a0c7fa8736c970b1d9c16f9673e86e9",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:37:58.415Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "record:backup:files",
+      "id": "8f6f282b-ad48-4b8e-9ff8-e6c81b97f27d",
+      "kind": "record",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "ff1a040f42f56bc2a5cbcf25007bed0e5ea419180ad11fd8d34e7f822b247c03",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:38:08.762Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "restore:files:e2837721-5303-4cc7-b37b-6be06accd75f",
+      "id": "9419e42e-8263-49ed-8eb9-593835117126",
+      "kind": "restore",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "3a7256e8805acd84e37ed35df44dae76f1755e4795f1e3c1837717b5c76575bf",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:39:08.366Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "verify:files:e2837721-5303-4cc7-b37b-6be06accd75f",
+      "id": "16b21a51-9d86-4feb-9317-9f4ee2aee733",
+      "kind": "verify",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "7f97102dcbbcec47528daad3d0e85e830073028845de33520605723b194f563e",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:39:18.625Z"
+      },
+      "failure": null
+    },
+    {
+      "label": "record:restore:files:8b3f83c7-2777-472d-a859-a16e9f721bca",
+      "id": "2923ecad-9507-4cf6-b989-d9e81078bab2",
+      "kind": "record",
+      "state": "succeeded",
+      "process": {
+        "exitCode": 0,
+        "stdoutSha256": "4a5264ae9ace2f538b60e3aead9aa605a94538c7f42e6a35bd59d5fa0833f3c3",
+        "stderrBytes": 0,
+        "completedAt": "2026-10-25T23:39:19.491Z"
+      },
+      "failure": null
+    }
+  ]
+}

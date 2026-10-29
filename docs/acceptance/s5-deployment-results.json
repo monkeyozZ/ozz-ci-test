@@ -1,0 +1,556 @@
+{
+  "stage": "S5 Linux production packaging and deployment acceptance",
+  "status": "passed",
+  "completedAt": "2026-10-26T01:15:52.762074+00:00",
+  "scope": "Four linux/arm64 images built from the immutable S5 snapshot and tested in the retained dedicated C Docker daemon; no A/B, Pebble or Mac Docker operations.",
+  "source": {
+    "runId": "s5-20261026T004406Z-5b4fee22",
+    "archive": ".local/local-lab/linux-build-c/snapshots/s5-20261026T004406Z-5b4fee22/source.tar.gz",
+    "archiveSha256": "fb0d8402542cac614268789efe0ece0860d4bc1c25b7de51d59b8b969264e173",
+    "archiveBytes": 1882895,
+    "sourceFiles": 649,
+    "sourceBytes": 11995713,
+    "docsSourceFiles": 100,
+    "stableDuringCapture": true,
+    "stableAfterEvidenceValidation": true,
+    "knownGeneratedSecretPatternsAbsent": 13,
+    "validation": {
+      "repositoryCheck": {
+        "backendPassed": 349,
+        "consolePassed": 39,
+        "manualDataPassed": 60,
+        "status": "passed"
+      },
+      "fullIntegration": {
+        "passed": 210,
+        "status": "passed"
+      },
+      "console": {
+        "realScenarios": 6,
+        "realPageChecks": 14,
+        "controlledScenarios": 15,
+        "themeSizeChecks": 66
+      },
+      "policyObservation": {
+        "passed": 13,
+        "status": "passed",
+        "actualErrorBranch": "KUBERNETES_TIMEOUT",
+        "ageThresholdBranchNotClaimedAsLiveTest": true
+      },
+      "evidence": [
+        {
+          "path": "docs/acceptance/s5-engineering-results.json",
+          "sha256": "16d341752f9f82bac24f30b1f22cd32facde16a726934a518abfced229d064f1",
+          "bytes": 10058
+        },
+        {
+          "path": "apps/console/tests/artifacts/s5-real-local-lab/validation-results.json",
+          "sha256": "b3825c0ac86ff0d6b901292cde9f6f00a97c5b5f54e9f28ccc1770b4a4a53a33",
+          "bytes": 4849
+        },
+        {
+          "path": "docs/acceptance/s5-product-local-results.json",
+          "sha256": "378514603629769b98808738e8e3da39981a032fbd39ec1e3571042ce4c1ef6a",
+          "bytes": 7704
+        },
+        {
+          "path": "docs/acceptance/s5-retention-local-results.json",
+          "sha256": "b6e5e214b63638e2b383ecc0812e8f69a07e9e9e8bf4a86d252a27644d741b8a",
+          "bytes": 3628
+        },
+        {
+          "path": "docs/acceptance/s5-bindings-local-results.json",
+          "sha256": "0cf702b43bc98fdc9a66aedb9e3b2a7c221c28c26b8a299fb3198d93f191eab5",
+          "bytes": 7276
+        },
+        {
+          "path": "docs/acceptance/s5-manual-data-final-20261025T234445Z.json",
+          "sha256": "2bb6ba9f8ca68c53d5f86c645585cc595d79557b697d48fb508ffc193a61cefd",
+          "bytes": 24107
+        },
+        {
+          "path": "docs/acceptance/s5-observation-local-results.json",
+          "sha256": "add36662f31929478ad70c55ab4b258034ef6d3aa85a663a74ba8f5b0cbb54a3",
+          "bytes": 426446
+        },
+        {
+          "path": "docs/acceptance/s5-observation-policy-local-results.json",
+          "sha256": "b1871cdb2cdcf61c16a7bf1975d458bacfce9ca0f391f1169357d36d2e7b883c",
+          "bytes": 449120
+        },
+        {
+          "path": ".local/local-lab/linux-build-c/s5-preflight.json",
+          "sha256": "f2732c825dd78ebc23f4640101b1aab32c8ccc77c6f1f564cf4ea9578dc22dca",
+          "bytes": 64448
+        },
+        {
+          "path": ".local/s5-final-check.log",
+          "sha256": "7d83901012e3f76a306295024d845755427399c9b5ae2ee28d1b6b82d916addf",
+          "bytes": 34970
+        },
+        {
+          "path": ".local/s5-final-integration-results.json",
+          "sha256": "05c9ace9e756460cbb88466214e2fdcfb331ba763d9bee7485c397fe57a7527e",
+          "bytes": 89439
+        },
+        {
+          "path": ".local/s5-final-integration.log",
+          "sha256": "0273e5a5c9031bac8b017ba11fad3aeacde22d6ade17a9de6cc671ffa89a1d32",
+          "bytes": 20909
+        },
+        {
+          "path": ".local/s5-final-lint-after-ui.log",
+          "sha256": "69c40394cb20ab53fb4a57cb1f4990adbf2e6be916adbbb9d51f4402fe0cab92",
+          "bytes": 61
+        },
+        {
+          "path": ".local/s5-final-format-after-ui.log",
+          "sha256": "4233f7e814de08f195dac4225cff8a5f7c855ab8cc41d02d87d4cd409049b280",
+          "bytes": 141
+        }
+      ],
+      "noWorkspaceResyncPermitted": true
+    },
+    "noLaterWorkspaceResync": true,
+    "deliveryReportsWrittenAfterCapture": true
+  },
+  "runtime": {
+    "node": "24.22.1",
+    "pnpm": "12.14.0",
+    "docker": "28.5.2",
+    "compose": "2.40.3",
+    "platform": "linux/arm64",
+    "versionsObservedInCompose": {
+      "apiNode": "v24.22.1",
+      "apiPnpm": "12.14.0",
+      "workerNode": "v24.22.1",
+      "workerPnpm": "12.14.0",
+      "caddy": "v2.11.7 h1:yj0Y4fYZGPkSvibBJ1sTWE33xC0fxztVyXEW5iIdUT4=",
+      "fastify": "5.12.7"
+    }
+  },
+  "images": {
+    "api": {
+      "reference": "ozz-s5-20261026t004406z-5b4fee22/api:0.1.0",
+      "imageId": "sha256:725ae059d148b71dd1a118f1d552db4b17f5664810d140ac87f5dface7b441f3",
+      "imageBytes": 923474861,
+      "archive": ".local/local-lab/linux-build-c/artifacts/ozz-s5-20261026t004406z-5b4fee22-api-linux-arm64.tar",
+      "archiveBytes": 954083840,
+      "archiveSha256": "4ea78ed689d70bfbc1414691482862847e6ac84e18417e7fb4bfc4677bde6fb4",
+      "verifiedLayers": 12,
+      "transportHashMatched": true,
+      "configAndAllRootfsDigestsVerified": true,
+      "macDockerLoaded": false
+    },
+    "worker": {
+      "reference": "ozz-s5-20261026t004406z-5b4fee22/worker:0.1.0",
+      "imageId": "sha256:80bd0d81d120d8e39d8582f6bdad954f43540bc7d9bd1412f95d1c09e2eb694e",
+      "imageBytes": 896882830,
+      "archive": ".local/local-lab/linux-build-c/artifacts/ozz-s5-20261026t004406z-5b4fee22-worker-linux-arm64.tar",
+      "archiveBytes": 923805184,
+      "archiveSha256": "ec503ebba2e373b6d7323869c0663c8f70503e022a7d284b809e925dd1c1d8b2",
+      "verifiedLayers": 12,
+      "transportHashMatched": true,
+      "configAndAllRootfsDigestsVerified": true,
+      "macDockerLoaded": false
+    },
+    "migrate": {
+      "reference": "ozz-s5-20261026t004406z-5b4fee22/migrate:0.1.0",
+      "imageId": "sha256:96c43d657684717b48c69ba92d1b43fd5a05d2f2c465a57ecead84ff2a0c4ef3",
+      "imageBytes": 2487231570,
+      "archive": ".local/local-lab/linux-build-c/artifacts/ozz-s5-20261026t004406z-5b4fee22-migrate-linux-arm64.tar",
+      "archiveBytes": 2696908288,
+      "archiveSha256": "1c2bf13c6d42fc38d85b4d6dd6004ed7b932e2fae9ff76cd3738573b636375bb",
+      "verifiedLayers": 29,
+      "transportHashMatched": true,
+      "configAndAllRootfsDigestsVerified": true,
+      "macDockerLoaded": false
+    },
+    "console": {
+      "reference": "ozz-s5-20261026t004406z-5b4fee22/console:0.1.0",
+      "imageId": "sha256:163d57943f85fbbc408adc6ae727fd551bb80015b27307505d45536a6afe1103",
+      "imageBytes": 583088409,
+      "archive": ".local/local-lab/linux-build-c/artifacts/ozz-s5-20261026t004406z-5b4fee22-console-linux-arm64.tar",
+      "archiveBytes": 594346496,
+      "archiveSha256": "b98707c24e7f413008517856e9eb9835685d3cf263e1699ac8c4288a41feecbb",
+      "verifiedLayers": 14,
+      "transportHashMatched": true,
+      "configAndAllRootfsDigestsVerified": true,
+      "macDockerLoaded": false
+    }
+  },
+  "archiveVerification": {
+    "images": 4,
+    "configs": 4,
+    "layerReferences": 67,
+    "uniqueRootfsDiffIds": 36,
+    "totalBytes": 5169143808,
+    "mode": "one image per Docker-save stream; no C archive; no Mac Docker load",
+    "minimumMacReserveBytes": 8589934592,
+    "minimumCReserveBytes": 2147483648,
+    "cArchiveFilesCreated": false,
+    "cDiskResizedDuringBuildAcceptanceExport": false
+  },
+  "compose": {
+    "passed": 19,
+    "failed": 0,
+    "checks": {
+      "linuxRootRestoreKeyReadableByRuntimeUser": true,
+      "migrationsActuallyApplied": true,
+      "httpsVerifiedWithLocalCa": true,
+      "sameOriginApiAndSpa": true,
+      "httpRedirectPreservesExternalOrigin": true,
+      "s5FixedDatabaseAndApplicationTemplates": true,
+      "s5AuthenticatedVolumeAndDatabaseQueries": true,
+      "s5StorageAndDatabaseMigrationsApplied": true,
+      "authCrudAndDefaultEnvironment": true,
+      "safeParserErrors": true,
+      "workerRejectsMissingAndWrongKeyBeforeDispatch": true,
+      "separateWorkerExecutesDurableTask": true,
+      "redisOutageAcceptedAndRecovered": true,
+      "composeBackupRestoreLocksNewGeneration": true,
+      "restartPreservesDatabaseKeyAndTls": true,
+      "forgedForwardedAddressesCannotBypassLoginLimit": true,
+      "backendPrivateAndResourcesBounded": true,
+      "apiAndWorkerReachExternalSshKubernetesAndRegistryProtocols": true,
+      "databaseAndRedisCannotReachTheSameExternalProtocols": true
+    },
+    "project": "ozz-s1-proof-a06ca071",
+    "databaseMigrations": {
+      "applied": 8,
+      "unfinished": 0
+    },
+    "timingsMs": {
+      "fixture-setup": 72,
+      "compose-config": 376,
+      "linux-key-permissions": 791,
+      "compose-start": 20534,
+      "database-check": 69,
+      "copy-public-ca": 84,
+      "admin-init": 3039,
+      "redis-stop": 199,
+      "compose-backup": 632,
+      "redis-start": 296,
+      "compose-restore": 482,
+      "storage-restart": 1051,
+      "application-restart": 1499,
+      "api-node-version": 186,
+      "api-pnpm-version": 138,
+      "worker-node-version": 84,
+      "worker-pnpm-version": 173,
+      "caddy-version": 243,
+      "fastify-version": 103,
+      "postgres-container-id": 100,
+      "postgres-runtime-config": 29,
+      "postgres-image-id": 22,
+      "redis-container-id": 71,
+      "redis-runtime-config": 12,
+      "redis-image-id": 11,
+      "api-container-id": 68,
+      "api-runtime-config": 11,
+      "api-image-id": 11,
+      "worker-container-id": 76,
+      "worker-runtime-config": 11,
+      "worker-image-id": 13,
+      "console-container-id": 82,
+      "console-runtime-config": 28,
+      "console-image-id": 19,
+      "backend-network": 17,
+      "egress-network": 14,
+      "egress-api-id": 104,
+      "egress-api-networks": 18,
+      "egress-worker-id": 288,
+      "egress-worker-networks": 25,
+      "egress-postgres-id": 223,
+      "egress-postgres-networks": 47,
+      "egress-redis-id": 97,
+      "egress-redis-networks": 16,
+      "egress-create-ca": 277,
+      "egress-create-csr": 278,
+      "egress-sign-cert": 30,
+      "egress-fixture-network": 193,
+      "egress-fixture-start": 865,
+      "egress-fixture-ports": 54,
+      "egress-api-probe": 905,
+      "egress-worker-probe": 317,
+      "egress-postgres-denied": 451,
+      "egress-redis-denied": 422,
+      "egress-fixture-stop": 243,
+      "stats-container-ids": 195,
+      "docker-stats": 4052,
+      "fixture-stop": 21055
+    },
+    "report": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/compose-s5-report.json",
+    "acceptanceHelperSha256": "6fc58e48a33e27698e70ccda6cab632dcd9efb7bd6febbc09209f4e91a1db2a1",
+    "retention": "All new test containers stopped and retained; databases, volumes, generated credentials and evidence retained.",
+    "s5Boundary": "Template metadata, authenticated volume/database reads and applied schema were tested in Compose; Kubernetes storage lifecycle is covered by the separately recorded S5 product acceptance, not claimed from these empty-list checks."
+  },
+  "s5ImageChecks": {
+    "passed": 4,
+    "failed": 0,
+    "report": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/s5-image-acceptance.json",
+    "checks": [
+      {
+        "status": "passed",
+        "target": "api",
+        "node": "v24.22.1",
+        "platform": "linux",
+        "architecture": "arm64",
+        "workingDirectory": "/tmp",
+        "manifestDocuments": 47,
+        "manifestBytes": 1034826,
+        "manifestSha256": "c04a51295adda2b1a775146751f973e787190778c7f35180861d9678876e5c74",
+        "digestImages": 4,
+        "configRejectsLocalAcme": true,
+        "workerLoaderVerified": false,
+        "fixedLetsEncryptDefaults": true,
+        "generatedConfigurationAbsent": true,
+        "s5StorageProof": {
+          "controlPlaneModules": true,
+          "infrastructureAdapter": true,
+          "prismaModels": [
+            "Volume",
+            "VolumeMount",
+            "VolumeMutation",
+            "VolumeMaintenance",
+            "DatabaseInstance",
+            "DatabaseBinding",
+            "DeploymentVolumeReference",
+            "DeploymentDatabaseReference"
+          ],
+          "migrationsVerified": 0
+        },
+        "imageId": "sha256:725ae059d148b71dd1a118f1d552db4b17f5664810d140ac87f5dface7b441f3",
+        "network": "none",
+        "readOnly": true,
+        "retained": true
+      },
+      {
+        "status": "passed",
+        "target": "worker",
+        "node": "v24.22.1",
+        "platform": "linux",
+        "architecture": "arm64",
+        "workingDirectory": "/tmp",
+        "manifestDocuments": 47,
+        "manifestBytes": 1034826,
+        "manifestSha256": "c04a51295adda2b1a775146751f973e787190778c7f35180861d9678876e5c74",
+        "digestImages": 4,
+        "configRejectsLocalAcme": true,
+        "workerLoaderVerified": true,
+        "fixedLetsEncryptDefaults": true,
+        "generatedConfigurationAbsent": true,
+        "s5StorageProof": {
+          "controlPlaneModules": true,
+          "infrastructureAdapter": true,
+          "prismaModels": [
+            "Volume",
+            "VolumeMount",
+            "VolumeMutation",
+            "VolumeMaintenance",
+            "DatabaseInstance",
+            "DatabaseBinding",
+            "DeploymentVolumeReference",
+            "DeploymentDatabaseReference"
+          ],
+          "migrationsVerified": 0
+        },
+        "imageId": "sha256:80bd0d81d120d8e39d8582f6bdad954f43540bc7d9bd1412f95d1c09e2eb694e",
+        "network": "none",
+        "readOnly": true,
+        "retained": true
+      },
+      {
+        "status": "passed",
+        "target": "migrate",
+        "node": "v24.22.1",
+        "platform": "linux",
+        "architecture": "arm64",
+        "workingDirectory": "/tmp",
+        "manifestDocuments": 47,
+        "manifestBytes": 1034826,
+        "manifestSha256": "c04a51295adda2b1a775146751f973e787190778c7f35180861d9678876e5c74",
+        "digestImages": 4,
+        "configRejectsLocalAcme": true,
+        "workerLoaderVerified": true,
+        "fixedLetsEncryptDefaults": true,
+        "generatedConfigurationAbsent": true,
+        "s5StorageProof": {
+          "controlPlaneModules": true,
+          "infrastructureAdapter": true,
+          "prismaModels": [
+            "Volume",
+            "VolumeMount",
+            "VolumeMutation",
+            "VolumeMaintenance",
+            "DatabaseInstance",
+            "DatabaseBinding",
+            "DeploymentVolumeReference",
+            "DeploymentDatabaseReference"
+          ],
+          "migrationsVerified": 8
+        },
+        "imageId": "sha256:96c43d657684717b48c69ba92d1b43fd5a05d2f2c465a57ecead84ff2a0c4ef3",
+        "network": "none",
+        "readOnly": true,
+        "retained": true
+      },
+      {
+        "status": "passed",
+        "target": "console",
+        "staticAssets": 128,
+        "s4NetworkingUiPresent": true,
+        "s5StorageUiPresent": true,
+        "s5FirstDatabasePublishNoticePresent": true,
+        "localCertificateAuthorityLabelPresent": true,
+        "mobileToastLayeringFixPresent": true,
+        "entryHtmlSha256": "fc5d3ed14ac70ed2b735a70ba9908aa3c05bc80e4968a42f7be9c5db626bbdba",
+        "imageId": "sha256:163d57943f85fbbc408adc6ae727fd551bb80015b27307505d45536a6afe1103",
+        "network": "none",
+        "readOnly": true,
+        "retained": true
+      }
+    ]
+  },
+  "preservation": {
+    "finalState": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/final-state.json",
+    "finalizeReport": ".local/local-lab/linux-build-c/s5-finalize-s5-20261026T004406Z-5b4fee22-attempt-2.json",
+    "retention": {
+      "previousImages": 234,
+      "previousContainers": 44,
+      "previousVolumes": 12,
+      "previousNamedTags": 16,
+      "allPreviousIdsAndNamedTagsRetained": true,
+      "imagesNow": 275,
+      "containersNow": 61,
+      "volumesNow": 16
+    },
+    "runtimeState": {
+      "k3s": "active",
+      "dedicatedDocker": "stopped-and-retained",
+      "runningDockerContainers": 0
+    },
+    "clusterUid": "3acbc89d-ce71-4fa2-9af2-660020df4827",
+    "nodeUid": "81bdf48b-7543-4b54-bc9d-110656ef8f95",
+    "nodeReady": true,
+    "configurationFilesReverified": 11,
+    "configurationSha256": {
+      "/etc/machine-id": "cd873a836b46ab7d68df8e6728f383da216969ea6534d56defd7158f7c8f4664",
+      "/etc/ozz-local-lab-instance": "017df63fc62a57ff59f1fde2f2e4c0c49d82f2f05fb0f417836ef5171aad8923",
+      "/etc/ssh/ssh_host_ed25519_key.pub": "f7564e9992ec273e64350b9df84a4566562e9941eb715da57571621224edd562",
+      "/etc/rancher/k3s/config.yaml": "427fac8a46bf61b56d55882ba1e3dee678b6493f4d64f361142abf31e4b418ba",
+      "/etc/systemd/system/k3s.service": "2ff12dfdff5427623562806f22116b7d3016ee70d26da36cf9965c31257480c4",
+      "/etc/rancher/k3s/k3s.yaml": "0425e03a979105db570279b553db2b88dbf2db0aec8e002deb725045288a8a56",
+      "/var/lib/rancher/k3s/server/tls/server-ca.crt": "8aeeb4833508cd6dfc919a4751d0088e9346ecf9018b1f04e3da54a5d7f04b31",
+      "/var/lib/rancher/k3s/server/tls/client-ca.crt": "9669a6ae15dd2a5864c98ac04fe3b1d167fa23da87e38b086265586f37ad2241",
+      "/etc/systemd/system/ozz-s3-docker-c.service": "00e1c53508af0023a544e6084efa7aff778106986836f2d3e3682598c8d3d755",
+      "/var/lib/ozz-local-lab/c/linux-build-s3/.owner": "f858ee3cc793bd6d0bd9f7903ede0ec9b47e59e14ca7cdcc906b6be2c7b40cc0",
+      "/var/lib/ozz-local-lab/c/linux-build-s3/daemon.json": "1534b9c6365f95e40f82382783319c4159d8d4d44cd62c056cda27bb560d9279"
+    },
+    "priorAndCurrentSnapshotsReverified": {
+      "s3-20261025T184613Z-bdea4186": {
+        "archiveSha256": "577495678a125ca8c8ce0a600c80756f7971ce51b0071e14c7305d9c2ed7e633",
+        "manifestSha256": "b1f49925fdc1969c9633f689da9a0e851c002a9d4c7f3a1d4455a367cbb0dce2",
+        "verifiedFiles": 277,
+        "allHashesMatched": true,
+        "allRecordedFileModesMatched": true
+      },
+      "s3-http413-20261025T193554Z-b9c3411e": {
+        "archiveSha256": "b29ff98a295c999c7e92c22aad31ea4a746269f53e5242bb7aeaa17960003fb0",
+        "manifestSha256": "c9a008055e51624c8bc65533aba6d44380578935136e4675424085eefc7ab7a8",
+        "verifiedFiles": 279,
+        "allHashesMatched": true,
+        "allRecordedFileModesMatched": true
+      },
+      "s4-20261025T205304Z-553ba763": {
+        "archiveSha256": "2f974880c34bca706afabde6b09cf041aff88a0a286d70cd12cd7f9b910d4e12",
+        "manifestSha256": "5fc1844b96bc0de4a14c69767ab50e47b2ee0c7fba66a450df88c820636a5e7e",
+        "verifiedFiles": 417,
+        "allHashesMatched": true,
+        "allRecordedFileModesMatched": true
+      },
+      "s5-20261026T004406Z-5b4fee22": {
+        "archiveSha256": "fb0d8402542cac614268789efe0ece0860d4bc1c25b7de51d59b8b969264e173",
+        "manifestSha256": "47e3b3de9fe8f87d891f40fd2aefb1b22ae74a9a5871fca53e3612f34151e117",
+        "verifiedFiles": 649,
+        "allHashesMatched": true,
+        "allRecordedFileModesMatched": true
+      }
+    },
+    "localHistoricalRecordsReverified": 71,
+    "oldS4Archives": {
+      "count": 4,
+      "inodeSizeMtimeAndPermissionsPreserved": true,
+      "physicalAllocationChanges": 2,
+      "changedAllocationArchivesRehashed": 2,
+      "affectedWholeArchiveHashesMatchOriginalDelivery": true,
+      "allocationRecheck": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/s4-artifact-allocation-recheck.json"
+    },
+    "aOrBModifiedByThisRun": false,
+    "pebbleRestartedByThisRun": false,
+    "macDockerInvokedByThisRun": false,
+    "cVmStopped": false
+  },
+  "capacity": {
+    "finalizedAt": "2026-10-26T01:15:52.762074+00:00",
+    "cDisk": {
+      "total": 40483942400,
+      "used": 25720668160,
+      "free": 14746497024
+    },
+    "macDiskAtFinalization": {
+      "total": 494384795648,
+      "used": 475842568192,
+      "free": 18542227456
+    },
+    "cLogicalDiskBytes": 42949672960,
+    "cSparseAllocatedBytesAtFinalization": 26134237184,
+    "cSparseAllocationGrowthSincePreflightBytes": 2925867008,
+    "priorAuthorizedDiskPreparation": ".local/local-lab/linux-build-c/s5-preparation-c-20261025T230216Z/receipt.json",
+    "discardCapabilityReport": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/discard-capability-read-only.json",
+    "discardAlreadyEnabled": true,
+    "fstrimExecutedByThisRun": false,
+    "laterReadOnlyCapacityReport": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/c-capacity-after-finalize.json",
+    "cDiskOwnerMemoryReport": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/c-disk-owner-memory.json",
+    "cConfiguredCpu": 2,
+    "cConfiguredMemoryBytes": 2415919104,
+    "cObservedVirtualMachinePhysicalFootprint": "2.3 G",
+    "cObservedUniqueHostAgentPhysicalFootprint": "98.3 M",
+    "cStopEstimate": "About 2.4 GiB of observed physical footprint and the 2304 MiB configured VM allocation; actual swap reclamation timing is controlled by macOS. ha.pid and vz.pid reference the same host agent and are counted once.",
+    "builderRecommendation": {
+      "builderCreated": false,
+      "cVmStopped": false,
+      "plan": "After a separate explicit stage starts, stop C while retaining its disk, then run a separate small Linux VM with rootless BuildKit in the released memory slot; recheck host free space before creation.",
+      "initialCpu": 2,
+      "initialMemoryMiB": 2048,
+      "buildConcurrency": 1,
+      "diskPolicy": "Preserve C and all delivery archives; budget the new VM base image, guest filesystem, build cache and one export against the actual host free space while keeping 8 GiB free. Set a cache limit before workload testing.",
+      "rootfulCIsNotTheSourceBuilder": true
+    }
+  },
+  "retainedDiagnosticAttempts": {
+    "readOnlyPreflightCompatibility": [
+      ".local/local-lab/linux-build-c/s5-preflight-attempt-1-local-known-host-alias.json",
+      ".local/local-lab/linux-build-c/s5-preflight-attempt-2-legacy-source-mode.json"
+    ],
+    "initialFinalizeFailure": ".local/local-lab/linux-build-c/s5-finalize-s5-20261026T004406Z-5b4fee22.json",
+    "allocationRecheck": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/s4-artifact-allocation-recheck.json",
+    "finalizeCorrection": "Physical allocation decreased for two old S4 archives while inode, size, mtime and permissions were unchanged. Whole-file SHA-256 matched original S4 delivery; the second helper accepts only this independently proven case. The cause of the allocation change was not established; no source, archive or image was changed."
+  },
+  "evidence": {
+    "completePrivateArchive": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/remote-evidence-after-finalize.tar.gz",
+    "completePrivateArchiveSha256": "d20fbdaca11ea3212c6b406e113c32b8c2cab6cc3fc990feec484ffb199d0fdf",
+    "manifest": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/retrieved-after-finalize/inventory.json",
+    "filesRetrievedAndVerified": 27,
+    "exportReport": ".local/local-lab/linux-build-c/s5-export-s5-20261026T004406Z-5b4fee22.json",
+    "buildReport": ".local/local-lab/linux-build-c/evidence/s5-20261026T004406Z-5b4fee22/build-s5-report.json",
+    "publicReportSecretScan": ".local/local-lab/linux-build-c/s5-public-report-secret-scan-s5-20261026T004406Z-5b4fee22.json"
+  },
+  "limitations": [
+    "This is Linux ARM64 local C evidence; AMD64, real cloud VPS and cross-physical-host capacity were not accepted in this run.",
+    "Public DNS and publicly trusted Let’s Encrypt issuance are outside this local packaging acceptance; production processes still reject the local ACME configuration switch.",
+    "Compose database/template checks do not replace the separate real K3s S5 storage and database lifecycle evidence.",
+    "Subsequent S6 workspace edits and these post-build delivery reports are not included in the immutable S5 image snapshot.",
+    "C uses a dedicated rootful Docker daemon for trusted release packaging; future user-source builds require a separate Linux permission domain with rootless BuildKit."
+  ]
+}

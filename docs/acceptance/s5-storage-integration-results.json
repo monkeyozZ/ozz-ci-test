@@ -1,0 +1,196 @@
+{
+  "stage": "S5 storage integration",
+  "status": "passed",
+  "startedAt": "2026-10-25T22:01:21.262000Z",
+  "finishedAt": "2026-10-25T22:01:43.500423Z",
+  "runtime": "v24.22.1",
+  "command": "pnpm exec node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts tests/integration/storage-s5.test.ts",
+  "scope": {
+    "postgresql": "real database with a random, per-run s5storage_* schema; migrations apply only to that schema",
+    "http": "authenticated real Fastify/Nest application injection and DTO validation",
+    "kubernetes": "controlled KubernetesStorageManager fixture; no real K3s calls in this suite",
+    "mainDatabaseMigrated": false,
+    "realApplicationClusterMutated": false,
+    "cleanup": "afterAll closed the API, dropped only the dedicated test schema, and removed the temporary fixture CA directory"
+  },
+  "counts": {
+    "passed": 25,
+    "failed": 0,
+    "total": 25
+  },
+  "checks": [
+    {
+      "command": "pnpm --filter @ozz/control-plane build",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm --filter @ozz/api build",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm exec eslint packages/control-plane/src/storage apps/api/src/modules/storage tests/integration/storage-s5.test.ts",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm exec prettier --check packages/control-plane/src/storage apps/api/src/modules/storage tests/integration/storage-s5.test.ts",
+      "status": "passed"
+    }
+  ],
+  "cases": [
+    {
+      "name": "S5 storage admission and durable execution creates one durable volume and one operation for concurrent identical requests, completing WFFC without a consumer",
+      "status": "passed",
+      "durationMs": 1007.3002499999998
+    },
+    {
+      "name": "S5 storage admission and durable execution rejects unsupported, incomplete or stale capabilities before creating metadata or remote effects",
+      "status": "passed",
+      "durationMs": 159.5379579999999
+    },
+    {
+      "name": "S5 storage admission and durable execution recovers a lost PVC create response using the original nonce and creation revision without another PVC create",
+      "status": "passed",
+      "durationMs": 551.6270830000003
+    },
+    {
+      "name": "S5 storage admission and durable execution shares the environment Namespace nonce across independent volumes and rejects a late receipt after its lease ends",
+      "status": "passed",
+      "durationMs": 692.7869170000004
+    },
+    {
+      "name": "S5 storage admission and durable execution rechecks management credentials at the write fence and stops before PVC creation after a mid-task change",
+      "status": "passed",
+      "durationMs": 285.7278750000005
+    },
+    {
+      "name": "S5 storage admission and durable execution rejects a superseded recovery generation at the PVC write fence before creating any claim (restoreLocked=false)",
+      "status": "passed",
+      "durationMs": 283.929666
+    },
+    {
+      "name": "S5 storage admission and durable execution rejects a superseded recovery generation at the PVC write fence before creating any claim (restoreLocked=true)",
+      "status": "passed",
+      "durationMs": 216.31458400000065
+    },
+    {
+      "name": "S5 storage admission and durable execution preserves the recorded PVC identity when an identically named claim is replaced before synchronization",
+      "status": "passed",
+      "durationMs": 355.192583
+    },
+    {
+      "name": "S5 storage admission and durable execution retains writer occupancy after a published mount is removed from the draft, then releases it only after confirmed unmount",
+      "status": "passed",
+      "durationMs": 1059.519875
+    },
+    {
+      "name": "S5 storage admission and durable execution allows publication to detach its own reader while verified readers remain, rejecting labels or a substituted controller UID",
+      "status": "passed",
+      "durationMs": 2211.466542
+    },
+    {
+      "name": "S5 storage admission and durable execution allows service_delete to detach its own reader while verified readers remain, rejecting labels or a substituted controller UID",
+      "status": "passed",
+      "durationMs": 2270.5044579999994
+    },
+    {
+      "name": "S5 storage admission and durable execution rejects cross-environment mounts, overlapping paths, and multi-replica writers without changing either draft",
+      "status": "passed",
+      "durationMs": 749.4711669999997
+    },
+    {
+      "name": "S5 storage admission and durable execution persists a first-write database fence even when initialization never becomes ready or a create response is lost",
+      "status": "passed",
+      "durationMs": 574.6423329999998
+    },
+    {
+      "name": "S5 storage admission and durable execution keeps maintenance after task failure and expiration, blocks new writers, and closes only after helpers disappear",
+      "status": "passed",
+      "durationMs": 782.101125000001
+    },
+    {
+      "name": "S5 storage admission and durable execution admits service stop after failed maintenance so its existing writer can drain without losing the maintenance fence",
+      "status": "passed",
+      "durationMs": 1614.6676669999997
+    },
+    {
+      "name": "S5 storage admission and durable execution can exit a cancelled metadata-only restore maintenance without creating data",
+      "status": "passed",
+      "durationMs": 299.66491700000006
+    },
+    {
+      "name": "S5 storage admission and durable execution binds destruction confirmation to the actual data identity and preserves the ledger tombstone",
+      "status": "passed",
+      "durationMs": 812.6013749999984
+    },
+    {
+      "name": "S5 storage admission and durable execution rechecks real Pod references before DELETE and performs no PVC delete when a new Pod appeared after preview",
+      "status": "passed",
+      "durationMs": 942.6970829999991
+    },
+    {
+      "name": "S5 storage admission and durable execution refreshes A and B separately, marks failed A stale immediately and preserves its last useful PVC sample",
+      "status": "passed",
+      "durationMs": 782.0956249999981
+    },
+    {
+      "name": "S5 storage admission and durable execution marks both capability and volume read deadlines stale immediately while retaining their prior samples",
+      "status": "passed",
+      "durationMs": 655.3818749999991
+    },
+    {
+      "name": "S5 storage admission and durable execution discards shutdown cancellation without publishing a server outage",
+      "status": "passed",
+      "durationMs": 439.08966599999985
+    },
+    {
+      "name": "S5 storage admission and durable execution discards a late observation after a newer write intent and does not replace a pinned PVC identity",
+      "status": "passed",
+      "durationMs": 552.643415999999
+    },
+    {
+      "name": "S5 storage HTTP and manual record contract returns accepted identities, exact mount revisions and complete list filters through the authenticated HTTP API",
+      "status": "passed",
+      "durationMs": 725.1629160000011
+    },
+    {
+      "name": "S5 storage HTTP and manual record contract records operator evidence without claiming platform verification and preserves the original backup manifest on restore",
+      "status": "passed",
+      "durationMs": 742.073042
+    },
+    {
+      "name": "S5 storage HTTP and manual record contract keeps read endpoints available while recovery mode blocks every storage mutation",
+      "status": "passed",
+      "durationMs": 389.4233340000028
+    }
+  ],
+  "correctionsValidated": [
+    "Service detach ignores another service only when verified Pod ancestry matches a live ManagedResource root UID/name/kind and the full stored platform target.",
+    "Unknown, spoofed, substituted, truncated or current-service mounts retain occupancy; independent volume maintenance and destruction still require all Pods to exit.",
+    "Read deadline publishes STORAGE_OBSERVATION_TIMEOUT immediately, preserving prior useful samples; shutdown cancellation does not fabricate an outage.",
+    "Generation replacement and restore-lock activation both stop before the PVC write fence with VOLUME_TASK_FENCE_LOST."
+  ],
+  "limits": [
+    "This is not real K3s storage or database initialization acceptance.",
+    "No real backup, restore, data checksum transfer, node scheduling, capacity enforcement, or off-host durability is certified by this suite.",
+    "Manual records remain operator_reported and never imply platform verification.",
+    "Real A/B cluster acceptance and the main database migration are separate work owned by the parent agent."
+  ],
+  "sourceSha256": {
+    "packages/control-plane/src/storage/commands.ts": "a43a148d50b1f8f2b86171faa43191da48cc4dc2e64249cbd4dcf4ef2f71ffe1",
+    "packages/control-plane/src/storage/contracts.ts": "bf4355b60ceac845ee0f7b60d438b0760933234c4082739397a54b666b1d23e3",
+    "packages/control-plane/src/storage/executor.ts": "4a80f3d45712c4636be5c2acd4cbaf471531ff0a814e8c2afdf66b3e7a553602",
+    "packages/control-plane/src/storage/index.ts": "ce324cf4392189e5d1d1e28b3d9e00e623be096e30edacf885a57fd1deca43f4",
+    "packages/control-plane/src/storage/ledger.ts": "eabcaeda657ba6659d4cc37359c0d677a1a395f5cc42875efc2e007934197e3e",
+    "packages/control-plane/src/storage/namespace.ts": "a38a07e3d0428e0019e17820854e6980c4bb319d95e43f14156af2252644d543",
+    "packages/control-plane/src/storage/observer.ts": "c23a355cbb496ad37f65f6c7be8826a432a85a3414fe4eb35addeb03798fe66a",
+    "packages/control-plane/src/storage/persistence.ts": "e0cd7a1b10ea5cb94dbdc22c69def62c517bb7d8bb5e6f942f4e67b66fb2a241",
+    "packages/control-plane/src/storage/validation.ts": "9832621db418b76168a8196387922d890ee8dcf4a9fe636182ea0cd84dfae44a",
+    "packages/control-plane/src/storage/views.ts": "a07a8089fbd84e5a662249f8724fd14e2f199f28d470efc796e046c7ea052cff",
+    "apps/api/src/modules/storage/execution.dto.ts": "3e60a27f0c166618320feff306097df5785b67ed7dfee8a19ed46d4c706299c6",
+    "apps/api/src/modules/storage/storage.controller.ts": "ebbe583dcf63268645cfe71ea09b8d0ef5ebdf9012e1a1a30c958e47c5e5ba7d",
+    "apps/api/src/modules/storage/storage.dto.ts": "1a0550ea07a2d19a6745dd708775df6a5e8e9ff5ff18bf54e920619b911635e5",
+    "apps/api/src/modules/storage/storage.module.ts": "b51804f7245e0be166b2e094596fc6ca43ed5f7220aadd0d125ed5129286404e",
+    "apps/api/src/modules/storage/storage.service.ts": "ac4f95241e88bc08a562e50bff5f9a0383f0d45923286b7cd84fd22c640604cd",
+    "tests/integration/storage-s5.test.ts": "b0ae548fdf083db226fa090a652a2ffb54a682bcafd2dd15a01db20b84a4f2a4"
+  }
+}

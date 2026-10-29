@@ -1,0 +1,30 @@
+{
+  "observedAt": "2026-10-25T20:18:44.279Z",
+  "migration": "202610260002_s4_networking",
+  "applied": true,
+  "preMigrationBackupDirectoriesPresent": true,
+  "activeOperations": 0,
+  "activeDeployments": 0,
+  "retainedClusters": [
+    {
+      "id": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+      "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954"
+    },
+    {
+      "id": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+      "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a"
+    },
+    {
+      "id": "4555faaf-8d4e-4841-b87c-e26a76895b95",
+      "kubeSystemUid": "3acbc89d-ce71-4fa2-9af2-660020df4827"
+    }
+  ],
+  "retainedServiceIds": [
+    "ff8e52ad-5776-44d0-bed2-cb7d9af78928",
+    "6d87d601-4bd8-4451-8ada-16fe914dbc3a",
+    "b668c732-f17b-461a-8f43-eb571c0564ed"
+  ],
+  "managedResourceCount": 37,
+  "networkManagedResourceCount": 0,
+  "publicCloudVerified": false
+}

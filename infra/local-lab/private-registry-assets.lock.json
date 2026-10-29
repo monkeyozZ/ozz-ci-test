@@ -1,0 +1,18 @@
+{
+  "formatVersion": 1,
+  "registry": {
+    "version": "3.1.2",
+    "platform": "linux/arm64",
+    "filename": "registry_3.1.2_linux_arm64.tar.gz",
+    "url": "https://github.com/distribution/distribution/releases/download/v3.1.2/registry_3.1.2_linux_arm64.tar.gz",
+    "checksumUrl": "https://github.com/distribution/distribution/releases/download/v3.1.2/registry_3.1.2_linux_arm64.tar.gz.sha256",
+    "sha256": "09d26f88d2c0f161bd1b8bfc6c123571cc3d291dcca8af5477b3cacc4ec95e73",
+    "bytes": 14303844
+  },
+  "sourceImage": {
+    "reference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "repository": "stefanprodan/podinfo",
+    "digest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "platform": { "os": "linux", "architecture": "arm64" }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "migratedAt": "2026-10-25T22:46:21.824Z",
+  "migration": "202610260003_s5_storage",
+  "backupId": "before-s5-storage-20261026",
+  "checks": {
+    "identity": true,
+    "clusterIdentities": true,
+    "services": true,
+    "resources": true,
+    "domains": true,
+    "networkResources": true,
+    "immutableDeployments": true,
+    "sealedCredentials": true,
+    "secretContentRevision": true,
+    "volumeTasksDoNotOccupyClusterSlot": true
+  },
+  "counts": {
+    "retainedServices": 7,
+    "retainedWorkloadResources": 32,
+    "retainedNetworkResources": 119,
+    "retainedDeployments": 25,
+    "sealedCredentials": 17
+  }
+}

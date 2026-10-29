@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "runId": "scope-20261026t022241497z-977d1d0d",
+  "status": "passed",
+  "startedAt": "2026-10-26T02:22:41.499Z",
+  "scope": "Real Distribution 3.1.2 TLS, JWT verification, OCI manifest/blob push/pull and repository-action enforcement only; no Builder, Skopeo or Kubernetes deployment is certified.",
+  "checks": [
+    {
+      "name": "verified_tls_and_real_distribution_bearer_challenge",
+      "passed": true
+    },
+    {
+      "name": "wrong_password_cannot_obtain_a_token",
+      "passed": true
+    },
+    {
+      "name": "runtime_requested_push_is_reduced_and_distribution_rejects_write",
+      "passed": true
+    },
+    {
+      "name": "uploader_pushes_a_real_oci_config_and_manifest",
+      "passed": true
+    },
+    {
+      "name": "runtime_identity_reads_exact_manifest_and_config",
+      "passed": true
+    },
+    {
+      "name": "runtime_cannot_put_manifests_or_delete_published_digest",
+      "passed": true
+    },
+    {
+      "name": "repository_scope_cannot_be_escalated",
+      "passed": true
+    },
+    {
+      "name": "distribution_verifies_jwt_signature",
+      "passed": true
+    },
+    {
+      "name": "rotated_password_mints_current_working_pull_token",
+      "passed": true
+    },
+    {
+      "name": "actual_registry_access_evidence_contains_no_credentials",
+      "passed": true
+    }
+  ],
+  "registryAccessEntries": 7,
+  "finishedAt": "2026-10-26T02:22:42.216Z",
+  "passed": 10,
+  "artifact": {
+    "repository": "ozz-s6/probe",
+    "tag": "scope-20261026t022241497z-977d1d0d",
+    "manifestDigest": "sha256:dbd5dabbcaf77082913c3ffc3a167df29fe3ffd4fd5908f924b14cd9996b63b5",
+    "configDigest": "sha256:e0ea88a43c18322649102a488b197f5b739a465bfe9ca9d855f6c9e3ed7a2441",
+    "retained": true
+  },
+  "privateEvidence": {
+    "path": ".local/local-lab/s6-registry/scope-20261026t022241497z-977d1d0d.json",
+    "sha256": "bd42d0df0eaabd1e8c3717468609f9ecfe19ac3c9d4278fa7321a4345b49d64f"
+  },
+  "fixtureSetup": ".local/local-lab/s6-registry/setup-1792981251525.json",
+  "sourceScripts": [
+    "infra/local-lab/s6-registry.mjs",
+    "tests/probes/s6-registry-scope.mjs",
+    "tests/probes/support/s6-registry-token-issuer.mjs"
+  ],
+  "preservation": {
+    "oldS3RegistryUnchanged": true,
+    "k3sRestarted": false,
+    "pebbleRestarted": false
+  },
+  "limitations": [
+    "The new OCI manifest has zero layers and is a protocol sample, not an application deployment.",
+    "Source checkout/BuildKit/skopeo/Kubernetes delivery remain separate acceptance.",
+    "Password rotation rejects old credentials for new token issuance; already issued short-lived JWTs were not claimed to be instantly revoked."
+  ]
+}

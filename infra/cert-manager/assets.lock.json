@@ -1,0 +1,67 @@
+{
+  "formatVersion": 1,
+  "version": "v1.21.3",
+  "verifiedAt": "2026-10-26",
+  "release": "https://github.com/cert-manager/cert-manager/releases/tag/v1.21.3",
+  "releaseApi": "https://api.github.com/repos/cert-manager/cert-manager/releases/tags/v1.21.3",
+  "publishedAt": "2026-10-23T20:47:13Z",
+  "license": {
+    "spdx": "Apache-2.0",
+    "packagePath": "packages/infrastructure/assets/LICENSE.cert-manager",
+    "url": "https://raw.githubusercontent.com/cert-manager/cert-manager/v1.21.3/LICENSE",
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "bytes": 11357
+  },
+  "compatibility": {
+    "kubernetesMajor": 1,
+    "supportedMinors": [33, 34, 35, 36],
+    "testedMinors": [33, 34, 35, 36],
+    "source": "https://cert-manager.io/docs/releases/"
+  },
+  "manifest": {
+    "filename": "cert-manager-v1.21.3.yaml",
+    "packagePath": "packages/infrastructure/assets/cert-manager-v1.21.3.yaml",
+    "url": "https://github.com/cert-manager/cert-manager/releases/download/v1.21.3/cert-manager.yaml",
+    "apiUrl": "https://api.github.com/repos/cert-manager/cert-manager/releases/assets/670268685",
+    "sha256": "c04a51295adda2b1a775146751f973e787190778c7f35180861d9678876e5c74",
+    "bytes": 1034826,
+    "documents": 47,
+    "largestObjectJsonBytes": 146637,
+    "maxObjectJsonBytes": 1048576,
+    "installationGuide": "https://cert-manager.io/docs/installation/kubectl/"
+  },
+  "images": {
+    "controller": {
+      "repository": "quay.io/jetstack/cert-manager-controller",
+      "tag": "v1.21.3",
+      "manifestListDigest": "sha256:9f4f96a33c7774cef24466fcd85031997531a03a8d117f151126baa8d1290dcc",
+      "linux/amd64": "sha256:9b262e9493ab3e0daebc2c9cfbddc6df68b9ac91afc036a759584f3d49d607e5",
+      "linux/arm64/v8": "sha256:e396f69ba33cf623694dcfb1f7c637911b06d71984350fb44158e0f7938f5a80",
+      "source": "https://quay.io/v2/jetstack/cert-manager-controller/manifests/v1.21.3"
+    },
+    "cainjector": {
+      "repository": "quay.io/jetstack/cert-manager-cainjector",
+      "tag": "v1.21.3",
+      "manifestListDigest": "sha256:083d0e906f8eb44e255fe4ff817ae54e49f9ed82e22f1011bb4e9e4f4b8a641f",
+      "linux/amd64": "sha256:165691f631d61931a27e4fbbb82bbed8205431d0446b3c14d170081aeff75f0a",
+      "linux/arm64/v8": "sha256:02d5ccb77275b12db6ab5a6275860be90d334be70def56e16b49e4eb7d96f142",
+      "source": "https://quay.io/v2/jetstack/cert-manager-cainjector/manifests/v1.21.3"
+    },
+    "webhook": {
+      "repository": "quay.io/jetstack/cert-manager-webhook",
+      "tag": "v1.21.3",
+      "manifestListDigest": "sha256:055ac8e9de6a0ba6763794838fe38944acc650f68ebe1b01dd8be079e580f458",
+      "linux/amd64": "sha256:fc2845cc042ab57c8b98c5ff62462d50dcd5d8d3302f9e6875cd05042ce1020b",
+      "linux/arm64/v8": "sha256:acef59f95954b7e94a7f8a3bcccd65608bec579db567ad5e2b5a1d38c4b75f62",
+      "source": "https://quay.io/v2/jetstack/cert-manager-webhook/manifests/v1.21.3"
+    },
+    "acmesolver": {
+      "repository": "quay.io/jetstack/cert-manager-acmesolver",
+      "tag": "v1.21.3",
+      "manifestListDigest": "sha256:c8c1225bb2fe8ab37a330b77f0d8c2ee6a41210fcb54fc07ca606ab9a022b8b7",
+      "linux/amd64": "sha256:5d9c98380d108c34fba252ce675857a9b63e00271ecb64ecfa7f58626723dac0",
+      "linux/arm64/v8": "sha256:40e58d6cce5a382461f82b1049aa0ea325b4971cdbf426d1a984edf5491cd0e0",
+      "source": "https://quay.io/v2/jetstack/cert-manager-acmesolver/manifests/v1.21.3"
+    }
+  }
+}

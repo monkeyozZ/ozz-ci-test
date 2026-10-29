@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "runtime": "v24.22.1",
+  "deploy": "pnpm deploy --legacy --prod --no-runtime",
+  "package": "@ozz/infrastructure",
+  "sourceExcluded": true,
+  "cwdIndependent": true,
+  "missingAssetRejected": true,
+  "oversizedAssetRejected": true,
+  "objects": 47,
+  "version": "v1.21.3"
+}

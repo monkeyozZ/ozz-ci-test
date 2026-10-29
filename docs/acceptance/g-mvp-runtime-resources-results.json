@@ -1,0 +1,613 @@
+{
+  "kind": "g-mvp-current-runtime-resource-observation",
+  "version": 1,
+  "recordedAt": "2026-10-29T02:58:51.805580+00:00",
+  "status": "passed",
+  "scope": "Five read-only samples over approximately 20 seconds of the selected existing local runtime components. No capacity or sustained-performance claim.",
+  "evidence": {
+    "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025407Z-aff48566/report.json",
+    "sha256": "e78a36a0d6026de89850b8e0bd08576b04d4737e6f92c38fb3bea6ea2d3268a6",
+    "bytes": 17711
+  },
+  "sampler": {
+    "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025407Z-aff48566/tool.py",
+    "sha256": "c9f50a99d8f0cb66b09d1cfdffd6d407e8f18e1a68afeb33f29475931f92fbbb",
+    "bytes": 16359
+  },
+  "startedAt": "2026-10-29T02:54:07.088285+00:00",
+  "finishedAt": "2026-10-29T02:54:31.012853+00:00",
+  "sampleSpanSeconds": 19.985439292,
+  "sampleCount": 5,
+  "syntheticLoadStarted": false,
+  "identitiesPreserved": true,
+  "vmBefore": [
+    {
+      "name": "ozz-lab-a",
+      "status": "Running"
+    },
+    {
+      "name": "ozz-lab-b",
+      "status": "Running"
+    },
+    {
+      "name": "ozz-lab-c",
+      "status": "Stopped"
+    },
+    {
+      "name": "ozz-build",
+      "status": "Running"
+    }
+  ],
+  "vmAfter": [
+    {
+      "name": "ozz-lab-a",
+      "status": "Running"
+    },
+    {
+      "name": "ozz-lab-b",
+      "status": "Running"
+    },
+    {
+      "name": "ozz-lab-c",
+      "status": "Stopped"
+    },
+    {
+      "name": "ozz-build",
+      "status": "Running"
+    }
+  ],
+  "readinessBefore": {
+    "api": {
+      "status": "ready",
+      "httpStatus": 200
+    },
+    "worker": {
+      "status": "ready",
+      "httpStatus": 200
+    }
+  },
+  "readinessAfter": {
+    "api": {
+      "status": "ready",
+      "httpStatus": 200
+    },
+    "worker": {
+      "status": "ready",
+      "httpStatus": 200
+    }
+  },
+  "processIdentities": {
+    "api": {
+      "pid": 18356,
+      "entrypoint": "tests/probes/s6-product-api.mjs",
+      "processStartedLabel": "Wed Oct 28 18:29:40 2026",
+      "cwdVerified": true
+    },
+    "worker": {
+      "pid": 38446,
+      "entrypoint": "tests/probes/s6-product-worker.mjs",
+      "processStartedLabel": "Wed Oct 28 18:46:02 2026",
+      "cwdVerified": true
+    }
+  },
+  "containerIdentities": {
+    "postgres": {
+      "id": "b20198412c855a08c22bc39b3428f7b387f0f8a67825114641b4591a270c1caf",
+      "name": "/ozz-dev-postgres-1",
+      "service": "postgres",
+      "image": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "running": true,
+      "memoryLimitBytes": 2147483648,
+      "volumes": [
+        {
+          "type": "volume",
+          "name": "ozz-dev_postgres-data",
+          "destination": "/var/lib/postgresql/data"
+        }
+      ]
+    },
+    "redis": {
+      "id": "436e58f898e886b537f13d771b772ce86570ee1632bc80dacad2cea63c3d2ea3",
+      "name": "/ozz-dev-redis-1",
+      "service": "redis",
+      "image": "redis@sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99",
+      "running": true,
+      "memoryLimitBytes": 402653184,
+      "volumes": [
+        {
+          "type": "volume",
+          "name": "ozz-dev_redis-data",
+          "destination": "/data"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "api": {
+      "maximumRssBytes": 49872896,
+      "cpuPercentOfOneCoreAcrossSample": 0.4003945888673291
+    },
+    "worker": {
+      "maximumRssBytes": 213336064,
+      "cpuPercentOfOneCoreAcrossSample": 10.460308634159691
+    },
+    "postgres": {
+      "maximumWorkingSetBytesApproximate": 233832448,
+      "maximumReportedCpuPercent": 11.04
+    },
+    "redis": {
+      "maximumWorkingSetBytesApproximate": 17186161,
+      "maximumReportedCpuPercent": 4.61
+    },
+    "builder": {
+      "maximumServiceMainProcessRssBytes": 1802240,
+      "maximumNodeProcessRssBytes": 66015232,
+      "maximumCgroupMemoryCurrentBytes": 286662656,
+      "cpuPercentOfOneCoreAcrossSample": 0.11512415659251175,
+      "minimumGuestMemAvailableBytes": 1765584896
+    }
+  },
+  "samples": [
+    {
+      "index": 0,
+      "at": "2026-10-29T02:54:08.813339+00:00",
+      "hostMonotonicNs": 71762018905541,
+      "hostFreeDiskBytes": 11673620480,
+      "host": {
+        "observedMonotonicNs": 71762033360708,
+        "processes": {
+          "api": {
+            "pid": 18356,
+            "rssBytes": 49872896,
+            "cpuTotalSeconds": 4.84
+          },
+          "worker": {
+            "pid": 38446,
+            "rssBytes": 119996416,
+            "cpuTotalSeconds": 5935.13
+          }
+        }
+      },
+      "docker": {
+        "observedMonotonicNs": 71764581423208,
+        "containers": {
+          "postgres": {
+            "containerId": "b20198412c855a08c22bc39b3428f7b387f0f8a67825114641b4591a270c1caf",
+            "cpuPercentAsReported": 3.43,
+            "workingSetBytesApproximate": 233203302,
+            "displayedMemoryLimitBytesApproximate": 2147483648,
+            "pids": 14
+          },
+          "redis": {
+            "containerId": "436e58f898e886b537f13d771b772ce86570ee1632bc80dacad2cea63c3d2ea3",
+            "cpuPercentAsReported": 0.68,
+            "workingSetBytesApproximate": 17186161,
+            "displayedMemoryLimitBytesApproximate": 402653184,
+            "pids": 6
+          }
+        }
+      },
+      "builder": {
+        "observedMonotonicNs": 2969543645941,
+        "machineId": "35f04e9afedf4f21bd08a60ec9c923d4",
+        "serviceMainPid": 666,
+        "processStartTicks": "539",
+        "mainProcessRssBytes": 1802240,
+        "serviceProcesses": [
+          {
+            "pid": 666,
+            "executableName": "flock",
+            "rssBytes": 1802240,
+            "processStartTicks": "539"
+          },
+          {
+            "pid": 715,
+            "executableName": "node",
+            "rssBytes": 66015232,
+            "processStartTicks": "556"
+          }
+        ],
+        "controlGroup": "/system.slice/ozz-builder.service",
+        "cpuUsageMicroseconds": 8909384,
+        "memoryCurrentBytes": 286662656,
+        "memoryPeakBytes": 303566848,
+        "memoryMaximumBytes": 402653184,
+        "pidsCurrent": 12,
+        "pidsMaximum": 2264,
+        "memoryEvents": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "guestMemAvailableBytes": 1770168320,
+        "guestMemTotalBytes": 2053836800,
+        "guestDiskAvailableBytes": 8107388928
+      },
+      "readiness": {
+        "api": {
+          "status": "ready",
+          "httpStatus": 200
+        },
+        "worker": {
+          "status": "ready",
+          "httpStatus": 200
+        }
+      }
+    },
+    {
+      "index": 1,
+      "at": "2026-10-29T02:54:13.803398+00:00",
+      "hostMonotonicNs": 71767008923875,
+      "hostFreeDiskBytes": 11673464832,
+      "host": {
+        "observedMonotonicNs": 71767017978791,
+        "processes": {
+          "api": {
+            "pid": 18356,
+            "rssBytes": 24526848,
+            "cpuTotalSeconds": 4.85
+          },
+          "worker": {
+            "pid": 38446,
+            "rssBytes": 170950656,
+            "cpuTotalSeconds": 5935.63
+          }
+        }
+      },
+      "docker": {
+        "observedMonotonicNs": 71768630213875,
+        "containers": {
+          "postgres": {
+            "containerId": "b20198412c855a08c22bc39b3428f7b387f0f8a67825114641b4591a270c1caf",
+            "cpuPercentAsReported": 11.04,
+            "workingSetBytesApproximate": 233203302,
+            "displayedMemoryLimitBytesApproximate": 2147483648,
+            "pids": 14
+          },
+          "redis": {
+            "containerId": "436e58f898e886b537f13d771b772ce86570ee1632bc80dacad2cea63c3d2ea3",
+            "cpuPercentAsReported": 4.61,
+            "workingSetBytesApproximate": 17186161,
+            "displayedMemoryLimitBytesApproximate": 402653184,
+            "pids": 6
+          }
+        }
+      },
+      "builder": {
+        "observedMonotonicNs": 2974654519895,
+        "machineId": "35f04e9afedf4f21bd08a60ec9c923d4",
+        "serviceMainPid": 666,
+        "processStartTicks": "539",
+        "mainProcessRssBytes": 1802240,
+        "serviceProcesses": [
+          {
+            "pid": 666,
+            "executableName": "flock",
+            "rssBytes": 1802240,
+            "processStartTicks": "539"
+          },
+          {
+            "pid": 715,
+            "executableName": "node",
+            "rssBytes": 66015232,
+            "processStartTicks": "556"
+          }
+        ],
+        "controlGroup": "/system.slice/ozz-builder.service",
+        "cpuUsageMicroseconds": 8916661,
+        "memoryCurrentBytes": 286662656,
+        "memoryPeakBytes": 303566848,
+        "memoryMaximumBytes": 402653184,
+        "pidsCurrent": 12,
+        "pidsMaximum": 2264,
+        "memoryEvents": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "guestMemAvailableBytes": 1765584896,
+        "guestMemTotalBytes": 2053836800,
+        "guestDiskAvailableBytes": 8107380736
+      },
+      "readiness": {
+        "api": {
+          "status": "ready",
+          "httpStatus": 200
+        },
+        "worker": {
+          "status": "ready",
+          "httpStatus": 200
+        }
+      }
+    },
+    {
+      "index": 2,
+      "at": "2026-10-29T02:54:18.798776+00:00",
+      "hostMonotonicNs": 71772004333208,
+      "hostFreeDiskBytes": 11673378816,
+      "host": {
+        "observedMonotonicNs": 71772015505375,
+        "processes": {
+          "api": {
+            "pid": 18356,
+            "rssBytes": 26001408,
+            "cpuTotalSeconds": 4.88
+          },
+          "worker": {
+            "pid": 38446,
+            "rssBytes": 177061888,
+            "cpuTotalSeconds": 5936.15
+          }
+        }
+      },
+      "docker": {
+        "observedMonotonicNs": 71774614829333,
+        "containers": {
+          "postgres": {
+            "containerId": "b20198412c855a08c22bc39b3428f7b387f0f8a67825114641b4591a270c1caf",
+            "cpuPercentAsReported": 3.69,
+            "workingSetBytesApproximate": 233832448,
+            "displayedMemoryLimitBytesApproximate": 2147483648,
+            "pids": 14
+          },
+          "redis": {
+            "containerId": "436e58f898e886b537f13d771b772ce86570ee1632bc80dacad2cea63c3d2ea3",
+            "cpuPercentAsReported": 0.98,
+            "workingSetBytesApproximate": 17186161,
+            "displayedMemoryLimitBytesApproximate": 402653184,
+            "pids": 6
+          }
+        }
+      },
+      "builder": {
+        "observedMonotonicNs": 2979486987548,
+        "machineId": "35f04e9afedf4f21bd08a60ec9c923d4",
+        "serviceMainPid": 666,
+        "processStartTicks": "539",
+        "mainProcessRssBytes": 1802240,
+        "serviceProcesses": [
+          {
+            "pid": 666,
+            "executableName": "flock",
+            "rssBytes": 1802240,
+            "processStartTicks": "539"
+          },
+          {
+            "pid": 715,
+            "executableName": "node",
+            "rssBytes": 66015232,
+            "processStartTicks": "556"
+          }
+        ],
+        "controlGroup": "/system.slice/ozz-builder.service",
+        "cpuUsageMicroseconds": 8922299,
+        "memoryCurrentBytes": 286662656,
+        "memoryPeakBytes": 303566848,
+        "memoryMaximumBytes": 402653184,
+        "pidsCurrent": 12,
+        "pidsMaximum": 2264,
+        "memoryEvents": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "guestMemAvailableBytes": 1770364928,
+        "guestMemTotalBytes": 2053836800,
+        "guestDiskAvailableBytes": 8107380736
+      },
+      "readiness": {
+        "api": {
+          "status": "ready",
+          "httpStatus": 200
+        },
+        "worker": {
+          "status": "ready",
+          "httpStatus": 200
+        }
+      }
+    },
+    {
+      "index": 3,
+      "at": "2026-10-29T02:54:23.801058+00:00",
+      "hostMonotonicNs": 71777006624625,
+      "hostFreeDiskBytes": 11673399296,
+      "host": {
+        "observedMonotonicNs": 71777019929458,
+        "processes": {
+          "api": {
+            "pid": 18356,
+            "rssBytes": 25198592,
+            "cpuTotalSeconds": 4.9
+          },
+          "worker": {
+            "pid": 38446,
+            "rssBytes": 122470400,
+            "cpuTotalSeconds": 5936.46
+          }
+        }
+      },
+      "docker": {
+        "observedMonotonicNs": 71779576042500,
+        "containers": {
+          "postgres": {
+            "containerId": "b20198412c855a08c22bc39b3428f7b387f0f8a67825114641b4591a270c1caf",
+            "cpuPercentAsReported": 3.02,
+            "workingSetBytesApproximate": 233832448,
+            "displayedMemoryLimitBytesApproximate": 2147483648,
+            "pids": 14
+          },
+          "redis": {
+            "containerId": "436e58f898e886b537f13d771b772ce86570ee1632bc80dacad2cea63c3d2ea3",
+            "cpuPercentAsReported": 0.74,
+            "workingSetBytesApproximate": 17186161,
+            "displayedMemoryLimitBytesApproximate": 402653184,
+            "pids": 6
+          }
+        }
+      },
+      "builder": {
+        "observedMonotonicNs": 2984517664924,
+        "machineId": "35f04e9afedf4f21bd08a60ec9c923d4",
+        "serviceMainPid": 666,
+        "processStartTicks": "539",
+        "mainProcessRssBytes": 1802240,
+        "serviceProcesses": [
+          {
+            "pid": 666,
+            "executableName": "flock",
+            "rssBytes": 1802240,
+            "processStartTicks": "539"
+          },
+          {
+            "pid": 715,
+            "executableName": "node",
+            "rssBytes": 66015232,
+            "processStartTicks": "556"
+          }
+        ],
+        "controlGroup": "/system.slice/ozz-builder.service",
+        "cpuUsageMicroseconds": 8926935,
+        "memoryCurrentBytes": 286662656,
+        "memoryPeakBytes": 303566848,
+        "memoryMaximumBytes": 402653184,
+        "pidsCurrent": 12,
+        "pidsMaximum": 2264,
+        "memoryEvents": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "guestMemAvailableBytes": 1768464384,
+        "guestMemTotalBytes": 2053836800,
+        "guestDiskAvailableBytes": 8107376640
+      },
+      "readiness": {
+        "api": {
+          "status": "ready",
+          "httpStatus": 200
+        },
+        "worker": {
+          "status": "ready",
+          "httpStatus": 200
+        }
+      }
+    },
+    {
+      "index": 4,
+      "at": "2026-10-29T02:54:28.798755+00:00",
+      "hostMonotonicNs": 71782004344833,
+      "hostFreeDiskBytes": 11673378816,
+      "host": {
+        "observedMonotonicNs": 71782013650708,
+        "processes": {
+          "api": {
+            "pid": 18356,
+            "rssBytes": 24543232,
+            "cpuTotalSeconds": 4.92
+          },
+          "worker": {
+            "pid": 38446,
+            "rssBytes": 213336064,
+            "cpuTotalSeconds": 5937.22
+          }
+        }
+      },
+      "docker": {
+        "observedMonotonicNs": 71783600283458,
+        "containers": {
+          "postgres": {
+            "containerId": "b20198412c855a08c22bc39b3428f7b387f0f8a67825114641b4591a270c1caf",
+            "cpuPercentAsReported": 4.01,
+            "workingSetBytesApproximate": 230581862,
+            "displayedMemoryLimitBytesApproximate": 2147483648,
+            "pids": 14
+          },
+          "redis": {
+            "containerId": "436e58f898e886b537f13d771b772ce86570ee1632bc80dacad2cea63c3d2ea3",
+            "cpuPercentAsReported": 2.49,
+            "workingSetBytesApproximate": 17186161,
+            "displayedMemoryLimitBytesApproximate": 402653184,
+            "pids": 6
+          }
+        }
+      },
+      "builder": {
+        "observedMonotonicNs": 2989494280699,
+        "machineId": "35f04e9afedf4f21bd08a60ec9c923d4",
+        "serviceMainPid": 666,
+        "processStartTicks": "539",
+        "mainProcessRssBytes": 1802240,
+        "serviceProcesses": [
+          {
+            "pid": 666,
+            "executableName": "flock",
+            "rssBytes": 1802240,
+            "processStartTicks": "539"
+          },
+          {
+            "pid": 715,
+            "executableName": "node",
+            "rssBytes": 66015232,
+            "processStartTicks": "556"
+          }
+        ],
+        "controlGroup": "/system.slice/ozz-builder.service",
+        "cpuUsageMicroseconds": 8932352,
+        "memoryCurrentBytes": 286662656,
+        "memoryPeakBytes": 303566848,
+        "memoryMaximumBytes": 402653184,
+        "pidsCurrent": 12,
+        "pidsMaximum": 2264,
+        "memoryEvents": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 0,
+          "oom_group_kill": 0
+        },
+        "guestMemAvailableBytes": 1766830080,
+        "guestMemTotalBytes": 2053836800,
+        "guestDiskAvailableBytes": 8107372544
+      },
+      "readiness": {
+        "api": {
+          "status": "ready",
+          "httpStatus": 200
+        },
+        "worker": {
+          "status": "ready",
+          "httpStatus": 200
+        }
+      }
+    }
+  ],
+  "limits": [
+    "A short local sample of the original API/Worker, PostgreSQL/Redis containers and Builder. It is not a capacity or sustained-load test.",
+    "Mac process RSS, Docker Linux working-set estimates, Builder service cgroup accounting and whole-guest memory are different scopes; they are not added together.",
+    "Builder systemd MainPID is the flock wrapper. Node RSS is observed separately for the service child executable; cgroup memory covers the whole service including cache.",
+    "Mac CPU totals have ps display precision; container CPU percentages and memory sizes retain Docker CLI sampling/rounding semantics. Builder CPU uses its own monotonic clock.",
+    "Normal observers and the read-only queries continue. Console/Vite, fixture/proxy processes, Docker VM overhead and application-cluster capacity are not measured here.",
+    "All workloads and virtual machines share one physical Mac. These readings are not Oracle/VPS resource guarantees."
+  ],
+  "earlierObservation": {
+    "evidence": {
+      "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025117Z-bf5c64ab/report.json",
+      "sha256": "8ddb75d58daae0dca1ac52eef410479732083ae7fd89dfab8d6663a17192774b",
+      "bytes": 15639
+    },
+    "scope": "The earlier managerPid/managerRssBytes were the systemd MainPID flock wrapper, not Node. The retained follow-up separates wrapper RSS, the actual Node child and cgroup memory; use this report for Builder process memory."
+  }
+}

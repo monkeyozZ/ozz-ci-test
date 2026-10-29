@@ -1,0 +1,88 @@
+{
+  "scope": "真实本地 Linux + 产品 API/Worker + 三套 K3s；不代表云端 SSH/防火墙、公网入口或 Oracle 容量验收。",
+  "runId": "30b5385e-6cee-4ff0-8f43-fb6128cf5ee0",
+  "startedAt": "2026-10-25T13:52:23.614Z",
+  "checks": [
+    {
+      "name": "import-a: verified identity and real nodes",
+      "passed": true,
+      "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+      "nodeCount": 1
+    },
+    {
+      "name": "import-b: verified identity and real nodes",
+      "passed": true,
+      "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+      "nodeCount": 1
+    },
+    {
+      "name": "initialize-c: durable acceptance",
+      "passed": true
+    },
+    {
+      "name": "retry-initialize-c-6ce5fde7-6494-408d-918c-46d9d05e678a: durable acceptance",
+      "passed": true
+    },
+    {
+      "name": "server-c: initialized through product Worker with encryption",
+      "passed": true,
+      "serverId": "93fad728-3f1e-4af8-8d2e-0bd5f028a08c",
+      "clusterId": "4555faaf-8d4e-4841-b87c-e26a76895b95",
+      "version": "v1.35.9+k3s1"
+    },
+    {
+      "name": "initialize-c: durable acceptance",
+      "passed": true
+    },
+    {
+      "name": "server-c: repeated acceptance returns the same initialization",
+      "passed": true
+    },
+    {
+      "name": "server-c: Server and Cluster share one Node identity",
+      "passed": true
+    },
+    {
+      "name": "three independent clusters retain unique identities",
+      "passed": true
+    },
+    {
+      "name": "same node names remain separate by cluster + UID",
+      "passed": true
+    },
+    {
+      "name": "project-a: fixed Cluster with production",
+      "passed": true,
+      "projectId": "ee0322ab-caea-41bc-a55b-252243e8e896",
+      "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3"
+    },
+    {
+      "name": "project-b: fixed Cluster with production",
+      "passed": true,
+      "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+      "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83"
+    },
+    {
+      "name": "project-c: fixed Cluster with production",
+      "passed": true,
+      "projectId": "99d288d1-3e51-4899-a9e5-dfddefd16ca4",
+      "clusterId": "4555faaf-8d4e-4841-b87c-e26a76895b95"
+    }
+  ],
+  "status": "passed",
+  "retainedResources": true,
+  "resources": {
+    "clusters": {
+      "a": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+      "b": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+      "c": "4555faaf-8d4e-4841-b87c-e26a76895b95"
+    },
+    "serverC": "93fad728-3f1e-4af8-8d2e-0bd5f028a08c",
+    "projects": {
+      "a": "ee0322ab-caea-41bc-a55b-252243e8e896",
+      "b": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+      "c": "99d288d1-3e51-4899-a9e5-dfddefd16ca4"
+    }
+  },
+  "finishedAt": "2026-10-25T13:52:30.705Z"
+}

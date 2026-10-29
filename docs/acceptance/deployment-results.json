@@ -1,0 +1,257 @@
+{
+  "project": "ozz-s1-proof-944276e8",
+  "testedAt": "2026-10-25T12:34:52.834Z",
+  "checks": {
+    "linuxRootRestoreKeyReadableByRuntimeUser": true,
+    "migrationsActuallyApplied": true,
+    "httpsVerifiedWithLocalCa": true,
+    "sameOriginApiAndSpa": true,
+    "httpRedirectPreservesExternalOrigin": true,
+    "authCrudAndDefaultEnvironment": true,
+    "safeParserErrors": true,
+    "workerRejectsMissingAndWrongKeyBeforeDispatch": true,
+    "separateWorkerExecutesDurableTask": true,
+    "redisOutageAcceptedAndRecovered": true,
+    "composeBackupRestoreLocksNewGeneration": true,
+    "restartPreservesDatabaseKeyAndTls": true,
+    "forgedForwardedAddressesCannotBypassLoginLimit": true,
+    "backendPrivateAndResourcesBounded": true
+  },
+  "timingsMs": {
+    "fixture-setup": 50,
+    "compose-config": 249,
+    "linux-key-permissions": 687,
+    "compose-start": 17149,
+    "database-check": 117,
+    "copy-public-ca": 70,
+    "admin-init": 1210,
+    "redis-stop": 269,
+    "compose-backup": 412,
+    "redis-start": 255,
+    "compose-restore": 483,
+    "storage-restart": 388,
+    "application-restart": 746,
+    "api-node-version": 145,
+    "api-pnpm-version": 138,
+    "worker-node-version": 106,
+    "worker-pnpm-version": 123,
+    "caddy-version": 182,
+    "fastify-version": 122,
+    "postgres-container-id": 93,
+    "postgres-runtime-config": 16,
+    "postgres-image-id": 15,
+    "redis-container-id": 81,
+    "redis-runtime-config": 15,
+    "redis-image-id": 15,
+    "api-container-id": 87,
+    "api-runtime-config": 16,
+    "api-image-id": 15,
+    "worker-container-id": 107,
+    "worker-runtime-config": 18,
+    "worker-image-id": 15,
+    "console-container-id": 73,
+    "console-runtime-config": 16,
+    "console-image-id": 15,
+    "backend-network": 14,
+    "stats-container-ids": 108,
+    "docker-stats": 2564,
+    "fixture-stop": 859
+  },
+  "versions": {
+    "apiNode": "v24.22.1",
+    "apiPnpm": "12.14.0",
+    "workerNode": "v24.22.1",
+    "workerPnpm": "12.14.0",
+    "caddy": "v2.11.7 h1:yj0Y4fYZGPkSvibBJ1sTWE33xC0fxztVyXEW5iIdUT4=",
+    "fastify": "5.12.7"
+  },
+  "resources": {
+    "postgres": {
+      "imageId": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+      "memoryLimitBytes": 2147483648,
+      "cpuLimit": 1,
+      "publishedPorts": []
+    },
+    "redis": {
+      "imageId": "sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99",
+      "memoryLimitBytes": 402653184,
+      "cpuLimit": 0.5,
+      "publishedPorts": []
+    },
+    "api": {
+      "imageId": "sha256:4f556eb8d4b630a1571a765c9b168f5b36b7adbe0344ebda116b7be9bd2b3edb",
+      "memoryLimitBytes": 536870912,
+      "cpuLimit": 1,
+      "publishedPorts": []
+    },
+    "worker": {
+      "imageId": "sha256:2940817610cb08f9e1aa1979708269bb9cd5a7c42ae61deeb0ab5354fb8f9d1c",
+      "memoryLimitBytes": 536870912,
+      "cpuLimit": 0.5,
+      "publishedPorts": []
+    },
+    "console": {
+      "imageId": "sha256:1d6fb6c4f3c1434ad8e3ab46971eecfb49139772bdd7522b5c598bb5eb9d0971",
+      "memoryLimitBytes": 268435456,
+      "cpuLimit": 0.5,
+      "publishedPorts": ["8080/tcp", "8443/tcp"]
+    },
+    "sample": [
+      {
+        "BlockIO": "0B / 0B",
+        "CPUPerc": "0.01%",
+        "Container": "1f6766486688bda1354aae21a3fbf27e18ff0cf83e2654faec441982f67c52d1",
+        "ID": "1f6766486688",
+        "MemPerc": "12.60%",
+        "MemUsage": "64.53MiB / 512MiB",
+        "Name": "ozz-s1-proof-944276e8-api-1",
+        "NetIO": "56.7kB / 77.4kB",
+        "PIDs": "18"
+      },
+      {
+        "BlockIO": "172kB / 4.1kB",
+        "CPUPerc": "0.00%",
+        "Container": "e8d81b734a1959af1a15fb58d60f7b20095a9724d800d1859b2f472d1980e5fb",
+        "ID": "e8d81b734a19",
+        "MemPerc": "4.12%",
+        "MemUsage": "10.56MiB / 256MiB",
+        "Name": "ozz-s1-proof-944276e8-console-1",
+        "NetIO": "43.1kB / 47.3kB",
+        "PIDs": "8"
+      },
+      {
+        "BlockIO": "0B / 17MB",
+        "CPUPerc": "1.30%",
+        "Container": "64efe8973e7692094b3c8be4217a5b34440a109e02b6e163dbd10b5f866fd552",
+        "ID": "64efe8973e76",
+        "MemPerc": "1.69%",
+        "MemUsage": "34.65MiB / 2GiB",
+        "Name": "ozz-s1-proof-944276e8-postgres-1",
+        "NetIO": "126kB / 90.6kB",
+        "PIDs": "12"
+      },
+      {
+        "BlockIO": "20.5kB / 0B",
+        "CPUPerc": "1.87%",
+        "Container": "a5f7cf051ec83d0528e0b9f89d059eaf201c9c09a5ad0585967fcd6e94e378c9",
+        "ID": "a5f7cf051ec8",
+        "MemPerc": "1.12%",
+        "MemUsage": "4.305MiB / 384MiB",
+        "Name": "ozz-s1-proof-944276e8-redis-1",
+        "NetIO": "46.7kB / 59.2kB",
+        "PIDs": "6"
+      },
+      {
+        "BlockIO": "0B / 0B",
+        "CPUPerc": "3.93%",
+        "Container": "8d1ae4e568ed66fe8ae8c915cb871386fd8bad6bb1b1bb2d4cc389046d913eb5",
+        "ID": "8d1ae4e568ed",
+        "MemPerc": "8.60%",
+        "MemUsage": "44.04MiB / 512MiB",
+        "Name": "ozz-s1-proof-944276e8-worker-1",
+        "NetIO": "62.3kB / 59.4kB",
+        "PIDs": "15"
+      }
+    ]
+  },
+  "linuxKeyPermissions": {
+    "status": "passed",
+    "platform": "linux",
+    "node": "v24.22.1",
+    "owners": [
+      {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "readableByRuntimeUser": true
+      },
+      {
+        "uid": 12345,
+        "gid": 12346,
+        "mode": "0600",
+        "readableByRuntimeUser": true
+      }
+    ],
+    "existingFilesUnchanged": true,
+    "nonRootOwnerMismatchRefused": true
+  },
+  "databaseMigrations": {
+    "applied": 2,
+    "unfinished": 0
+  },
+  "status": "passed",
+  "containers": "stopped-and-retained",
+  "formatVersion": 1,
+  "sourceEvidence": ".local/ozz-s1-proof-944276e8/evidence.json",
+  "sourceSha256": "9ae2febc7e30452171cd2c867af197ab100ca9d5137435963578ffb7a5b411ba",
+  "evidenceWrittenAt": "2026-10-25T12:35:43.340555+00:00",
+  "platform": {
+    "hostOs": "macOS 14.8",
+    "dockerDesktop": "4.36.0",
+    "dockerEngine": "27.3.1",
+    "compose": "2.30.3",
+    "containerOs": "linux",
+    "architecture": "arm64",
+    "dockerCpus": 8,
+    "dockerMemoryBytes": 8218251264
+  },
+  "commands": {
+    "build": "pnpm exec node infra/docker/build-images.mjs --legacy --bootstrap-image node:22.21.1-bookworm-slim --debian-mirror https://mirrors.tuna.tsinghua.edu.cn",
+    "verification": "pnpm exec node tests/deployment/compose-smoke.mjs"
+  },
+  "images": {
+    "api": {
+      "id": "sha256:4f556eb8d4b630a1571a765c9b168f5b36b7adbe0344ebda116b7be9bd2b3edb",
+      "sizeBytes": 286429707,
+      "tags": ["ozz/api:0.1.0"]
+    },
+    "worker": {
+      "id": "sha256:2940817610cb08f9e1aa1979708269bb9cd5a7c42ae61deeb0ab5354fb8f9d1c",
+      "sizeBytes": 279872946,
+      "tags": ["ozz/worker:0.1.0"]
+    },
+    "migrate": {
+      "id": "sha256:78292880772070449780c7b3be581f6f51430bd54719777d6b533e0b61c956d7",
+      "sizeBytes": 775160566,
+      "tags": ["ozz/migrate:0.1.0"]
+    },
+    "console": {
+      "id": "sha256:1d6fb6c4f3c1434ad8e3ab46971eecfb49139772bdd7522b5c598bb5eb9d0971",
+      "sizeBytes": 207983934,
+      "tags": ["ozz/console:0.1.0"]
+    }
+  },
+  "verifiedRestoration": {
+    "transport": "docker-compose-exec",
+    "target": "separate empty database in the fixture PostgreSQL instance",
+    "restoreLocked": true,
+    "generation": 1,
+    "restoredPendingOperationGeneration": 0,
+    "activeRestoredSessions": 0,
+    "sourceRemainedReadWrite": true,
+    "matchingMasterKeyBytes": true
+  },
+  "resourceSampleScope": "One docker stats --no-stream sample after functional checks; includes background health/queue work. This is not a sustained load test or a VPS capacity guarantee.",
+  "untested": [
+    "real VPS / Oracle target host",
+    "public DNS and ACME issuance",
+    "AMD64 build and runtime",
+    "cross-machine backup transfer or disaster recovery cutover",
+    "S2 outbound K3s/SSH work from the control-plane backend network"
+  ],
+  "deploymentCorrections": [
+    "Copy the generated Prisma client to the path resolved by the deployed package and construct it during the build.",
+    "Run Prisma migrate as a real Node CLI entrypoint with inherited connection environment and forwarded signals/exit status.",
+    "Return explicit HTTP 308 redirects using the external HTTPS origin and port.",
+    "Publish newly restored 0600 Linux Compose keys with the configured runtime UID/GID.",
+    "Remove successful temporary build containers automatically; retain Compose fixtures and their data."
+  ],
+  "buildTemporaryObjectCleanup": {
+    "removedContainers": 74,
+    "removedUnreferencedImages": 17,
+    "scope": "Only inactive, volume-free temporary build containers traced to this task build logs, and their untagged unreferenced intermediate images; no global prune.",
+    "manifest": ".local/ozz-build-cleanup-20261025.json",
+    "runtimeAndVerificationContainersRetained": true,
+    "allVolumesRetained": true
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "command": "pnpm check",
+  "exitCode": 0,
+  "scope": "S2 milestone, before S3 implementation",
+  "checks": [
+    "Prisma generate",
+    "workspace build",
+    "workspace typecheck",
+    "ESLint",
+    "Prettier",
+    "backend and console unit tests"
+  ],
+  "unit": {
+    "backend": 50,
+    "console": 6
+  },
+  "runtime": {
+    "node": "v24.22.1",
+    "pnpm": "12.14.0"
+  },
+  "completedAt": "2026-10-25T14:22:16.589Z",
+  "log": "s2-check-output.txt",
+  "additionalEvidence": [
+    "s2-integration-results.json",
+    "s2-observer-results.json",
+    "s2-local-results.json",
+    "s2-observer-local-results.json"
+  ],
+  "limitations": [
+    "S2 Linux container image was not rebuilt",
+    "Cloud VPS and Oracle capacity not verified"
+  ]
+}

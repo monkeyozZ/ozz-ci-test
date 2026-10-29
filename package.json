@@ -1,0 +1,57 @@
+{
+  "name": "ozz",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@12.14.0",
+  "engines": {
+    "node": ">=24.22.1 <25",
+    "pnpm": "12.14.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.22.1",
+      "onFail": "download"
+    }
+  },
+  "scripts": {
+    "build": "pnpm -r --sort build",
+    "typecheck": "pnpm -r --sort typecheck",
+    "lint": "eslint apps packages tests scripts infra --no-warn-ignored",
+    "format:check": "prettier --check apps packages tests scripts infra *.json *.yaml .github",
+    "format": "prettier --write apps packages tests scripts infra *.json *.yaml .github",
+    "db:generate": "pnpm --filter @ozz/database generate",
+    "db:migrate": "pnpm --filter @ozz/database migrate",
+    "db:studio": "pnpm --filter @ozz/database studio",
+    "dev:setup": "node scripts/setup-local.mjs",
+    "dev:infra": "docker compose --env-file .env -f compose.dev.yaml up -d --wait",
+    "dev": "pnpm build && concurrently -k -n api,worker,console \"pnpm --filter @ozz/api dev\" \"pnpm --filter @ozz/worker dev\" \"pnpm --filter @ozz/console dev\"",
+    "admin:init": "node --env-file=.env apps/api/dist/cli.js admin:init",
+    "recovery:lock": "node --env-file=.env apps/api/dist/cli.js recovery:lock",
+    "recovery:unlock": "node --env-file=.env apps/api/dist/cli.js recovery:unlock",
+    "api:generate": "pnpm --filter @ozz/api... build && node --env-file=.env apps/api/dist/openapi.js && pnpm --filter @ozz/api-client generate && pnpm --filter @ozz/api-client build",
+    "backup:control-plane": "node scripts/backup-control-plane.mjs",
+    "restore:control-plane": "node scripts/restore-control-plane.mjs",
+    "deploy:setup": "node infra/docker/setup-compose.mjs",
+    "build:images": "node infra/docker/build-images.mjs",
+    "test:deployment": "node tests/deployment/compose-smoke.mjs",
+    "test": "pnpm build && pnpm test:unit",
+    "test:unit": "vitest run && pnpm --filter @ozz/console test:unit && pnpm test:manual-data",
+    "test:manual-data": "node --test tests/manual-data/*.test.mjs",
+    "test:integration": "pnpm build && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts",
+    "test:e2e": "node scripts/run-console-e2e.mjs",
+    "check": "pnpm db:generate && pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test:unit"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@fastify/websocket": "11.3.4",
+    "@nestjs/testing": "11.2.8",
+    "@types/node": "24.19.2",
+    "concurrently": "10.0.6",
+    "eslint": "9.39.5",
+    "prettier": "3.9.10",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "3.2.7"
+  }
+}

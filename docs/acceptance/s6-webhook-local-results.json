@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "status": "passed",
+  "completedAt": "2026-10-26T04:53:28.179Z",
+  "scope": "Real local product HTTPS API, Worker, managed Builder, Registry and K3s; GitHub provider and event sender are controlled local fixtures.",
+  "probe": "tests/probes/s6-webhook-local-lab.mjs",
+  "report": ".local/local-lab/s6-webhook/20261026T045122280Z-304dc9b0/report.json",
+  "reportVersion": 2,
+  "completedPhases": 16,
+  "checksPassedAcrossRetainedAttempts": 18,
+  "checksPassedInFinalAttempt": 11,
+  "baseline": {
+    "deploymentId": "7f089683-1eb7-40cb-bb98-e982b4be1c5b",
+    "commitSha": "f8365500cab6bb6a682966cb32327d84a84967fe",
+    "imageDigest": "sha256:760634892091f28780bf76cf6573d3e5e80d843879e860de3a97c95ebdef9ba5",
+    "resumedWithoutRebuilding": true,
+    "resumeOperationId": "21b92917-6051-4de1-9d5b-025969e65566"
+  },
+  "stoppedDelivery": {
+    "deliveryId": "a1e0c560-6a5c-430b-a59d-3ba7172a0e21",
+    "webhookTargetId": "00449584-4f9e-4bf8-a7d1-7aa0df222f9a",
+    "forgedSignatureStatus": 401,
+    "forgedSignatureReservedDeliveryId": false,
+    "validReplayStatus": 200,
+    "targetCount": 1,
+    "remainedManualAfterResume": true,
+    "commitSha": "af8b1b1f6a771ec903dc8c755f3dc94f6ce5fd7a",
+    "deploymentId": "44f344a4-ad5d-4b3f-a816-24cb79cde3cf",
+    "initiatorKind": "admin",
+    "buildRunIds": ["7a179cbe-45e2-4a2e-9b3d-3ebaf3de4990"],
+    "imageDigest": "sha256:83d3f71c69dc1c8c0dcfb71308b7711b79af4bccf73f8e1b6577988689294ee6",
+    "httpsContentVerified": true
+  },
+  "runningDelivery": {
+    "deliveryId": "04bc3b6d-d391-47a0-88e8-276792bb7df9",
+    "webhookTargetId": "64500274-cbce-4f63-adf2-3277464feafc",
+    "commitSha": "36a74998397ce94d82c85896a3942084ae11784b",
+    "deploymentId": "19cf6191-2ac5-44ce-a69f-8f6182d25c6b",
+    "initiatorKind": "webhook",
+    "targetReason": "automatic_publication",
+    "buildRunIds": ["4810a2ce-b440-4d90-9934-be18550b14c5"],
+    "artifactId": "5c1003e5-bedc-4c04-9572-1fb674913396",
+    "producerSubmittedAndClosureProofVerified": true,
+    "imageDigest": "sha256:d72278b43efd8d10c011a46414866af52f95b6d5a7da4fa68ffa9870fcabe4c2",
+    "httpsBodySha256": "11e9950901f9a02c38461a497ab7bcfc70c2deece358921d9d5a98a40700fa65",
+    "httpsBodyMatchesCommittedHtml": true,
+    "httpMutationPolicy": "reads-and-signed-callback-only",
+    "signedCallbackPosts": 2,
+    "manualDeploymentCommands": 0,
+    "retainedEarlierDeployments": 9,
+    "addedDeployments": 1,
+    "postSuccessReplay": {
+      "status": 200,
+      "duplicateCountIncrease": 1,
+      "observations": 5,
+      "observedForMs": 7361,
+      "additionalDeployments": 0,
+      "additionalBuildRuns": 0,
+      "unchangedFinalDeploymentCount": 10,
+      "unchangedFinalBuildRunCount": 15
+    }
+  },
+  "retainedFailure": {
+    "report": ".local/local-lab/s6-webhook/20261026T044832197Z-c82c58e9/report.json",
+    "stage": "resume-service",
+    "code": "S6_WEBHOOK_DOMAIN_NOT_READY",
+    "followupEvidence": ".local/local-lab/s6-webhook/20261026T044832197Z-c82c58e9/read-only-domain-after-resume.json",
+    "resolution": "Added bounded waiting for asynchronous domain observations with strict live TLS verification; reused the original successful resume Operation and pending receipt."
+  },
+  "verification": {
+    "nodeVersion": "24.22.1",
+    "syntax": "passed",
+    "scopedEslint": "passed",
+    "scopedPrettier": "passed",
+    "probeExitCode": 0,
+    "minimumObservedHostFreeBytes": 12661039104,
+    "hostDiskSamples": 9,
+    "minimumRequiredHostFreeBytes": 8589934592,
+    "probeLocksReleasedAtHandoff": true
+  },
+  "limits": [
+    "Local CA verification does not establish public DNS, public trust or GitHub-origin Internet delivery.",
+    "This result covers the Webhook sequence only; it does not establish complete S6 or G-MVP acceptance."
+  ]
+}

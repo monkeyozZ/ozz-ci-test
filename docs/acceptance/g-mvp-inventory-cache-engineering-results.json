@@ -1,0 +1,196 @@
+{
+  "version": 1,
+  "stage": "S6 / local G-MVP Builder inventory cache increment",
+  "recordedAt": "2026-10-28T10:17:31.528134+00:00",
+  "status": "passed",
+  "scope": "Existing FileBuildLedger/BuildManager tests for the single-page inventory cache fix, in-memory verification of the existing compiled manager, and hashes of the retained 2026-10-26 installation bundle. This is separate from the previous full workspace checks and does not certify a new Linux release.",
+  "change": {
+    "source": "apps/builder/src/manager.ts",
+    "behavior": "Only inventories with more than 100 runs occupy the four retained pagination snapshots. Signed one-page inventories can be queried repeatedly without filling that cache."
+  },
+  "runtime": {
+    "node": "24.22.1",
+    "typescript": "5.9.3",
+    "nodeOptions": "--max-old-space-size=1536",
+    "vitestWorkers": 1,
+    "fileParallelism": false
+  },
+  "tests": {
+    "file": "tests/unit/builder-ledger.test.ts",
+    "files": 1,
+    "passed": 18,
+    "failed": 0,
+    "skipped": 0,
+    "command": [
+      "pnpm",
+      "exec",
+      "vitest",
+      "run",
+      "tests/unit/builder-ledger.test.ts",
+      "--maxWorkers=1",
+      "--minWorkers=1",
+      "--no-file-parallelism",
+      "--reporter=json",
+      "--outputFile=.local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/vitest-results.json"
+    ],
+    "singlePageCases": {
+      "runCounts": [0, 1, 100],
+      "freshSignedQueriesPerCase": 6,
+      "verification": "Each query has a fresh challenge and snapshot ID and is verified through verifyInventoryPages."
+    },
+    "multipageCase": "101-run stable snapshot after a later tombstone; missing/reordered pages and challenge mismatch reject; a fifth retained multipage snapshot returns BUILD_BUSY; expired pages reject and allow a fresh snapshot."
+  },
+  "emission": {
+    "method": "TypeScript transpileModule in memory with the current Builder tsconfig",
+    "nodeVersion": "v24.22.1",
+    "typescriptVersion": "5.9.3",
+    "sourceSha256": "db3dfeba2645cd0be5562078df63e6878cfacbd47ce391eda3b8994a333c8beb",
+    "emittedSha256": "1d0d2f718779e6660d9080d73928120ab326de8dfd1c93f5f8a2ea609f5517b2",
+    "compiledSha256": "1d0d2f718779e6660d9080d73928120ab326de8dfd1c93f5f8a2ea609f5517b2",
+    "exactBytesMatch": true,
+    "diagnosticErrors": [],
+    "filesWritten": false,
+    "fullTypecheckPerformed": false,
+    "source": {
+      "path": "apps/builder/src/manager.ts",
+      "sha256": "db3dfeba2645cd0be5562078df63e6878cfacbd47ce391eda3b8994a333c8beb"
+    },
+    "compiled": {
+      "path": "apps/builder/dist/manager.js",
+      "sha256": "1d0d2f718779e6660d9080d73928120ab326de8dfd1c93f5f8a2ea609f5517b2"
+    },
+    "verificationScript": {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/verify-emission.cjs",
+      "sha256": "6bd39e768be67e94a55ef1857d0186e5e62289943f83ddb1e7022790798711bb"
+    },
+    "stdinCommand": ["pnpm", "exec", "node", "--input-type=commonjs"],
+    "stdout": {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/manager-emission.stdout.log",
+      "sha256": "0f035ca569ba484092d5a7cbbb30a4bc507a7e2633fcb19976ea0a53965b0916"
+    }
+  },
+  "installationBinding": {
+    "status": "passed",
+    "bundle": "s6-inventory-cache-20261026T0908Z",
+    "recordedInstallationAt": "2026-10-26T09:08:43.448940+00:00",
+    "installationReceipt": {
+      "path": ".local/local-lab/builder/updates/update-20261026T090842050402Z-6ad4968a/results.json",
+      "sha256": "670bee44f87218d0623dab6c1cd3455c8530807fdef1a879f8d24d63d1428f7a",
+      "bytes": 441
+    },
+    "bundleManifest": {
+      "path": ".local/local-lab/builder/bundles/s6-inventory-cache-20261026T0908Z/builder-bundle-manifest.json",
+      "sha256": "25b4795ec72a3d724b08991f029eed70dcb7a9455a12587e2f9bb0cbae7cb108",
+      "bytes": 5580
+    },
+    "installationArchive": {
+      "path": ".local/local-lab/builder/updates/update-20261026T090842050402Z-6ad4968a/application.tar",
+      "sha256": "b20d0e142e2fff1680c68399b045ae43ec9bedf537e376af5a128b2913e89a8f",
+      "bytes": 317440
+    },
+    "verifiedFiles": 32,
+    "allCurrentWorkspaceFilesMatchBundle": true,
+    "allManifestEntriesVerifiedInBothBundleAndArchive": true,
+    "retainedRunsInOriginalReceipt": 28,
+    "oldReleaseRetainedInOriginalReceipt": true,
+    "remoteObservationPerformedThisRun": false,
+    "evidence": {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/installation-binding.json",
+      "sha256": "60e87a0cf7bbc4701744bbaaa5c9cf27a30cc2d872a5df42ff606d618215fb33"
+    }
+  },
+  "previousFullRegression": {
+    "evidence": {
+      "path": "docs/acceptance/g-mvp-engineering-results.json",
+      "sha256": "e9db2b9bd4bf09e7a322b057e4302a660171c3e17174580f553f54bf92d16068"
+    },
+    "recordedAt": "2026-10-26T08:01:23.568655+00:00",
+    "previousManagerSourceSha256": "ac55d6b683117a3b27baeedff0eecd47c49935ff96d33c00444e2d55603c0c91",
+    "currentSourceDifferencesAtIncrementCheck": ["apps/builder/src/manager.ts"],
+    "unchangedOriginalReport": true,
+    "rerun": false
+  },
+  "sourceFiles": [
+    {
+      "path": "apps/builder/src/manager.ts",
+      "sha256": "db3dfeba2645cd0be5562078df63e6878cfacbd47ce391eda3b8994a333c8beb",
+      "bytes": 30134
+    },
+    {
+      "path": "apps/builder/src/ledger.ts",
+      "sha256": "6d6c42df84b6c467400a4122edc3c81ac691fdff1d04dbffc6fac157ddf6934b",
+      "bytes": 11130
+    },
+    {
+      "path": "tests/unit/builder-ledger.test.ts",
+      "sha256": "b419ce75e8b0bb6d53e18f8f7fd0425544e8a1868a704533dc321e060a42050b",
+      "bytes": 26830
+    },
+    {
+      "path": "tests/infrastructure/build-fixture.ts",
+      "sha256": "9b8bf32955a4946dcfce44d48459427845a023386689708f3f9ba1d24dfa11ff",
+      "bytes": 3309
+    },
+    {
+      "path": "packages/infrastructure/src/build/proof.ts",
+      "sha256": "1e6d2049e8527bbeb9a34ab45b10a533a5bf95f7ec873f136692d2eed8bbeefd",
+      "bytes": 6883
+    },
+    {
+      "path": "packages/infrastructure/src/build/validation.ts",
+      "sha256": "31d5ad9c02fd0a3803af19dcf22685384206f86d8ed1ad68709de438c7b36e5d",
+      "bytes": 27196
+    },
+    {
+      "path": "apps/builder/tsconfig.json",
+      "sha256": "65830141c9e37d6d5a604ae796c5fe8b9258040f9e1f29547c0b238829b989d6",
+      "bytes": 135
+    },
+    {
+      "path": "tsconfig.base.json",
+      "sha256": "0ee912a8603f27c38095e33aae34ee06ddf9afcda775f360cfc644d470f019e8",
+      "bytes": 444
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "de7a519934829785a1bc9d641657d54c202a739113eab485bd51954ddb43aa4b",
+      "bytes": 196486
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/results.json",
+      "sha256": "00dd47ea318c19aa25f2b17b4602d4e266d2eb0ef857d700c044376fd60c78d8"
+    },
+    {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/vitest-results.json",
+      "sha256": "540a5365e2a15dacefe665c259899e8408817c5ef5a711c715e03463f740be6a"
+    },
+    {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/builder-ledger.execution.json",
+      "sha256": "52d947d8812bfbc3ab09f8f4c0996510b2fad79b027dcbf73826edf436095d49"
+    },
+    {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/builder-ledger.stdout.log",
+      "sha256": "8d54d363ae9069c27e91a9ff44231716b4306248e64a253047b075370fa3d324"
+    },
+    {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/builder-ledger.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/node-version.execution.json",
+      "sha256": "a732fe3eefd1b0ed1eef16a767fabfb76434d66813b5b92acb4db76f9ec940e4"
+    },
+    {
+      "path": ".local/g-mvp-inventory-cache-checks/20261028T101112Z-c59c218b/manager-emission.execution.json",
+      "sha256": "1409a1ebf59a49a203c482378921492e0d6e394f68792a6a98facbf100c72b46"
+    }
+  ],
+  "limitations": [
+    "The tests use the real manager and file ledger with a controlled execution driver. They do not rerun Linux process, cgroup, network or workload isolation acceptance.",
+    "transpileModule verifies exact emitted manager JavaScript bytes; it is not a full typecheck or workspace build.",
+    "The installation chain is verified from retained local files and the original installation receipt. No Builder process was installed, restarted or remotely inspected in this increment.",
+    "Post-recovery HTTPS authentication, exact RPO and independent full RTO, S6 Linux packaging, production authentication, upgrade/rollback and real screen-reader acceptance remain separate work."
+  ]
+}

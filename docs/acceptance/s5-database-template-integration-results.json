@@ -1,0 +1,172 @@
+{
+  "stage": "S5 database and template integration",
+  "status": "passed",
+  "startedAt": "2026-10-25T22:17:17.450000Z",
+  "finishedAt": "2026-10-25T22:17:28.777743Z",
+  "runtime": "v24.22.1",
+  "command": "pnpm exec node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts tests/integration/databases-s5.test.ts",
+  "counts": {
+    "passed": 18,
+    "failed": 0,
+    "total": 18
+  },
+  "scope": {
+    "controlPlaneDatabase": "real PostgreSQL in an independent random s5databases_* schema with the current migrations",
+    "http": "authenticated Fastify/Nest injection, real transformed DTOs and public responses",
+    "admissionAndFences": "production ServiceCommands, DatabaseCommands, Storage write ledger, TaskRepository leases and SQL guards",
+    "kubernetesAndEngineAuthentication": "controlled controller, PVC and database-authentication facts; no live application database engine or Kubernetes call",
+    "suiteMigratedMainDatabase": false,
+    "suiteMutatedApplicationClusters": false,
+    "keyMaterial": "independent temporary master key file with mode 0600, removed after the suite; no production key read or modified",
+    "cleanup": "closed API, dropped only the dedicated test schema, restored process-local environment variables and removed temporary fixture key directory"
+  },
+  "checks": [
+    {
+      "command": "pnpm --filter @ozz/control-plane build",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm --filter @ozz/api build",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm exec eslint packages/control-plane/src/templates/catalog.ts packages/control-plane/src/databases/commands.ts packages/control-plane/src/databases/protection.ts tests/integration/databases-s5.test.ts",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm exec prettier --check packages/control-plane/src/templates/catalog.ts packages/control-plane/src/databases/commands.ts packages/control-plane/src/databases/protection.ts tests/integration/databases-s5.test.ts",
+      "status": "passed"
+    }
+  ],
+  "cases": [
+    {
+      "name": "S5 template drafts and generated database identities lists fixed template versions and renders previews without allocating any service, credential, task or volume",
+      "status": "passed",
+      "durationMs": 254.63925000000017
+    },
+    {
+      "name": "S5 template drafts and generated database identities creates exactly one postgresql template draft for concurrent HTTP retries and never returns its generated password",
+      "status": "passed",
+      "durationMs": 438.682417
+    },
+    {
+      "name": "S5 template drafts and generated database identities creates exactly one redis template draft for concurrent HTTP retries and never returns its generated password",
+      "status": "passed",
+      "durationMs": 323.0419999999999
+    },
+    {
+      "name": "S5 template drafts and generated database identities rejects unknown versions, password injection and mixed configuration/template sources without allocating identities",
+      "status": "passed",
+      "durationMs": 135.81012499999997
+    },
+    {
+      "name": "S5 template drafts and generated database identities permits a template draft when storage observations are stale, while its preview clearly marks publication as blocked",
+      "status": "passed",
+      "durationMs": 201.91008299999976
+    },
+    {
+      "name": "S5 database credential and first-data protection rejects a changed exact engine version in the original database snapshot even when its image and major version match",
+      "status": "passed",
+      "durationMs": 186.93079100000068
+    },
+    {
+      "name": "S5 database credential and first-data protection rejects database initialization credentials as generic environment secrets and forbids ordinary credential deletion",
+      "status": "passed",
+      "durationMs": 280.6661670000003
+    },
+    {
+      "name": "S5 database credential and first-data protection persists the original postgresql credential fence before a PVC response or successful initialization and permits equivalent master-key rewrapping",
+      "status": "passed",
+      "durationMs": 450.7397089999995
+    },
+    {
+      "name": "S5 database credential and first-data protection persists the original redis credential fence before a PVC response or successful initialization and permits equivalent master-key rewrapping",
+      "status": "passed",
+      "durationMs": 915.2205839999997
+    },
+    {
+      "name": "S5 database credential and first-data protection keeps database command, image, replica and data-mount changes out of ordinary configuration updates while allowing resource tuning",
+      "status": "passed",
+      "durationMs": 1186.7725419999997
+    },
+    {
+      "name": "S5 database bindings, immutable publications and provider retention previews and saves same-environment bindings as drafts without deploying, rejecting foreign targets and variable conflicts",
+      "status": "passed",
+      "durationMs": 769.3890410000004
+    },
+    {
+      "name": "S5 database bindings, immutable publications and provider retention pins private Service UID, credential content revision and output mapping in a publication instead of reading the later binding draft",
+      "status": "passed",
+      "durationMs": 658.5383750000001
+    },
+    {
+      "name": "S5 database bindings, immutable publications and provider retention blocks provider removal for an unpublished detach until a new consumer publication replaces the original reference",
+      "status": "passed",
+      "durationMs": 637.5727920000008
+    },
+    {
+      "name": "S5 database bindings, immutable publications and provider retention serializes provider deletion against binding admission (overlap) so both cannot be accepted",
+      "status": "passed",
+      "durationMs": 468.01937499999985
+    },
+    {
+      "name": "S5 database bindings, immutable publications and provider retention serializes provider deletion against binding admission (binding_first) so both cannot be accepted",
+      "status": "passed",
+      "durationMs": 421.20750000000044
+    },
+    {
+      "name": "S5 database bindings, immutable publications and provider retention serializes provider deletion against binding admission (deletion_first) so both cannot be accepted",
+      "status": "passed",
+      "durationMs": 410.6907910000009
+    },
+    {
+      "name": "S5 database bindings, immutable publications and provider retention retains the original database, volume, PVC and credential identity after its provider is deleted at the metadata boundary, and forbids reassigning it",
+      "status": "passed",
+      "durationMs": 369.5915420000001
+    },
+    {
+      "name": "S5 database bindings, immutable publications and provider retention keeps a TCP-ready provider unavailable to consumers when authentication or Redis persistence evidence fails",
+      "status": "passed",
+      "durationMs": 364.7425829999993
+    }
+  ],
+  "correctionsValidated": [
+    "Template parameters ignore undefined optional DTO fields, while actual unknown, unsupported and null parameters remain rejected.",
+    "Database binding mappings normalize undefined optional DTO fields before preview/save; empty, null, unsupported and unknown actual outputs remain rejected.",
+    "Database snapshot identity compares exactVersion in addition to image, major version, template version and original credential reference/content revision.",
+    "The parent-owned migration now binds every non-null DatabaseInstance.serviceId to originalServiceJson.id, rejecting reassignment after the original provider has been deleted."
+  ],
+  "attemptHistory": [
+    {
+      "passed": 10,
+      "failed": 8,
+      "finding": "DTO undefined fields blocked HTTP template/binding commands; exactVersion comparison was missing; two fixture requests needed the documented query/drain preconditions."
+    },
+    {
+      "passed": 17,
+      "failed": 1,
+      "finding": "After a drained provider Service was deleted, the prior SQL guard allowed a null serviceId to be reassigned to another same-environment database Service."
+    },
+    {
+      "passed": 18,
+      "failed": 0,
+      "finding": "All cases passed with the latest parent-owned origin guard and strict invalid-input regressions."
+    }
+  ],
+  "limits": [
+    "Controller health and database authentication/persistence checks use controlled facts and are not live PostgreSQL/Redis or K3s acceptance.",
+    "The consumer publication helper advances the real publication pointer using a controlled task outcome; it does not deploy an application Pod.",
+    "Provider retention is verified at the SQL metadata boundary after a controlled completed drain, not by deleting a live StatefulSet.",
+    "No real backup, restore, network exposure, disk durability, capacity isolation or data recovery is certified here.",
+    "Real A/B cluster acceptance and the main database migration are separate work owned by the parent agent."
+  ],
+  "sourceSha256": {
+    "packages/control-plane/src/templates/catalog.ts": "bb7edeb4ca39c5f9c06031bdbd0c049060af7999c9fc5f65cfec39396cfb5c38",
+    "packages/control-plane/src/databases/commands.ts": "45e9a57a503e62b980e90659b36431e3bbabd513fb182e2745ca02f376409066",
+    "packages/control-plane/src/databases/protection.ts": "e142376abe72bd6250c6368eb55d749a4b2bc71018206b38f93890fc702b98a8",
+    "packages/control-plane/src/databases/persistence.ts": "cf26dfa5000b26939e48bd28f018244ade9a3905397cda9e8687d73e124a16f3",
+    "packages/control-plane/src/databases/runtime.ts": "8c5b9fc7cca8b42ec97dad920ebf4d48612d9e2d6464dec47d4cb33ed08701d2",
+    "packages/database/prisma/migrations/202610260003_s5_storage/migration.sql": "2a56af0b2acb8bbca52b60bde132509e250646d441f2ebfa6f43e505a60eb27c",
+    "tests/integration/databases-s5.test.ts": "dd63f03bcccd285f883592efd8951066ae547b56abff9f1550beafddbfe5f4cd"
+  }
+}

@@ -1,0 +1,5307 @@
+{
+  "owner": "ozz-s4-observation-probe-v1",
+  "attemptId": "400d456c-d379-426c-be79-aba2a3e00e6f",
+  "startedAt": "2026-10-25T20:57:52.077Z",
+  "status": "passed",
+  "scope": "Real local ARM64 K3s A/B API outage, retained domain observations, real HTTP-01 renewal blockage and certificate expiry/recovery. Local test CA only.",
+  "mode": "outage",
+  "checks": [
+    {
+      "name": "A/B domain baselines are fresh with distinct cluster identities",
+      "passed": true,
+      "observedAt": "2026-10-25T20:58:20.731Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      },
+      "aInventory": [
+        {
+          "kind": "Certificate",
+          "name": "ozz-d-6cffae81293a4e6797e4e9e0c394be89",
+          "namespace": "ozz-e-13026c6aa9c0482a97259122990baea8",
+          "role": "certificate",
+          "uid": "a7192d6f-30de-48ba-8bbc-b941082e3749",
+          "creationNonce": "4207ce94-de3f-4c8b-9dc2-c17c20984613"
+        },
+        {
+          "kind": "Ingress",
+          "name": "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+          "namespace": "ozz-e-13026c6aa9c0482a97259122990baea8",
+          "role": "http",
+          "uid": "f48da21d-c228-4907-ba23-89de27dd099d",
+          "creationNonce": "a431e8c7-f017-4aad-889e-4800be8404b7"
+        },
+        {
+          "kind": "Ingress",
+          "name": "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https",
+          "namespace": "ozz-e-13026c6aa9c0482a97259122990baea8",
+          "role": "https",
+          "uid": "f82dddde-d8fb-4382-9d59-bbed2ad10e6a",
+          "creationNonce": "b1283181-7e8b-4efd-bacc-b813b05dd37a"
+        },
+        {
+          "kind": "Middleware",
+          "name": "ozz-d-6cffae81293a4e6797e4e9e0c394be89-redirect",
+          "namespace": "ozz-e-13026c6aa9c0482a97259122990baea8",
+          "role": "redirect",
+          "uid": "f3773e37-2d0f-4103-a981-52f7c69e7479",
+          "creationNonce": "2b1d9a41-0d1f-425a-b7b0-c32ec890fc5e"
+        },
+        {
+          "kind": "Secret",
+          "name": "ozz-t-6cffae81293a4e6797e4e9e0c394be89",
+          "namespace": "ozz-e-13026c6aa9c0482a97259122990baea8",
+          "role": "tls",
+          "uid": "c0c9d831-0b41-4088-a7e8-2327c72a0091",
+          "creationNonce": "9433eeb9-0eed-4043-bf44-2799344e3f03"
+        }
+      ]
+    },
+    {
+      "name": "first API failure marks A stale before the 90-second observation TTL and preserves route/certificate",
+      "passed": true,
+      "observedAt": "2026-10-25T20:59:05.692Z",
+      "detectedAfterMs": 44958,
+      "before": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "failed": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": true,
+        "lastAttemptAt": "2026-10-25T20:59:05.236Z",
+        "lastErrorCode": "KUBERNETES_TIMEOUT",
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:50.185Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      }
+    },
+    {
+      "name": "B keeps observing while A API is paused",
+      "passed": true,
+      "observedAt": "2026-10-25T20:59:05.748Z",
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "name": "A application and its valid certificate continue serving during API pause",
+      "passed": true,
+      "observedAt": "2026-10-25T20:59:06.334Z",
+      "application": {
+        "httpStatus": 301,
+        "location": "https://podinfo-6cffae81293a.a.apps.ozz.test/",
+        "bodySha256": "d18ed36671b8618520016c81125aa889a5b800872038c5e009ef49cd305088cd",
+        "apiProcessPaused": true,
+        "tlsVerified": true,
+        "serialNumber": "7F7B123977A8BA3C",
+        "notBefore": "Oct 25 20:57:19 2026 GMT",
+        "notAfter": "Oct 25 21:01:18 2026 GMT",
+        "fingerprint": "e8026724d96dccd7e1069f009a13ddb73162ebc08ea46add75467e8049739664",
+        "httpsStatus": 200,
+        "applicationMessage": "Ozz S4 A"
+      }
+    },
+    {
+      "name": "A recovers with original cluster process and network resource identities",
+      "passed": true,
+      "observedAt": "2026-10-25T21:00:37.025Z",
+      "recovered": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T21:00:36.399Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T21:00:36.304Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T21:00:36.342Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:04:17.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T21:00:18.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T21:00:36.342Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:02:58.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "processes": {
+        "pid": 693,
+        "startTicks": "536",
+        "fixtureProcesses": {
+          "dns": {
+            "pid": 26973,
+            "startTicks": "2143730"
+          },
+          "staging": {
+            "pid": 26974,
+            "startTicks": "2143730"
+          },
+          "production": {
+            "pid": 26975,
+            "startTicks": "2143731"
+          }
+        },
+        "configurationHashes": {
+          "/etc/resolv.conf": "ebdf560272a77357195c39e98340b77e18c8a8ce2025ee950e9e0c7b01467ab8",
+          "/etc/rancher/k3s/config.yaml": "02404b5b58350c1ab476c883d94710f734fe00c75c0bce6a4f01bd239f5c1b84",
+          "/var/lib/rancher/k3s/server/manifests/traefik.yaml": "9f08f1b82d72736004421b7406b2d9ec547eebcb8f50ebfe631cb1b79ab85db9",
+          "/etc/ssl/certs/ca-certificates.crt": "ecd9dc38bc3efb7dbd6431f57e29d2f8d6a0f0d211e1464b3fef2cbfe266fcd2"
+        }
+      }
+    },
+    {
+      "name": "Pebble accounts/roots and global guest network/trust configuration were preserved",
+      "passed": true,
+      "observedAt": "2026-10-25T21:00:37.768Z",
+      "afterProcesses": {
+        "a": {
+          "pid": 693,
+          "startTicks": "536",
+          "fixtureProcesses": {
+            "dns": {
+              "pid": 26973,
+              "startTicks": "2143730"
+            },
+            "staging": {
+              "pid": 26974,
+              "startTicks": "2143730"
+            },
+            "production": {
+              "pid": 26975,
+              "startTicks": "2143731"
+            }
+          },
+          "configurationHashes": {
+            "/etc/resolv.conf": "ebdf560272a77357195c39e98340b77e18c8a8ce2025ee950e9e0c7b01467ab8",
+            "/etc/rancher/k3s/config.yaml": "02404b5b58350c1ab476c883d94710f734fe00c75c0bce6a4f01bd239f5c1b84",
+            "/var/lib/rancher/k3s/server/manifests/traefik.yaml": "9f08f1b82d72736004421b7406b2d9ec547eebcb8f50ebfe631cb1b79ab85db9",
+            "/etc/ssl/certs/ca-certificates.crt": "ecd9dc38bc3efb7dbd6431f57e29d2f8d6a0f0d211e1464b3fef2cbfe266fcd2"
+          }
+        },
+        "b": {
+          "pid": 704,
+          "startTicks": "534",
+          "fixtureProcesses": {
+            "dns": {
+              "pid": 28578,
+              "startTicks": "2561830"
+            },
+            "staging": {
+              "pid": 28579,
+              "startTicks": "2561830"
+            },
+            "production": {
+              "pid": 28580,
+              "startTicks": "2561831"
+            }
+          },
+          "configurationHashes": {
+            "/etc/resolv.conf": "ebdf560272a77357195c39e98340b77e18c8a8ce2025ee950e9e0c7b01467ab8",
+            "/etc/rancher/k3s/config.yaml": "02404b5b58350c1ab476c883d94710f734fe00c75c0bce6a4f01bd239f5c1b84",
+            "/var/lib/rancher/k3s/server/manifests/traefik.yaml": "9f08f1b82d72736004421b7406b2d9ec547eebcb8f50ebfe631cb1b79ab85db9",
+            "/etc/ssl/certs/ca-certificates.crt": "ecd9dc38bc3efb7dbd6431f57e29d2f8d6a0f0d211e1464b3fef2cbfe266fcd2"
+          }
+        }
+      }
+    }
+  ],
+  "samples": [
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:20.884Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:21.914Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:22.976Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:24.007Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:25.038Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:26.090Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:27.143Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:28.172Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:29.215Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:30.274Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:31.301Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:32.342Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:33.374Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:34.405Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:35.445Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:36.497Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:37.535Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:38.575Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:39.596Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:40.624Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:41.677Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:11.793Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:11.702Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:11.713Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:42.718Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:43.749Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:44.798Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:45.835Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:46.891Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:47.942Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:48.987Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:50.028Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:19.877Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:51.057Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:52.084Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:53.115Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:54.141Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:55.206Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:56.274Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:57.307Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:58.352Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:58:59.395Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:59:00.432Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:59:01.494Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:59:02.574Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:59:03.609Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:59:04.639Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:50.156Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:19.804Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    },
+    {
+      "phase": "observe-api-outage",
+      "at": "2026-10-25T20:59:05.690Z",
+      "a": {
+        "id": "6cffae81-293a-4e67-97e4-e9e0c394be89",
+        "hostname": "podinfo-6cffae81293a.a.apps.ozz.test",
+        "revision": 4,
+        "serviceId": "f806a17e-2edf-4933-af89-07d1dddd9c17",
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "environmentId": "13026c6a-a9c0-482a-9725-9122990baea8",
+        "portId": "8cc19146-bed8-43e0-979d-7184ac75cd82",
+        "stale": true,
+        "lastAttemptAt": "2026-10-25T20:59:05.236Z",
+        "lastErrorCode": "KUBERNETES_TIMEOUT",
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:50.185Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "ingressNames": [
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-http",
+            "ozz-d-6cffae81293a4e6797e4e9e0c394be89-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-f806a17e2edf4933af8907d1dddd9c17"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:18.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:19.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:19.818Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T20:59:59.000Z",
+          "certificateName": "ozz-d-6cffae81293a4e6797e4e9e0c394be89"
+        }
+      },
+      "b": {
+        "id": "1c34623d-baca-4480-9fda-e5b52a29ca2c",
+        "hostname": "podinfo-1c34623dbaca.b.apps.ozz.test",
+        "revision": 3,
+        "serviceId": "a1b492cb-cf62-4fd7-bab8-11efbd55e597",
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "environmentId": "70fee4a5-8d94-484b-b6d5-3631781f5723",
+        "portId": "fdf3e869-2ae0-4034-8dac-31a175218956",
+        "stale": false,
+        "lastAttemptAt": "2026-10-25T20:58:42.121Z",
+        "lastErrorCode": null,
+        "dns": {
+          "code": null,
+          "state": "matched",
+          "message": "当前解析器的 DNS 结果与预期入口匹配；路由与证书仍需独立检查。",
+          "addresses": [
+            "192.168.5.15"
+          ],
+          "cnameChain": [],
+          "observedAt": "2026-10-25T20:58:42.023Z",
+          "expectedCname": null,
+          "expectedAddresses": [
+            "192.168.5.15"
+          ]
+        },
+        "route": {
+          "code": null,
+          "state": "ready",
+          "message": "路由资源与就绪端点已核对；公网可达性需另行验证。",
+          "portName": "http",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "ingressNames": [
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-http",
+            "ozz-d-1c34623dbaca44809fdae5b52a29ca2c-https"
+          ],
+          "readyEndpoints": 1,
+          "backendServiceName": "ozz-s-a1b492cbcf624fd7bab811efbd55e597"
+        },
+        "certificate": {
+          "code": null,
+          "state": "ready",
+          "message": "本地测试证书已签发；不代表公网信任。",
+          "notAfter": "2026-10-25T21:01:52.000Z",
+          "authority": "local_test",
+          "notBefore": "2026-10-25T20:57:53.000Z",
+          "issuerName": "ozz-acme-production",
+          "observedAt": "2026-10-25T20:58:42.040Z",
+          "environment": "production",
+          "renewalTime": "2026-10-25T21:00:33.000Z",
+          "certificateName": "ozz-d-1c34623dbaca44809fdae5b52a29ca2c"
+        }
+      }
+    }
+  ],
+  "publicCloudVerified": false,
+  "runId": "7d0b85ae-4b44-4ac3-8dfd-87032f0a7a60",
+  "beforeProcesses": {
+    "a": {
+      "pid": 693,
+      "startTicks": "536",
+      "fixtureProcesses": {
+        "dns": {
+          "pid": 26973,
+          "startTicks": "2143730"
+        },
+        "staging": {
+          "pid": 26974,
+          "startTicks": "2143730"
+        },
+        "production": {
+          "pid": 26975,
+          "startTicks": "2143731"
+        }
+      },
+      "configurationHashes": {
+        "/etc/resolv.conf": "ebdf560272a77357195c39e98340b77e18c8a8ce2025ee950e9e0c7b01467ab8",
+        "/etc/rancher/k3s/config.yaml": "02404b5b58350c1ab476c883d94710f734fe00c75c0bce6a4f01bd239f5c1b84",
+        "/var/lib/rancher/k3s/server/manifests/traefik.yaml": "9f08f1b82d72736004421b7406b2d9ec547eebcb8f50ebfe631cb1b79ab85db9",
+        "/etc/ssl/certs/ca-certificates.crt": "ecd9dc38bc3efb7dbd6431f57e29d2f8d6a0f0d211e1464b3fef2cbfe266fcd2"
+      }
+    },
+    "b": {
+      "pid": 704,
+      "startTicks": "534",
+      "fixtureProcesses": {
+        "dns": {
+          "pid": 28578,
+          "startTicks": "2561830"
+        },
+        "staging": {
+          "pid": 28579,
+          "startTicks": "2561830"
+        },
+        "production": {
+          "pid": 28580,
+          "startTicks": "2561831"
+        }
+      },
+      "configurationHashes": {
+        "/etc/resolv.conf": "ebdf560272a77357195c39e98340b77e18c8a8ce2025ee950e9e0c7b01467ab8",
+        "/etc/rancher/k3s/config.yaml": "02404b5b58350c1ab476c883d94710f734fe00c75c0bce6a4f01bd239f5c1b84",
+        "/var/lib/rancher/k3s/server/manifests/traefik.yaml": "9f08f1b82d72736004421b7406b2d9ec547eebcb8f50ebfe631cb1b79ab85db9",
+        "/etc/ssl/certs/ca-certificates.crt": "ecd9dc38bc3efb7dbd6431f57e29d2f8d6a0f0d211e1464b3fef2cbfe266fcd2"
+      }
+    }
+  },
+  "apiPause": {
+    "pid": 693,
+    "startTicks": "536",
+    "watchdogPid": 35745,
+    "watchdogStartTicks": "2390085",
+    "watchdogSeconds": 55,
+    "startedAt": 1792961900.943669
+  },
+  "apiResume": {
+    "pid": 693,
+    "startTicks": "536",
+    "resumed": true,
+    "resumedAt": 1792961946.6318288
+  },
+  "cleanup": {
+    "apiResumed": true,
+    "faultIngressRemoved": true
+  },
+  "completedAt": "2026-10-25T21:00:37.771Z"
+}

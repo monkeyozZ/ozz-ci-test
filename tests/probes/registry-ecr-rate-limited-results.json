@@ -1,0 +1,15 @@
+{
+  "scope": "真实公网 OCI manifest/config/digest/平台读取；不代表 Kubernetes 拉取运行或受限仓库验收。",
+  "startedAt": "2026-10-25T14:40:25.702Z",
+  "status": "failed",
+  "checks": [],
+  "inputReference": "public.ecr.aws/docker/library/nginx:alpine",
+  "image": null,
+  "blobServiceOrigins": ["https://d5l0dvt14r5h8.cloudfront.net"],
+  "failure": {
+    "code": "REGISTRY_RATE_LIMITED",
+    "httpStatus": 429
+  },
+  "finishedAt": "2026-10-25T14:40:27.628Z",
+  "toolchain": "0.1.0"
+}

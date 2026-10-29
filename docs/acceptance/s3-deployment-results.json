@@ -1,0 +1,1343 @@
+{
+  "stage": "S3",
+  "status": "passed",
+  "recordedAt": "2026-10-25T20:09:23.130909+00:00",
+  "scope": "Frozen S3 Linux ARM64 images and real Compose acceptance on the dedicated C Lima VM; no S4 source was included.",
+  "source": {
+    "runId": "s3-http413-20261025T193554Z-b9c3411e",
+    "archiveSha256": "b29ff98a295c999c7e92c22aad31ea4a746269f53e5242bb7aeaa17960003fb0",
+    "archiveBytes": 505918,
+    "sourceCount": 279,
+    "sourceBytes": 1966567,
+    "baselineArchiveSha256": "577495678a125ca8c8ce0a600c80756f7971ce51b0071e14c7305d9c2ed7e633",
+    "patchSha256": "b9c3411eaf9e281e9fd056b0756681a7bebaba53cc6a058d93c44f959da93b6d",
+    "derivation": "Only the listed HTTP boundary fix and regression files were overlaid on the immutable baseline archive; no other current workspace source was read.",
+    "changes": [
+      {
+        "path": "apps/api/src/app.ts",
+        "beforeSha256": "a48607fb495245cf065ee625d7b5ae9ff1aa5e1fc2caa62ec7d18560a03a7ab4",
+        "afterSha256": "c6d766dc5ba076591eb8fd0c8bab62caba8a60d6e7deb60952faef3bc96902c7"
+      },
+      {
+        "path": "apps/api/src/common/body-limit.ts",
+        "beforeSha256": null,
+        "afterSha256": "17f8d68cb5374c589e52f1af0f2cd260b93e5fb7b1c5e0c39f05e7f356ffea8a"
+      },
+      {
+        "path": "tests/unit/body-limit.test.ts",
+        "beforeSha256": null,
+        "afterSha256": "a30dfce1effd3cc170c3e9b17babb2aa8b0aca1406a64a26b3551a742bcbecb4"
+      },
+      {
+        "path": "tests/deployment/compose-smoke.mjs",
+        "beforeSha256": "0fccd1a5f7e5e030e57cb8843d9c309c8e1bdaa52c72cec248b2274c4a303f4d",
+        "afterSha256": "08bbe5d5ba72f91290f0b9e2f6811cd2e05afe8e41ed36d2d3159987d69006f3"
+      }
+    ],
+    "validation": {
+      "baselineRootCheck": "root reported pnpm check exit 0 immediately before capture",
+      "patchRealTcpTestsPassed": 2,
+      "patchStrictTypecheckExitCode": 0,
+      "patchEslintExitCode": 0,
+      "patchPrettierExitCode": 0
+    }
+  },
+  "environment": {
+    "instance": "ozz-lab-c",
+    "vm": "Lima 2.2.1 / Apple Virtualization / Ubuntu 24.04",
+    "platform": "linux/arm64",
+    "cpus": 2,
+    "memoryMiB": 2304,
+    "initialVirtualDiskGiB": 20,
+    "finalVirtualDiskGiB": 28,
+    "diskResizeOnlyChangedCapacity": true,
+    "hostPackagesInstalled": false,
+    "globalBinaryPathsModified": false,
+    "toolVersions": {
+      "node": "v24.22.1",
+      "docker": "Docker version 28.5.2, build ecc6942",
+      "dockerd": "Docker version 28.5.2, build 89c5e8f",
+      "containerd": "containerd containerd.io v1.7.28 b98a3aace656320842a23f4a392a33f46af97866",
+      "compose": "2.40.3"
+    },
+    "dedicatedDockerSocket": "unix:///run/ozz-s3-docker-c/docker.sock",
+    "dedicatedDockerDataRoot": "/var/lib/ozz-local-lab/c/linux-build-s3/data"
+  },
+  "build": {
+    "status": "passed",
+    "targetsPassed": 4,
+    "imageIdKind": "Docker config digest from the classic overlay2 image store",
+    "images": {
+      "api": {
+        "reference": "ozz-s3-http413-final/api:0.1.0",
+        "id": "sha256:0788834a15975711e69e5210676a12aa97e8fec42010cedb01b25424f26e7688",
+        "tags": ["ozz-s3-http413-final/api:0.1.0"],
+        "size": 919195807,
+        "architecture": "arm64",
+        "os": "linux"
+      },
+      "worker": {
+        "reference": "ozz-s3-http413-final/worker:0.1.0",
+        "id": "sha256:3a7710812029f644e958b01a563910795d32ec07431aabfef30f719cb749d5a7",
+        "tags": ["ozz-s3-http413-final/worker:0.1.0"],
+        "size": 893043333,
+        "architecture": "arm64",
+        "os": "linux"
+      },
+      "migrate": {
+        "reference": "ozz-s3-http413-final/migrate:0.1.0",
+        "id": "sha256:32f5ee94d7c865898df227468f0d45b005093e57c75ffec1fda3625c6b1926db",
+        "tags": ["ozz-s3-http413-final/migrate:0.1.0"],
+        "size": 2475660427,
+        "architecture": "arm64",
+        "os": "linux"
+      },
+      "console": {
+        "reference": "ozz-s3-http413-final/console:0.1.0",
+        "id": "sha256:fc4cb2b019ebb36a86c11677d3912bbef8d895684f4927b11cab04097d2dfccc",
+        "tags": ["ozz-s3-http413-final/console:0.1.0", "ozz-s3/console:0.1.0"],
+        "size": 582837783,
+        "architecture": "arm64",
+        "os": "linux"
+      }
+    },
+    "startedAt": "2026-10-25T19:56:07.030355+00:00",
+    "finishedAt": "2026-10-25T19:57:54.956374+00:00",
+    "sourceFilesVerifiedBefore": 279,
+    "sourceFilesVerifiedAfter": 279,
+    "k3sRestored": true,
+    "k3sConfigurationUnchanged": true,
+    "cachePolicy": {
+      "mode": "verified-completed-stage-ids",
+      "shimSha256": "48400fb44aba93b27734b85e65044338b2dde980e4375b6899647bf4c9d0ed93",
+      "baselineSourceArchiveSha256": "577495678a125ca8c8ce0a600c80756f7971ce51b0071e14c7305d9c2ed7e633",
+      "invocations": "/var/lib/ozz-local-lab/c/linux-build-s3/workspaces/s3-http413-20261025T193554Z-b9c3411e/evidence/cache-final-invocations.jsonl",
+      "minimumFreeBytesBeforeTarget": 2147483648
+    },
+    "logs": {
+      "api": "/var/lib/ozz-local-lab/c/linux-build-s3/workspaces/s3-http413-20261025T193554Z-b9c3411e/evidence/build-final-api-attempt-1.log",
+      "worker": "/var/lib/ozz-local-lab/c/linux-build-s3/workspaces/s3-http413-20261025T193554Z-b9c3411e/evidence/build-final-worker-attempt-2.log",
+      "migrate": "/var/lib/ozz-local-lab/c/linux-build-s3/workspaces/s3-http413-20261025T193554Z-b9c3411e/evidence/build-final-migrate-attempt-3.log",
+      "console": "/var/lib/ozz-local-lab/c/linux-build-s3/workspaces/s3-http413-20261025T193554Z-b9c3411e/evidence/build-final-console-attempt-4.log"
+    }
+  },
+  "compose": {
+    "project": "ozz-s1-proof-a0e2aff7",
+    "directory": "/var/lib/ozz-local-lab/c/linux-build-s3/workspaces/s3-http413-20261025T193554Z-b9c3411e/source/.local/ozz-s1-proof-a0e2aff7",
+    "testedAt": "2026-10-25T19:58:34.208Z",
+    "checks": {
+      "linuxRootRestoreKeyReadableByRuntimeUser": true,
+      "migrationsActuallyApplied": true,
+      "httpsVerifiedWithLocalCa": true,
+      "sameOriginApiAndSpa": true,
+      "httpRedirectPreservesExternalOrigin": true,
+      "authCrudAndDefaultEnvironment": true,
+      "safeParserErrors": true,
+      "workerRejectsMissingAndWrongKeyBeforeDispatch": true,
+      "separateWorkerExecutesDurableTask": true,
+      "redisOutageAcceptedAndRecovered": true,
+      "composeBackupRestoreLocksNewGeneration": true,
+      "restartPreservesDatabaseKeyAndTls": true,
+      "forgedForwardedAddressesCannotBypassLoginLimit": true,
+      "backendPrivateAndResourcesBounded": true,
+      "apiAndWorkerReachExternalSshKubernetesAndRegistryProtocols": true,
+      "databaseAndRedisCannotReachTheSameExternalProtocols": true
+    },
+    "timingsMs": {
+      "fixture-setup": 66,
+      "compose-config": 208,
+      "linux-key-permissions": 382,
+      "compose-start": 16974,
+      "database-check": 62,
+      "copy-public-ca": 48,
+      "admin-init": 933,
+      "redis-stop": 200,
+      "compose-backup": 323,
+      "redis-start": 143,
+      "compose-restore": 363,
+      "storage-restart": 371,
+      "application-restart": 786,
+      "api-node-version": 84,
+      "api-pnpm-version": 99,
+      "worker-node-version": 63,
+      "worker-pnpm-version": 68,
+      "caddy-version": 97,
+      "fastify-version": 137,
+      "postgres-container-id": 83,
+      "postgres-runtime-config": 38,
+      "postgres-image-id": 21,
+      "redis-container-id": 77,
+      "redis-runtime-config": 14,
+      "redis-image-id": 12,
+      "api-container-id": 96,
+      "api-runtime-config": 14,
+      "api-image-id": 14,
+      "worker-container-id": 149,
+      "worker-runtime-config": 13,
+      "worker-image-id": 21,
+      "console-container-id": 72,
+      "console-runtime-config": 11,
+      "console-image-id": 10,
+      "backend-network": 12,
+      "egress-network": 18,
+      "egress-api-id": 108,
+      "egress-api-networks": 13,
+      "egress-worker-id": 66,
+      "egress-worker-networks": 15,
+      "egress-postgres-id": 67,
+      "egress-postgres-networks": 12,
+      "egress-redis-id": 92,
+      "egress-redis-networks": 18,
+      "egress-create-ca": 244,
+      "egress-create-csr": 168,
+      "egress-sign-cert": 25,
+      "egress-fixture-network": 133,
+      "egress-fixture-start": 276,
+      "egress-fixture-ports": 22,
+      "egress-api-probe": 156,
+      "egress-worker-probe": 114,
+      "egress-postgres-denied": 269,
+      "egress-redis-denied": 177,
+      "egress-fixture-stop": 122,
+      "stats-container-ids": 70,
+      "docker-stats": 2567,
+      "fixture-stop": 645
+    },
+    "versions": {
+      "apiNode": "v24.22.1",
+      "apiPnpm": "12.14.0",
+      "workerNode": "v24.22.1",
+      "workerPnpm": "12.14.0",
+      "caddy": "v2.11.7 h1:yj0Y4fYZGPkSvibBJ1sTWE33xC0fxztVyXEW5iIdUT4=",
+      "fastify": "5.12.7"
+    },
+    "resources": {
+      "postgres": {
+        "imageId": "sha256:25a89970a83255ae96484d709005bb35aa71f7455f941bc1634514f31c5d5c62",
+        "memoryLimitBytes": 2147483648,
+        "cpuLimit": 1,
+        "publishedPorts": []
+      },
+      "redis": {
+        "imageId": "sha256:80dd823f4d2bf93dd5e418a0ae2817319a1ba279953e234082e54a5a18306223",
+        "memoryLimitBytes": 402653184,
+        "cpuLimit": 0.5,
+        "publishedPorts": []
+      },
+      "api": {
+        "imageId": "sha256:0788834a15975711e69e5210676a12aa97e8fec42010cedb01b25424f26e7688",
+        "memoryLimitBytes": 536870912,
+        "cpuLimit": 1,
+        "publishedPorts": []
+      },
+      "worker": {
+        "imageId": "sha256:3a7710812029f644e958b01a563910795d32ec07431aabfef30f719cb749d5a7",
+        "memoryLimitBytes": 536870912,
+        "cpuLimit": 0.5,
+        "publishedPorts": []
+      },
+      "console": {
+        "imageId": "sha256:fc4cb2b019ebb36a86c11677d3912bbef8d895684f4927b11cab04097d2dfccc",
+        "memoryLimitBytes": 268435456,
+        "cpuLimit": 0.5,
+        "publishedPorts": ["8080/tcp", "8443/tcp"]
+      },
+      "sample": [
+        {
+          "BlockIO": "18.2MB / 0B",
+          "CPUPerc": "0.00%",
+          "Container": "5676cc8226bf86dcb891f72e52e1d92783c716cc64fd6e56ee65deb0c264a4b6",
+          "ID": "5676cc8226bf",
+          "MemPerc": "15.73%",
+          "MemUsage": "80.55MiB / 512MiB",
+          "Name": "ozz-s1-proof-a0e2aff7-api-1",
+          "NetIO": "45.4kB / 45kB",
+          "PIDs": "17"
+        },
+        {
+          "BlockIO": "340kB / 4.1kB",
+          "CPUPerc": "0.10%",
+          "Container": "46f2543f187e9862712819cadaf7c5bfcab452d2f197d8291ce8d60a4476c5f4",
+          "ID": "46f2543f187e",
+          "MemPerc": "4.18%",
+          "MemUsage": "10.69MiB / 256MiB",
+          "Name": "ozz-s1-proof-a0e2aff7-console-1",
+          "NetIO": "29.2kB / 27.2kB",
+          "PIDs": "8"
+        },
+        {
+          "BlockIO": "930kB / 18.5MB",
+          "CPUPerc": "2.25%",
+          "Container": "d5bb32f25c390d2fd8c90cbf7dbdcbef88360ecf1fe361611b46d79eb58f6337",
+          "ID": "d5bb32f25c39",
+          "MemPerc": "1.97%",
+          "MemUsage": "40.35MiB / 2GiB",
+          "Name": "ozz-s1-proof-a0e2aff7-postgres-1",
+          "NetIO": "144kB / 99.1kB",
+          "PIDs": "14"
+        },
+        {
+          "BlockIO": "65.5kB / 0B",
+          "CPUPerc": "1.39%",
+          "Container": "10a07e185913878e1a85c1368908696ed8ea5217cadc6f80c2a6702c481acc29",
+          "ID": "10a07e185913",
+          "MemPerc": "1.05%",
+          "MemUsage": "4.043MiB / 384MiB",
+          "Name": "ozz-s1-proof-a0e2aff7-redis-1",
+          "NetIO": "48.7kB / 65.6kB",
+          "PIDs": "6"
+        },
+        {
+          "BlockIO": "0B / 0B",
+          "CPUPerc": "2.57%",
+          "Container": "7e179bfaad6ebd000d6c27187f81eb4d0d7d80f9b5b9f68383c4033f1a62e38a",
+          "ID": "7e179bfaad6e",
+          "MemPerc": "9.22%",
+          "MemUsage": "47.19MiB / 512MiB",
+          "Name": "ozz-s1-proof-a0e2aff7-worker-1",
+          "NetIO": "82.2kB / 79.6kB",
+          "PIDs": "15"
+        }
+      ]
+    },
+    "linuxKeyPermissions": {
+      "status": "passed",
+      "platform": "linux",
+      "node": "v24.22.1",
+      "owners": [
+        {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "readableByRuntimeUser": true
+        },
+        {
+          "uid": 12345,
+          "gid": 12346,
+          "mode": "0600",
+          "readableByRuntimeUser": true
+        }
+      ],
+      "existingFilesUnchanged": true,
+      "nonRootOwnerMismatchRefused": true
+    },
+    "databaseMigrations": {
+      "applied": 6,
+      "unfinished": 0
+    },
+    "egress": {
+      "scope": "Linux TCP/HTTPS egress boundary through a dedicated bridge gateway and isolated protocol fixtures; separate from product SSH/K3s/registry execution.",
+      "gateway": "172.29.5.1",
+      "fixtureNetwork": "a8955636261b2bdcee79a44d1d79033d46e6ecb5ae047692ddf302a06bda8597",
+      "members": {
+        "api": {
+          "id": "5676cc8226bf86dcb891f72e52e1d92783c716cc64fd6e56ee65deb0c264a4b6",
+          "networks": ["ozz-s1-proof-a0e2aff7_backend", "ozz-s1-proof-a0e2aff7_egress"]
+        },
+        "worker": {
+          "id": "7e179bfaad6ebd000d6c27187f81eb4d0d7d80f9b5b9f68383c4033f1a62e38a",
+          "networks": ["ozz-s1-proof-a0e2aff7_backend", "ozz-s1-proof-a0e2aff7_egress"]
+        },
+        "postgres": {
+          "id": "d5bb32f25c390d2fd8c90cbf7dbdcbef88360ecf1fe361611b46d79eb58f6337",
+          "networks": ["ozz-s1-proof-a0e2aff7_backend"]
+        },
+        "redis": {
+          "id": "10a07e185913878e1a85c1368908696ed8ea5217cadc6f80c2a6702c481acc29",
+          "networks": ["ozz-s1-proof-a0e2aff7_backend"]
+        }
+      },
+      "protocols": ["ssh-banner", "kubernetes-https-version", "registry-https-challenge"],
+      "strictTls": true,
+      "realCredentialsSent": false,
+      "allowed": {
+        "api": {
+          "results": [
+            {
+              "protocol": "ssh",
+              "tcpConnected": true,
+              "verified": true,
+              "errorCode": null
+            },
+            {
+              "protocol": "kubernetes",
+              "tcpConnected": true,
+              "verified": true,
+              "errorCode": null
+            },
+            {
+              "protocol": "registry",
+              "tcpConnected": true,
+              "verified": true,
+              "errorCode": null
+            }
+          ]
+        },
+        "worker": {
+          "results": [
+            {
+              "protocol": "ssh",
+              "tcpConnected": true,
+              "verified": true,
+              "errorCode": null
+            },
+            {
+              "protocol": "kubernetes",
+              "tcpConnected": true,
+              "verified": true,
+              "errorCode": null
+            },
+            {
+              "protocol": "registry",
+              "tcpConnected": true,
+              "verified": true,
+              "errorCode": null
+            }
+          ]
+        }
+      },
+      "denied": {
+        "postgres": {
+          "networkNamespace": "d5bb32f25c390d2fd8c90cbf7dbdcbef88360ecf1fe361611b46d79eb58f6337",
+          "probeContainer": "ozz-s1-proof-a0e2aff7-egress-denied-postgres",
+          "results": [
+            {
+              "protocol": "ssh",
+              "tcpConnected": false,
+              "verified": false,
+              "errorCode": "ENETUNREACH"
+            },
+            {
+              "protocol": "kubernetes",
+              "tcpConnected": false,
+              "verified": false,
+              "errorCode": "ENETUNREACH"
+            },
+            {
+              "protocol": "registry",
+              "tcpConnected": false,
+              "verified": false,
+              "errorCode": "ENETUNREACH"
+            }
+          ]
+        },
+        "redis": {
+          "networkNamespace": "10a07e185913878e1a85c1368908696ed8ea5217cadc6f80c2a6702c481acc29",
+          "probeContainer": "ozz-s1-proof-a0e2aff7-egress-denied-redis",
+          "results": [
+            {
+              "protocol": "ssh",
+              "tcpConnected": false,
+              "verified": false,
+              "errorCode": "ENETUNREACH"
+            },
+            {
+              "protocol": "kubernetes",
+              "tcpConnected": false,
+              "verified": false,
+              "errorCode": "ENETUNREACH"
+            },
+            {
+              "protocol": "registry",
+              "tcpConnected": false,
+              "verified": false,
+              "errorCode": "ENETUNREACH"
+            }
+          ]
+        }
+      },
+      "publishedOnlyOnDedicatedGateway": {
+        "host": "172.29.5.1",
+        "ports": {
+          "ssh": 32768,
+          "kubernetes": 32769,
+          "registry": 32770
+        }
+      },
+      "status": "passed",
+      "fixtureContainer": "4266d075224d51b166ad7bb9104c55f7a3e761c8c4abdc88a2f42e697a261e5f",
+      "fixtureState": "stopped-and-retained"
+    },
+    "status": "passed",
+    "containers": "stopped-and-retained",
+    "durationSeconds": 47.605,
+    "startedAt": "2026-10-25T19:58:33.953935+00:00",
+    "finishedAt": "2026-10-25T19:59:21.558679+00:00",
+    "checksPassed": 16,
+    "oversizedRequestRegression": {
+      "contentLengthRequests": 8,
+      "chunkedRequests": 8,
+      "expectedStatus": 413,
+      "expectedCode": "PAYLOAD_TOO_LARGE",
+      "allPassed": true
+    },
+    "externalProtocolConnectionsAllowed": 6,
+    "externalProtocolConnectionsDenied": 6
+  },
+  "httpBoundaryFix": {
+    "baselineProject": "ozz-s1-proof-c14b12f1",
+    "baselineStatus": "failed",
+    "baselineFailure": "Expected values to be strictly equal:\n\n502 !== 413\n",
+    "cause": "Fastify forced Connection: close for an oversized request before Caddy finished forwarding the body. API logged 413 while the proxy saw an upstream TCP reset and returned 502.",
+    "fix": "Only FST_ERR_CTP_BODY_TOO_LARGE removes the forced close header and drains without buffering. An absolute drain deadline uses the existing server requestTimeout (15000 ms in production); end/close releases the timer.",
+    "comparison": {
+      "testedAt": "2026-10-25T19:28:44.963Z",
+      "bodyLimit": 102400,
+      "payloadBytes": 110018,
+      "results": {
+        "baseline": {
+          "contentLength": [
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 14
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 2
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 502,
+              "elapsedMs": 2
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 502,
+              "elapsedMs": 2
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 2
+            }
+          ],
+          "chunked": [
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 3
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 2
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 2
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 2
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 4
+            }
+          ]
+        },
+        "resume-only": {
+          "contentLength": [
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 2
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 3
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 502,
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 502,
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            }
+          ],
+          "chunked": [
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 2
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 2
+            }
+          ]
+        },
+        "keepalive-drain": {
+          "contentLength": [
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 3
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            }
+          ],
+          "chunked": [
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 1
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 3
+            },
+            {
+              "status": 413,
+              "code": "PAYLOAD_TOO_LARGE",
+              "elapsedMs": 3
+            }
+          ]
+        }
+      }
+    },
+    "comparisonStatusCounts": {
+      "baseline": {
+        "contentLength": {
+          "413": 6,
+          "502": 2
+        },
+        "chunked": {
+          "413": 8
+        }
+      },
+      "resume-only": {
+        "contentLength": {
+          "413": 6,
+          "502": 2
+        },
+        "chunked": {
+          "413": 8
+        }
+      },
+      "keepalive-drain": {
+        "contentLength": {
+          "413": 8
+        },
+        "chunked": {
+          "413": 8
+        }
+      }
+    },
+    "realTcpUnitTests": {
+      "passed": 2,
+      "checks": [
+        {
+          "name": "delivers 413 before upload completion, drains it, and reuses the TCP connection",
+          "status": "passed",
+          "durationMs": 434.07608300000004
+        },
+        {
+          "name": "closes an incomplete rejected upload at the request deadline",
+          "status": "passed",
+          "durationMs": 257.4435
+        }
+      ],
+      "covers": [
+        "413 before the upload finishes",
+        "complete rejected upload drains and the same TCP connection survives beyond the deadline for a subsequent GET",
+        "incomplete rejected upload closes within the configured deadline"
+      ]
+    },
+    "peerReview": "A separate read-only review found no blocking drain/keepalive issue; repeated chunked framing is also covered by the final Compose smoke."
+  },
+  "cacheProvenance": {
+    "transport": "Read-only Docker image save from Mac to C; no Mac tags were changed. Official Docker Hub pull from C failed, so verified imported caches were used.",
+    "archiveSha256": "aff4b8b39c65606e89c55667e1924d5fb1b8bf96c60d81f894ae66f3f01ed5cd",
+    "runtimeBindings": {
+      "postgres": {
+        "originalReference": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+        "rootDigest": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+        "manifestDigest": "sha256:0b2882c46a2b8d8e148431b333394348cf4d7f15aec6df7f17d51dc641e56cfa",
+        "configId": "sha256:25a89970a83255ae96484d709005bb35aa71f7455f941bc1634514f31c5d5c62",
+        "platform": "linux/arm64",
+        "layers": [
+          {
+            "digest": "sha256:a9986cd6f37dbddae7862a6d4be71683472e7c2ea708e87db14f8a6393c00f00",
+            "bytes": 4187659
+          },
+          {
+            "digest": "sha256:0c4d12928c8b2660374a223a13ca28b01a312ff8d642e436b529b79de89cfebf",
+            "bytes": 968
+          },
+          {
+            "digest": "sha256:334e16b2a68ce7b36d020eccba4adabc278256fc28f155ff6c1d8cb3942f604d",
+            "bytes": 853406
+          },
+          {
+            "digest": "sha256:87e7bc91b13bf5beb183df842ad2f3c7f65d57ff22b7a3f9bb62a431039d1857",
+            "bytes": 116
+          },
+          {
+            "digest": "sha256:2561c1a92c320b073660a52bbaa75b254d9393d4a6e1b9bf2ee71b38234eb330",
+            "bytes": 109961784
+          },
+          {
+            "digest": "sha256:b266f5de38072165c84dc35aae9faff7e2b1b5db20009637c5a8a6aca6db82a7",
+            "bytes": 10001
+          },
+          {
+            "digest": "sha256:17bc19c5b6b39355a781ab82e977b8ee99f683ca7eeb5fc0611d515d66c01b15",
+            "bytes": 128
+          },
+          {
+            "digest": "sha256:571d921d3454527a64b67cb0310cab6cbd054be812f8b6c6908246a7e47268f6",
+            "bytes": 168
+          },
+          {
+            "digest": "sha256:ba4c01c41a64bfd7b24c8f58e6b10165887d7668c6227bc7ae7b98ec72392bc3",
+            "bytes": 6113
+          },
+          {
+            "digest": "sha256:363a00f0fb0536b34ba57bf3ef68cec53853914bb440c457ce9354135473db0a",
+            "bytes": 184
+          }
+        ],
+        "expectedRuntimeDiffIds": [
+          "sha256:1b349a3334531b575b01d409540dd8aca14ef29abddacd50f36643d7c949db4b",
+          "sha256:6105053010d7234e5da3c998271cd6a06c966bf02609780cd462ffbb8ccd4af2",
+          "sha256:d973feabfe24563d84362ea8e3cf5fa8d3f15d77c741c6cbae34cc19a0c99c89",
+          "sha256:59b3db3a6e9366134d5a638faf1bd73cd7ebf5f83fb66c756a2261a3185f480e",
+          "sha256:69f72ea6f65dbab3e3bdfd07322848577dce31912d95ea38e1c1a36d5a70e462",
+          "sha256:b9896a47aeba727e79e04481a1eb6e80227a071346553689b933153440d441ba",
+          "sha256:f069d78ee120649c0cb6b9a65598638a3d6236b884e65705a6d8fdbaea79e965",
+          "sha256:075b36f84691a142a8d182af28926d791b4a4d82b6e3fd390dc03961521e4c03",
+          "sha256:f769e9f71cef9122be783a92c89fd894e0c077069d841c27335d7ba996d771f9",
+          "sha256:08c3845a93301179ecebb8b32a7d0b99c0d955b6af8d4363f92287c6e999b8fa"
+        ],
+        "everyDigestAndSizeVerified": true,
+        "importedConfigAndAllDiffIdsMatch": true,
+        "importedRuntime": {
+          "id": "sha256:25a89970a83255ae96484d709005bb35aa71f7455f941bc1634514f31c5d5c62",
+          "architecture": "arm64",
+          "os": "linux",
+          "diffIds": [
+            "sha256:1b349a3334531b575b01d409540dd8aca14ef29abddacd50f36643d7c949db4b",
+            "sha256:6105053010d7234e5da3c998271cd6a06c966bf02609780cd462ffbb8ccd4af2",
+            "sha256:d973feabfe24563d84362ea8e3cf5fa8d3f15d77c741c6cbae34cc19a0c99c89",
+            "sha256:59b3db3a6e9366134d5a638faf1bd73cd7ebf5f83fb66c756a2261a3185f480e",
+            "sha256:69f72ea6f65dbab3e3bdfd07322848577dce31912d95ea38e1c1a36d5a70e462",
+            "sha256:b9896a47aeba727e79e04481a1eb6e80227a071346553689b933153440d441ba",
+            "sha256:f069d78ee120649c0cb6b9a65598638a3d6236b884e65705a6d8fdbaea79e965",
+            "sha256:075b36f84691a142a8d182af28926d791b4a4d82b6e3fd390dc03961521e4c03",
+            "sha256:f769e9f71cef9122be783a92c89fd894e0c077069d841c27335d7ba996d771f9",
+            "sha256:08c3845a93301179ecebb8b32a7d0b99c0d955b6af8d4363f92287c6e999b8fa"
+          ]
+        }
+      },
+      "redis": {
+        "originalReference": "redis@sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99",
+        "rootDigest": "sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99",
+        "manifestDigest": "sha256:084f4bcb3fedf990ba43d26774f58ed4697a2c044156544ac4717934ad1d57c8",
+        "configId": "sha256:80dd823f4d2bf93dd5e418a0ae2817319a1ba279953e234082e54a5a18306223",
+        "platform": "linux/arm64",
+        "layers": [
+          {
+            "digest": "sha256:2dd7199cff98a7400e801cbfad6de906972a4e3dd0a749d4c1b80f5a1e3e4108",
+            "bytes": 3994465
+          },
+          {
+            "digest": "sha256:b293fa9cfba6857598df15ce9145b20d5031411ff3dae29ae872579750bf6916",
+            "bytes": 949
+          },
+          {
+            "digest": "sha256:49842fab55ed8b61dbed72e1c37ab2a67351dd78d0ccb077619ae9bbaea86636",
+            "bytes": 197785
+          },
+          {
+            "digest": "sha256:e156f517d17a8fdcd5030da1fdc02362deb25ea48c2d2596a721a1e9690cd3ec",
+            "bytes": 12578833
+          },
+          {
+            "digest": "sha256:f24aebc9f65557935dd47df789e9aa015cec38cf77f51ec7766f9e2fc971ba72",
+            "bytes": 99
+          },
+          {
+            "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+            "bytes": 32
+          },
+          {
+            "digest": "sha256:875d4f4d7e836cd1e6616b879228f9b814fabed4f507f284a87fa099eea8fbe8",
+            "bytes": 604
+          }
+        ],
+        "expectedRuntimeDiffIds": [
+          "sha256:e553266e9961960d0d998d56a5d13d3f8b9555c7ec6acfe10f3d53796905d8ee",
+          "sha256:ac2dffe5d7e4bd0f3fefd4cee0923afdcdbdb498f5e38be5be9564e767d96ec0",
+          "sha256:0f685dbfeec6f1865856719efee347a7f394d1e815778849a31b5940730e17c7",
+          "sha256:178f906f09b9759c58d79a22aea82102e4fc9f1895b20dfa512250e5f2b13409",
+          "sha256:b4361404010bb62f7d9c6dfc9ff1c1025141e8024f3c8353704f835f028657bb",
+          "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+          "sha256:ae3faf9e1a603e622dfd9e7b8b912dd44e0fa704a8d383668f62f77ae53874bc"
+        ],
+        "everyDigestAndSizeVerified": true,
+        "importedConfigAndAllDiffIdsMatch": true,
+        "importedRuntime": {
+          "id": "sha256:80dd823f4d2bf93dd5e418a0ae2817319a1ba279953e234082e54a5a18306223",
+          "architecture": "arm64",
+          "os": "linux",
+          "diffIds": [
+            "sha256:e553266e9961960d0d998d56a5d13d3f8b9555c7ec6acfe10f3d53796905d8ee",
+            "sha256:ac2dffe5d7e4bd0f3fefd4cee0923afdcdbdb498f5e38be5be9564e767d96ec0",
+            "sha256:0f685dbfeec6f1865856719efee347a7f394d1e815778849a31b5940730e17c7",
+            "sha256:178f906f09b9759c58d79a22aea82102e4fc9f1895b20dfa512250e5f2b13409",
+            "sha256:b4361404010bb62f7d9c6dfc9ff1c1025141e8024f3c8353704f835f028657bb",
+            "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+            "sha256:ae3faf9e1a603e622dfd9e7b8b912dd44e0fa704a8d383668f62f77ae53874bc"
+          ]
+        }
+      }
+    },
+    "buildBindings": {
+      "node:22.21.1-bookworm-slim": {
+        "rootDigest": "sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c",
+        "manifestDigest": "sha256:e9a25e805913a62afa8dc44a6810e369c656917a543908c0ff9c3eb08627e9cc",
+        "configId": "sha256:38a8425a7f4e32ac2a27cb9764be4d3ab308fff430e54c7ae5c4746b23282257",
+        "platform": "linux/arm64",
+        "layers": [
+          {
+            "digest": "sha256:33bdc9671af8942d96d2f78f67aeec06580065dde1272decac3732689ec7c0e8",
+            "bytes": 28107889
+          },
+          {
+            "digest": "sha256:ff1919949b44c1c46cf75a0fdb7757ca5caec3d771360c940dee5855cb4bc575",
+            "bytes": 3312
+          },
+          {
+            "digest": "sha256:d2a034be9a64f8ff2fb73a96cda78789036795be6cd57703acd6a60b14e02077",
+            "bytes": 49614786
+          },
+          {
+            "digest": "sha256:f798b500b0cc5f6a2da2dd002070358db520df693659ed031b802ae4e4f00042",
+            "bytes": 1712610
+          },
+          {
+            "digest": "sha256:42d3bd69420ceec8364386320564ddc9279df9fe468daaeb23533081510ea812",
+            "bytes": 446
+          }
+        ],
+        "expectedRuntimeDiffIds": [
+          "sha256:27718dd4c00f9fd135129ee24338fc13706d328b1ca5ea353bc79772eb520fa4",
+          "sha256:cbde7870a8cfcad5082bbf64e0f0bcce13b79f3c438e0b222c9e3637eb3d4dec",
+          "sha256:fd75532632731302ee796fcb59edc451a9c164e19e71abcf71838b6d095653f7",
+          "sha256:11e6656fad2fb1cf10ecd80969e6a80f3b6fda2b307e514562c77cfc402ba0dc",
+          "sha256:ed1fe46163efcbf4eac3f1e9203db1836158be90b0409db9eaf321f15a48af80"
+        ],
+        "historyEntries": 9,
+        "everyDigestAndSizeVerified": true,
+        "importedConfigAndAllDiffIdsMatch": true
+      },
+      "ozz-s1/toolchain:0.1.0": {
+        "rootDigest": "sha256:fee3cdcb9df6f1a229a5454cf199b90ad899291dcd38d846d421e3f6a60c3205",
+        "manifestDigest": "sha256:fee3cdcb9df6f1a229a5454cf199b90ad899291dcd38d846d421e3f6a60c3205",
+        "configId": "sha256:e9f68532887615ec84789a9ccb087a4f79421391fd3e61cde1aaabc05948308a",
+        "platform": "linux/arm64",
+        "layers": [
+          {
+            "digest": "sha256:33bdc9671af8942d96d2f78f67aeec06580065dde1272decac3732689ec7c0e8",
+            "bytes": 28107889
+          },
+          {
+            "digest": "sha256:ff1919949b44c1c46cf75a0fdb7757ca5caec3d771360c940dee5855cb4bc575",
+            "bytes": 3312
+          },
+          {
+            "digest": "sha256:d2a034be9a64f8ff2fb73a96cda78789036795be6cd57703acd6a60b14e02077",
+            "bytes": 49614786
+          },
+          {
+            "digest": "sha256:f798b500b0cc5f6a2da2dd002070358db520df693659ed031b802ae4e4f00042",
+            "bytes": 1712610
+          },
+          {
+            "digest": "sha256:42d3bd69420ceec8364386320564ddc9279df9fe468daaeb23533081510ea812",
+            "bytes": 446
+          },
+          {
+            "digest": "sha256:ff853c07876beff57a90d0f47ba472daa3d08a07b1a4733d7f50c3babc50bae4",
+            "bytes": 3360750
+          },
+          {
+            "digest": "sha256:4345243fe0e367aa99af14a7485711f1c82589e7d69ed045790eefc4ce1d425a",
+            "bytes": 1361
+          },
+          {
+            "digest": "sha256:51fbca90f6a19f03c0facdb1b3b22df226b84866c403f304d7a75224daf19b26",
+            "bytes": 60021619
+          },
+          {
+            "digest": "sha256:e72f5b216631e5efa7524dea00f6cf3c9c7f2c5c81d0de7cca2facb9458de717",
+            "bytes": 48352785
+          },
+          {
+            "digest": "sha256:3fdce4aa1646ddc1a46cd08ad6a61f0445d713e1a915469c0d63572db693299e",
+            "bytes": 886
+          }
+        ],
+        "expectedRuntimeDiffIds": [
+          "sha256:27718dd4c00f9fd135129ee24338fc13706d328b1ca5ea353bc79772eb520fa4",
+          "sha256:cbde7870a8cfcad5082bbf64e0f0bcce13b79f3c438e0b222c9e3637eb3d4dec",
+          "sha256:fd75532632731302ee796fcb59edc451a9c164e19e71abcf71838b6d095653f7",
+          "sha256:11e6656fad2fb1cf10ecd80969e6a80f3b6fda2b307e514562c77cfc402ba0dc",
+          "sha256:ed1fe46163efcbf4eac3f1e9203db1836158be90b0409db9eaf321f15a48af80",
+          "sha256:fd63dd39fb3068910239bc17c279d178371b06f46e43a7ef3f4c3556b46eee09",
+          "sha256:99b7780b2fecf06ceddc6b07153ad49118fca4ec55ab55a904ed08fb1633c831",
+          "sha256:036f763af5660cd3aab47b7e570a49221a906a7b4e286cea77bcc539b38b2455",
+          "sha256:ed1c4e3efb3b4c1c2580171afc6fde1ce1e9ea7db30abffc7f3aa53a4a79dcd3",
+          "sha256:233718149e4ac5054d5b4bd9a18d77dada4f0ad824f1337c040c3d9a4dead3b8"
+        ],
+        "historyEntries": 15,
+        "everyDigestAndSizeVerified": true,
+        "importedConfigAndAllDiffIdsMatch": true
+      }
+    },
+    "debianMirror": "https://mirrors.tuna.tsinghua.edu.cn",
+    "debianSignatureVerificationEnabled": true,
+    "globalDnsProxyOrTrustChanged": false
+  },
+  "artifact": {
+    "startedAt": "2026-10-25T20:01:01.340226+00:00",
+    "sourceArchiveSha256": "b29ff98a295c999c7e92c22aad31ea4a746269f53e5242bb7aeaa17960003fb0",
+    "transport": "Docker save streamed through verified SSH to Mac filesystem; no second C archive and no Mac Docker load",
+    "images": {
+      "ozz-s3-http413-final/api:0.1.0": {
+        "id": "sha256:0788834a15975711e69e5210676a12aa97e8fec42010cedb01b25424f26e7688",
+        "size": 919195807,
+        "rootfsDiffIds": [
+          "sha256:27718dd4c00f9fd135129ee24338fc13706d328b1ca5ea353bc79772eb520fa4",
+          "sha256:cbde7870a8cfcad5082bbf64e0f0bcce13b79f3c438e0b222c9e3637eb3d4dec",
+          "sha256:fd75532632731302ee796fcb59edc451a9c164e19e71abcf71838b6d095653f7",
+          "sha256:11e6656fad2fb1cf10ecd80969e6a80f3b6fda2b307e514562c77cfc402ba0dc",
+          "sha256:ed1fe46163efcbf4eac3f1e9203db1836158be90b0409db9eaf321f15a48af80",
+          "sha256:4f502f2d90c65584d1b8f34015a4b096906a03b3a173cfdc66c7bb74cded1deb",
+          "sha256:45774756c704775cbbd001b2280bbbd322859e27bf98a3c41497bb1a218eb4fe",
+          "sha256:6c8ff486007b86e8e2142c8bb01177e1f9d04dd1b3d452364c0c62caa5ec29b4",
+          "sha256:ff3d10b85aec14bb684b2982f6b4c40a879c43dbb45b7799b2d04e97489be108",
+          "sha256:19541c96c05107cb5dbc13a8eafb839120c85f60e86e19ccc629b95fe5f9f8d9",
+          "sha256:9a0871595498cf5b29a4c0c2918cabcadc36cff9654454e916ab4bf7dcf02c6a",
+          "sha256:493208c9fbea520e1219795a4ef6790a1738612d5668fc74b6a306800b99ee85"
+        ]
+      },
+      "ozz-s3-http413-final/worker:0.1.0": {
+        "id": "sha256:3a7710812029f644e958b01a563910795d32ec07431aabfef30f719cb749d5a7",
+        "size": 893043333,
+        "rootfsDiffIds": [
+          "sha256:27718dd4c00f9fd135129ee24338fc13706d328b1ca5ea353bc79772eb520fa4",
+          "sha256:cbde7870a8cfcad5082bbf64e0f0bcce13b79f3c438e0b222c9e3637eb3d4dec",
+          "sha256:fd75532632731302ee796fcb59edc451a9c164e19e71abcf71838b6d095653f7",
+          "sha256:11e6656fad2fb1cf10ecd80969e6a80f3b6fda2b307e514562c77cfc402ba0dc",
+          "sha256:ed1fe46163efcbf4eac3f1e9203db1836158be90b0409db9eaf321f15a48af80",
+          "sha256:4f502f2d90c65584d1b8f34015a4b096906a03b3a173cfdc66c7bb74cded1deb",
+          "sha256:45774756c704775cbbd001b2280bbbd322859e27bf98a3c41497bb1a218eb4fe",
+          "sha256:6c8ff486007b86e8e2142c8bb01177e1f9d04dd1b3d452364c0c62caa5ec29b4",
+          "sha256:ff3d10b85aec14bb684b2982f6b4c40a879c43dbb45b7799b2d04e97489be108",
+          "sha256:19541c96c05107cb5dbc13a8eafb839120c85f60e86e19ccc629b95fe5f9f8d9",
+          "sha256:9a0871595498cf5b29a4c0c2918cabcadc36cff9654454e916ab4bf7dcf02c6a",
+          "sha256:f47b9f80706aab91c453609d71ce457ecb06e4b1b10edb5e9247f3936f872f39"
+        ]
+      },
+      "ozz-s3-http413-final/migrate:0.1.0": {
+        "id": "sha256:32f5ee94d7c865898df227468f0d45b005093e57c75ffec1fda3625c6b1926db",
+        "size": 2475660427,
+        "rootfsDiffIds": [
+          "sha256:27718dd4c00f9fd135129ee24338fc13706d328b1ca5ea353bc79772eb520fa4",
+          "sha256:cbde7870a8cfcad5082bbf64e0f0bcce13b79f3c438e0b222c9e3637eb3d4dec",
+          "sha256:fd75532632731302ee796fcb59edc451a9c164e19e71abcf71838b6d095653f7",
+          "sha256:11e6656fad2fb1cf10ecd80969e6a80f3b6fda2b307e514562c77cfc402ba0dc",
+          "sha256:ed1fe46163efcbf4eac3f1e9203db1836158be90b0409db9eaf321f15a48af80",
+          "sha256:4f502f2d90c65584d1b8f34015a4b096906a03b3a173cfdc66c7bb74cded1deb",
+          "sha256:45774756c704775cbbd001b2280bbbd322859e27bf98a3c41497bb1a218eb4fe",
+          "sha256:6c8ff486007b86e8e2142c8bb01177e1f9d04dd1b3d452364c0c62caa5ec29b4",
+          "sha256:ff3d10b85aec14bb684b2982f6b4c40a879c43dbb45b7799b2d04e97489be108",
+          "sha256:19541c96c05107cb5dbc13a8eafb839120c85f60e86e19ccc629b95fe5f9f8d9",
+          "sha256:ae968b64a86f9b68bd4b2023be362367ce0e8b6210615f6592b55f716bebfb6d",
+          "sha256:56f47f99235703c10ba5a649b49c6eab83640a3b32253652ab6c3140b018bd4b",
+          "sha256:bddaa251a55d061b87e30abd98e53b04dbf53aeb496b35309267ba52d55a1638",
+          "sha256:ea5cc8462fddebdd6d30c9df65691029588c3318e3045bdff414c3e33f56ee12",
+          "sha256:ff2a78a6a1a3063f81fe923cd3d2fac7cfbb828d7ca5d1043a6f90bcc0eb0993",
+          "sha256:ecb937f2024c97fdaa97019229765448bc813a26e73ad715409fa10c1adffd2b",
+          "sha256:50549a3c1c79949ca3dd801e26c8e33bd75ff41c61fe0fb6f7e82d99626fb672",
+          "sha256:2b9998d6fb05668fdab1ed39d93ed7efd14443d424fcb80a3d043b14ac803b95",
+          "sha256:89bb3f8028d00e287cfd57a7d50289964fe951f91ce08882b6dcc834121fe392",
+          "sha256:f2281d181b6ee7437fac6e2e62937c0b4567f627a2dbae3b5085e17aa4d168b5",
+          "sha256:610f58c8269214d6a3ea44e0b0e5260f148535a99844afe4ffad35f30ab0e551",
+          "sha256:741cc57c08e1642b0c0081e977beb9f8b1956bb9b6ac0ecc39054f7c7f7048fc",
+          "sha256:2ea0c7fee1e00cfb80f6e41f8f25110fc7fe28f0835cb8c245e766ecb9749cd5",
+          "sha256:07556eeb5939c6fb68ad9aff3700a20451eb52542cb869f48517aa9351c66f2a",
+          "sha256:8100971e1639bbf5d2e0892e7226eb4d9851ab2902f1943d07bba3e360af1387",
+          "sha256:4a39ad0cf5142d71edcc75b31f57183fb0b4868b558fa3fe83a48565e9aa8ae3",
+          "sha256:36d4780d699018789adb05a9f51a88924b512ae920795e86c8661ad88fa52d56",
+          "sha256:85bdc2306a0868ebbd8139ae352059affbd4354b69a9b7d181476f6a213de21c",
+          "sha256:884358f9f08d9806c1682db2f4a611f5521348135579f4ad487e113664c26080"
+        ]
+      },
+      "ozz-s3-http413-final/console:0.1.0": {
+        "id": "sha256:fc4cb2b019ebb36a86c11677d3912bbef8d895684f4927b11cab04097d2dfccc",
+        "size": 582837783,
+        "rootfsDiffIds": [
+          "sha256:27718dd4c00f9fd135129ee24338fc13706d328b1ca5ea353bc79772eb520fa4",
+          "sha256:cbde7870a8cfcad5082bbf64e0f0bcce13b79f3c438e0b222c9e3637eb3d4dec",
+          "sha256:fd75532632731302ee796fcb59edc451a9c164e19e71abcf71838b6d095653f7",
+          "sha256:11e6656fad2fb1cf10ecd80969e6a80f3b6fda2b307e514562c77cfc402ba0dc",
+          "sha256:ed1fe46163efcbf4eac3f1e9203db1836158be90b0409db9eaf321f15a48af80",
+          "sha256:4f502f2d90c65584d1b8f34015a4b096906a03b3a173cfdc66c7bb74cded1deb",
+          "sha256:45774756c704775cbbd001b2280bbbd322859e27bf98a3c41497bb1a218eb4fe",
+          "sha256:6c8ff486007b86e8e2142c8bb01177e1f9d04dd1b3d452364c0c62caa5ec29b4",
+          "sha256:ff3d10b85aec14bb684b2982f6b4c40a879c43dbb45b7799b2d04e97489be108",
+          "sha256:19541c96c05107cb5dbc13a8eafb839120c85f60e86e19ccc629b95fe5f9f8d9",
+          "sha256:1ee1cc24b6a8e32d8a9d91b8e2a0ac0e03a01ef5db70b07119d14733587dd5ce",
+          "sha256:343485cc1af09fda3769569014942462e0afee2105ab4e1bce8237f4a1a0ab5e",
+          "sha256:6b75fdfe7f70fdb5e3ac3f4267f02ff42dbbf5d7339a724b71781b10d990e0fb",
+          "sha256:9d4722cc24e70ff1613f45ece3aee839f2fd8a92cd46c09dd5ffcfc8dcdeab4d"
+        ]
+      }
+    },
+    "status": "passed",
+    "archiveBytes": 3513444352,
+    "archiveSha256": "d1751fd7e4d7355f6d32ae2572cbc3f1d6792df451d44fdfe1ecca42bdc5aef1",
+    "finishedAt": "2026-10-25T20:01:51.945158+00:00",
+    "localArtifact": ".local/local-lab/linux-build-c/artifacts/ozz-s3-http413-final-linux-arm64-s3-http413-20261025T193554Z-b9c3411e.tar",
+    "verifiedAt": "2026-10-25T20:01:56.618851+00:00",
+    "transportHashMatched": true,
+    "allConfigAndRootfsDigestsVerified": true,
+    "verifiedUniqueLayers": 36,
+    "macDockerLoaded": false
+  },
+  "retainedState": {
+    "runtime": {
+      "dedicatedDockerDaemon": "stopped-and-retained",
+      "k3s": "active",
+      "clusterUid": "3acbc89d-ce71-4fa2-9af2-660020df4827"
+    },
+    "imageIdsRetained": 193,
+    "containersRetained": 27,
+    "volumesRetained": 8,
+    "rootFilesystemFreeBytes": 8279408640,
+    "retentionAssertions": {
+      "allPreExpansionImagesAndTagsRetained": true,
+      "allPreExpansionContainersRetained": true,
+      "allPreExpansionVolumesRetained": true,
+      "allOwnedContainersStopped": true
+    },
+    "sourceSnapshots": {
+      "s3-http413-20261025T193554Z-b9c3411e": {
+        "archiveSha256": "b29ff98a295c999c7e92c22aad31ea4a746269f53e5242bb7aeaa17960003fb0",
+        "verifiedFiles": 279,
+        "fileModesVerified": true
+      },
+      "s3-20261025T184613Z-bdea4186": {
+        "archiveSha256": "577495678a125ca8c8ce0a600c80756f7971ce51b0071e14c7305d9c2ed7e633",
+        "verifiedFiles": 277,
+        "fileModesVerified": true
+      }
+    },
+    "clusterUid": "3acbc89d-ce71-4fa2-9af2-660020df4827",
+    "nodeUid": "81bdf48b-7543-4b54-bc9d-110656ef8f95",
+    "k3sFiles": {
+      "/etc/machine-id": "cd873a836b46ab7d68df8e6728f383da216969ea6534d56defd7158f7c8f4664",
+      "/etc/rancher/k3s/config.yaml": "427fac8a46bf61b56d55882ba1e3dee678b6493f4d64f361142abf31e4b418ba",
+      "/etc/systemd/system/k3s.service": "2ff12dfdff5427623562806f22116b7d3016ee70d26da36cf9965c31257480c4"
+    },
+    "nodeConditions": [
+      {
+        "type": "MemoryPressure",
+        "status": "False",
+        "reason": "KubeletHasSufficientMemory"
+      },
+      {
+        "type": "DiskPressure",
+        "status": "False",
+        "reason": "KubeletHasNoDiskPressure"
+      },
+      {
+        "type": "PIDPressure",
+        "status": "False",
+        "reason": "KubeletHasSufficientPID"
+      },
+      {
+        "type": "Ready",
+        "status": "True",
+        "reason": "KubeletReady"
+      }
+    ],
+    "macSourceImagesUnchanged": [
+      {
+        "reference": "node:22.21.1-bookworm-slim",
+        "imageId": "sha256:25b3eb23a00590b7499f2a2ce939322727fcce1b15fdd69754fcd09536a3ae2c",
+        "idTagsDigestsAndSizeUnchanged": true
+      },
+      {
+        "reference": "ozz-s1/toolchain:0.1.0",
+        "imageId": "sha256:fee3cdcb9df6f1a229a5454cf199b90ad899291dcd38d846d421e3f6a60c3205",
+        "idTagsDigestsAndSizeUnchanged": true
+      },
+      {
+        "reference": "postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+        "imageId": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+        "idTagsDigestsAndSizeUnchanged": true
+      },
+      {
+        "reference": "redis@sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99",
+        "imageId": "sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99",
+        "idTagsDigestsAndSizeUnchanged": true
+      }
+    ],
+    "finalImagesAbsentFromMacDocker": true,
+    "aAndBConfigurationAndPersistentIdentityUnchangedByResize": true
+  },
+  "retainedEarlierFailures": [
+    {
+      "phase": "dedicated Docker bootstrap",
+      "cause": "bridge and bip options conflicted; only the dedicated daemon configuration was corrected",
+      "evidence": ".local/local-lab/linux-build-c/bridge-config-fix.json"
+    },
+    {
+      "phase": "initial base pull / bootstrap",
+      "cause": "C Docker Hub connection refusal and Debian HTTP timeout; immutable imported image bindings and signed HTTPS package downloads used",
+      "evidence": ".local/local-lab/linux-build-c/evidence/original/build-api-attempt-1.log"
+    },
+    {
+      "phase": "original Compose",
+      "cause": "Oversized request returned proxy 502 instead of API 413; corrected with the separately hashed four-file patch",
+      "evidence": ".local/local-lab/linux-build-c/evidence/original/fixtures/ozz-s1-proof-c14b12f1.json"
+    },
+    {
+      "phase": "HTTP fix build before capacity increase",
+      "cause": "Explicit free-space guard stopped before migrate; C alone expanded to 28 GiB, preserving all data",
+      "evidence": ".local/local-lab/linux-build-c/evidence/http413/build-report.disk-headroom-failure.json"
+    },
+    {
+      "phase": "derived snapshot extraction",
+      "cause": "umask narrowed source directories to 0700; runtime UID could not traverse them. Directory modes restored to 0755; all 279 file bytes, file modes and archive SHA unchanged",
+      "evidence": ".local/local-lab/linux-build-c/evidence/final/extraction-directory-mode-fix.json"
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": ".local/local-lab/linux-build-c/http413-patch.json",
+      "sha256": "3c61dfafd355d3f6ad40f5123a4dd70536a713d14c35330a7febde327e543701",
+      "bytes": 1746
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/body-limit-unit-results.json",
+      "sha256": "4622047063ab297fa0ac15698075bc82108216270f880720c4976717e421a1b7",
+      "bytes": 1183
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/c-disk-resize/receipt.json",
+      "sha256": "b23a8f304a4cf35d0dc96183e857e83597dc99e23d8b6fb0378e26aacfd45c48",
+      "bytes": 41612
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/final-state.json",
+      "sha256": "54a1777e86ef70a91988c87017c943f4f83af29530260e94adeab8c0295ebd16",
+      "bytes": 23844
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/image-export-http413.json",
+      "sha256": "328268d1e74bac6ed87baae08d325de8c643deb1ef5dfdd9f6f12119af858777",
+      "bytes": 7139
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/evidence/original/http-boundary-candidate/results.json",
+      "sha256": "f2b94948e8a3b1cce64efd00de5ec1ebc8f1a7011a7f944fcd136213f9d8962c",
+      "bytes": 5500
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/evidence/final/build-final-report.json",
+      "sha256": "2026ea4e72a4c6279282bd44b1a973ebe1eca4fe2bb859374175e2eedeee1641",
+      "bytes": 7382
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/evidence/final/compose-final-report.json",
+      "sha256": "e54a9aa42c2862b0e3c87b4a3d8ecb7a153a12b7dfcde7a4bf0871da615d835a",
+      "bytes": 2402
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/evidence/final/compose-evidence.json",
+      "sha256": "74e823dc96ff5c2d31e39e342409fb46b1e84630bf9065461348862255880f9b",
+      "bytes": 10681
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/evidence/final/egress-evidence.json",
+      "sha256": "dc171d51d133bda75b156ba20d8112205edca3cd57adf5b000de92346ab5d19c",
+      "bytes": 3864
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/evidence/final/extraction-directory-mode-fix.json",
+      "sha256": "6d3790c1d9d94bd350dbad3d3de05a745aa4497e7ef9dc6eb1c50105403b994c",
+      "bytes": 8101
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/verified-packages.json",
+      "sha256": "3bd19c5d5d67aca815b02f009657064259b078cb2b6f6fd5636079d604059975",
+      "bytes": 94048
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/base-cache-runtime-verification.json",
+      "sha256": "ce784532026393db1840eddddce02ce4317c04cdd13f2cc34d0cc0b9b73a870a",
+      "bytes": 7173
+    },
+    {
+      "path": ".local/local-lab/linux-build-c/build-cache-bindings.json",
+      "sha256": "7eea6654161bf3eb00350f6d7693105e0f4022e591d29af9aeea6aaa70fd09eb",
+      "bytes": 4628
+    }
+  ],
+  "limits": [
+    "Linux ARM64 on local C, not an AMD64 or public VPS acceptance",
+    "Egress fixtures verify real TCP/TLS/protocol connectivity, not remote product credentials or private registry lifecycle; those have separate S3 records",
+    "Local CA HTTPS does not establish public DNS/ACME trust",
+    "Resource samples and command durations are observations, not production capacity or RPO/RTO commitments"
+  ]
+}

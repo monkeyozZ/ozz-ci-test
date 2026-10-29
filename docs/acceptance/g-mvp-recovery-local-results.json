@@ -1,0 +1,562 @@
+{
+  "version": 1,
+  "stage": "G-MVP L06",
+  "owner": "ozz-g-mvp-recovery-local-summary-v1",
+  "recoveryId": "d222fddb-7a8c-478b-9624-e9942e94e335",
+  "recordedAt": "2026-10-28T04:01:46.355308Z",
+  "status": "passed",
+  "scope": "Existing local control-plane backups restored to two new databases; explicit reconciliation with the retained Builder and K3s resources; original database returned; bounded all-off and restarted continuity samples. This is not full G-MVP or production acceptance.",
+  "summary": {
+    "recoveryChecks": 13,
+    "passedRecoveryChecks": 13,
+    "successfulRecoveryPhaseReports": 6,
+    "retainedFailedRecoveryAttempts": 6,
+    "continuityRounds": 14,
+    "passedContinuityRounds": 14,
+    "targetObservations": 56,
+    "oldBackupMissingBuildRuns": 15,
+    "finalBackupBuildRuns": 28,
+    "originalReturnedGeneration": 5
+  },
+  "backupSamples": [
+    {
+      "sample": "old",
+      "backupId": "g-mvp-s6-before-faults-20261026T045124227Z",
+      "archiveCreatedAt": "2026-10-26T04:51:29.712Z",
+      "restoreIntentAt": "2026-10-26T08:29:15.443Z",
+      "restoredAt": "2026-10-26T08:29:19.565Z",
+      "restoreIntentToReceiptMs": 4122.0,
+      "diagnosticSucceededAt": "2026-10-26T09:09:52.263Z",
+      "restoreIntentToDiagnosticMs": 2436820.0,
+      "unlockedGeneration": 3,
+      "diagnosticId": "92aaf501-6659-4975-afa2-b53811100d9b",
+      "restoredRecordCounts": {
+        "builders": 1,
+        "runs": 13,
+        "deployments": 57,
+        "services": 20,
+        "operations": 103,
+        "waitingTargets": 0
+      },
+      "initialRestoreLocked": true,
+      "newDiagnosticSucceeded": true,
+      "workloadOrBuildReplayObserved": false,
+      "backupManifestEvidence": {
+        "path": ".local/backups/postgresql/g-mvp-s6-before-faults-20261026T045124227Z/manifest.json",
+        "sha256": "23d88642664ac57bf092e4e94ba05d9bb08a0713b12c314d992a7d59c9f0f34f"
+      },
+      "archiveAgeAtOriginalStopMs": 12855366.227,
+      "acceptedUnknownRemoteRuns": 15,
+      "knownNewerK3sControllers": 1,
+      "backupUnknownK3sControllers": 6,
+      "defaultUnknownRunDisposition": "blocked-and-restore-locked",
+      "explicitHistoryReviewUsed": true,
+      "historyMetadataRestored": false,
+      "readOnlyWriteRejection": {
+        "status": 503,
+        "code": "RESTORE_READ_ONLY"
+      },
+      "workerPausedWhileLocked": true,
+      "timingIncludesOperatorReviewAndRetainedFailedAttempts": true
+    },
+    {
+      "sample": "final",
+      "backupId": "g-mvp-s6-final-d222fddb-20261026T082139873Z",
+      "archiveCreatedAt": "2026-10-26T08:21:42.867Z",
+      "restoreIntentAt": "2026-10-26T09:11:02.268Z",
+      "restoredAt": "2026-10-26T09:11:04.832Z",
+      "restoreIntentToReceiptMs": 2564.0,
+      "diagnosticSucceededAt": "2026-10-26T09:11:22.067Z",
+      "restoreIntentToDiagnosticMs": 19799.0,
+      "unlockedGeneration": 4,
+      "diagnosticId": "34895b97-11d9-4f0d-9bed-6fffe0879088",
+      "restoredRecordCounts": {
+        "builders": 1,
+        "runs": 28,
+        "deployments": 85,
+        "services": 33,
+        "operations": 113,
+        "waitingTargets": 0
+      },
+      "initialRestoreLocked": true,
+      "newDiagnosticSucceeded": true,
+      "workloadOrBuildReplayObserved": false,
+      "backupManifestEvidence": {
+        "path": ".local/backups/postgresql/g-mvp-s6-final-d222fddb-20261026T082139873Z/manifest.json",
+        "sha256": "83c3f08b340de8c6fa6d32624f7b811c51be10bce4874d56d09274a22d3c643a"
+      },
+      "archiveAgeAtOriginalStopMs": 242211.227,
+      "completeSignedInventoryRuns": 28,
+      "retainedHistoryMatchesFinalCapture": true,
+      "timingIncludesOperatorReviewAndRetainedFailedAttempts": false
+    }
+  ],
+  "originalControlPlane": {
+    "originalNeedsReconcile": false,
+    "returnedGeneration": 5,
+    "formalUnlockAuditId": "7d4b86f7-b4c0-43ab-90e7-35c946957b35",
+    "sourceRecordCountsBeforeRestart": {
+      "builders": 1,
+      "runs": 28,
+      "deployments": 85,
+      "services": 33,
+      "operations": 113,
+      "waitingTargets": 0
+    },
+    "sourceBusinessFactsPreservedAtReturn": true,
+    "originalEnvAndMasterKeyPreserved": true,
+    "k3sBaselinePreservedAtReturn": true,
+    "originalRuntimeRestartedByRecoveryDriver": false,
+    "originalRuntimeProcessesAndPortsObservedRunning": true,
+    "authenticatedHttpsVerification": "separate-check-pending"
+  },
+  "continuity": [
+    {
+      "phase": "all-off",
+      "status": "passed",
+      "startedAt": "2026-10-26T08:26:49.676Z",
+      "finishedAt": "2026-10-26T08:27:24.182Z",
+      "roundCount": 7,
+      "passedRounds": 7,
+      "targetObservationCount": 28,
+      "sampleStartSpanMs": 31514.152,
+      "originalProcessAndPortStateVerifiedEveryRound": true,
+      "targets": [
+        {
+          "key": "application-a",
+          "guest": "a",
+          "passedObservations": 7,
+          "identityPreserved": true,
+          "httpStatuses": [301],
+          "httpsStatuses": [200],
+          "tlsAndHostnameVerified": true,
+          "contentMatches": true
+        },
+        {
+          "key": "application-b",
+          "guest": "b",
+          "passedObservations": 7,
+          "identityPreserved": true,
+          "httpStatuses": [301],
+          "httpsStatuses": [200],
+          "tlsAndHostnameVerified": true,
+          "contentMatches": true
+        },
+        {
+          "key": "postgresql",
+          "guest": "a",
+          "passedObservations": 7,
+          "identityPreserved": true,
+          "readOnly": true,
+          "markerMatches": true
+        },
+        {
+          "key": "redis",
+          "guest": "a",
+          "passedObservations": 7,
+          "identityPreserved": true,
+          "readOnly": true,
+          "markerMatches": true
+        }
+      ],
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery-continuity/20261026T082649675Z-e67e90ad/report.json",
+        "sha256": "a8b500611fa12c3ab9440b7c6bce06f3d86930cb1f4a3c0bc83e88934e44af43"
+      }
+    },
+    {
+      "phase": "restarted",
+      "status": "passed",
+      "startedAt": "2026-10-28T03:41:25.407Z",
+      "finishedAt": "2026-10-28T03:41:59.874Z",
+      "roundCount": 7,
+      "passedRounds": 7,
+      "targetObservationCount": 28,
+      "sampleStartSpanMs": 30594.509,
+      "originalProcessAndPortStateVerifiedEveryRound": true,
+      "targets": [
+        {
+          "key": "application-a",
+          "guest": "a",
+          "passedObservations": 7,
+          "identityPreserved": true,
+          "httpStatuses": [301],
+          "httpsStatuses": [200],
+          "tlsAndHostnameVerified": true,
+          "contentMatches": true
+        },
+        {
+          "key": "application-b",
+          "guest": "b",
+          "passedObservations": 7,
+          "identityPreserved": true,
+          "httpStatuses": [301],
+          "httpsStatuses": [200],
+          "tlsAndHostnameVerified": true,
+          "contentMatches": true
+        },
+        {
+          "key": "postgresql",
+          "guest": "a",
+          "passedObservations": 7,
+          "identityPreserved": true,
+          "readOnly": true,
+          "markerMatches": true
+        },
+        {
+          "key": "redis",
+          "guest": "a",
+          "passedObservations": 7,
+          "identityPreserved": true,
+          "readOnly": true,
+          "markerMatches": true
+        }
+      ],
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery-continuity/20261028T034125406Z-f4d82888/report.json",
+        "sha256": "a4b92bbc6241aff22cf381fa9113309a0303e8150c1e81c93ef2319b18f77f42"
+      }
+    }
+  ],
+  "timing": {
+    "originalStop": {
+      "apiWorkerStartedAt": "2026-10-26T08:25:45.078227+00:00",
+      "apiWorkerCompletedAt": "2026-10-26T08:25:46.187908+00:00",
+      "redisStartedAt": "2026-10-26T08:25:46.190946+00:00",
+      "redisCompletedAt": "2026-10-26T08:25:47.138113+00:00",
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/root-window-20261026T0825/stop-results.json",
+        "sha256": "67c830254850675468817b2ddfed6431691f8ef7866457411658113f308dcb11"
+      }
+    },
+    "finalPhaseExecutionMs": 21102.0,
+    "returnOriginalExecutionMs": 12494.0,
+    "exactBackupSnapshotTimeRecorded": false,
+    "exactRpoMs": null,
+    "endToEndRtoMs": null,
+    "notes": [
+      "Archive createdAt is not the precise PostgreSQL snapshot time; archive age is reported separately and is not called RPO.",
+      "The old sample retained 13 of the 28 final-capture BuildRun records. Explicit acceptance does not recreate the 15 missing records.",
+      "Old-sample elapsed time includes operator review and failed tool attempts. The interval to original restart also spans the interrupted conversation on October 26–28; neither is presented as a recovery performance measurement.",
+      "Final/return-original timings measure their named local script phases, not production RTO."
+    ]
+  },
+  "checks": [
+    {
+      "name": "isolated-recovery-targets-and-independent-builder-identity-prepared",
+      "attempt": "20261026T082024030Z-b5463017",
+      "at": "2026-10-26T08:20:27.578Z"
+    },
+    {
+      "name": "idle-final-consistent-backup-and-live-workload-baseline-retained",
+      "attempt": "20261026T082137903Z-5f7873bd",
+      "at": "2026-10-26T08:21:46.964Z",
+      "generation": 0
+    },
+    {
+      "name": "restored-old-backup-into-a-new-locked-database",
+      "attempt": "20261026T082913415Z-059704e0",
+      "at": "2026-10-26T08:29:19.674Z",
+      "generation": 1
+    },
+    {
+      "name": "old-restored-api-and-worker-remain-locked",
+      "attempt": "20261026T084934567Z-f72fd470",
+      "at": "2026-10-26T08:49:42.279Z",
+      "workerStatus": "paused",
+      "rejectedStatus": 503
+    },
+    {
+      "name": "real-post-backup-builder-runs-block-old-restore-after-a-signed-fence",
+      "attempt": "20261026T084934567Z-f72fd470",
+      "at": "2026-10-26T08:49:59.367Z",
+      "restoreLocked": true,
+      "knownNewerK3sResources": 1,
+      "backupUnknownK3sResources": 6
+    },
+    {
+      "name": "old-backup-exports-an-explicit-review-without-accepting-or-fencing",
+      "attempt": "20261026T085533844Z-98255b07",
+      "at": "2026-10-26T08:55:45.426Z",
+      "historyMetadataRestored": false,
+      "restoreLocked": true
+    },
+    {
+      "name": "explicitly-reviewed-closed-history-is-recorded-while-old-backup-stays-locked",
+      "attempt": "20261026T085901241Z-b67d8691",
+      "at": "2026-10-26T08:59:05.219Z",
+      "auditId": "86c95db9-db8b-425c-8ae0-3c6367938763",
+      "historyMetadataRestored": false,
+      "restoreLocked": true
+    },
+    {
+      "name": "old-backup-unlocks-through-explicit-history-review-and-the-production-cli",
+      "attempt": "20261026T090939142Z-526bbe82",
+      "at": "2026-10-26T09:09:49.152Z",
+      "generation": 3,
+      "auditId": "b46b0f34-ecac-46e8-8dfa-90192bb0109c",
+      "historyMetadataRestored": false,
+      "acceptedUnknownRunCount": 15
+    },
+    {
+      "name": "new-generation-diagnostic-succeeds-without-replaying-workloads-or-builds",
+      "attempt": "20261026T090939142Z-526bbe82",
+      "at": "2026-10-26T09:09:52.263Z",
+      "generation": 3,
+      "sample": "old",
+      "restoredUnfinishedTaskCount": 0,
+      "oldTaskTerminalizationTestedInThisRun": false
+    },
+    {
+      "name": "restored-final-backup-into-a-new-locked-database",
+      "attempt": "20261026T091101533Z-2b67b016",
+      "at": "2026-10-26T09:11:04.999Z",
+      "generation": 1
+    },
+    {
+      "name": "complete-final-backup-unlocks-through-the-production-cli",
+      "attempt": "20261026T091101533Z-2b67b016",
+      "at": "2026-10-26T09:11:15.123Z",
+      "generation": 4,
+      "auditId": "7de9e639-94ba-4920-8738-b5dbd5ee8667",
+      "signedInventoryRuns": 28
+    },
+    {
+      "name": "new-generation-diagnostic-succeeds-without-replaying-workloads-or-builds",
+      "attempt": "20261026T091101533Z-2b67b016",
+      "at": "2026-10-26T09:11:22.067Z",
+      "generation": 4,
+      "sample": "final",
+      "restoredUnfinishedTaskCount": 0,
+      "oldTaskTerminalizationTestedInThisRun": false
+    },
+    {
+      "name": "original-control-plane-formally-reconciles-every-raised-builder-generation",
+      "attempt": "20261028T031348637Z-740df034",
+      "at": "2026-10-28T03:14:01.100Z",
+      "generation": 5,
+      "auditId": "7d4b86f7-b4c0-43ab-90e7-35c946957b35",
+      "originalEnvAndKeyPreserved": true
+    }
+  ],
+  "successfulPhaseReports": [
+    {
+      "mode": "prepare",
+      "status": "passed",
+      "startedAt": "2026-10-26T08:20:24.032Z",
+      "completedAt": "2026-10-26T08:20:27.631Z",
+      "durationMs": 3599.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T082024030Z-b5463017/report.json",
+        "sha256": "2e9f995a5e006a7c5ad3ecb603bc9839622b07c9f6cb541ff7751af2daa46f0e"
+      }
+    },
+    {
+      "mode": "capture-final",
+      "status": "passed",
+      "startedAt": "2026-10-26T08:21:37.903Z",
+      "completedAt": "2026-10-26T08:21:46.988Z",
+      "durationMs": 9085.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T082137903Z-5f7873bd/report.json",
+        "sha256": "eb973d8c0b22839f91395440b73a2c6b5b64e7e895bb5913616fdf1d83e36acf"
+      }
+    },
+    {
+      "mode": "old",
+      "status": "passed",
+      "startedAt": "2026-10-26T08:55:33.844Z",
+      "completedAt": "2026-10-26T08:55:46.220Z",
+      "durationMs": 12376.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T085533844Z-98255b07/report.json",
+        "sha256": "4fe346d284752be603228a8ba8e017a43f45128a82a396a5182148b0e7ff4146"
+      }
+    },
+    {
+      "mode": "old-accept",
+      "status": "passed",
+      "startedAt": "2026-10-26T09:09:39.143Z",
+      "completedAt": "2026-10-26T09:09:52.871Z",
+      "durationMs": 13728.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T090939142Z-526bbe82/report.json",
+        "sha256": "c828dbbd31c968da1ed7773a4aaea648abd095f3d5b2222779f50a688e1a3e93"
+      }
+    },
+    {
+      "mode": "final",
+      "status": "passed",
+      "startedAt": "2026-10-26T09:11:01.534Z",
+      "completedAt": "2026-10-26T09:11:22.636Z",
+      "durationMs": 21102.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T091101533Z-2b67b016/report.json",
+        "sha256": "14138c93b0f45f7c8dcac864554fc376933c19af4efa19e234f4eb6a6845d75e"
+      }
+    },
+    {
+      "mode": "return-original",
+      "status": "passed",
+      "startedAt": "2026-10-28T03:13:48.639Z",
+      "completedAt": "2026-10-28T03:14:01.133Z",
+      "durationMs": 12494.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261028T031348637Z-740df034/report.json",
+        "sha256": "bddb903d2667370e5d8328334493807c60045a2ab2164ed1da2af36f85efb9ee"
+      }
+    }
+  ],
+  "retainedFailedAttempts": [
+    {
+      "mode": "prepare",
+      "status": "failed",
+      "startedAt": "2026-10-26T08:11:00.781Z",
+      "completedAt": "2026-10-26T08:11:02.040Z",
+      "durationMs": 1259.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T081100779Z-dd3fa1d1/report.json",
+        "sha256": "e46352f5535e08aea4190365cfd48ac44859c1370dbb35ab68defde559dcdede"
+      },
+      "failure": {
+        "stage": "prepare",
+        "code": "GMVP_RECOVERY_UNEXPECTED_FAILURE"
+      }
+    },
+    {
+      "mode": "old",
+      "status": "failed",
+      "startedAt": "2026-10-26T08:29:13.417Z",
+      "completedAt": "2026-10-26T08:29:19.800Z",
+      "durationMs": 6383.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T082913415Z-059704e0/report.json",
+        "sha256": "cae38da4ae182c8466923bb1f76f1a790b0f6ddd05b446ab44188796dab6b06e"
+      },
+      "failure": {
+        "stage": "old-restored",
+        "code": "GMVP_RECOVERY_DOCKER_INSPECTION_FAILED",
+        "errorType": "Error",
+        "causeCode": null
+      }
+    },
+    {
+      "mode": "old",
+      "status": "failed",
+      "startedAt": "2026-10-26T08:35:08.098Z",
+      "completedAt": "2026-10-26T08:35:41.049Z",
+      "durationMs": 32951.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T083508094Z-8d0d55e1/report.json",
+        "sha256": "8ceeb3a42135d66a8ff22f9b8538bca1087d4663b37a64e278790b9c65d27400"
+      },
+      "failure": {
+        "stage": "old-restored",
+        "code": "GMVP_RECOVERY_OBSERVATION_TIMEOUT",
+        "errorType": "Error",
+        "causeCode": null
+      }
+    },
+    {
+      "mode": "old",
+      "status": "failed",
+      "startedAt": "2026-10-26T08:49:34.568Z",
+      "completedAt": "2026-10-26T08:50:03.343Z",
+      "durationMs": 28775.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T084934567Z-f72fd470/report.json",
+        "sha256": "868d25209c6050c29da86ce1b5d0dad97ab14d5b043e79410b1c60e5db642561"
+      },
+      "failure": {
+        "stage": "old-review-manifest",
+        "code": "GMVP_RECOVERY_SUBPROCESS_FAILED",
+        "errorType": "Error",
+        "causeCode": null
+      }
+    },
+    {
+      "mode": "old-accept",
+      "status": "failed",
+      "startedAt": "2026-10-26T08:56:26.834Z",
+      "completedAt": "2026-10-26T08:56:28.333Z",
+      "durationMs": 1499.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T085626833Z-bbddfa5b/report.json",
+        "sha256": "428fd3d93646f2ea62fb6b14e12c9fa8fc4cfb89e77089f9493148b2bb5b517a"
+      },
+      "failure": {
+        "stage": "old-history-accepted",
+        "code": "GMVP_RECOVERY_UNEXPECTED_FAILURE",
+        "errorType": "UnknownError",
+        "causeCode": null
+      }
+    },
+    {
+      "mode": "old-accept",
+      "status": "failed",
+      "startedAt": "2026-10-26T08:59:01.241Z",
+      "completedAt": "2026-10-26T08:59:09.987Z",
+      "durationMs": 8746.0,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-recovery/20261026T085901241Z-b67d8691/report.json",
+        "sha256": "d0000e9634871bb30f1120aff2776cc222bc3b77f4bd1ddca17ca139df36fcbd"
+      },
+      "failure": {
+        "stage": "old-unlocked",
+        "code": "GMVP_RECOVERY_UNEXPECTED_FAILURE",
+        "errorType": "BuilderError",
+        "causeCode": "BUILD_BUSY",
+        "httpStatus": 429
+      }
+    }
+  ],
+  "provenance": {
+    "finalState": {
+      "path": ".local/local-lab/g-mvp-recovery/state.json",
+      "sha256": "13e0a488317e9a71fc93c835e8993a896343cbc6b67dd43bc76397578eb98979"
+    },
+    "protectedRuntimeArtifactsStillMatchPreparation": [
+      {
+        "path": "apps/api/dist/cli.js",
+        "sha256": "25b4f5a0ae7483326ec82e2ea0befa75836745e74d7c24ae074ca0bca90a084e"
+      },
+      {
+        "path": "packages/control-plane/dist/builds/recovery.js",
+        "sha256": "93040923966b314a1e93c548c07fff820d697f72feddeeea82a3e1f6e3bf953b"
+      },
+      {
+        "path": "packages/control-plane/dist/builds/recovery-history.js",
+        "sha256": "3154e85c0e892e818c344721ddc0a6f38a26f09347d9e7c7f5b5528736bb0220"
+      },
+      {
+        "path": "packages/database/prisma/migrations/202610260004_s6_git_build/migration.sql",
+        "sha256": "8fa0194d7f50f872b196e2d8fd9269873b942765bff10a9168fb47d8f395f6cb"
+      }
+    ],
+    "continuitySourcesStillMatchOriginalBaseline": [
+      {
+        "path": "tests/probes/g-mvp-continuity-local-lab.mjs",
+        "sha256": "03d3e2019877a70ee972d2862e92121034f4fa2e291a8cfe78ec34b4aafd6b51"
+      },
+      {
+        "path": "tests/probes/support/g-mvp-continuity-k3s.py",
+        "sha256": "d00bee1d76734a48e01bfe57e31a3525dd7b3fdea4cc6018f6fb4d91c7815c2f"
+      }
+    ],
+    "recoveryDriverAtSummary": {
+      "path": "tests/probes/g-mvp-recovery-local-lab.mjs",
+      "sha256": "7152dba1956ff3463da03cc0d892807e413edd37c6d9b1badfa230117a74e242"
+    },
+    "k3sReadOnlyHelperAtSummary": {
+      "path": "tests/probes/support/g-mvp-recovery-k3s.py",
+      "sha256": "bb345d6c21ec803e4e5a191c7cb1fb6a361f8972db06dc8bad9cfa7acb35e23b"
+    }
+  },
+  "limitations": [
+    "No continuous sampling covers the unobserved interval between the all-off and restarted windows.",
+    "No public VPS, physical off-host disaster recovery, public GitHub delivery, or publicly trusted HTTPS is established by these local fixtures.",
+    "Both restored samples had zero unfinished tasks; actual old-task terminalization was not exercised in this run. Existing S1/S6 PostgreSQL regressions remain separate evidence.",
+    "Missing old-backup business history remains missing after explicit review; it is not reconstructed from the Builder.",
+    "Exact snapshot-based RPO and a separately controlled end-to-end RTO remain unmeasured."
+  ]
+}

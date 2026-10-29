@@ -1,0 +1,148 @@
+{
+  "scope": "真实本地 K3s A 的 Registry/Workload Adapter 发布与操作；文件 ledger，不代表产品 API/Worker、私有镜像或公网入口验收。",
+  "startedAt": "2026-10-25T15:52:01.152Z",
+  "status": "failed",
+  "checks": [
+    {
+      "name": "local A retains its trusted cluster UID and ARM64 node",
+      "passed": true
+    },
+    {
+      "name": "fixed OCI image includes verified ARM64 manifest",
+      "passed": true,
+      "reference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da"
+    },
+    {
+      "name": "real Kubernetes resources completely applied with UID receipts",
+      "passed": true
+    }
+  ],
+  "resourcesRetained": true,
+  "runId": "a82be384-4191-4bd3-9d7d-f52afd9591f7",
+  "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+  "failure": {
+    "stage": "wait-initial-health",
+    "code": "WORKLOAD_ROLLOUT_FAILED"
+  },
+  "lastObservation": {
+    "observedAt": "2026-10-25T15:57:08.437Z",
+    "configurationState": "consistent",
+    "deployment": {
+      "uid": "95e998dd-b17e-4ef0-8ec9-fdf6c0a5802c",
+      "resourceVersion": "5381",
+      "generation": 1,
+      "observedGeneration": 1,
+      "replicas": 1,
+      "currentReplicas": 1,
+      "updatedReplicas": 1,
+      "readyReplicas": 0,
+      "availableReplicas": 0,
+      "snapshotId": "4dd9a1ed-659b-4cdd-8701-aad97b7840ac",
+      "configRevision": 1,
+      "mutationRevision": 1,
+      "rolloutId": "4dd9a1ed-659b-4cdd-8701-aad97b7840ac",
+      "image": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+      "templateFingerprint": "a7da98732776ae6fb63d7f03bfb7e6bf93f8bd86da420e1cc58c37ac1724112e",
+      "workloadFingerprint": "b880fde38e7d1e539a9af75b9f42317bb2bfeb00f0d17a7a24e422addfbf61c3",
+      "progressDeadlineExceeded": true,
+      "deleting": false
+    },
+    "pods": [
+      {
+        "uid": "18432923-d2f9-4ad4-a8d4-3b9ce030851e",
+        "name": "ozz-s-27c942116bb14b6280fccc1340c15c2a-54d7674b54-2gpdt",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "nodeName": "ozz-node",
+        "createdAt": "2026-10-25T15:52:08.000Z",
+        "deletionTimestamp": null,
+        "phase": "Pending",
+        "ready": false,
+        "snapshotId": "4dd9a1ed-659b-4cdd-8701-aad97b7840ac",
+        "configRevision": 1,
+        "rolloutId": "4dd9a1ed-659b-4cdd-8701-aad97b7840ac",
+        "replicaSetUid": "96db7004-f995-4f60-b55a-5c10dd700c51",
+        "containers": [
+          {
+            "name": "app",
+            "image": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+            "imageId": null,
+            "ready": false,
+            "restartCount": 0,
+            "state": "waiting",
+            "reason": "ContainerCreating",
+            "lastTerminationReason": null,
+            "oomKilled": false,
+            "exitCode": null,
+            "requests": {
+              "cpuCores": 0.025,
+              "memoryBytes": 33554432
+            },
+            "limits": {
+              "cpuCores": 0.2,
+              "memoryBytes": 134217728
+            },
+            "metrics": {
+              "state": "unknown",
+              "cpuCores": null,
+              "memoryBytes": null,
+              "observedAt": null,
+              "windowSeconds": null
+            }
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "state": "unknown",
+      "cpuCores": null,
+      "memoryBytes": null,
+      "observedAt": null,
+      "windowSeconds": null
+    },
+    "drift": [],
+    "resources": [
+      {
+        "kind": "Namespace",
+        "name": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "namespace": null,
+        "expectedUid": "50aee41f-df91-4dc8-befd-e84345180001",
+        "observedUid": "50aee41f-df91-4dc8-befd-e84345180001",
+        "resourceVersion": "5268",
+        "state": "verified",
+        "reason": null
+      },
+      {
+        "kind": "Secret",
+        "name": "ozz-r-4dd9a1ed659b4cdd8701aad97b7840ac",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "expectedUid": "0eca5aed-bbaa-499f-b8b2-50a08f7d2206",
+        "observedUid": "0eca5aed-bbaa-499f-b8b2-50a08f7d2206",
+        "resourceVersion": "5269",
+        "state": "verified",
+        "reason": null
+      },
+      {
+        "kind": "Service",
+        "name": "ozz-s-27c942116bb14b6280fccc1340c15c2a",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "expectedUid": "64d0f6a4-fe39-4207-a954-21fd2d2db777",
+        "observedUid": "64d0f6a4-fe39-4207-a954-21fd2d2db777",
+        "resourceVersion": "5273",
+        "state": "verified",
+        "reason": null
+      },
+      {
+        "kind": "Deployment",
+        "name": "ozz-s-27c942116bb14b6280fccc1340c15c2a",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "expectedUid": "95e998dd-b17e-4ef0-8ec9-fdf6c0a5802c",
+        "observedUid": "95e998dd-b17e-4ef0-8ec9-fdf6c0a5802c",
+        "resourceVersion": "5381",
+        "state": "verified",
+        "reason": null
+      }
+    ]
+  },
+  "finishedAt": "2026-10-25T15:57:08.457Z",
+  "stateFile": "/Users/monkeyozz/Desktop/code/ozz/.local/local-lab/workload-adapter-a.state.json"
+}

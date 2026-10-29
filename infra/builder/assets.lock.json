@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "profile": "linux-arm64-native-v1",
+  "operatingSystem": "ubuntu-24.04",
+  "architecture": "arm64",
+  "frontend": {
+    "reference": "docker/dockerfile:1.19.0",
+    "digest": "sha256:b6afd42430b15f2d2a4c5a02b919e98a525b785b1aaff16747d2f623364e39b6",
+    "verification": "Docker Hub authenticated manifest response; exact response body SHA256 verified"
+  },
+  "archives": [
+    {
+      "name": "buildkit",
+      "version": "v0.25.1",
+      "url": "https://github.com/moby/buildkit/releases/download/v0.25.1/buildkit-v0.25.1.linux-arm64.tar.gz",
+      "sha256": "b7ad3db5e886ef40a28974dc94217666054c147bd0e06e5f71420210c4b72fba",
+      "bytes": 79412666,
+      "members": {
+        "bin/buildctl": "buildctl",
+        "bin/buildkitd": "buildkitd"
+      },
+      "checksumSource": "https://api.github.com/repos/moby/buildkit/releases/tags/v0.25.1"
+    },
+    {
+      "name": "rootlesskit",
+      "version": "v2.3.5",
+      "url": "https://github.com/rootless-containers/rootlesskit/releases/download/v2.3.5/rootlesskit-aarch64.tar.gz",
+      "sha256": "478c14c3195bf989cd9a8e6bd129d227d5d88f1c11418967ffdc84a0072cc7a2",
+      "bytes": 18229777,
+      "members": {
+        "rootlesskit": "rootlesskit"
+      },
+      "checksumSource": "https://github.com/rootless-containers/rootlesskit/releases/download/v2.3.5/SHA256SUMS"
+    },
+    {
+      "name": "runc",
+      "version": "v1.3.3",
+      "url": "https://github.com/opencontainers/runc/releases/download/v1.3.3/runc.arm64",
+      "sha256": "3c9a8e9e6dafd00db61f4611692447ebab4a56388bae4f82192aed67b66df712",
+      "bytes": 11436560,
+      "file": "runc",
+      "checksumSource": "https://api.github.com/repos/opencontainers/runc/releases/tags/v1.3.3"
+    },
+    {
+      "name": "node",
+      "version": "24.22.1",
+      "url": "https://nodejs.org/dist/v24.22.1/node-v24.22.1-linux-arm64.tar.gz",
+      "sha256": "33c37be234ba8bee041961047b19160f4d7d0f164e8e246f78bdd10feff148b3",
+      "members": {
+        "node-v24.22.1-linux-arm64/bin/node": "node"
+      },
+      "checksumSource": "https://nodejs.org/dist/v24.22.1/SHASUMS256.txt"
+    }
+  ],
+  "distributionPackages": [
+    {
+      "name": "skopeo",
+      "version": "1.13.3+ds1-2ubuntu0.24.04.3",
+      "publication": "https://api.launchpad.net/1.0/ubuntu/+archive/primary/+binarypub/227689805"
+    },
+    {
+      "name": "slirp4netns",
+      "version": "1.2.1-1build2",
+      "publication": "https://api.launchpad.net/1.0/ubuntu/+archive/primary/+binarypub/207474822"
+    },
+    {
+      "name": "uidmap",
+      "version": "1:4.13+dfsg1-4ubuntu3.2",
+      "publication": "https://ports.ubuntu.com/ubuntu-ports/dists/noble-updates/InRelease",
+      "verification": "Present in the Ubuntu archive-key authenticated noble-updates arm64 index during the dedicated Linux installation; package SHA256 052b1852a9ab03d931398a9d0060ef7c312f1b48bc4f4ee4533649bb958b634a. The earlier 3.3 publication was not available in the selected stable suites."
+    }
+  ],
+  "distributionVerification": "Installer requires exact listed versions from Ubuntu signed apt metadata, records package SHA256 and installed tool SHA256 in its installation receipt. Archive binaries have not been downloaded or executed by preparing this lockfile."
+}

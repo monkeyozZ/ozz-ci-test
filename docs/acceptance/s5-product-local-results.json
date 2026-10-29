@@ -1,0 +1,205 @@
+{
+  "status": "passed",
+  "scope": "Local ARM64 A/B K3s, real product API/Worker, persistent volumes and databases. Exact public image cache assistance; not native unassisted registry or cloud acceptance.",
+  "runId": "ddaabb56-0393-4076-a636-126a6caa22f4",
+  "startedAt": "2026-10-25T22:47:18.449Z",
+  "resumedAt": "2026-10-25T23:21:49.958Z",
+  "checks": [
+    {
+      "name": "a: actual local-path class is available without a hard quota claim",
+      "passed": true,
+      "observedAt": "2026-10-25T22:53:54.695Z",
+      "projectId": "fbd1c8ed-aee3-421a-bff7-be7f63a16002",
+      "environmentId": "7fb31281-95ac-416c-8aff-e3b53763016c"
+    },
+    {
+      "name": "b: actual local-path class is available without a hard quota claim",
+      "passed": true,
+      "observedAt": "2026-10-25T22:53:54.742Z",
+      "projectId": "9fa217f6-f778-4798-8b52-bd5db84714b3",
+      "environmentId": "34589790-b3fd-46ce-af36-834c143d4e20"
+    },
+    {
+      "name": "fixed templates expose real architecture assets and a read-only preview",
+      "passed": true,
+      "observedAt": "2026-10-25T22:53:54.757Z"
+    },
+    {
+      "name": "postgresql: creating a template saves a draft without automatic deployment",
+      "passed": true,
+      "observedAt": "2026-10-25T22:53:55.033Z",
+      "serviceId": "efb929e9-7488-4d25-9d76-d42afa8ce338"
+    },
+    {
+      "name": "redis: creating a template saves a draft without automatic deployment",
+      "passed": true,
+      "observedAt": "2026-10-25T22:53:55.203Z",
+      "serviceId": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c"
+    },
+    {
+      "name": "node-example: creating a template saves a draft without automatic deployment",
+      "passed": true,
+      "observedAt": "2026-10-25T22:53:55.285Z",
+      "serviceId": "a75fca05-20e2-481a-98cb-cdbe1cdacb66"
+    },
+    {
+      "name": "static-example: creating a template saves a draft without automatic deployment",
+      "passed": true,
+      "observedAt": "2026-10-25T22:53:55.338Z",
+      "serviceId": "676eb157-d6ed-4528-a969-bd6ffa863a7a"
+    },
+    {
+      "name": "ordinary writable volume is a draft mount using single-replica Recreate",
+      "passed": true,
+      "observedAt": "2026-10-25T22:53:56.909Z",
+      "volumeId": "605410b8-8099-4a8c-a185-3c37c18d06cb"
+    },
+    {
+      "name": "postgresql: template is running through the common deployment engine",
+      "passed": true,
+      "observedAt": "2026-10-25T23:15:52.523Z",
+      "serviceId": "efb929e9-7488-4d25-9d76-d42afa8ce338",
+      "deploymentId": "1da232dc-9cd9-4c08-9249-715a6dfeb76b",
+      "controller": "StatefulSet"
+    },
+    {
+      "name": "postgresql: authenticated database uses its original bound PVC",
+      "passed": true,
+      "observedAt": "2026-10-25T23:15:52.606Z",
+      "databaseId": "a5ecad00-1950-49d2-ae67-a6a622d712f2",
+      "volumeId": "61c28353-0831-47ac-9c1b-419983417eec",
+      "pvcUid": "92d8ff4c-33aa-4aa3-9b01-5768c8267dbc",
+      "engineVersion": "17.11"
+    },
+    {
+      "name": "redis: template is running through the common deployment engine",
+      "passed": true,
+      "observedAt": "2026-10-25T23:16:10.008Z",
+      "serviceId": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c",
+      "deploymentId": "48a4e52c-2835-4c13-9a6d-9a2685f9d2e1",
+      "controller": "StatefulSet"
+    },
+    {
+      "name": "redis: authenticated database uses its original bound PVC",
+      "passed": true,
+      "observedAt": "2026-10-25T23:16:10.190Z",
+      "databaseId": "1d027656-8f3a-45f4-aa44-aa9590adc8d2",
+      "volumeId": "336ee757-62f7-4bf4-bdd9-09b486c412d9",
+      "pvcUid": "1ebeaab4-6cfa-4d67-9771-a58b3aebed61",
+      "engineVersion": "7.4.11"
+    },
+    {
+      "name": "node-example: template is running through the common deployment engine",
+      "passed": true,
+      "observedAt": "2026-10-25T23:16:22.429Z",
+      "serviceId": "a75fca05-20e2-481a-98cb-cdbe1cdacb66",
+      "deploymentId": "f58cc23c-001d-4e05-b38f-9d866de09fe3",
+      "controller": "Deployment"
+    },
+    {
+      "name": "static-example: template is running through the common deployment engine",
+      "passed": true,
+      "observedAt": "2026-10-25T23:16:34.775Z",
+      "serviceId": "676eb157-d6ed-4528-a969-bd6ffa863a7a",
+      "deploymentId": "18346271-55ed-48ec-a2b9-e7acc717485c",
+      "controller": "Deployment"
+    },
+    {
+      "name": "files: template is running through the common deployment engine",
+      "passed": true,
+      "observedAt": "2026-10-25T23:16:51.287Z",
+      "serviceId": "bfd2b0d3-16bb-44e0-af21-19b30c180ac0",
+      "deploymentId": "eb6d0ed4-6903-4588-a526-9ed1040976c0",
+      "controller": "Deployment"
+    },
+    {
+      "name": "postgresql: writes a marker into real persistent application data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:16:52.125Z"
+    },
+    {
+      "name": "redis: writes a marker into real persistent application data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:16:52.746Z"
+    },
+    {
+      "name": "files: writes a marker into real persistent application data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:21:51.438Z"
+    },
+    {
+      "name": "postgresql: a new Pod retains the same PVC and written data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:22:02.872Z",
+      "oldPodUid": "13ddd1b8-ec7c-4ca0-9215-744e719cf06b",
+      "pvcUid": "92d8ff4c-33aa-4aa3-9b01-5768c8267dbc"
+    },
+    {
+      "name": "redis: a new Pod retains the same PVC and written data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:22:13.987Z",
+      "oldPodUid": "c9c620a8-ea25-4d68-aace-bf848ebc1c40",
+      "pvcUid": "1ebeaab4-6cfa-4d67-9771-a58b3aebed61"
+    },
+    {
+      "name": "files: a new Pod retains the same PVC and written data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:23:10.212Z",
+      "oldPodUid": "b8b50db7-cd69-43ae-8468-2c7480e9bdd4",
+      "pvcUid": "9b7e488c-791c-47e0-a182-9b83a7ac9da8"
+    },
+    {
+      "name": "postgresql: stop drains Pods while retaining the published volume",
+      "passed": true,
+      "observedAt": "2026-10-25T23:23:28.669Z"
+    },
+    {
+      "name": "postgresql: resume authenticates and reads the original data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:23:37.757Z"
+    },
+    {
+      "name": "redis: stop drains Pods while retaining the published volume",
+      "passed": true,
+      "observedAt": "2026-10-25T23:23:40.976Z"
+    },
+    {
+      "name": "redis: resume authenticates and reads the original data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:23:49.795Z"
+    },
+    {
+      "name": "files: stop drains Pods while retaining the published volume",
+      "passed": true,
+      "observedAt": "2026-10-25T23:24:21.319Z"
+    },
+    {
+      "name": "files: resume authenticates and reads the original data",
+      "passed": true,
+      "observedAt": "2026-10-25T23:24:33.995Z"
+    }
+  ],
+  "completedAt": "2026-10-25T23:24:33.996Z",
+  "resources": {
+    "projects": {
+      "a": "fbd1c8ed-aee3-421a-bff7-be7f63a16002",
+      "b": "9fa217f6-f778-4798-8b52-bd5db84714b3"
+    },
+    "environments": {
+      "a": "7fb31281-95ac-416c-8aff-e3b53763016c",
+      "b": "34589790-b3fd-46ce-af36-834c143d4e20"
+    },
+    "services": {
+      "postgresql": "efb929e9-7488-4d25-9d76-d42afa8ce338",
+      "redis": "7b52d1bd-a519-4b2f-8ca0-ef85a6d8cb3c",
+      "node-example": "a75fca05-20e2-481a-98cb-cdbe1cdacb66",
+      "static-example": "676eb157-d6ed-4528-a969-bd6ffa863a7a",
+      "files": "bfd2b0d3-16bb-44e0-af21-19b30c180ac0"
+    },
+    "volumes": {
+      "postgresql": "61c28353-0831-47ac-9c1b-419983417eec",
+      "redis": "336ee757-62f7-4bf4-bdd9-09b486c412d9",
+      "files": "605410b8-8099-4a8c-a185-3c37c18d06cb"
+    }
+  }
+}

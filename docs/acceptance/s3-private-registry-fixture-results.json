@@ -1,0 +1,149 @@
+{
+  "scope": "真实本地 Distribution 3.1.2：TLS、Basic 认证、OCI blob 推送及 RegistryAdapter 解析；产品 API/Worker/节点部署另行验收。",
+  "startedAt": "2026-10-25T18:02:20.873Z",
+  "status": "passed",
+  "registry": "127.0.0.1:50443",
+  "sourceReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+  "checks": [
+    {
+      "name": "source OCI index matches its immutable upstream digest",
+      "passed": true
+    },
+    {
+      "name": "ARM64 manifest matches the verified source index",
+      "passed": true
+    },
+    {
+      "name": "unauthenticated registry requests are rejected",
+      "passed": true
+    },
+    {
+      "name": "incorrect Basic credentials are rejected",
+      "passed": true
+    },
+    {
+      "name": "correct Basic credentials authenticate over verified TLS",
+      "passed": true
+    },
+    {
+      "name": "a client without the fixture CA fails TLS verification",
+      "passed": true
+    },
+    {
+      "name": "private ARM64 manifest retains the exact public source digest",
+      "passed": true
+    },
+    {
+      "name": "runtime pull fixture has a unique manifest and a new harmless layer",
+      "passed": true
+    },
+    {
+      "name": "production RegistryAdapter resolves the authenticated ARM64 image",
+      "passed": true
+    },
+    {
+      "name": "production RegistryAdapter verifies the pinned private digest",
+      "passed": true
+    },
+    {
+      "name": "production RegistryAdapter accepts the unique ARM64 runtime fixture",
+      "passed": true
+    },
+    {
+      "name": "production RegistryAdapter reports a missing credential",
+      "passed": true
+    },
+    {
+      "name": "production RegistryAdapter reports an invalid credential",
+      "passed": true
+    },
+    {
+      "name": "production RegistryAdapter rejects an AMD64-only index for ARM64",
+      "passed": true
+    },
+    {
+      "name": "negative fixture has internally consistent AMD64 config and index metadata",
+      "passed": true
+    }
+  ],
+  "blobs": [
+    {
+      "digest": "sha256:8d0c5e5054411ef20720bbaee4f8b6ac0143f2aec5b7db613331efce58d410ee",
+      "bytes": 3526,
+      "reused": true
+    },
+    {
+      "digest": "sha256:5de55e5ef9c033997441461efe7ba23a986db059c0bb78b38f84ee0d72b99167",
+      "bytes": 4183037,
+      "reused": true
+    },
+    {
+      "digest": "sha256:27a39ffe7ded1d327ff924ee5eaba2e006a2e08c7aeb9d452c295868467eafad",
+      "bytes": 2793818,
+      "reused": true
+    },
+    {
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "bytes": 32,
+      "reused": true
+    },
+    {
+      "digest": "sha256:ac3d56de623d81729302fd97ab892a367ab11cf2a0a9c28911732224897bb041",
+      "bytes": 10475370,
+      "reused": true
+    },
+    {
+      "digest": "sha256:ecc83ece825ed5dbe3bcd4bf366cf6b37a68c997e3b74deaee21395f016a224e",
+      "bytes": 5062675,
+      "reused": true
+    },
+    {
+      "digest": "sha256:dec44e5aec7c1abe2562661c0f8a28d1acdee2a9ba356cc97bd41261645e4add",
+      "bytes": 2134,
+      "reused": true
+    },
+    {
+      "digest": "sha256:0d6b1db0d0df878010c6b7ec3e18d5e66003b07a63a63d270f27eaa5243a6532",
+      "bytes": 10477537,
+      "reused": true
+    }
+  ],
+  "arm64": {
+    "repository": "ozz-fixture/podinfo",
+    "tag": "arm64",
+    "reference": "127.0.0.1:50443/ozz-fixture/podinfo:arm64",
+    "digest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+    "sourcePlatformDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204"
+  },
+  "runtimeImage": {
+    "id": "3e71871b-ca8d-48a9-83c0-17ce28b296c8",
+    "repository": "ozz-fixture/runtime-3e71871bca8d48a9/podinfo",
+    "manifestDigest": "sha256:11658be316f5327beabd5c19980c21176e17860afddd717b6e5939bba0a55de2",
+    "configDigest": "sha256:cf40293ecdc4cf4d55ee865cd36d326896671d0695f1db7bd0c45f4c22610c1f",
+    "newLayer": {
+      "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+      "digest": "sha256:cc1d7dc2167d6bb13da7ff60d35ecf9bec8e5f173270d9d79be299718e0950bc",
+      "size": 228
+    },
+    "newLayerDiffId": "sha256:e6f4940bd41a6ad6bcb3c38dfd6a0517783db653c65eb46ea7d9b79b6dd1ee7d",
+    "baseLayers": [
+      "sha256:5de55e5ef9c033997441461efe7ba23a986db059c0bb78b38f84ee0d72b99167",
+      "sha256:27a39ffe7ded1d327ff924ee5eaba2e006a2e08c7aeb9d452c295868467eafad",
+      "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "sha256:ac3d56de623d81729302fd97ab892a367ab11cf2a0a9c28911732224897bb041",
+      "sha256:ecc83ece825ed5dbe3bcd4bf366cf6b37a68c997e3b74deaee21395f016a224e",
+      "sha256:dec44e5aec7c1abe2562661c0f8a28d1acdee2a9ba356cc97bd41261645e4add",
+      "sha256:0d6b1db0d0df878010c6b7ec3e18d5e66003b07a63a63d270f27eaa5243a6532"
+    ],
+    "reference": "127.0.0.1:50443/ozz-fixture/runtime-3e71871bca8d48a9/podinfo:v1",
+    "inheritedBaseLayersMayBeCached": true
+  },
+  "amd64Only": {
+    "repository": "ozz-fixture/amd64-only",
+    "tag": "v1",
+    "reference": "127.0.0.1:50443/ozz-fixture/amd64-only:v1",
+    "digest": "sha256:937f61c84843b7c0258d48d2f7a5da402c1343e3b861b76f7e03b5cd077de371",
+    "fixture": "Generated valid AMD64-only OCI scratch metadata; not a runnable Podinfo image."
+  },
+  "finishedAt": "2026-10-25T18:02:25.209Z"
+}

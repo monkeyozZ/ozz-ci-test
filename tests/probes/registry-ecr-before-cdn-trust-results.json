@@ -1,0 +1,13 @@
+{
+  "scope": "真实公网 OCI manifest/config/digest/平台读取；不代表 Kubernetes 拉取运行或受限仓库验收。",
+  "startedAt": "2026-10-25T14:37:51.237Z",
+  "status": "failed",
+  "checks": [],
+  "image": null,
+  "failure": {
+    "code": "REGISTRY_REDIRECT_REJECTED",
+    "httpStatus": null
+  },
+  "finishedAt": "2026-10-25T14:37:53.543Z",
+  "toolchain": "0.1.0"
+}

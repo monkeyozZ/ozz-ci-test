@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-25T23:18:46.366Z",
+  "status": "passed",
+  "scope": {
+    "manualToolTests": "Local temporary HTTPS/binary WebSocket servers, artifact/archive tests and fixed client/process stubs.",
+    "manualRecordTests": "Real PostgreSQL and HTTP admission in a unique isolated schema; Kubernetes effects are fixtures.",
+    "realBusinessDatabaseEngineExecution": false,
+    "realKubernetesExecution": false,
+    "realAtoBRecoveryExecution": false,
+    "mainControlPlaneSchemaMutation": false,
+    "note": "Actual A/B engine execution belongs to the separate recovery acceptance report."
+  },
+  "runtime": { "node": "v24.22.1", "pnpm": "12.14.0", "platform": "darwin", "arch": "arm64" },
+  "toolVersion": "ozz-manual-data/1.0.0",
+  "results": {
+    "manualData": {
+      "passed": 51,
+      "failed": 0,
+      "skipped": 0,
+      "artifactAndArchive": 25,
+      "databaseProofAndProcessLifecycle": 7,
+      "httpsAndWebSocketProtocols": 19
+    },
+    "manualRecordIntegration": {
+      "selected": 6,
+      "passed": 6,
+      "failed": 0,
+      "otherTestsExcludedByName": 27,
+      "newRegressionTests": 3,
+      "changedIdentityFieldsChecked": 12
+    },
+    "checks": [
+      { "command": "pnpm --filter @ozz/control-plane build", "exitCode": 0 },
+      {
+        "command": "pnpm exec eslint packages/control-plane/src/storage/commands.ts tests/integration/storage-s5.test.ts 'scripts/manual-data-*.mjs' 'tests/manual-data/*.mjs'",
+        "exitCode": 0
+      },
+      {
+        "command": "pnpm exec prettier --check packages/control-plane/src/storage/commands.ts tests/integration/storage-s5.test.ts 'scripts/manual-data-*.mjs' 'tests/manual-data/*.mjs' docs/manual-data-recovery.md",
+        "exitCode": 0
+      },
+      {
+        "command": "git diff --check",
+        "exitCode": 0,
+        "note": "The workspace is predominantly untracked; scoped Prettier supplies the substantive whitespace check."
+      },
+      { "command": "pnpm exec node scripts/manual-data-backup.mjs --help", "exitCode": 0 },
+      { "command": "pnpm exec node scripts/manual-data-restore.mjs --help", "exitCode": 0 },
+      { "command": "pnpm exec node scripts/manual-data-verify.mjs --help", "exitCode": 0 },
+      { "command": "pnpm exec node scripts/manual-data-record.mjs --help", "exitCode": 0 },
+      { "command": "pnpm exec node scripts/manual-data-helper.mjs --help", "exitCode": 0 },
+      { "command": "pnpm exec node scripts/manual-data-artifact.mjs --help", "exitCode": 0 }
+    ],
+    "executions": [
+      {
+        "command": "pnpm exec node --test tests/manual-data/*.test.mjs",
+        "startedAt": "2026-10-25T23:17:20.491Z",
+        "completedAt": "2026-10-25T23:17:27.227Z",
+        "exitCode": 0,
+        "output": "✔ private files, atomic publication and copy never overwrite retained bytes (21.913ms)\n✔ source and restore target require independent Volume, PVC and Service identities (0.625542ms)\n✔ USTAR inventory verifies bytes, root ownership, directories and ordinary file modes (11.785458ms)\n✔ rejects unsafe tar path \"../escape\" (11.034ms)\n✔ rejects unsafe tar path \"./../escape\" (10.312ms)\n✔ rejects unsafe tar path \"/absolute\" (8.614667ms)\n✔ rejects unsafe tar path \"a/../escape\" (9.035333ms)\n✔ rejects unsafe tar path \"a//b\" (8.3585ms)\n✔ rejects unsafe tar path \"a\\\\b\" (5.931041ms)\n✔ rejects unsafe tar path \"a\\nb\" (5.933084ms)\n✔ rejects tar links, devices and extension type 1 (6.851708ms)\n✔ rejects tar links, devices and extension type 2 (6.095792ms)\n✔ rejects tar links, devices and extension type 3 (5.700375ms)\n✔ rejects tar links, devices and extension type 4 (7.572459ms)\n✔ rejects tar links, devices and extension type 6 (7.850709ms)\n✔ rejects tar links, devices and extension type x (8.6175ms)\n✔ rejects tar links, devices and extension type g (10.267916ms)\n✔ rejects tar links, devices and extension type L (10.341542ms)\n✔ rejects tar links, devices and extension type S (12.029208ms)\n✔ rejects equivalent paths, file/directory collisions and special mode bits (26.871125ms)\n✔ rejects corrupted checksums, truncation, nonzero padding and trailing concatenated archives (32.327083ms)\n✔ rejects ambiguous NUL paths, hidden link targets and entry-count overflow (40.491333ms)\n✔ seal, verify and copy preserve the manifest byte-for-byte and verify the destination (108.009167ms)\n✔ modified artifact or manifest metadata cannot pass local verification (59.27ms)\n✔ database signatures are only early rejection, never a semantic-validation claim (21.402792ms)\n✔ postgresql: complete operator workflow across HTTPS and binary WebSocket, without real engine/cluster execution (891.038875ms)\n✔ redis: complete operator workflow across HTTPS and binary WebSocket, without real engine/cluster execution (867.848667ms)\n✔ files: complete operator workflow across HTTPS and binary WebSocket, without real engine/cluster execution (534.470042ms)\n✔ product staleness, maintenance loss and parallel mutation block before remote writes (82.931709ms)\n✔ same-name Node replacement, changed PV binding and replaced runtime Secret fail closed (68.311625ms)\n✔ typed Kubernetes lists may omit item TypeMeta but explicit wrong kinds are rejected (118.754625ms)\n✔ truncated, forbidden and unrelated Pod mounts never become a zero-mount claim (104.16175ms)\n✔ active attachment and stale controller fingerprint block helper creation (137.053083ms)\n✔ helper creation intent precedes POST; lost response recovers only matching nonce and UID (134.110583ms)\n✔ admission-added sidecar/init container is never accepted as a helper (108.416958ms)\n✔ helper rejects added exec surfaces and subPath while accepting API omitted readOnly false (147.048875ms)\n✔ expired session and recovery lock are rechecked between remote phases (50.020166ms)\n✔ nonempty PostgreSQL restore retains the target/helper and never imports (358.075333ms)\n✔ Redis rewrite failure cannot publish a completed restore or start the formal StatefulSet (547.613959ms)\n✔ failed import helper can be gracefully removed under the original overdue lock without releasing maintenance (742.146333ms)\n✔ manual records use the source Volume route and remain operator_reported for incomplete restores (935.582042ms)\n✔ WebSocket stdin sends the complete bounded artifact and an explicit v5 EOF (158.952833ms)\n✔ WebSocket requires binary frames, bounded bytes and explicit successful process status (99.999583ms)\n✔ HTTP redirect responses do not forward authentication to another origin (69.970709ms)\n✔ PostgreSQL checks actual version, bounded selected rows and structural/constraint digests (2.907084ms)\n✔ Redis hashes values without storing bytes and compares absolute expiry across elapsed time (1.067041ms)\n✔ Redis refuses invalid clocks, malformed proofs, wrong versions and incomplete AOF conversion (0.453292ms)\n✔ Redis string proofs accept empty bytes and reject internal collection encodings (0.113458ms)\n✔ PostgreSQL snapshot EXIT trap stops the real client on success and dump failure (1942.862958ms)\n✔ structured probes cannot inject SQL, commands or unsupported system targets (0.286875ms)\n✔ every fixed shell program parses and engine import commands preserve the required order/flags (213.274542ms)\nℹ tests 51\nℹ suites 0\nℹ pass 51\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 6441.838\n"
+      },
+      {
+        "command": "pnpm exec node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts tests/integration/storage-s5.test.ts --testNamePattern 'S5 storage HTTP and manual record contract'",
+        "startedAt": "2026-10-25T23:17:20.495Z",
+        "completedAt": "2026-10-25T23:17:30.284Z",
+        "exitCode": 0,
+        "output": "\n RUN  v3.2.7 /Users/monkeyozz/Desktop/code/ozz\n\n ✓ tests/integration/storage-s5.test.ts (33 tests | 27 skipped) 7090ms\n   ✓ S5 storage HTTP and manual record contract > returns accepted identities, exact mount revisions and complete list filters through the authenticated HTTP API  1318ms\n   ✓ S5 storage HTTP and manual record contract > records operator evidence without claiming platform verification and preserves the original backup manifest on restore  1557ms\n   ✓ S5 storage HTTP and manual record contract > accepts reordered source and target identities after a real PostgreSQL JSONB round trip  707ms\n   ✓ S5 storage HTTP and manual record contract > rejects a change to any source or target identity field without appending a manual record  1022ms\n   ✓ S5 storage HTTP and manual record contract > rejects unbound source and target volumes without a registered PVC identity  413ms\n   ✓ S5 storage HTTP and manual record contract > keeps read endpoints available while recovery mode blocks every storage mutation  371ms\n\n Test Files  1 passed (1)\n      Tests  6 passed | 27 skipped (33)\n   Start at  07:17:21\n   Duration  8.82s (transform 374ms, setup 0ms, collect 1.42s, tests 7.09s, environment 0ms, prepare 128ms)\n\n"
+      }
+    ]
+  },
+  "fixedAssets": {
+    "postgresql": {
+      "version": "17.11",
+      "layout": "postgresql-17-pgdata-v1",
+      "image": "docker.io/library/postgres@sha256:858bb5e98eed02eb8cafbcdc007f9a65d1b613972028944a8ec2133ccaf80d27"
+    },
+    "redis": {
+      "version": "7.4.11",
+      "layout": "redis-7-rdb-aof-v1",
+      "image": "docker.io/library/redis@sha256:44960b3100c48159a66d28c18b0588c193492e25f7551d60e51dd464fc3eca5b"
+    },
+    "files": {
+      "tool": "GNU tar 1.34",
+      "layout": "files-root-v1",
+      "format": "USTAR",
+      "image": "same immutable PostgreSQL Bookworm image; PostgreSQL is not started"
+    }
+  },
+  "corrections": [
+    "Hold the exported PostgreSQL snapshot with the actual background psql PID; stop and wait for that PID on success and failure.",
+    "Hash each selected PostgreSQL row before sorted digest aggregation; bound selected rows and total user-table schema inventory.",
+    "Use stable selected Redis string GET-byte digests rather than encoding-dependent DUMP serialization; compare absolute expiration times.",
+    "Accept missing TypeMeta only inside correctly typed Kubernetes lists; reject explicit mismatches.",
+    "Normalize absent readOnly to false only for persistentVolumeClaim.readOnly and container.volumeMounts[].readOnly.",
+    "Compare manual-record identities by all six fields and reject a null ledger identity. Existing input/view builders already normalized field order, so the former comparison bug was not reproduced here.",
+    "Bounded FileHandle writes replace a pipeline that previously waited indefinitely for a disabled auto-close event."
+  ],
+  "boundaries": [
+    "Operator-reported backup/restore metadata never claims platform verification.",
+    "The copy receipt proves bytes and the original manifest digest, not the physical disaster-recovery location of an operator label.",
+    "Targets must use a new Service, Volume and PVC created after backup completion; source and failed targets are retained.",
+    "A successful import produces restore-prepared.json with result incomplete; formal workload verification is required for restore-complete.json.",
+    "Helpers and maintenance are fenced by original identities; success/failure never automatically resumes a Service, exits maintenance or switches traffic.",
+    "Artifacts are bounded to 1 GiB. PostgreSQL proof markers are 1–32 tables, at most 10000 rows each and at most 256 user tables.",
+    "Redis proof markers are 1–32 selected string or absent keys in one DB, with value digest and absolute TTL; RDB still contains all databases/types.",
+    "Files support ordinary files/directories and POSIX numeric ownership/mode; links/devices/extensions/special bits are rejected, ACL/xattr/SELinux/sparse layouts are not preserved.",
+    "Local protocol tests require openssl, Python 3 and Bash; real database executables were not installed or run."
+  ],
+  "runbook": "docs/manual-data-recovery.md",
+  "files": [
+    {
+      "path": "docs/manual-data-recovery.md",
+      "sizeBytes": 21305,
+      "sha256": "d7bbd36553f381ee85e0429cdd9ecc037a95272ccef7951338f34e619bb4b72e"
+    },
+    {
+      "path": "packages/control-plane/src/storage/commands.ts",
+      "sizeBytes": 21878,
+      "sha256": "d941e7cc623cb66076632bdba966849747bf86ab8c683f6fd0cca61c6e1f2d24"
+    },
+    {
+      "path": "scripts/manual-data-artifact.mjs",
+      "sizeBytes": 11614,
+      "sha256": "7f9210807a4cae5c589ac060e38d0ea66cccab5149eadca648f86b9622986264"
+    },
+    {
+      "path": "scripts/manual-data-backup.mjs",
+      "sizeBytes": 875,
+      "sha256": "992c1ee8684b8e3b857588f82f2d23a10b49c4c29103fd73efec06ed059e007f"
+    },
+    {
+      "path": "scripts/manual-data-commands.mjs",
+      "sizeBytes": 15955,
+      "sha256": "5fc8e358acfc03d7c4db03a4c0b413adfa6800bb92c89dc04b7fce7898cc82c1"
+    },
+    {
+      "path": "scripts/manual-data-core.mjs",
+      "sizeBytes": 10464,
+      "sha256": "4bc88f87e8f56176842c62e00586acd2a9942ab4ffaa24e019fa32844749b36d"
+    },
+    {
+      "path": "scripts/manual-data-exec.mjs",
+      "sizeBytes": 7991,
+      "sha256": "5de82841c009ba026b9a81f1c5c15c9442226a312b1d3050235c396ec59b313b"
+    },
+    {
+      "path": "scripts/manual-data-helper.mjs",
+      "sizeBytes": 5019,
+      "sha256": "668358f9b3fce6d562a9656e57d124c1bf9fc4b210483c67962da9c818c783fa"
+    },
+    {
+      "path": "scripts/manual-data-operations.mjs",
+      "sizeBytes": 24540,
+      "sha256": "dcd24e730d7e8c2f4fd22a430c4b127c4107e61b9138c07cc065c10e63805350"
+    },
+    {
+      "path": "scripts/manual-data-record.mjs",
+      "sizeBytes": 5725,
+      "sha256": "c61c277572f6d58d06eb34edc68d5a2ec920cf8a56b08b1fe98c9ab3b389b821"
+    },
+    {
+      "path": "scripts/manual-data-restore.mjs",
+      "sizeBytes": 1067,
+      "sha256": "78bbb94f34bcc58004c1e767a1ac57a4781f0613261408cb58b7079d50d93eeb"
+    },
+    {
+      "path": "scripts/manual-data-runtime.mjs",
+      "sizeBytes": 40786,
+      "sha256": "a23b2a85e157c9e9247f409d9808a438d9d87bd5b9440af075439738e6ac855c"
+    },
+    {
+      "path": "scripts/manual-data-tar.mjs",
+      "sizeBytes": 6606,
+      "sha256": "e4b2df7b14f74e22d7a00539fb9b645dc6ba2347f3d9f4bff02f9f4fc8628625"
+    },
+    {
+      "path": "scripts/manual-data-verification.mjs",
+      "sizeBytes": 8716,
+      "sha256": "ef0a9a1108f551993c138b8a9cad3502cc43b56d77ed28820c458375381a7cf4"
+    },
+    {
+      "path": "scripts/manual-data-verify.mjs",
+      "sizeBytes": 1045,
+      "sha256": "3a7ab2909b1e38cc0d5ef77a48ff0fa5601d54ad490f232ebcff96c4fcc61ff3"
+    },
+    {
+      "path": "tests/integration/storage-s5.test.ts",
+      "sizeBytes": 73202,
+      "sha256": "b46d649f7a62db201ee3584d4086565884995c4fa18911e9ff8ba40a9505a89e"
+    },
+    {
+      "path": "tests/manual-data/archive-fixture.mjs",
+      "sizeBytes": 2483,
+      "sha256": "2ac7b737224f2a163435591685af730f5c043e7c359e14cb541dc1e462df8e56"
+    },
+    {
+      "path": "tests/manual-data/artifact.test.mjs",
+      "sizeBytes": 8366,
+      "sha256": "14ccf7b48767ebb9fe6541b07f26d3e96f2e3494b3fa70da60c29ae52735594c"
+    },
+    {
+      "path": "tests/manual-data/protocol-fixture.mjs",
+      "sizeBytes": 28602,
+      "sha256": "3b7b4e6da3292da9bfa7ad353dae0ed2cb6d7ece7c9dc4fab2edf911f27e2273"
+    },
+    {
+      "path": "tests/manual-data/protocol.test.mjs",
+      "sizeBytes": 20206,
+      "sha256": "aa827dd1589b809d7c2b1a6dda13709796e9fdd2eafcc39d09a25fd4de0b69cc"
+    },
+    {
+      "path": "tests/manual-data/verification.test.mjs",
+      "sizeBytes": 10025,
+      "sha256": "e261d8c4ad2f76e734047bda7428297a8b84ea6a7c9e10e8587e842a01e80ee6"
+    }
+  ]
+}

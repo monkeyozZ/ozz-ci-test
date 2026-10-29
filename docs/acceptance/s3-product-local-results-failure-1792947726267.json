@@ -1,0 +1,313 @@
+{
+  "scope": "产品 API/Worker/PostgreSQL 与真实本地 K3s A/B；同 digest 镜像缓存辅助，非公网 Registry 拉取、私仓、公网入口或 Oracle 容量验收。",
+  "runId": "a0ade89a-87ac-4098-9216-6a9e8715990a",
+  "startedAt": "2026-10-25T16:44:40.070Z",
+  "resumedAt": "2026-10-25T17:01:49.584Z",
+  "checks": [
+    {
+      "name": "a: inherited project/environment/cluster and encrypted draft",
+      "passed": true,
+      "observedAt": "2026-10-25T16:47:07.718Z",
+      "serviceId": "6d87d601-4bd8-4451-8ada-16fe914dbc3a",
+      "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3"
+    },
+    {
+      "name": "a: durable publication reaches real healthy Pods",
+      "passed": true,
+      "observedAt": "2026-10-25T16:47:16.510Z",
+      "deploymentId": "2cc0ec29-aab7-47c6-9f05-f661cb28b75e",
+      "target": {
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "namespace": "ozz-e-6450e6cbe1724a2c8bae315a798b3266",
+        "projectId": "ee0322ab-caea-41bc-a55b-252243e8e896",
+        "serviceId": "6d87d601-4bd8-4451-8ada-16fe914dbc3a",
+        "serviceName": "ozz-s-6d87d6014bd844518ada16fe914dbc3a",
+        "environmentId": "6450e6cb-e172-4a2c-8bae-315a798b3266",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "resolvedImage": {
+        "tag": null,
+        "version": 1,
+        "registry": "ghcr.io",
+        "repository": "stefanprodan/podinfo",
+        "resolvedAt": "2026-10-25T16:47:13.183Z",
+        "indexDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "inputReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "manifestDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "deployReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "requestedDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "manifestMediaType": "application/vnd.oci.image.index.v1+json",
+        "platformManifests": [
+          {
+            "os": "linux",
+            "architecture": "arm64",
+            "configDigest": "sha256:8d0c5e5054411ef20720bbaee4f8b6ac0143f2aec5b7db613331efce58d410ee",
+            "manifestDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+            "manifestMediaType": "application/vnd.oci.image.manifest.v1+json"
+          }
+        ]
+      },
+      "stages": [
+        {
+          "name": "resolving",
+          "status": "succeeded"
+        },
+        {
+          "name": "deploying",
+          "status": "succeeded"
+        },
+        {
+          "name": "waiting_healthy",
+          "status": "succeeded"
+        }
+      ]
+    },
+    {
+      "name": "b: inherited project/environment/cluster and encrypted draft",
+      "passed": true,
+      "observedAt": "2026-10-25T16:47:16.563Z",
+      "serviceId": "ff8e52ad-5776-44d0-bed2-cb7d9af78928",
+      "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83"
+    },
+    {
+      "name": "b: durable publication reaches real healthy Pods",
+      "passed": true,
+      "observedAt": "2026-10-25T16:47:24.307Z",
+      "deploymentId": "b026bb0a-862b-4378-b0bf-697f89763d9f",
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceId": "ff8e52ad-5776-44d0-bed2-cb7d9af78928",
+        "serviceName": "ozz-s-ff8e52ad577644d0bed2cb7d9af78928",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "resolvedImage": {
+        "tag": null,
+        "version": 1,
+        "registry": "ghcr.io",
+        "repository": "stefanprodan/podinfo",
+        "resolvedAt": "2026-10-25T16:47:21.418Z",
+        "indexDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "inputReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "manifestDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "deployReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "requestedDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "manifestMediaType": "application/vnd.oci.image.index.v1+json",
+        "platformManifests": [
+          {
+            "os": "linux",
+            "architecture": "arm64",
+            "configDigest": "sha256:8d0c5e5054411ef20720bbaee4f8b6ac0143f2aec5b7db613331efce58d410ee",
+            "manifestDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+            "manifestMediaType": "application/vnd.oci.image.manifest.v1+json"
+          }
+        ]
+      },
+      "stages": [
+        {
+          "name": "resolving",
+          "status": "succeeded"
+        },
+        {
+          "name": "deploying",
+          "status": "succeeded"
+        },
+        {
+          "name": "waiting_healthy",
+          "status": "succeeded"
+        }
+      ]
+    },
+    {
+      "name": "A/B retain different project/cluster/namespace/Pod identities",
+      "passed": true,
+      "observedAt": "2026-10-25T16:47:24.328Z"
+    },
+    {
+      "name": "a: application HTTP responds through private Service DNS",
+      "passed": true,
+      "observedAt": "2026-10-25T16:47:24.997Z",
+      "serviceDns": "ozz-s-6d87d6014bd844518ada16fe914dbc3a.ozz-e-6450e6cbe1724a2c8bae315a798b3266.svc",
+      "podUid": "6109034d-092b-409b-bdc5-1cba81e90c8d"
+    },
+    {
+      "name": "b: application HTTP responds through private Service DNS",
+      "passed": true,
+      "observedAt": "2026-10-25T16:47:25.500Z",
+      "serviceDns": "ozz-s-ff8e52ad577644d0bed2cb7d9af78928.ozz-e-5932bca61b2a45e99ec5b7db7fcfb678.svc",
+      "podUid": "19637601-efee-41a2-93af-4ef82260d613"
+    },
+    {
+      "name": "real Pod logs use finite SSE and an explicit ending",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:22.462Z",
+      "httpStatus": 200,
+      "bytes": 638
+    },
+    {
+      "name": "a Pod from another service/cluster cannot be used for logs",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:22.532Z"
+    },
+    {
+      "name": "saving a draft keeps the published snapshot and current Pod",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:22.596Z"
+    },
+    {
+      "name": "stop keeps draft and published replicas while scaling runtime to zero",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:27.251Z"
+    },
+    {
+      "name": "publication of a stopped service requires explicit start intent",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:27.286Z"
+    },
+    {
+      "name": "resume uses the trusted published snapshot and leaves the draft unpublished",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:29.936Z"
+    },
+    {
+      "name": "restart observes a new healthy Pod of the published snapshot",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:35.097Z"
+    },
+    {
+      "name": "delete-check: inherited project/environment/cluster and encrypted draft",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:35.149Z",
+      "serviceId": "abd5a09d-763a-4f44-88c1-0efeababebf7",
+      "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3"
+    },
+    {
+      "name": "delete-check: durable publication reaches real healthy Pods",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:42.431Z",
+      "deploymentId": "6dcc6524-a9c7-4957-95dd-97e0f2c06812",
+      "target": {
+        "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3",
+        "namespace": "ozz-e-6450e6cbe1724a2c8bae315a798b3266",
+        "projectId": "ee0322ab-caea-41bc-a55b-252243e8e896",
+        "serviceId": "abd5a09d-763a-4f44-88c1-0efeababebf7",
+        "serviceName": "ozz-s-abd5a09d763a4f4488c10efeababebf7",
+        "environmentId": "6450e6cb-e172-4a2c-8bae-315a798b3266",
+        "kubeSystemUid": "dbb8b388-181d-4c8a-9a7e-574ccad35c0a",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "resolvedImage": {
+        "tag": null,
+        "version": 1,
+        "registry": "ghcr.io",
+        "repository": "stefanprodan/podinfo",
+        "resolvedAt": "2026-10-25T16:52:39.180Z",
+        "indexDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "inputReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "manifestDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "deployReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "requestedDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "manifestMediaType": "application/vnd.oci.image.index.v1+json",
+        "platformManifests": [
+          {
+            "os": "linux",
+            "architecture": "arm64",
+            "configDigest": "sha256:8d0c5e5054411ef20720bbaee4f8b6ac0143f2aec5b7db613331efce58d410ee",
+            "manifestDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+            "manifestMediaType": "application/vnd.oci.image.manifest.v1+json"
+          }
+        ]
+      },
+      "stages": [
+        {
+          "name": "resolving",
+          "status": "succeeded"
+        },
+        {
+          "name": "deploying",
+          "status": "succeeded"
+        },
+        {
+          "name": "waiting_healthy",
+          "status": "succeeded"
+        }
+      ]
+    },
+    {
+      "name": "product deletion removes only its service and preserves a shared environment",
+      "passed": true,
+      "observedAt": "2026-10-25T16:52:49.185Z"
+    },
+    {
+      "name": "failure-check: inherited project/environment/cluster and encrypted draft",
+      "passed": true,
+      "observedAt": "2026-10-25T17:01:49.871Z",
+      "serviceId": "b668c732-f17b-461a-8f43-eb571c0564ed",
+      "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83"
+    },
+    {
+      "name": "failure-check: durable publication reaches real healthy Pods",
+      "passed": true,
+      "observedAt": "2026-10-25T17:01:57.836Z",
+      "deploymentId": "72ca9058-f449-4e80-b902-c99b73668cb2",
+      "target": {
+        "clusterId": "9a71027e-75ed-4dbc-9235-bd5fc7907e83",
+        "namespace": "ozz-e-5932bca61b2a45e99ec5b7db7fcfb678",
+        "projectId": "6cfc208c-eaf5-4794-b458-d3f26fcbfbdf",
+        "serviceId": "b668c732-f17b-461a-8f43-eb571c0564ed",
+        "serviceName": "ozz-s-b668c732f17b461a8f43eb571c0564ed",
+        "environmentId": "5932bca6-1b2a-45e9-9ec5-b7db7fcfb678",
+        "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+        "installationId": "df582d1b-f4d3-4aa9-a35d-c17170982972"
+      },
+      "resolvedImage": {
+        "tag": null,
+        "version": 1,
+        "registry": "ghcr.io",
+        "repository": "stefanprodan/podinfo",
+        "resolvedAt": "2026-10-25T17:01:53.539Z",
+        "indexDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "inputReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "manifestDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "deployReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "requestedDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+        "manifestMediaType": "application/vnd.oci.image.index.v1+json",
+        "platformManifests": [
+          {
+            "os": "linux",
+            "architecture": "arm64",
+            "configDigest": "sha256:8d0c5e5054411ef20720bbaee4f8b6ac0143f2aec5b7db613331efce58d410ee",
+            "manifestDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+            "manifestMediaType": "application/vnd.oci.image.manifest.v1+json"
+          }
+        ]
+      },
+      "stages": [
+        {
+          "name": "resolving",
+          "status": "succeeded"
+        },
+        {
+          "name": "deploying",
+          "status": "succeeded"
+        },
+        {
+          "name": "waiting_healthy",
+          "status": "succeeded"
+        }
+      ]
+    }
+  ],
+  "status": "failed",
+  "failure": {
+    "stage": "failed-health-publication",
+    "code": null,
+    "httpStatus": null,
+    "message": "LOCAL_S3_ASSERTION: a failed health wait retains the completely applied publication without reusing old healthy status"
+  },
+  "finishedAt": "2026-10-25T17:02:06.264Z"
+}

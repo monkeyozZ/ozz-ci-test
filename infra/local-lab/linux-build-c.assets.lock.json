@@ -1,0 +1,56 @@
+{
+  "formatVersion": 1,
+  "verifiedAt": "2026-10-25T18:27:39.316663+00:00",
+  "signatureProvenance": {
+    "url": "https://download.docker.com/linux/ubuntu/dists/noble/InRelease",
+    "keyFingerprint": "9DC858229FC7DD38854AE2D88D81803C0EBFCD88",
+    "releaseSha256": "de25cfdfb7deb4840540d47e755358bf180c6099a4bb27ec62d86b9203448e30",
+    "packagesSha256": "a58de7551a7bd31b90b52bc70f8eeb8df3b675fdc6213937da77542726f693ad"
+  },
+  "docker": [
+    {
+      "package": "docker-ce",
+      "version": "5:28.5.2-1~ubuntu.24.04~noble",
+      "architecture": "arm64",
+      "filename": "docker-ce_28.5.2-1~ubuntu.24.04~noble_arm64.deb",
+      "url": "https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/arm64/docker-ce_28.5.2-1~ubuntu.24.04~noble_arm64.deb",
+      "bytes": 17002092,
+      "sha256": "e37107df227680099f4a742c580b1c80cf3d0acae0540b6cc13a03d1f7fa38c4"
+    },
+    {
+      "package": "docker-ce-cli",
+      "version": "5:28.5.2-1~ubuntu.24.04~noble",
+      "architecture": "arm64",
+      "filename": "docker-ce-cli_28.5.2-1~ubuntu.24.04~noble_arm64.deb",
+      "url": "https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/arm64/docker-ce-cli_28.5.2-1~ubuntu.24.04~noble_arm64.deb",
+      "bytes": 14323064,
+      "sha256": "935463e46794fe223aa5a69bec2f112f1a20d5009e6044bd32755d699d743922"
+    },
+    {
+      "package": "containerd.io",
+      "version": "1.7.28-1~ubuntu.24.04~noble",
+      "architecture": "arm64",
+      "filename": "containerd.io_1.7.28-1~ubuntu.24.04~noble_arm64.deb",
+      "url": "https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/arm64/containerd.io_1.7.28-1~ubuntu.24.04~noble_arm64.deb",
+      "bytes": 23497288,
+      "sha256": "43956d54dfc16beae111c7f6f397d977a22319c1e57e8ee2fc288ada4d5449ae"
+    },
+    {
+      "package": "docker-compose-plugin",
+      "version": "2.40.3-1~ubuntu.24.04~noble",
+      "architecture": "arm64",
+      "filename": "docker-compose-plugin_2.40.3-1~ubuntu.24.04~noble_arm64.deb",
+      "url": "https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/arm64/docker-compose-plugin_2.40.3-1~ubuntu.24.04~noble_arm64.deb",
+      "bytes": 12304512,
+      "sha256": "fffcabd129a5469a84f81e686578649884435ee0d674da80c76c50c3612bc02c"
+    }
+  ],
+  "node": {
+    "version": "24.22.1",
+    "architecture": "arm64",
+    "filename": "node-v24.22.1-linux-arm64.tar.gz",
+    "url": "https://nodejs.org/dist/v24.22.1/node-v24.22.1-linux-arm64.tar.gz",
+    "checksumSource": "https://nodejs.org/dist/v24.22.1/SHASUMS256.txt",
+    "sha256": "33c37be234ba8bee041961047b19160f4d7d0f164e8e246f78bdd10feff148b3"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "status": "product-ssh-preflight-verified-clean-c",
+  "verifiedAt": "2026-10-25T13:19:19.753Z",
+  "scope": "Actual product SSH Adapter against a clean Ubuntu VM. No product initialization has been executed; API port is reserved and K3s is absent.",
+  "instance": "ozz-lab-c",
+  "target": {
+    "host": "127.0.0.1",
+    "port": 60322,
+    "username": "ozz",
+    "hostKeyFingerprint": "SHA256:UVrkzQ1cnszjGHsvfERSKWBh8i3/WQGw2mGnVPu7gXU"
+  },
+  "reservedApiEndpoint": "https://127.0.0.1:36443",
+  "initializationVersion": "v1.35.9+k3s1",
+  "checks": {
+    "fingerprintMatchedTrustedGuestKey": true,
+    "authenticatedUsingProtectedPrivateKey": true,
+    "preflightReadOnly": true,
+    "noExistingK3s": true,
+    "noInstallationMarker": true,
+    "noInstallationBlockers": true,
+    "noInitializationPerformed": true
+  },
+  "assetCache": {
+    "source": "project-pinned-official-assets",
+    "remoteDirectory": "/var/cache/ozz/k3s",
+    "sha256Verified": true,
+    "rootOwned": true,
+    "fileMode": "0600",
+    "assets": [
+      {
+        "filename": "k3s-v1.35.9-k3s1-arm64",
+        "sha256": "6176dd12c512e177af998e6035920f6283c5fdbd5adfdff85c103a7fdf2a00b5",
+        "bytes": 70779042
+      },
+      {
+        "filename": "k3s-v1.35.9-k3s1-airgap-images-arm64.tar.zst",
+        "sha256": "2c7a2347a7bf7606a40b6d2a8e2f350dfdc47f552c059f4594491934c25a6780",
+        "bytes": 176489633
+      }
+    ]
+  },
+  "hostKey": {
+    "fingerprint": "SHA256:UVrkzQ1cnszjGHsvfERSKWBh8i3/WQGw2mGnVPu7gXU",
+    "algorithm": "ssh-ed25519",
+    "observedAt": "2026-10-25T13:19:19.302Z"
+  },
+  "preflight": {
+    "observedAt": "2026-10-25T13:19:19.752Z",
+    "machineId": "3e9bf57d21f54ccd87e275b12d60bc4e",
+    "hostname": "lima-ozz-lab-c",
+    "os": "ubuntu",
+    "osVersion": "24.04",
+    "architecture": "arm64",
+    "kernel": "6.8.0-147-generic",
+    "init": "systemd",
+    "cpuCount": 2,
+    "memoryBytes": 2312220672,
+    "memoryAvailableBytes": 2063540224,
+    "rootDiskBytes": 19682557952,
+    "rootDiskAvailableBytes": 17543311360,
+    "dataDiskBytes": 19682557952,
+    "dataDiskAvailableBytes": 17543311360,
+    "privileged": true,
+    "memoryCgroupAvailable": true,
+    "systemdAvailable": true,
+    "ports": [
+      {
+        "protocol": "tcp",
+        "port": 22,
+        "listening": true
+      },
+      {
+        "protocol": "tcp",
+        "port": 80,
+        "listening": false
+      },
+      {
+        "protocol": "tcp",
+        "port": 443,
+        "listening": false
+      },
+      {
+        "protocol": "tcp",
+        "port": 6443,
+        "listening": false
+      },
+      {
+        "protocol": "tcp",
+        "port": 10250,
+        "listening": false
+      },
+      {
+        "protocol": "udp",
+        "port": 8472,
+        "listening": false
+      }
+    ],
+    "firewall": "inactive",
+    "k3s": {
+      "installed": false,
+      "version": null,
+      "installationId": null,
+      "installationPhase": null,
+      "secretsEncryption": "unknown"
+    },
+    "blockers": [],
+    "warnings": ["cloud_firewall_unknown", "low_memory_headroom", "low_disk_headroom"]
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "status": "frozen_s5_source_verified",
+  "capturedAt": "2026-10-26T00:44:06.188790+00:00",
+  "scope": "Immutable S5 source and historical migration baseline for S6 development; no S6 functionality or database upgrade is certified.",
+  "runId": "s5-20261026T004406Z-5b4fee22",
+  "archiveSha256": "fb0d8402542cac614268789efe0ece0860d4bc1c25b7de51d59b8b969264e173",
+  "sourceManifestSha256": "47e3b3de9fe8f87d891f40fd2aefb1b22ae74a9a5871fca53e3612f34151e117",
+  "sourceCount": 649,
+  "sourceArchivePath": ".local/local-lab/linux-build-c/snapshots/s5-20261026T004406Z-5b4fee22/source.tar.gz",
+  "sourceManifestPath": ".local/local-lab/linux-build-c/snapshots/s5-20261026T004406Z-5b4fee22/source-manifest.json",
+  "historicalMigrations": [
+    {
+      "path": "packages/database/prisma/migrations/202610250001_s1_foundation/migration.sql",
+      "sha256": "6040e076d242244282f78911ca4b6cad4d6d93478b43ced98067c02047dfccaa",
+      "bytes": 9927,
+      "mode": 420
+    },
+    {
+      "path": "packages/database/prisma/migrations/202610250002_s1_integrity/migration.sql",
+      "sha256": "a38d15305291f67abb572fa7b465f417ed96e3223a1e9038c50698dc64cbdcaf",
+      "bytes": 2579,
+      "mode": 420
+    },
+    {
+      "path": "packages/database/prisma/migrations/202610250003_s2_infrastructure/migration.sql",
+      "sha256": "033d9625e2823dd51bdba9e649830779ac6cc33060b86a8f9a76a3343c630684",
+      "bytes": 4695,
+      "mode": 420
+    },
+    {
+      "path": "packages/database/prisma/migrations/202610250004_s3_services/migration.sql",
+      "sha256": "85ef7118bc394f6977157957f5dce458c310f6f72b48a10a4b2eb4ad2efac441",
+      "bytes": 16241,
+      "mode": 420
+    },
+    {
+      "path": "packages/database/prisma/migrations/202610250005_s3_task_fences/migration.sql",
+      "sha256": "e0950a7a1d07c096966ad16dc6bc0ff263b83abb57c980c1a1cd78ee913ce338",
+      "bytes": 3367,
+      "mode": 420
+    },
+    {
+      "path": "packages/database/prisma/migrations/202610260001_s3_observation_state/migration.sql",
+      "sha256": "08a34652bc5aec15dba389444b348be5e636d9f80ac50d3272ae6c72495d3353",
+      "bytes": 69,
+      "mode": 420
+    },
+    {
+      "path": "packages/database/prisma/migrations/202610260002_s4_networking/migration.sql",
+      "sha256": "99b7372dff1570878485167c6501d3cf9761b66d8426ae997eaf555ccca1c205",
+      "bytes": 6880,
+      "mode": 420
+    },
+    {
+      "path": "packages/database/prisma/migrations/202610260003_s5_storage/migration.sql",
+      "sha256": "30a94a8c22b101f1e66786b81ed4a0b9fea5afa347b799df18081157dc89b817",
+      "bytes": 29488,
+      "mode": 420
+    },
+    {
+      "path": "packages/database/prisma/migrations/migration_lock.toml",
+      "sha256": "1db17a8d051aa136110736752c5e1f8b7ed92b6ea8e803112fbbe2497047c210",
+      "bytes": 24,
+      "mode": 420
+    }
+  ],
+  "publicDatabaseState": "S5; S6 migrations must first pass in isolated schemas",
+  "s5EngineeringEvidence": {
+    "path": "docs/acceptance/s5-engineering-results.json",
+    "sha256": "16d341752f9f82bac24f30b1f22cd32facde16a726934a518abfced229d064f1"
+  }
+}

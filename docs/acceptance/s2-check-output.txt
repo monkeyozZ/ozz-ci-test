@@ -1,0 +1,142 @@
+$ pnpm db:generate && pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test:unit
+$ pnpm --filter @ozz/database generate
+$ prisma generate
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v6.19.3) to ./../../node_modules/.pnpm/@prisma+client@6.19.3_prisma@6.19.3_typescript@5.9.3__typescript@5.9.3/node_modules/@prisma/client in 84ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Interested in query caching in just a few lines of code? Try Accelerate today! https://pris.ly/tip-3-accelerate
+
+$ pnpm -r --sort build
+packages/api-client build$ tsc -p tsconfig.json
+packages/infrastructure build$ tsc -p tsconfig.json
+packages/config build$ tsc -p tsconfig.json
+packages/database build$ tsc -p tsconfig.json
+packages/api-client build: Done
+apps/console build$ vue-tsc --noEmit && vite build
+packages/config build: Done
+packages/database build: Done
+packages/infrastructure build: Done
+packages/control-plane build$ tsc -p tsconfig.json
+packages/control-plane build: Done
+apps/api build$ tsc -p tsconfig.json
+apps/worker build$ tsc -p tsconfig.json
+apps/worker build: Done
+apps/console build: vite v8.3.5 building client environment for production...
+apps/console build: transforming...
+apps/api build: Done
+apps/console build: ✓ 2728 modules transformed.
+apps/console build: rendering chunks...
+apps/console build: computing gzip size...
+apps/console build: dist/index.html                                    1.26 kB │ gzip:  0.67 kB
+apps/console build: dist/assets/ProjectPage-CThLE3Uu.css               0.16 kB │ gzip:  0.14 kB
+apps/console build: dist/assets/ThemeSwitcher-BS3oqDw1.css             0.40 kB │ gzip:  0.24 kB
+apps/console build: dist/assets/SettingsPage-BIa_jBJ0.css              0.47 kB │ gzip:  0.25 kB
+apps/console build: dist/assets/ProjectCreatePage-uw3JGDpg.css         0.98 kB │ gzip:  0.40 kB
+apps/console build: dist/assets/OperationPage-CTnfghry.css             1.13 kB │ gzip:  0.46 kB
+apps/console build: dist/assets/ServerPage-C3gJcBmf.css                1.37 kB │ gzip:  0.54 kB
+apps/console build: dist/assets/InfrastructureTask-7EI9ffP2.css        1.58 kB │ gzip:  0.62 kB
+apps/console build: dist/assets/ProjectsPage-BPrSDuJK.css              1.81 kB │ gzip:  0.67 kB
+apps/console build: dist/assets/LoginPage-CHwlf2UV.css                 1.82 kB │ gzip:  0.64 kB
+apps/console build: dist/assets/ClusterPage-DH4kwGT-.css               2.40 kB │ gzip:  0.80 kB
+apps/console build: dist/assets/AppShell-BpuBKoSE.css                  5.24 kB │ gzip:  1.34 kB
+apps/console build: dist/assets/index-B0xrbZkc.css                    26.94 kB │ gzip:  6.95 kB
+apps/console build: dist/assets/useQuery-BL3YHXWB.js                   0.09 kB │ gzip:  0.10 kB
+apps/console build: dist/assets/check-C5zF4ImF.js                      0.13 kB │ gzip:  0.14 kB
+apps/console build: dist/assets/chevron-right-BTBAXOMl.js              0.14 kB │ gzip:  0.14 kB
+apps/console build: dist/assets/plus-D5VGU05b.js                       0.16 kB │ gzip:  0.15 kB
+apps/console build: dist/assets/loader-circle-DAOkoX9r.js              0.17 kB │ gzip:  0.17 kB
+apps/console build: dist/assets/arrow-up-right-zuJs5-72.js             0.17 kB │ gzip:  0.16 kB
+apps/console build: dist/assets/search-ZOEn43f0.js                     0.18 kB │ gzip:  0.17 kB
+apps/console build: dist/assets/info-Knpit7Cx.js                       0.21 kB │ gzip:  0.18 kB
+apps/console build: dist/assets/activity-SSU6Pl1H.js                   0.24 kB │ gzip:  0.21 kB
+apps/console build: dist/assets/operation-presentation-snaKhNYZ.js     0.28 kB │ gzip:  0.27 kB
+apps/console build: dist/assets/square-BXvTMtkF.js                     0.32 kB │ gzip:  0.24 kB
+apps/console build: dist/assets/shield-check-LKn2cQga.js               0.33 kB │ gzip:  0.25 kB
+apps/console build: dist/assets/server-D-X0UaKu.js                     0.34 kB │ gzip:  0.22 kB
+apps/console build: dist/assets/trash-C6ZWuLyI.js                      0.35 kB │ gzip:  0.23 kB
+apps/console build: dist/assets/folder-kanban-BSGqOnah.js              0.35 kB │ gzip:  0.25 kB
+apps/console build: dist/assets/key-round-HjbS_Cm9.js                  0.36 kB │ gzip:  0.26 kB
+apps/console build: dist/assets/layers-D8beo74W.js                     0.45 kB │ gzip:  0.25 kB
+apps/console build: dist/assets/Input-n9q6fMpa.js                      0.49 kB │ gzip:  0.34 kB
+apps/console build: dist/assets/Textarea-V4mu_zBg.js                   0.51 kB │ gzip:  0.36 kB
+apps/console build: dist/assets/EmptyState-Dy31hTOp.js                 0.59 kB │ gzip:  0.40 kB
+apps/console build: dist/assets/eye-DeryM64O.js                        0.66 kB │ gzip:  0.35 kB
+apps/console build: dist/assets/NotFoundPage-CxwV4JeB.js               0.86 kB │ gzip:  0.63 kB
+apps/console build: dist/assets/sun-4qu6zWFB.js                        0.88 kB │ gzip:  0.44 kB
+apps/console build: dist/assets/MutationError-DoESj7u3.js              0.92 kB │ gzip:  0.60 kB
+apps/console build: dist/assets/QueryState-CAygyn9F.js                 1.64 kB │ gzip:  0.96 kB
+apps/console build: dist/assets/useViewScope-CCsBFhTl.js               2.50 kB │ gzip:  1.04 kB
+apps/console build: dist/assets/StatusBadge-DF3EXxlF.js                3.18 kB │ gzip:  1.60 kB
+apps/console build: dist/assets/LoginPage-_BxUQueA.js                  3.51 kB │ gzip:  1.93 kB
+apps/console build: dist/assets/ProjectsPage-BimAwqOw.js               4.59 kB │ gzip:  2.17 kB
+apps/console build: dist/assets/ProjectCreatePage-CvRztnGj.js          6.98 kB │ gzip:  3.20 kB
+apps/console build: dist/assets/InfrastructurePage-D5vokeK7.js         7.14 kB │ gzip:  2.57 kB
+apps/console build: dist/assets/OperationsPage-CjOWtZVx.js             7.61 kB │ gzip:  3.50 kB
+apps/console build: dist/assets/SettingsPage-Dxnq1sIG.js              10.35 kB │ gzip:  4.24 kB
+apps/console build: dist/assets/OperationPage-DtbEldjh.js             10.39 kB │ gzip:  3.99 kB
+apps/console build: dist/assets/InfrastructureTask-CfxqyV8r.js        11.07 kB │ gzip:  4.77 kB
+apps/console build: dist/assets/AppShell-CMQ3Uo4G.js                  12.62 kB │ gzip:  5.43 kB
+apps/console build: dist/assets/ProjectPage-DWA5oIFS.js               15.59 kB │ gzip:  5.54 kB
+apps/console build: dist/assets/runtime-dom.esm-bundler-CpV1hLEv.js   25.05 kB │ gzip:  9.84 kB
+apps/console build: dist/assets/Teleport-rUNicwBv.js                  27.30 kB │ gzip: 10.39 kB
+apps/console build: dist/assets/ServerPage-DtvK75FG.js                35.68 kB │ gzip: 12.15 kB
+apps/console build: dist/assets/ClusterPage-CfOH-zP7.js               41.52 kB │ gzip: 13.68 kB
+apps/console build: dist/assets/ThemeSwitcher-DwH1jkVd.js             55.13 kB │ gzip: 17.02 kB
+apps/console build: dist/assets/index-CnZsq7FZ.js                     92.80 kB │ gzip: 31.60 kB
+apps/console build: dist/assets/button-w0gTv7st.js                   120.90 kB │ gzip: 45.02 kB
+apps/console build: 
+apps/console build: ✓ built in 1.55s
+apps/console build: Done
+$ pnpm -r --sort typecheck
+packages/infrastructure typecheck$ tsc -p tsconfig.json --noEmit
+packages/api-client typecheck$ tsc -p tsconfig.json --noEmit
+packages/database typecheck$ tsc -p tsconfig.json --noEmit
+packages/config typecheck$ tsc -p tsconfig.json --noEmit
+packages/config typecheck: Done
+packages/api-client typecheck: Done
+apps/console typecheck$ vue-tsc --noEmit
+packages/database typecheck: Done
+packages/infrastructure typecheck: Done
+packages/control-plane typecheck$ tsc -p tsconfig.json --noEmit
+packages/control-plane typecheck: Done
+apps/api typecheck$ tsc -p tsconfig.json --noEmit
+apps/worker typecheck$ tsc -p tsconfig.json --noEmit
+apps/worker typecheck: Done
+apps/console typecheck: Done
+apps/api typecheck: Done
+$ eslint apps packages tests scripts infra --no-warn-ignored
+$ prettier --check apps packages tests scripts infra *.json *.yaml .github
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run && pnpm --filter @ozz/console test:unit
+
+ RUN  v3.2.7 /Users/monkeyozz/Desktop/code/ozz
+
+ ✓ tests/unit/security.test.ts (4 tests) 15ms
+ ✓ tests/infrastructure/ssh-scripts.test.ts (2 tests) 133ms
+ ✓ tests/unit/task-logs.test.ts (2 tests) 8ms
+ ✓ tests/infrastructure/kubernetes.test.ts (17 tests) 1783ms
+   ✓ Kubernetes credential and real HTTPS protocol boundaries > accepts embedded certificates or tokens and keeps secrets out of serializable connections  395ms
+ ✓ tests/infrastructure/ssh.test.ts (25 tests) 2091ms
+   ✓ SSH adapter across a real SSH transport > supports a passphrase protected private key without an agent or keyboard interactive fallback  949ms
+
+ Test Files  5 passed (5)
+      Tests  50 passed (50)
+   Start at  22:22:13
+   Duration  2.49s (transform 256ms, setup 0ms, collect 851ms, tests 4.03s, environment 2ms, prepare 341ms)
+
+$ vitest run --config vitest.config.ts
+
+ RUN  v3.2.7 /Users/monkeyozz/Desktop/code/ozz/apps/console
+
+ ✓ tests/unit/infrastructure-observations.test.ts (3 tests) 7ms
+ ✓ tests/unit/request.test.ts (3 tests) 157ms
+
+ Test Files  2 passed (2)
+      Tests  6 passed (6)
+   Start at  22:22:16
+   Duration  407ms (transform 36ms, setup 0ms, collect 57ms, tests 164ms, environment 0ms, prepare 110ms)
+

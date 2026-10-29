@@ -1,0 +1,369 @@
+{
+  "version": 1,
+  "stage": "G-MVP L06 / isolated recovery point and timing increment",
+  "recordedAt": "2026-10-28T14:39:34.717974+00:00",
+  "status": "passed",
+  "scope": "Isolated local metadata recovery using production API/Worker, public backup/restore CLI and one HTTPS origin. No existing Builder or Kubernetes connection is registered in this sample.",
+  "sourceReportVersion": 1,
+  "sourceReportOwner": "ozz-g-mvp-recovery-timing-v1",
+  "originalReport": {
+    "path": ".local/local-lab/g-mvp-recovery-timing/20261028T111142483Z-8fea39b3/report.json",
+    "sha256": "345291a71bbbc7e3b06aa12a28c11d2fd5eccc12c789144299dc67ca4f226238",
+    "bytes": 14813
+  },
+  "runId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+  "startedAt": "2026-10-28T11:11:42.485Z",
+  "completedAt": "2026-10-28T11:12:10.556Z",
+  "runtime": {
+    "nodeMajorRequiredByProbe": 24,
+    "nodeArtifactsPreparedBeforeIncident": true,
+    "clock": "one process.hrtime.bigint timebase"
+  },
+  "sourceFiles": [
+    {
+      "path": "tests/probes/g-mvp-recovery-timing-local-lab.mjs",
+      "sha256": "c9438e27fdee7f4d3d667b5f0ffa08e05bf5f4805e115a0500d46e0e6a3f5f3b"
+    },
+    {
+      "path": "tests/probes/support/g-mvp-recovery-timing.mjs",
+      "sha256": "3e4f358b83debd1ccd20f3138fd4e923d44fa7ce0cd613d136ed0ffafdc9843d"
+    },
+    {
+      "path": "scripts/backup-control-plane.mjs",
+      "sha256": "8bd6bb72d4b3741176f7c065019d36d7f2df93ae23b8b4bc5f0a832a8da8f2b4"
+    },
+    {
+      "path": "scripts/restore-control-plane.mjs",
+      "sha256": "407f5ea00538616aececcb9e1088c08bfadb68d5f71e284220841d90246a569b"
+    },
+    {
+      "path": "scripts/backup-helpers.mjs",
+      "sha256": "4b40ffd0d7a4d69e4eec90dbc9d4207cbaad9a82d88626b93cb8c8a89ae4b1c4"
+    },
+    {
+      "path": "apps/api/dist/main.js",
+      "sha256": "e503d64dd60c6eba71e67239859a20a710140e0edf93f9d2e95611ba12b5b38e"
+    },
+    {
+      "path": "apps/api/dist/cli.js",
+      "sha256": "25b4f5a0ae7483326ec82e2ea0befa75836745e74d7c24ae074ca0bca90a084e"
+    },
+    {
+      "path": "apps/worker/dist/main.js",
+      "sha256": "ce440947eac2b1e457c73bfe17b6cea6192d9620b72117b387295f087bc33503"
+    }
+  ],
+  "sourceVerification": {
+    "recordedDuringRun": true,
+    "verifiedAt": "2026-10-28T14:39:34.717974+00:00",
+    "files": 8,
+    "allCurrentBytesMatch": true,
+    "fullTransitiveBuildIdentityRecorded": false
+  },
+  "origin": "https://127.0.0.1:54382",
+  "tls": {
+    "caSha256": "fb7903c58e8d6291a00342f4ab59539f040e61cae15a9d7488d02d59f3abb97e",
+    "certificateFingerprint256": "28:08:0E:E2:61:18:CF:BA:32:56:39:6D:5A:83:3C:82:B9:9C:1B:77:31:FC:87:6B:91:AA:67:B6:8C:A8:4F:0F",
+    "hostnameVerified": "127.0.0.1",
+    "trustedPublicly": false
+  },
+  "checks": [
+    {
+      "name": "fresh-production-control-plane-with-no-remote-targets",
+      "database": "ozz_timing_8fea39b3cfa3_source",
+      "projectId": "b510dee7-0e00-4cdd-aeff-3cc78f9ce42d",
+      "clusterId": "dea97069-ed7a-43c9-a681-70eff308f71d",
+      "secretId": "dd602504-f5c3-4bb8-8b14-c22f820f8a72",
+      "passed": true
+    },
+    {
+      "name": "read-only-recovery-preserves-data-and-credentials-revokes-session-and-blocks-writes",
+      "sameOrigin": true,
+      "originalSessionRevoked": true,
+      "credentialDecryptionVerified": true,
+      "workerPaused": true,
+      "restoredCheckpoint": {
+        "id": "dea97069-ed7a-43c9-a681-70eff308f71d",
+        "revision": 2,
+        "contentSha256": "2debd4121f4feaea0a89fedff92d0217679dbb29fbb8107135c80aeb7cdd4983"
+      },
+      "passed": true
+    },
+    {
+      "name": "formal-unlock-and-new-generation-task-complete-through-the-same-https-origin",
+      "generation": 2,
+      "auditId": "37196cdf-3206-4ad8-87a2-1028e01a4ba5",
+      "diagnosticId": "98cc904f-90c8-4fa2-b558-ad26c1bc315f",
+      "passed": true
+    },
+    {
+      "name": "later-acknowledged-write-remains-only-in-retained-source",
+      "sourceRevision": 3,
+      "restoredRevision": 2,
+      "passed": true
+    }
+  ],
+  "counts": {
+    "passed": 4,
+    "failed": 0
+  },
+  "checkpoint": {
+    "id": "dea97069-ed7a-43c9-a681-70eff308f71d",
+    "revision": 2,
+    "contentSha256": "2debd4121f4feaea0a89fedff92d0217679dbb29fbb8107135c80aeb7cdd4983"
+  },
+  "restoredCheckpoint": {
+    "id": "dea97069-ed7a-43c9-a681-70eff308f71d",
+    "revision": 2,
+    "contentSha256": "2debd4121f4feaea0a89fedff92d0217679dbb29fbb8107135c80aeb7cdd4983"
+  },
+  "omittedCheckpoint": {
+    "id": "dea97069-ed7a-43c9-a681-70eff308f71d",
+    "revision": 3,
+    "contentSha256": "e9063ce6277528e04d2f6da06a5ca4196c8a18d6f039651aa4b56d3c625ac515"
+  },
+  "backup": {
+    "backupId": "timing-8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+    "archiveCreatedAt": "2026-10-28T11:11:55.462Z",
+    "databaseSha256": "4d6f4d0700a814c6e4d27ad4069a62314192b4ed2faa4ffa470b42d2f7fd882d",
+    "masterKeySha256": "dd5a270ec9d4a77f59ac9ff9622144569eb1318aa1f27a188b963826571d0fdd"
+  },
+  "marks": {
+    "checkpointRequested": {
+      "at": "2026-10-28T11:11:53.205Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 10719.299042,
+      "kind": "checkpointRequested"
+    },
+    "checkpointAcknowledged": {
+      "at": "2026-10-28T11:11:53.282Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 10796.711292,
+      "kind": "checkpointAcknowledged"
+    },
+    "backupStarted": {
+      "at": "2026-10-28T11:11:53.291Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 10805.982625,
+      "kind": "backupStarted"
+    },
+    "backupCompleted": {
+      "at": "2026-10-28T11:11:55.489Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 13004.165042,
+      "kind": "backupCompleted"
+    },
+    "omittedRequested": {
+      "at": "2026-10-28T11:11:55.494Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 13008.72675,
+      "kind": "omittedRequested"
+    },
+    "omittedAcknowledged": {
+      "at": "2026-10-28T11:11:55.528Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 13042.485375,
+      "kind": "omittedAcknowledged"
+    },
+    "incident": {
+      "at": "2026-10-28T11:11:55.536Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 13051.008084,
+      "kind": "incident"
+    },
+    "failureDetected": {
+      "at": "2026-10-28T11:11:55.786Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 13300.266875,
+      "kind": "failureDetected"
+    },
+    "targetCreated": {
+      "at": "2026-10-28T11:11:55.912Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 13426.394834,
+      "kind": "targetCreated"
+    },
+    "backupRetrieved": {
+      "at": "2026-10-28T11:11:55.931Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 13446.071459,
+      "kind": "backupRetrieved"
+    },
+    "importStarted": {
+      "at": "2026-10-28T11:11:55.937Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 13451.434334,
+      "kind": "importStarted"
+    },
+    "importCompleted": {
+      "at": "2026-10-28T11:12:03.457Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 20971.226459,
+      "kind": "importCompleted"
+    },
+    "readOnlyAvailable": {
+      "at": "2026-10-28T11:12:07.095Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 24609.912417,
+      "kind": "readOnlyAvailable"
+    },
+    "unlockCompleted": {
+      "at": "2026-10-28T11:12:09.182Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 26696.187209,
+      "kind": "unlockCompleted"
+    },
+    "writeReady": {
+      "at": "2026-10-28T11:12:09.465Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 26979.687,
+      "kind": "writeReady"
+    },
+    "recovered": {
+      "at": "2026-10-28T11:12:10.074Z",
+      "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+      "elapsedMs": 27588.221,
+      "kind": "recovered"
+    }
+  },
+  "timing": {
+    "clock": "one process.hrtime.bigint timebase; wall-clock timestamps are labels only",
+    "clockId": "8fea39b3-cfa3-4c5a-9a23-e9d35d7fed28",
+    "recoveryPoint": {
+      "kind": "verified-application-metadata-checkpoint",
+      "id": "dea97069-ed7a-43c9-a681-70eff308f71d",
+      "revision": 2,
+      "contentSha256": "2debd4121f4feaea0a89fedff92d0217679dbb29fbb8107135c80aeb7cdd4983",
+      "requestStartedAt": "2026-10-28T11:11:53.205Z",
+      "acknowledgedAt": "2026-10-28T11:11:53.282Z",
+      "acknowledgedCheckpointRpoMs": 2254.297,
+      "checkpointCommitRpoBoundsMs": {
+        "minimum": 2254.297,
+        "maximum": 2331.709
+      },
+      "backupSnapshotRpoBoundsMs": {
+        "minimum": 46.843,
+        "maximum": 2245.025
+      },
+      "exactPostgresSnapshotRpoMs": null,
+      "omittedAcknowledgedCheckpoint": {
+        "id": "dea97069-ed7a-43c9-a681-70eff308f71d",
+        "revision": 3,
+        "contentSha256": "e9063ce6277528e04d2f6da06a5ca4196c8a18d6f039651aa4b56d3c625ac515"
+      },
+      "explanation": "The restored revision and content were checked through the real HTTPS API. The later acknowledged revision is absent. The commit lies between request and acknowledgement; the consistent snapshot lies inside the backup command. No observation is presented as PostgreSQL exact commit or snapshot time."
+    },
+    "recoveryTime": {
+      "start": "immediately before stopping the owned source API and Worker",
+      "end": "new-generation diagnostic succeeded and restored metadata re-read over the same HTTPS origin",
+      "endToEndRtoMs": 14537.213,
+      "failureDetectionMs": 249.259,
+      "targetDatabaseCreationMs": 126.128,
+      "localBackupRetrievalMs": 19.677,
+      "databaseImportMs": 7519.792,
+      "incidentToReadOnlyMs": 11558.904,
+      "incidentToUnlockMs": 13645.179,
+      "incidentToWriteReadyMs": 13928.679,
+      "finalDiagnosticAndVerificationMs": 608.534
+    }
+  },
+  "cleanup": {
+    "processesAndContainers": [
+      {
+        "sample": "source",
+        "stopped": true
+      },
+      {
+        "sample": "target",
+        "stopped": true
+      }
+    ],
+    "databasesBackupsKeysAndVolumesRetained": true
+  },
+  "limits": [
+    "The source and target databases share the existing local PostgreSQL server; this is not loss of the physical database host.",
+    "Node artifacts, cached Docker images, the TLS entry and database administrator credentials are prepared before the incident. Target database creation, local backup copy, restore, Redis creation, application startup, reconciliation and HTTPS verification are timed.",
+    "Recovery is automated against a fixed procedure. Human detection, public DNS changes, remote backup download, physical host provisioning and a target VPS are not measured.",
+    "This fresh metadata sample has no Builder or connected Kubernetes cluster. Existing L06 evidence covers their real reconciliation separately; its timings cannot be combined with this run.",
+    "An acknowledgement is an observable data checkpoint, not the exact SQL commit or exported snapshot instant. RPO bounds and the observed checkpoint interval are reported explicitly."
+  ],
+  "remaining": [
+    "The exact PostgreSQL snapshot instant is not recorded; the report retains checkpoint and snapshot RPO bounds, with exactPostgresSnapshotRpoMs null.",
+    "This independent metadata RTO does not include real Builder or Kubernetes reconciliation and must not be added to timings from the earlier L06 run.",
+    "Physical host loss, independent remote backup retrieval, public entry changes and the target VPS remain untested here."
+  ],
+  "previousFailedAttempts": [
+    {
+      "originalReport": {
+        "path": ".local/local-lab/g-mvp-recovery-timing/20261028T110346179Z-1475197b/report.json",
+        "sha256": "c195d567e9d5c699b4ec0aa0285e86f6a9beb2845b12992a2fd0c382184f7d7e",
+        "bytes": 5794
+      },
+      "status": "failed",
+      "startedAt": "2026-10-28T11:03:46.184Z",
+      "completedAt": "2026-10-28T11:03:52.483Z",
+      "failure": {
+        "stage": "preflight",
+        "code": "GMVP_TIMING_UNEXPECTED_FAILURE"
+      },
+      "completedChecks": 0,
+      "timingWindowStarted": false,
+      "sourceFiles": [
+        {
+          "path": "tests/probes/g-mvp-recovery-timing-local-lab.mjs",
+          "sha256": "8cf29b02fa8ee1af52395c76a56eb0b89d7800ad53026206d0a5a7e417af7fce"
+        },
+        {
+          "path": "tests/probes/support/g-mvp-recovery-timing.mjs",
+          "sha256": "3e4f358b83debd1ccd20f3138fd4e923d44fa7ce0cd613d136ed0ffafdc9843d"
+        },
+        {
+          "path": "scripts/backup-control-plane.mjs",
+          "sha256": "8bd6bb72d4b3741176f7c065019d36d7f2df93ae23b8b4bc5f0a832a8da8f2b4"
+        },
+        {
+          "path": "scripts/restore-control-plane.mjs",
+          "sha256": "407f5ea00538616aececcb9e1088c08bfadb68d5f71e284220841d90246a569b"
+        },
+        {
+          "path": "scripts/backup-helpers.mjs",
+          "sha256": "4b40ffd0d7a4d69e4eec90dbc9d4207cbaad9a82d88626b93cb8c8a89ae4b1c4"
+        },
+        {
+          "path": "apps/api/dist/main.js",
+          "sha256": "e503d64dd60c6eba71e67239859a20a710140e0edf93f9d2e95611ba12b5b38e"
+        },
+        {
+          "path": "apps/api/dist/cli.js",
+          "sha256": "25b4f5a0ae7483326ec82e2ea0befa75836745e74d7c24ae074ca0bca90a084e"
+        },
+        {
+          "path": "apps/worker/dist/main.js",
+          "sha256": "ce440947eac2b1e457c73bfe17b6cea6192d9620b72117b387295f087bc33503"
+        }
+      ],
+      "cleanup": {
+        "processesAndContainers": [
+          {
+            "sample": "source",
+            "stopped": true
+          },
+          {
+            "sample": "target",
+            "stopped": true
+          }
+        ],
+        "databasesBackupsKeysAndVolumesRetained": true
+      },
+      "retained": true,
+      "scope": "The first attempt failed before the incident/checkpoint window. Its probe hash differs from the successful attempt; the failed report is retained and not rewritten."
+    }
+  ],
+  "evidenceHandling": {
+    "originalReportsUnchanged": true,
+    "environmentContentsIncluded": false,
+    "passwordsOrSessionValuesIncluded": false,
+    "commandOutputIncluded": false,
+    "sourceReportSelection": "Explicit non-sensitive fields; no raw environment, database rows, credentials, command output or backup bytes are published."
+  }
+}

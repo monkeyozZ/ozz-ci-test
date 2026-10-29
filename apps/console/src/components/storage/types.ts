@@ -1,0 +1,33 @@
+import type { components } from '@ozz/api-client';
+
+// Public DTOs are generated from the API. No runtime backend modules enter the Console.
+type Schema = components['schemas'];
+export type Database = Schema['DatabaseDto'];
+export type DatabaseBinding = Schema['DatabaseBindingDto'];
+export type DatabaseBindingCollection = Schema['DatabaseBindingCollectionDto'];
+export type DatabaseBindingPreview = Schema['DatabaseBindingPreviewDto'];
+export type DatabaseBindingInput = Schema['DatabaseBindingInputDto'];
+export type DatabaseOutputMapping = Schema['DatabaseOutputMappingDto'];
+export type DatabaseOutputKey = Schema['DatabaseBindingVariableDto']['output'];
+export type Template = Schema['TemplateDto'];
+export type TemplatePreview = Schema['TemplatePreviewDto'];
+export type TemplatePreviewInput = Schema['TemplatePreviewInputDto'];
+export type TemplateParameters = Schema['TemplateParametersDto'];
+export type TemplateSelection = Schema['TemplateSelectionDto'];
+export type TemplateId = Template['id'];
+export type ServiceDeletionPreview = Schema['ServiceDeletionPreviewDto'];
+export type DataIssue = Schema['DataIssueDto'];
+export type Volume = Schema['VolumeDto'];
+export type VolumeMount = Schema['VolumeMountDto'];
+export type VolumeMountCollection = Schema['VolumeMountCollectionDto'];
+export type VolumeMaintenance = Schema['VolumeMaintenanceDto'];
+export type ClusterStorage = Schema['ClusterStorageDto'];
+export type CreateVolumeInput = Schema['CreateVolumeDto'];
+export type SaveVolumeMountInput = Schema['SaveVolumeMountDto'];
+export type VolumeDeletionPreview = Schema['VolumeDeletionPreviewDto'];
+export type VolumeDeletionConfirmation = Schema['VolumeDeletionConfirmationDto'];
+export type VolumeCreateResult = Schema['VolumeCreationDto'];
+export type ManualDataRecord = Schema['ManualDataRecordDto'];
+export type CreateManualDataRecordInput = Schema['CreateManualDataRecordDto'];
+export type ManualDataIdentity = Schema['ManualDataIdentityDto'];
+export type VolumeOperationInput = Schema['VolumeOperationInputDto'];

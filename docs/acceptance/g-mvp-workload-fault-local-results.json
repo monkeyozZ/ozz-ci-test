@@ -1,0 +1,559 @@
+{
+  "version": 1,
+  "owner": "ozz-gmvp-workload-faults-v1",
+  "recordedAt": "2026-10-26T07:29:41.251Z",
+  "status": "passed-across-independent-samples-after-retained-failures",
+  "acceptanceId": "L05",
+  "matrixAccepted": true,
+  "scope": "B-cluster dedicated Pod OOM and partial workload application acceptance. C whole-node/PVC recovery is separate.",
+  "aggregation": {
+    "caseCount": 2,
+    "acceptedCaseCount": 2,
+    "attemptCount": 5,
+    "failedRunCount": 4,
+    "passedRunCount": 1,
+    "singleRunPassedBothCases": false,
+    "oomAcceptedAttemptId": "a988bc74-9664-49b4-b010-473505925925",
+    "partialAcceptedAttemptId": "1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210",
+    "firstObservationPassed": false,
+    "originalReportsRewritten": false
+  },
+  "cases": [
+    {
+      "case": "oom",
+      "accepted": true,
+      "attemptId": "a988bc74-9664-49b4-b010-473505925925",
+      "serviceId": "820aacc9-7fde-48c8-a4f1-f2b616c700c4",
+      "containingRunStatus": "failed",
+      "deploymentId": "81c34c92-48dd-4053-9716-0bcf9dc75a21",
+      "deploymentStatus": "failed",
+      "expectedErrorCode": "WORKLOAD_ROLLOUT_TIMEOUT",
+      "memoryLimitMiB": 128,
+      "checks": {
+        "realPodOomKilled": true,
+        "historyOomKilled": true,
+        "samePodUidInLiveAndHistory": true,
+        "evidenceBelongsToFailedRollout": true,
+        "oldHealthyPodNotCountedAsRecovery": true
+      },
+      "pods": [
+        {
+          "uid": "36c431ab-0254-47fa-a4cd-d7d9e88479bd",
+          "name": "ozz-s-820aacc97fde48c8a4f1f2b616c700c4-7d95d55b86-v77l2",
+          "containers": [
+            {
+              "name": "app",
+              "restartCount": 1,
+              "reason": "OOMKilled",
+              "exitCode": 137
+            }
+          ]
+        }
+      ],
+      "historyCapturedAt": "2026-10-26T06:15:51.945Z",
+      "evidence": {
+        "deployment": {
+          "path": ".local/local-lab/g-mvp-workload-faults/attempts/a988bc74-9664-49b4-b010-473505925925/memory-publication-1792995352790-4ec187c6.json",
+          "sha256": "029d3217e218e7f4a00ff9bfedbc187369eaaf933ebf900c1a0bca4747e42817"
+        },
+        "liveKubernetes": {
+          "path": ".local/local-lab/g-mvp-workload-faults/attempts/a988bc74-9664-49b4-b010-473505925925/memory-kubernetes-1792995352850-a11d6932.json",
+          "sha256": "f4595bfe313aac0185bd06258987ecb5e18bfcd2ac4b4fd3cdc16f6f26a7fbaa"
+        },
+        "containingFailedRun": {
+          "path": ".local/local-lab/g-mvp-workload-faults/attempts/a988bc74-9664-49b4-b010-473505925925/report-1792995390024-a9473bb6.json",
+          "sha256": "4cb2e41d88fbd965c04ab16c43b30eace15528496a9aa9c79a3456d28b87223c"
+        }
+      }
+    },
+    {
+      "case": "partial",
+      "accepted": true,
+      "attemptId": "1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210",
+      "serviceId": "0404f823-e6c8-45dc-be7a-624a9447f547",
+      "containingRunStatus": "passed",
+      "baselineDeploymentId": "53716d54-744a-44b8-97cf-e29cbcadc6b4",
+      "deniedDeploymentId": "d87c5632-6e03-4ca1-97c2-0d6562051bc7",
+      "expectedErrorCode": "KUBERNETES_FORBIDDEN",
+      "configurationState": "partial",
+      "resourceVersions": {
+        "controller": {
+          "kind": "Deployment",
+          "name": "ozz-s-0404f823e6c845dcbe7a624a9447f547",
+          "namespace": "ozz-e-7ab3d3ab965c4d19a5c3cba3bb9f2da1",
+          "uid": "a88b9c99-c691-45bc-a310-20cab1b2d05f",
+          "resourceVersion": "56599",
+          "snapshotId": "53716d54-744a-44b8-97cf-e29cbcadc6b4",
+          "configRevision": "1",
+          "taskId": "53716d54-744a-44b8-97cf-e29cbcadc6b4",
+          "mutationRevision": "1"
+        },
+        "service": {
+          "kind": "Service",
+          "name": "ozz-s-0404f823e6c845dcbe7a624a9447f547",
+          "namespace": "ozz-e-7ab3d3ab965c4d19a5c3cba3bb9f2da1",
+          "uid": "7a985b3d-6fe4-41a5-88cb-da3090dd2513",
+          "resourceVersion": "56606",
+          "snapshotId": null,
+          "configRevision": null,
+          "taskId": "d87c5632-6e03-4ca1-97c2-0d6562051bc7",
+          "mutationRevision": "2"
+        },
+        "runtimeSecret": {
+          "kind": "Secret",
+          "name": "ozz-r-d87c56326e034ca197c20d6562051bc7",
+          "namespace": "ozz-e-7ab3d3ab965c4d19a5c3cba3bb9f2da1",
+          "uid": "515676d2-9f5f-40b6-9249-e5a8dc00a554",
+          "resourceVersion": "56604",
+          "snapshotId": "d87c5632-6e03-4ca1-97c2-0d6562051bc7",
+          "configRevision": null,
+          "taskId": "d87c5632-6e03-4ca1-97c2-0d6562051bc7",
+          "mutationRevision": "2"
+        }
+      },
+      "stopOperationId": "8886e88a-7080-48df-8c9e-3ab4c8012f59",
+      "repairDeploymentId": "49f1dc4e-1552-4e66-ad09-c6c82d5d84e6",
+      "finalStopOperationId": "7c1bdce9-3e08-48a7-b0a0-9a0014968fbf",
+      "checks": {
+        "controllerRetainedBaseline": true,
+        "serviceAppliedNewMutation": true,
+        "runtimeSecretAppliedNewSnapshot": true,
+        "partialPreserved": true,
+        "restartRejected": true,
+        "admissionRemovalObservedBeforeStop": true,
+        "partialStopSucceeded": true,
+        "partialStopReplicasAndPodsZero": true,
+        "resumeRejected": true,
+        "explicitRepairSucceeded": true,
+        "finalStopSucceeded": true,
+        "originalGitServiceUnchanged": true
+      },
+      "stopObserved": {
+        "observedAt": "2026-10-26T07:22:02.441Z",
+        "controllerUid": "a88b9c99-c691-45bc-a310-20cab1b2d05f",
+        "replicas": 0,
+        "pods": 0
+      },
+      "finalStopObserved": {
+        "observedAt": "2026-10-26T07:22:11.159Z",
+        "controllerUid": "a88b9c99-c691-45bc-a310-20cab1b2d05f",
+        "replicas": 0,
+        "pods": 0
+      },
+      "parentServiceComparison": {
+        "id": "e5968684-0d49-49fa-8dfd-ce0b035d73ad",
+        "revision": 14,
+        "desiredState": "running",
+        "publishedDeploymentId": "19cf6191-2ac5-44ce-a69f-8f6182d25c6b"
+      },
+      "evidence": {
+        "run": {
+          "path": ".local/local-lab/g-mvp-workload-faults/attempts/1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210/report-1792999331422-6b7adc82.json",
+          "sha256": "f4cd960a2277e0a9d50b85196e4dea374fbb57f5e6f2dfe3848909059509b0c0"
+        },
+        "deniedDeployment": {
+          "path": ".local/local-lab/g-mvp-workload-faults/attempts/1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210/partial-publication-1792999317911-575116ac.json",
+          "sha256": "97d3b60f58a6a03139f9fb997e8245e7f715f840ab7781331ee8e4e43b8de2d1"
+        },
+        "partialStop": {
+          "path": ".local/local-lab/g-mvp-workload-faults/attempts/1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210/stop-partial-command-1792999322406-7cb16d93.json",
+          "sha256": "2f925ad01557b2c1ba0298f9d83aa49724f76c2fbe7eb69dbeaa034ae9b48ac0"
+        },
+        "repair": {
+          "path": ".local/local-lab/g-mvp-workload-faults/attempts/1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210/explicit-repair-1792999327857-2b61d399.json",
+          "sha256": "9d29ce53d7dc7a3467b66565a62b8d717c1dc57d5bab46e2d5a2bdfc938acb8c"
+        },
+        "finalStop": {
+          "path": ".local/local-lab/g-mvp-workload-faults/attempts/1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210/final-stop-command-1792999331117-f9773bdb.json",
+          "sha256": "5efcc96a068f8b39611e1fbdf1fcabf9e2679409f68a11c869140a344bdaaa3b"
+        }
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "attemptId": "f0cd0dfb-6963-4e5c-be62-40d88de70a3b",
+      "label": "default",
+      "scenario": "full",
+      "serviceId": "76c45b45-a37d-45d0-8391-d1c002f683ee",
+      "environmentId": "6ee07e1b-36b0-433b-a4cc-b2263b683c4a",
+      "runStatus": "failed",
+      "acceptedCases": [],
+      "note": "Original full attempt failed while checking OOM history: retained deployment failureObservation lacked container diagnostics. This attempt remains failed.",
+      "reports": [
+        {
+          "mode": "prepare",
+          "status": "passed",
+          "startedAt": "2026-10-26T06:01:22.353Z",
+          "completedAt": "2026-10-26T06:01:25.339Z",
+          "code": null,
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/report-1792994485339-543b8e98.json",
+            "sha256": "021a26036e38bc8fbe86102c1bb4eef3b59041dceceb01627bbe4e5d2b36f608"
+          }
+        },
+        {
+          "mode": "run",
+          "status": "failed",
+          "startedAt": "2026-10-26T06:02:02.727Z",
+          "completedAt": "2026-10-26T06:04:11.419Z",
+          "code": "GMVP_WORKLOAD_PROBE_FAILED",
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/report-1792994651420-301c785f.json",
+            "sha256": "5d32ab98a05356ecf21001908b68f043e6c4752807269fea275aa25d637ee6bd"
+          }
+        }
+      ],
+      "finalStopReadback": {
+        "sample": "default",
+        "attemptId": "f0cd0dfb-6963-4e5c-be62-40d88de70a3b",
+        "scenario": "full",
+        "serviceId": "76c45b45-a37d-45d0-8391-d1c002f683ee",
+        "namespace": "ozz-e-6ee07e1b36b0433ba4ccb2263b683c4a",
+        "observedAt": "2026-10-26T07:27:39.556Z",
+        "controller": {
+          "name": "ozz-s-76c45b45a37d45d08391d1c002f683ee",
+          "uid": "a4e2b6da-675c-43ef-90ee-39d73053bba0",
+          "resourceVersion": "49128",
+          "generation": 3,
+          "observedGeneration": 3,
+          "replicas": 0,
+          "currentReplicas": 0,
+          "readyReplicas": 0
+        },
+        "pods": {
+          "count": 0,
+          "resourceVersion": "57159",
+          "items": []
+        },
+        "admission": {
+          "notInstalled": true,
+          "removed": true
+        },
+        "registryAcl": {
+          "restoredInState": true,
+          "originalBytesMatch": true
+        },
+        "priorCleanupIssues": [],
+        "stopped": true,
+        "passed": true
+      }
+    },
+    {
+      "attemptId": "a988bc74-9664-49b4-b010-473505925925",
+      "label": "a988",
+      "scenario": "full",
+      "serviceId": "820aacc9-7fde-48c8-a4f1-f2b616c700c4",
+      "environmentId": "520cc88f-fc0c-4662-9be2-3c68dc638127",
+      "runStatus": "failed",
+      "acceptedCases": ["oom"],
+      "note": "The OOM case passed with matching live and historical OOMKilled evidence. The same full run subsequently failed partial-state acceptance because confirmed partial was overwritten as unknown. The full run remains failed.",
+      "reports": [
+        {
+          "mode": "prepare",
+          "status": "passed",
+          "startedAt": "2026-10-26T06:13:58.994Z",
+          "completedAt": "2026-10-26T06:14:00.185Z",
+          "code": null,
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/a988bc74-9664-49b4-b010-473505925925/report-1792995240185-608bd785.json",
+            "sha256": "5b1252a6a96b6a9824777605e2b35b28913fa34e5e4b9d40964a8d312bcda54a"
+          }
+        },
+        {
+          "mode": "run",
+          "status": "failed",
+          "startedAt": "2026-10-26T06:14:57.073Z",
+          "completedAt": "2026-10-26T06:16:30.024Z",
+          "code": "GMVP_WORKLOAD_PARTIAL_NOT_RECORDED",
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/a988bc74-9664-49b4-b010-473505925925/report-1792995390024-a9473bb6.json",
+            "sha256": "4cb2e41d88fbd965c04ab16c43b30eace15528496a9aa9c79a3456d28b87223c"
+          }
+        }
+      ],
+      "finalStopReadback": {
+        "sample": "a988",
+        "attemptId": "a988bc74-9664-49b4-b010-473505925925",
+        "scenario": "full",
+        "serviceId": "820aacc9-7fde-48c8-a4f1-f2b616c700c4",
+        "namespace": "ozz-e-520cc88ffc0c46629be23c68dc638127",
+        "observedAt": "2026-10-26T07:27:39.556Z",
+        "controller": {
+          "name": "ozz-s-820aacc97fde48c8a4f1f2b616c700c4",
+          "uid": "125ed3e3-481d-480b-8813-6ebabfc0be77",
+          "resourceVersion": "50494",
+          "generation": 4,
+          "observedGeneration": 4,
+          "replicas": 0,
+          "currentReplicas": 0,
+          "readyReplicas": 0
+        },
+        "pods": {
+          "count": 0,
+          "resourceVersion": "57159",
+          "items": []
+        },
+        "admission": {
+          "policyName": "ozz-gmvp-fault-a988bc74-9664-49b4-b010-473505925925",
+          "bindingStatus": 404,
+          "policyStatus": 404,
+          "removed": true
+        },
+        "registryAcl": {
+          "restoredInState": true,
+          "originalBytesMatch": true
+        },
+        "priorCleanupIssues": [],
+        "stopped": true,
+        "passed": true
+      }
+    },
+    {
+      "attemptId": "c7c16ca6-2452-42d5-93a7-f53aa79875b5",
+      "label": "c7c1",
+      "scenario": "partial",
+      "serviceId": "b0975e0f-600e-405f-bd0f-2bbf2fdece4f",
+      "environmentId": "e8bc84de-438d-4527-af7a-b83183b773ca",
+      "runStatus": "failed",
+      "acceptedCases": [],
+      "note": "Partial-only attempt timed out during controller-fault installation before partial publication; no partial-case acceptance is claimed.",
+      "reports": [
+        {
+          "mode": "prepare",
+          "status": "passed",
+          "startedAt": "2026-10-26T06:28:13.395Z",
+          "completedAt": "2026-10-26T06:28:15.286Z",
+          "code": null,
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/c7c16ca6-2452-42d5-93a7-f53aa79875b5/report-1792996095287-98c927b0.json",
+            "sha256": "eaa3dee537ea35f3d7c9a0fe68717fa0a2a0bfd474d62e8418ce48a4e9e3ceb3"
+          }
+        },
+        {
+          "mode": "run",
+          "status": "failed",
+          "startedAt": "2026-10-26T06:28:48.520Z",
+          "completedAt": "2026-10-26T06:32:34.616Z",
+          "code": "GMVP_WORKLOAD_PROBE_FAILED",
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/c7c16ca6-2452-42d5-93a7-f53aa79875b5/report-1792996354616-07cd0f39.json",
+            "sha256": "5cb87402c0a9d5b3701ac0951975a49434db7e84a2f5800f7a3d0ffb04e15aec"
+          }
+        }
+      ],
+      "finalStopReadback": {
+        "sample": "c7c1",
+        "attemptId": "c7c16ca6-2452-42d5-93a7-f53aa79875b5",
+        "scenario": "partial",
+        "serviceId": "b0975e0f-600e-405f-bd0f-2bbf2fdece4f",
+        "namespace": "ozz-e-e8bc84de438d4527af7ab83183b773ca",
+        "observedAt": "2026-10-26T07:27:39.556Z",
+        "controller": {
+          "name": "ozz-s-b0975e0f600e405fbd0f2bbf2fdece4f",
+          "uid": "f45f5495-d13d-404d-8895-27ae1bd771ee",
+          "resourceVersion": "52115",
+          "generation": 2,
+          "observedGeneration": 2,
+          "replicas": 0,
+          "currentReplicas": 0,
+          "readyReplicas": 0
+        },
+        "pods": {
+          "count": 0,
+          "resourceVersion": "57159",
+          "items": []
+        },
+        "admission": {
+          "policyName": "ozz-gmvp-fault-c7c16ca6-2452-42d5-93a7-f53aa79875b5",
+          "bindingStatus": 404,
+          "policyStatus": 404,
+          "removed": true
+        },
+        "registryAcl": {
+          "restoredInState": true,
+          "originalBytesMatch": true
+        },
+        "priorCleanupIssues": [],
+        "stopped": true,
+        "passed": true
+      }
+    },
+    {
+      "attemptId": "ed3a4a63-a7a4-4df3-a206-6a7fc8aa8cfd",
+      "label": "ed3a",
+      "scenario": "partial",
+      "serviceId": "a260c104-92f9-4ce1-bcbe-516463d6d584",
+      "environmentId": "3db1d286-2f2e-4cb3-b905-8a6ac0d30f0a",
+      "runStatus": "failed",
+      "acceptedCases": [],
+      "note": "Partial state and restart rejection passed, then stop failed with KUBERNETES_FORBIDDEN. Immediate policy deletion without propagation observation was consistent with the failure, but the generic code does not identify the denied request. Initial cleanup checked desiredState alone and missed the running controller. Later explicit cleanup passed; the run remains failed.",
+      "reports": [
+        {
+          "mode": "prepare",
+          "status": "passed",
+          "startedAt": "2026-10-26T07:09:04.233Z",
+          "completedAt": "2026-10-26T07:09:04.875Z",
+          "code": null,
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/ed3a4a63-a7a4-4df3-a206-6a7fc8aa8cfd/report-1792998544875-cb8c2e22.json",
+            "sha256": "649cec1a5c1718bc60128a76f2c4ee25ef1a3c058252ac729922b104698b71fe"
+          }
+        },
+        {
+          "mode": "run",
+          "status": "failed",
+          "startedAt": "2026-10-26T07:09:12.496Z",
+          "completedAt": "2026-10-26T07:09:24.172Z",
+          "code": "GMVP_WORKLOAD_LIFECYCLE_FAILED",
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/ed3a4a63-a7a4-4df3-a206-6a7fc8aa8cfd/report-1792998564172-997d9de6.json",
+            "sha256": "6d402435f6b1785a522f978974a876a43d38cb6c77a9ffc5220df26f25febccf"
+          }
+        },
+        {
+          "mode": "cleanup",
+          "status": "passed",
+          "startedAt": "2026-10-26T07:20:15.190Z",
+          "completedAt": "2026-10-26T07:20:19.417Z",
+          "code": null,
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/ed3a4a63-a7a4-4df3-a206-6a7fc8aa8cfd/report-1792999219417-576b5c94.json",
+            "sha256": "2fc5945cbedc34adab2e6848f6e040e25dc774dd9cc6502d5313571bab2146a8"
+          }
+        }
+      ],
+      "finalStopReadback": {
+        "sample": "ed3a",
+        "attemptId": "ed3a4a63-a7a4-4df3-a206-6a7fc8aa8cfd",
+        "scenario": "partial",
+        "serviceId": "a260c104-92f9-4ce1-bcbe-516463d6d584",
+        "namespace": "ozz-e-3db1d2862f2e4cb3b9058a6ac0d30f0a",
+        "observedAt": "2026-10-26T07:27:39.555Z",
+        "controller": {
+          "name": "ozz-s-a260c10492f94ce1bcbe516463d6d584",
+          "uid": "365764a5-eafd-40c1-b42f-266b1305ba36",
+          "resourceVersion": "56519",
+          "generation": 2,
+          "observedGeneration": 2,
+          "replicas": 0,
+          "currentReplicas": 0,
+          "readyReplicas": 0
+        },
+        "pods": {
+          "count": 0,
+          "resourceVersion": "57159",
+          "items": []
+        },
+        "admission": {
+          "policyName": "ozz-gmvp-fault-ed3a4a63-a7a4-4df3-a206-6a7fc8aa8cfd",
+          "bindingStatus": 404,
+          "policyStatus": 404,
+          "removed": true
+        },
+        "registryAcl": {
+          "restoredInState": true,
+          "originalBytesMatch": true
+        },
+        "priorCleanupIssues": [],
+        "stopped": true,
+        "passed": true
+      }
+    },
+    {
+      "attemptId": "1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210",
+      "label": "1fe6",
+      "scenario": "partial",
+      "serviceId": "0404f823-e6c8-45dc-be7a-624a9447f547",
+      "environmentId": "7ab3d3ab-965c-4d19-a5c3-cba3bb9f2da1",
+      "runStatus": "passed",
+      "acceptedCases": ["partial"],
+      "note": "Independent partial-only rerun passed partial resource application, restart/resume rejection, actual stopping, explicit repair, and final stopping. It did not repeat OOM.",
+      "reports": [
+        {
+          "mode": "prepare",
+          "status": "passed",
+          "startedAt": "2026-10-26T07:21:16.989Z",
+          "completedAt": "2026-10-26T07:21:17.444Z",
+          "code": null,
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210/report-1792999277444-a415d617.json",
+            "sha256": "f04b44a9c60ceb50b4e43a7c4d576fbc18171fb1e7a79e4c5b45b1dba1d1c2ba"
+          }
+        },
+        {
+          "mode": "run",
+          "status": "passed",
+          "startedAt": "2026-10-26T07:21:48.375Z",
+          "completedAt": "2026-10-26T07:22:11.422Z",
+          "code": null,
+          "evidence": {
+            "path": ".local/local-lab/g-mvp-workload-faults/attempts/1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210/report-1792999331422-6b7adc82.json",
+            "sha256": "f4cd960a2277e0a9d50b85196e4dea374fbb57f5e6f2dfe3848909059509b0c0"
+          }
+        }
+      ],
+      "finalStopReadback": {
+        "sample": "1fe6",
+        "attemptId": "1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210",
+        "scenario": "partial",
+        "serviceId": "0404f823-e6c8-45dc-be7a-624a9447f547",
+        "namespace": "ozz-e-7ab3d3ab965c4d19a5c3cba3bb9f2da1",
+        "observedAt": "2026-10-26T07:27:39.555Z",
+        "controller": {
+          "name": "ozz-s-0404f823e6c845dcbe7a624a9447f547",
+          "uid": "a88b9c99-c691-45bc-a310-20cab1b2d05f",
+          "resourceVersion": "56680",
+          "generation": 4,
+          "observedGeneration": 4,
+          "replicas": 0,
+          "currentReplicas": 0,
+          "readyReplicas": 0
+        },
+        "pods": {
+          "count": 0,
+          "resourceVersion": "57159",
+          "items": []
+        },
+        "admission": {
+          "policyName": "ozz-gmvp-fault-1fe6b29d-6ee1-4b4c-9c7e-9ee83c547210",
+          "bindingStatus": 404,
+          "policyStatus": 404,
+          "removed": true
+        },
+        "registryAcl": {
+          "restoredInState": true,
+          "originalBytesMatch": true
+        },
+        "priorCleanupIssues": [],
+        "stopped": true,
+        "passed": true
+      }
+    }
+  ],
+  "finalCleanup": {
+    "status": "passed",
+    "observedAt": "2026-10-26T07:27:39.556Z",
+    "sampleCount": 5,
+    "allActualReplicasZero": true,
+    "allObservedReplicasZero": true,
+    "allPodCountsZero": true,
+    "allInstalledPoliciesAndBindingsAbsent": true,
+    "allRegistryAclOriginalBytesMatch": true,
+    "additionalCleanupNeededDuringFinalAudit": false,
+    "readOnlyAudit": true,
+    "evidence": {
+      "path": ".local/local-lab/g-mvp-workload-faults/all-fixtures-stop-readback-1792999659404-cfd1586a.json",
+      "sha256": "2e346dafd90070c87835d3826c1ef5890dabc5f4d728870048699ce6a2f822de"
+    }
+  },
+  "limitations": [
+    "OOM and complete partial recovery passed on different dedicated samples; no single full run passed both cases.",
+    "The original four failed runs and the later cleanup receipt are retained with their original statuses.",
+    "This result does not claim whole-node outage, C PVC persistence, database recovery, or resource-quota enforcement."
+  ],
+  "probeSourceAtFinalAudit": {
+    "path": "tests/probes/g-mvp-workload-fault-local-lab.mjs",
+    "sha256": "927ecbbc8c08adf3576dc17952850d344e69bb7e7c3fbbcc9c7d6a86631baa0a"
+  }
+}

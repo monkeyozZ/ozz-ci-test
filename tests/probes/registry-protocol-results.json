@@ -1,0 +1,274 @@
+{
+  "numTotalTestSuites": 2,
+  "numPassedTestSuites": 2,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 26,
+  "numPassedTests": 26,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0,
+    "didUpdate": false
+  },
+  "startTime": 1792939738319,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services allows public IPv4/IPv6 while excluding private, mapped, multicast and metadata addresses",
+          "status": "passed",
+          "title": "allows public IPv4/IPv6 while excluding private, mapped, multicast and metadata addresses",
+          "duration": 4.738582999999949,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services normalizes Docker Hub and private references while rejecting unsafe or ambiguous input",
+          "status": "passed",
+          "title": "normalizes Docker Hub and private references while rejecting unsafe or ambiguous input",
+          "duration": 1.497541999999953,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services keeps access handles secret-free and exposes pull credentials only through the explicit helper",
+          "status": "passed",
+          "title": "keeps access handles secret-free and exposes pull credentials only through the explicit helper",
+          "duration": 5.378083000000061,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services reads a real TLS manifest and config, returns immutable identity, and omits config environment",
+          "status": "passed",
+          "title": "reads a real TLS manifest and config, returns immutable identity, and omits config environment",
+          "duration": 19.10733300000004,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services pins the multi-platform index while checking both actual config architectures",
+          "status": "passed",
+          "title": "pins the multi-platform index while checking both actual config architectures",
+          "duration": 37.44433300000003,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services accepts Docker v2 manifests and manifest lists with Docker image config media types",
+          "status": "passed",
+          "title": "accepts Docker v2 manifests and manifest lists with Docker image config media types",
+          "duration": 26.757499999999936,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services rejects a forged platform descriptor whose actual image config is another architecture",
+          "status": "passed",
+          "title": "rejects a forged platform descriptor whose actual image config is another architecture",
+          "duration": 11.183333999999945,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services does not silently select a newer ISA variant for a baseline node",
+          "status": "passed",
+          "title": "does not silently select a newer ISA variant for a baseline node",
+          "duration": 19.119207999999958,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services supports nested OCI indexes and rejects ambiguous platform candidates",
+          "status": "passed",
+          "title": "supports nested OCI indexes and rejects ambiguous platform candidates",
+          "duration": 21.610291000000075,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services checks response digest headers, requested digest bytes, config bytes and descriptor size",
+          "status": "passed",
+          "title": "checks response digest headers, requested digest bytes, config bytes and descriptor size",
+          "duration": 38.40645800000004,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services rejects legacy manifests, malformed JSON and non-image configs without exposing body content",
+          "status": "passed",
+          "title": "rejects legacy manifests, malformed JSON and non-image configs without exposing body content",
+          "duration": 28.07570799999985,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services uses Basic credentials only after the registry challenge and distinguishes missing or invalid auth",
+          "status": "passed",
+          "title": "uses Basic credentials only after the registry challenge and distinguishes missing or invalid auth",
+          "duration": 56.058917000000065,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services handles Bearer challenges using only repository pull scope and never returns the token",
+          "status": "passed",
+          "title": "handles Bearer challenges using only repository pull scope and never returns the token",
+          "duration": 47.38979200000017,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services rejects untrusted token origins before contacting them and permits explicit token trust",
+          "status": "passed",
+          "title": "rejects untrusted token origins before contacting them and permits explicit token trust",
+          "duration": 34.02629100000013,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services rejects token and manifest redirects without forwarding any authentication",
+          "status": "passed",
+          "title": "rejects token and manifest redirects without forwarding any authentication",
+          "duration": 26.363458000000037,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services allows explicitly trusted config-blob redirects with no credentials and verifies the returned digest",
+          "status": "passed",
+          "title": "allows explicitly trusted config-blob redirects with no credentials and verifies the returned digest",
+          "duration": 110.37816700000008,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services validates both CA trust and SAN and refuses credentials on an invalid TLS peer",
+          "status": "passed",
+          "title": "validates both CA trust and SAN and refuses credentials on an invalid TLS peer",
+          "duration": 12.22220799999991,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services maps HTTP 403 to a bounded safe error",
+          "status": "passed",
+          "title": "maps HTTP 403 to a bounded safe error",
+          "duration": 9.016916000000037,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services maps HTTP 404 to a bounded safe error",
+          "status": "passed",
+          "title": "maps HTTP 404 to a bounded safe error",
+          "duration": 9.093041000000085,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services maps HTTP 429 to a bounded safe error",
+          "status": "passed",
+          "title": "maps HTTP 429 to a bounded safe error",
+          "duration": 9.240624999999909,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services maps HTTP 503 to a bounded safe error",
+          "status": "passed",
+          "title": "maps HTTP 503 to a bounded safe error",
+          "duration": 11.592083000000002,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services owns and closes timed-out or cancelled sockets",
+          "status": "passed",
+          "title": "owns and closes timed-out or cancelled sockets",
+          "duration": 152.138958,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services applies a total resolution deadline across individually timely requests",
+          "status": "passed",
+          "title": "applies a total resolution deadline across individually timely requests",
+          "duration": 121.51199999999994,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services bounds content length, streamed bodies, aggregate bytes and request counts",
+          "status": "passed",
+          "title": "bounds content length, streamed bodies, aggregate bytes and request counts",
+          "duration": 36.08208300000001,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services re-verifies the stored digest after tag movement and fails if that artifact was deleted",
+          "status": "passed",
+          "title": "re-verifies the stored digest after tag movement and fails if that artifact was deleted",
+          "duration": 30.277832999999873,
+          "failureMessages": [],
+          "meta": {}
+        },
+        {
+          "ancestorTitles": ["OCI Registry Adapter with real HTTPS protocol services"],
+          "fullName": "OCI Registry Adapter with real HTTPS protocol services rejects corrupted stored image metadata before making any request",
+          "status": "passed",
+          "title": "rejects corrupted stored image metadata before making any request",
+          "duration": 11.259375000000091,
+          "failureMessages": [],
+          "meta": {}
+        }
+      ],
+      "startTime": 1792939739188,
+      "endTime": 1792939740078.2593,
+      "status": "passed",
+      "message": "",
+      "name": "/Users/monkeyozz/Desktop/code/ozz/tests/infrastructure/registry.test.ts"
+    }
+  ]
+}

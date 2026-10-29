@@ -1,0 +1,77 @@
+{
+  "scope": "真实本地 K3s A 的 Registry/Workload Adapter 发布与操作；文件 ledger，不代表产品 API/Worker、私有镜像或公网入口验收。 同一镜像采用完整 SHA256 校验的本地缓存辅助，原 K3s 公网拉取未通过。",
+  "startedAt": "2026-10-25T16:25:48.337Z",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "local A retains its trusted cluster UID and ARM64 node",
+      "passed": true
+    },
+    {
+      "name": "fixed OCI image includes verified ARM64 manifest",
+      "passed": true,
+      "reference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da"
+    },
+    {
+      "name": "real Kubernetes resources completely applied with UID receipts",
+      "passed": true
+    },
+    {
+      "name": "actual Pod is ready for the requested digest and HTTP probe",
+      "passed": true,
+      "nodeName": "ozz-node",
+      "imageId": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da"
+    },
+    {
+      "name": "Metrics API supplies current Pod CPU and memory",
+      "passed": true,
+      "state": "available",
+      "cpuCores": 0.000518426,
+      "memoryBytes": 14716928,
+      "observedAt": "2026-10-25T16:22:19.000Z",
+      "windowSeconds": 30.174
+    },
+    {
+      "name": "stop waits for zero active Pods and keeps the published template",
+      "passed": true
+    },
+    {
+      "name": "resume restores the original published snapshot and replicas",
+      "passed": true
+    },
+    {
+      "name": "restart replaces the Pod while preserving immutable published configuration",
+      "passed": true,
+      "previousActivePodUids": [
+        "9b75153a-3603-4bb0-8453-a897d01525a3"
+      ],
+      "currentActivePodUids": [
+        "e8e704bb-4a3e-4f60-9dee-f00a892a4780"
+      ],
+      "retainedTerminalPods": 1
+    },
+    {
+      "name": "product adapter deletes only its workload resources and retains the Namespace",
+      "passed": true
+    },
+    {
+      "name": "probe cleanup verifies the exclusively owned empty Namespace UID and final 404",
+      "passed": true
+    }
+  ],
+  "resourcesRetained": false,
+  "runId": "a82be384-4191-4bd3-9d7d-f52afd9591f7",
+  "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+  "imageCacheAssistance": {
+    "mode": "verified-local-cache",
+    "originalPublicPullSucceeded": false,
+    "sourceReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "rootDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "platformDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+    "archiveSha256": "sha256:e073ff03ff78d9930c0f06634bed33e640af7c6c09a2d4f02ed42666c206c9d0",
+    "importedAt": "2026-10-25T16:19:26Z",
+    "evidenceFile": "/Users/monkeyozz/Desktop/code/ozz/docs/acceptance/s3-workload-image-cache-assist.json"
+  },
+  "finishedAt": "2026-10-25T16:26:00.994Z",
+  "stateFile": "/Users/monkeyozz/Desktop/code/ozz/.local/local-lab/workload-adapter-a.state.json"
+}

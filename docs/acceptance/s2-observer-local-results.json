@@ -1,0 +1,55 @@
+{
+  "scope": "真实三 VM / 三 K3s 的产品后台观察失联与恢复；不包含云网络或应用入口验收。",
+  "startedAt": "2026-10-25T14:21:43.294Z",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "three retained VMs exist and are running",
+      "passed": true
+    },
+    {
+      "name": "product has fresh observations and distinct cluster identities",
+      "passed": true
+    },
+    {
+      "name": "background observer marks A unavailable and retains its last observation",
+      "passed": true,
+      "connectionStatus": "unreachable",
+      "errorCode": "KUBERNETES_UNREACHABLE",
+      "lastObservedAt": "2026-10-25T14:21:39.972Z",
+      "detectedAt": "2026-10-25T14:22:10.667Z",
+      "nodeCount": 1
+    },
+    {
+      "name": "B and C keep publishing new real observations while A is down",
+      "passed": true,
+      "bObservedAt": "2026-10-25T14:22:25.829Z",
+      "cObservedAt": "2026-10-25T14:22:11.638Z"
+    },
+    {
+      "name": "repeated failed reads preserve node and metrics snapshots without fabricated zeroes",
+      "passed": true,
+      "observationHash": "4100680424ba8b3cdc7fa4b1a7171982f4db7b831e0bb8f1935701cb49cb2aa2",
+      "nodesHash": "8d52b27f2e14ee0e84dea37d5873343015201044cbeb6d964031dc8d5ce27adc"
+    },
+    {
+      "name": "project and node summaries show the same unavailable target",
+      "passed": true
+    },
+    {
+      "name": "A reconnects automatically with its original cluster and node identity",
+      "passed": true,
+      "recoveredAt": "2026-10-25T14:22:49.113Z",
+      "clusterId": "9b745fb0-8fc8-452b-b166-863122c6d1e3"
+    },
+    {
+      "name": "VM restart preserves the verified SSH host key and saved trust",
+      "passed": true
+    }
+  ],
+  "stoppedInstance": "ozz-lab-a",
+  "retainedResources": true,
+  "restored": true,
+  "faultStartedAt": "2026-10-25T14:21:43.792Z",
+  "finishedAt": "2026-10-25T14:22:49.318Z"
+}

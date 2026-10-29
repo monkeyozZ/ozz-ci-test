@@ -1,0 +1,186 @@
+name: ${COMPOSE_PROJECT_NAME:-ozz}
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: '10m'
+    max-file: '3'
+
+x-build: &build
+  context: .
+  dockerfile: infra/docker/Dockerfile
+  args:
+    BOOTSTRAP_IMAGE: ${BOOTSTRAP_IMAGE:-node:24.22.1-bookworm-slim}
+    DEBIAN_MIRROR: ${DEBIAN_MIRROR:-http://deb.debian.org}
+
+x-runtime-environment: &runtime-environment
+  NODE_ENV: production
+  HOST: 0.0.0.0
+  APP_ORIGIN: ${APP_ORIGIN:?Set the HTTPS console origin}
+  POSTGRES_USER: ${POSTGRES_USER:-ozz}
+  POSTGRES_DB: ${POSTGRES_DB:-ozz}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+  REDIS_PASSWORD: ${REDIS_PASSWORD:?Set REDIS_PASSWORD}
+  DATABASE_SCHEMA: ${DATABASE_SCHEMA:-public}
+  MASTER_KEY_FILE: /run/secrets/master_key
+  RESTORE_MODE: ${RESTORE_MODE:-false}
+  LOG_LEVEL: ${LOG_LEVEL:-info}
+  SESSION_TTL_SECONDS: ${SESSION_TTL_SECONDS:-28800}
+  # Only the Caddy container can reach the API from outside the backend network.
+  TRUSTED_PROXY_CIDRS: uniquelocal
+  TASK_LOG_RETENTION_DAYS: ${TASK_LOG_RETENTION_DAYS:-7}
+  TASK_LOG_MAX_BYTES: ${TASK_LOG_MAX_BYTES:-16384}
+  REGISTRY_HTTP_PROXY: ${REGISTRY_HTTP_PROXY:-}
+  REGISTRY_PROXY_BLOB_ORIGINS: ${REGISTRY_PROXY_BLOB_ORIGINS:-}
+  NODE_OPTIONS: --max-old-space-size=256
+
+x-application: &application
+  init: true
+  restart: unless-stopped
+  read_only: true
+  tmpfs:
+    - /tmp:size=64m,mode=1777
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  stop_grace_period: 20s
+  logging: *logging
+
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ozz}
+      POSTGRES_DB: ${POSTGRES_DB:-ozz}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    mem_limit: 2g
+    cpus: 1.0
+    networks: [backend]
+    logging: *logging
+
+  redis:
+    image: ${REDIS_IMAGE:-redis@sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?Set REDIS_PASSWORD}
+      REDISCLI_AUTH: ${REDIS_PASSWORD:?Set REDIS_PASSWORD}
+    command:
+      [
+        'sh',
+        '-c',
+        'exec redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy noeviction --requirepass "$$REDIS_PASSWORD"',
+      ]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    mem_limit: 384m
+    cpus: 0.5
+    networks: [backend]
+    logging: *logging
+
+  migrate:
+    image: ${OZZ_IMAGE_PREFIX:-ozz}/migrate:${OZZ_IMAGE_TAG:-0.1.0}
+    build:
+      <<: *build
+      target: migrate
+    environment:
+      <<: *runtime-environment
+    depends_on:
+      postgres: { condition: service_healthy }
+    read_only: true
+    tmpfs: ['/tmp:size=64m,mode=1777', '/home/node/.cache:size=32m,mode=1777']
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    cpus: 1.0
+    networks: [backend]
+    logging: *logging
+
+  api:
+    <<: *application
+    user: '${OZZ_RUNTIME_UID:-1000}:${OZZ_RUNTIME_GID:-1000}'
+    image: ${OZZ_IMAGE_PREFIX:-ozz}/api:${OZZ_IMAGE_TAG:-0.1.0}
+    build:
+      <<: *build
+      target: api
+    environment:
+      <<: *runtime-environment
+      PORT: 3000
+    secrets: [master_key]
+    depends_on:
+      postgres: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+    mem_limit: 512m
+    cpus: 1.0
+    networks: [backend, egress]
+
+  worker:
+    <<: *application
+    user: '${OZZ_RUNTIME_UID:-1000}:${OZZ_RUNTIME_GID:-1000}'
+    image: ${OZZ_IMAGE_PREFIX:-ozz}/worker:${OZZ_IMAGE_TAG:-0.1.0}
+    build:
+      <<: *build
+      target: worker
+    environment:
+      <<: *runtime-environment
+      WORKER_HEALTH_PORT: 3001
+    secrets: [master_key]
+    depends_on:
+      postgres: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+      api: { condition: service_healthy }
+    mem_limit: 512m
+    cpus: 0.5
+    networks: [backend, egress]
+
+  console:
+    <<: *application
+    image: ${OZZ_IMAGE_PREFIX:-ozz}/console:${OZZ_IMAGE_TAG:-0.1.0}
+    build:
+      <<: *build
+      target: console
+    environment:
+      CONSOLE_HOST: ${CONSOLE_HOST:?Set the console hostname without scheme or port}
+      APP_ORIGIN: ${APP_ORIGIN:?Set the HTTPS console origin}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+    depends_on:
+      api: { condition: service_healthy }
+    ports:
+      - '${BIND_ADDRESS:-0.0.0.0}:${HTTP_PORT:-80}:8080'
+      - '${BIND_ADDRESS:-0.0.0.0}:${HTTPS_PORT:-443}:8443'
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    mem_limit: 256m
+    cpus: 0.5
+    networks: [backend, edge]
+
+networks:
+  backend:
+    internal: true
+  # Remote SSH/Kubernetes/registry access has no published host ports.
+  # PostgreSQL and Redis remain exclusively on the internal backend.
+  egress:
+    internal: false
+  edge:
+
+volumes:
+  postgres-data:
+  redis-data:
+  caddy-data:
+  caddy-config:
+
+secrets:
+  master_key:
+    file: ${MASTER_KEY_FILE:?Set the protected master key file path}

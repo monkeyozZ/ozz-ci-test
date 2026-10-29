@@ -1,0 +1,230 @@
+{
+  "scope": "真实本地 K3s A 的 Registry/Workload Adapter 发布与操作；文件 ledger，不代表产品 API/Worker、私有镜像或公网入口验收。 同一镜像采用完整 SHA256 校验的本地缓存辅助，原 K3s 公网拉取未通过。",
+  "startedAt": "2026-10-25T16:22:43.062Z",
+  "status": "failed",
+  "checks": [
+    {
+      "name": "local A retains its trusted cluster UID and ARM64 node",
+      "passed": true
+    },
+    {
+      "name": "fixed OCI image includes verified ARM64 manifest",
+      "passed": true,
+      "reference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da"
+    },
+    {
+      "name": "real Kubernetes resources completely applied with UID receipts",
+      "passed": true
+    },
+    {
+      "name": "actual Pod is ready for the requested digest and HTTP probe",
+      "passed": true,
+      "nodeName": "ozz-node",
+      "imageId": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da"
+    },
+    {
+      "name": "Metrics API supplies current Pod CPU and memory",
+      "passed": true,
+      "state": "available",
+      "cpuCores": 0.000518426,
+      "memoryBytes": 14716928,
+      "observedAt": "2026-10-25T16:22:19.000Z",
+      "windowSeconds": 30.174
+    },
+    {
+      "name": "stop waits for actual zero Pods and keeps the published template",
+      "passed": true
+    },
+    {
+      "name": "resume restores the original published snapshot and replicas",
+      "passed": true
+    },
+    {
+      "name": "restart replaces the Pod while preserving immutable published configuration",
+      "passed": false
+    }
+  ],
+  "resourcesRetained": true,
+  "runId": "a82be384-4191-4bd3-9d7d-f52afd9591f7",
+  "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+  "imageCacheAssistance": {
+    "mode": "verified-local-cache",
+    "originalPublicPullSucceeded": false,
+    "sourceReference": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "rootDigest": "sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+    "platformDigest": "sha256:29186ab823274ed31b94c55f533f63402c33c506d7be1666b303b398e5adc204",
+    "archiveSha256": "sha256:e073ff03ff78d9930c0f06634bed33e640af7c6c09a2d4f02ed42666c206c9d0",
+    "importedAt": "2026-10-25T16:19:26Z",
+    "evidenceFile": "/Users/monkeyozz/Desktop/code/ozz/docs/acceptance/s3-workload-image-cache-assist.json"
+  },
+  "failure": {
+    "stage": "restart",
+    "code": "WORKLOAD_PROBE_ASSERTION_FAILED"
+  },
+  "lastObservation": {
+    "observedAt": "2026-10-25T16:22:58.163Z",
+    "configurationState": "consistent",
+    "deployment": {
+      "uid": "95e998dd-b17e-4ef0-8ec9-fdf6c0a5802c",
+      "resourceVersion": "5950",
+      "generation": 4,
+      "observedGeneration": 4,
+      "replicas": 1,
+      "currentReplicas": 1,
+      "updatedReplicas": 1,
+      "readyReplicas": 1,
+      "availableReplicas": 1,
+      "snapshotId": "4dd9a1ed-659b-4cdd-8701-aad97b7840ac",
+      "configRevision": 1,
+      "mutationRevision": 4,
+      "rolloutId": "17869292-a72d-4d1c-84ef-c639f8d1d52c",
+      "image": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+      "templateFingerprint": "a7da98732776ae6fb63d7f03bfb7e6bf93f8bd86da420e1cc58c37ac1724112e",
+      "workloadFingerprint": "b880fde38e7d1e539a9af75b9f42317bb2bfeb00f0d17a7a24e422addfbf61c3",
+      "progressDeadlineExceeded": false,
+      "deleting": false
+    },
+    "pods": [
+      {
+        "uid": "9b75153a-3603-4bb0-8453-a897d01525a3",
+        "name": "ozz-s-27c942116bb14b6280fccc1340c15c2a-54d7674b54-q2nc8",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "nodeName": "ozz-node",
+        "createdAt": "2026-10-25T16:22:47.000Z",
+        "deletionTimestamp": "2026-10-25T16:23:24.000Z",
+        "phase": "Succeeded",
+        "ready": false,
+        "snapshotId": "4dd9a1ed-659b-4cdd-8701-aad97b7840ac",
+        "configRevision": 1,
+        "rolloutId": "4dd9a1ed-659b-4cdd-8701-aad97b7840ac",
+        "replicaSetUid": "96db7004-f995-4f60-b55a-5c10dd700c51",
+        "matchesDeploymentTemplate": false,
+        "containers": [
+          {
+            "name": "app",
+            "image": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+            "imageId": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+            "ready": false,
+            "restartCount": 0,
+            "state": "terminated",
+            "reason": "Completed",
+            "lastTerminationReason": null,
+            "oomKilled": false,
+            "exitCode": 0,
+            "requests": {
+              "cpuCores": 0.025,
+              "memoryBytes": 33554432
+            },
+            "limits": {
+              "cpuCores": 0.2,
+              "memoryBytes": 134217728
+            },
+            "metrics": {
+              "state": "unknown",
+              "cpuCores": null,
+              "memoryBytes": null,
+              "observedAt": null,
+              "windowSeconds": null
+            }
+          }
+        ]
+      },
+      {
+        "uid": "e8e704bb-4a3e-4f60-9dee-f00a892a4780",
+        "name": "ozz-s-27c942116bb14b6280fccc1340c15c2a-574cbf6949-42jhd",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "nodeName": "ozz-node",
+        "createdAt": "2026-10-25T16:22:52.000Z",
+        "deletionTimestamp": null,
+        "phase": "Running",
+        "ready": true,
+        "snapshotId": "4dd9a1ed-659b-4cdd-8701-aad97b7840ac",
+        "configRevision": 1,
+        "rolloutId": "17869292-a72d-4d1c-84ef-c639f8d1d52c",
+        "replicaSetUid": "8097d2cb-47f5-4f05-872f-4d4b8bbe98eb",
+        "matchesDeploymentTemplate": true,
+        "containers": [
+          {
+            "name": "app",
+            "image": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+            "imageId": "ghcr.io/stefanprodan/podinfo@sha256:ec73780a8425f59ea49f5bc8cdff0d598805a224fbaa1f86c67a244f250fa9da",
+            "ready": true,
+            "restartCount": 0,
+            "state": "running",
+            "reason": null,
+            "lastTerminationReason": null,
+            "oomKilled": false,
+            "exitCode": null,
+            "requests": {
+              "cpuCores": 0.025,
+              "memoryBytes": 33554432
+            },
+            "limits": {
+              "cpuCores": 0.2,
+              "memoryBytes": 134217728
+            },
+            "metrics": {
+              "state": "unknown",
+              "cpuCores": null,
+              "memoryBytes": null,
+              "observedAt": null,
+              "windowSeconds": null
+            }
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "state": "unknown",
+      "cpuCores": null,
+      "memoryBytes": null,
+      "observedAt": null,
+      "windowSeconds": null
+    },
+    "drift": [],
+    "resources": [
+      {
+        "kind": "Namespace",
+        "name": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "namespace": null,
+        "expectedUid": "50aee41f-df91-4dc8-befd-e84345180001",
+        "observedUid": "50aee41f-df91-4dc8-befd-e84345180001",
+        "resourceVersion": "5268",
+        "state": "verified",
+        "reason": null
+      },
+      {
+        "kind": "Secret",
+        "name": "ozz-r-4dd9a1ed659b4cdd8701aad97b7840ac",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "expectedUid": "0eca5aed-bbaa-499f-b8b2-50a08f7d2206",
+        "observedUid": "0eca5aed-bbaa-499f-b8b2-50a08f7d2206",
+        "resourceVersion": "5269",
+        "state": "verified",
+        "reason": null
+      },
+      {
+        "kind": "Service",
+        "name": "ozz-s-27c942116bb14b6280fccc1340c15c2a",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "expectedUid": "64d0f6a4-fe39-4207-a954-21fd2d2db777",
+        "observedUid": "64d0f6a4-fe39-4207-a954-21fd2d2db777",
+        "resourceVersion": "5273",
+        "state": "verified",
+        "reason": null
+      },
+      {
+        "kind": "Deployment",
+        "name": "ozz-s-27c942116bb14b6280fccc1340c15c2a",
+        "namespace": "ozz-e-073c814af79c486393f4ccc3de8c422b",
+        "expectedUid": "95e998dd-b17e-4ef0-8ec9-fdf6c0a5802c",
+        "observedUid": "95e998dd-b17e-4ef0-8ec9-fdf6c0a5802c",
+        "resourceVersion": "5950",
+        "state": "verified",
+        "reason": null
+      }
+    ]
+  },
+  "finishedAt": "2026-10-25T16:22:58.215Z",
+  "stateFile": "/Users/monkeyozz/Desktop/code/ozz/.local/local-lab/workload-adapter-a.state.json"
+}

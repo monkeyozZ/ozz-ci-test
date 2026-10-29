@@ -1,0 +1,34 @@
+{
+  "command": "pnpm check",
+  "exitCode": 0,
+  "checks": [
+    "Prisma generate",
+    "workspace build",
+    "workspace typecheck",
+    "ESLint",
+    "Prettier"
+  ],
+  "unit": {
+    "backend": 6,
+    "console": 3
+  },
+  "runtime": {
+    "node": "v24.22.1",
+    "pnpm": "12.14.0"
+  },
+  "recordedAt": "2026-10-25T12:34:45.123Z",
+  "log": ".local/accepted-check.log",
+  "includes": [
+    "Final runtime CLI launcher",
+    "Automatic build-container cleanup",
+    "Local Lima lab fixes",
+    "Native Chrome page-zoom probe"
+  ],
+  "documentation": {
+    "markdownFiles": 17,
+    "localLinks": 134,
+    "missingLinks": 0,
+    "verifiedAt": "2026-10-25T12:47:28.879Z"
+  },
+  "observedAt": "2026-10-25T12:34:45.123Z"
+}

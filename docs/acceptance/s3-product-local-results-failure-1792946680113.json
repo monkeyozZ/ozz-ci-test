@@ -1,0 +1,15 @@
+{
+  "scope": "产品 API/Worker/PostgreSQL 与真实本地 K3s A/B；同 digest 镜像缓存辅助，非公网 Registry 拉取、私仓、公网入口或 Oracle 容量验收。",
+  "runId": "a0ade89a-87ac-4098-9216-6a9e8715990a",
+  "startedAt": "2026-10-25T16:44:40.070Z",
+  "resumedAt": "2026-10-25T16:44:40.075Z",
+  "checks": [],
+  "status": "failed",
+  "failure": {
+    "stage": "login",
+    "code": null,
+    "httpStatus": null,
+    "message": "fetch failed"
+  },
+  "finishedAt": "2026-10-25T16:44:40.113Z"
+}

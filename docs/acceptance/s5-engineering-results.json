@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "status": "passed",
+  "recordedAt": "2026-10-26T00:08:13.389833+00:00",
+  "scope": "S5 source engineering and isolated integration; real K3s, browser and image-delivery evidence are separate.",
+  "baseline": {
+    "command": "pnpm check",
+    "execSessionId": 64931,
+    "exitCode": 0,
+    "log": ".local/s5-final-check.log",
+    "sha256": "7d83901012e3f76a306295024d845755427399c9b5ae2ee28d1b6b82d916addf",
+    "mainTests": 349,
+    "consoleUnitTests": 39,
+    "manualDataTests": 60,
+    "failures": 0,
+    "skipped": 0,
+    "sequenceNote": "Before the last first-database-publication UI fix; that final Console change is covered by the follow-up results and unchanged backend tests."
+  },
+  "consoleFollowUp": {
+    "path": "apps/console/tests/artifacts/s5-real-local-lab/validation-results.json",
+    "sha256": "b3825c0ac86ff0d6b901292cde9f6f00a97c5b5f54e9f28ccc1770b4a4a53a33",
+    "sourceHashesVerified": true,
+    "build": true,
+    "typecheck": true,
+    "unitTests": 39,
+    "controlledBrowserScenarios": 15,
+    "themeSizeChecks": 66,
+    "realBrowserScenarios": 6,
+    "realPageChecks": 14,
+    "scope": "Structured record of previously returned executor results and retained browser artifacts, not a reconstructed stdout log."
+  },
+  "integration": {
+    "command": "pnpm exec node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts --reporter=default --reporter=json --outputFile=.local/s5-final-integration-results.json",
+    "execSessionId": 67846,
+    "exitCode": 0,
+    "results": ".local/s5-final-integration-results.json",
+    "sha256": "05c9ace9e756460cbb88466214e2fdcfb331ba763d9bee7485c397fe57a7527e",
+    "log": ".local/s5-final-integration.log",
+    "logSha256": "0273e5a5c9031bac8b017ba11fad3aeacde22d6ade17a9de6cc671ffa89a1d32",
+    "tests": 210,
+    "passed": 210,
+    "failed": 0,
+    "skipped": 0,
+    "files": [
+      {
+        "path": "tests/integration/cluster-ledger-retention.test.ts",
+        "passed": 8,
+        "status": "passed",
+        "sha256": "8b39bec26098c907c5c05d9f891170e7454bf19ff8230feea48d552f85ef5249"
+      },
+      {
+        "path": "tests/integration/databases-s5.test.ts",
+        "passed": 18,
+        "status": "passed",
+        "sha256": "dd63f03bcccd285f883592efd8951066ae547b56abff9f1550beafddbfe5f4cd"
+      },
+      {
+        "path": "tests/integration/http-protocols.test.ts",
+        "passed": 6,
+        "status": "passed",
+        "sha256": "d7b413839d3364c2969b56c5f5558af194a0829b8eb97e43903e55ecf1b34166"
+      },
+      {
+        "path": "tests/integration/metadata.test.ts",
+        "passed": 9,
+        "status": "passed",
+        "sha256": "c28eed08b62305b05efc88a10ee69fc3ac7ed58039bf9c74dd249d4265865f47"
+      },
+      {
+        "path": "tests/integration/networking-s4.test.ts",
+        "passed": 25,
+        "status": "passed",
+        "sha256": "3c5ba146a16e07f44364299bd2bec0400942297db9b1f9bad6b1223866d1eeec"
+      },
+      {
+        "path": "tests/integration/observer.test.ts",
+        "passed": 8,
+        "status": "passed",
+        "sha256": "5af673ea5efe0947e4e815fe2ab557db6d53dc9ee97c602220b123c8d2103961"
+      },
+      {
+        "path": "tests/integration/recovery.test.ts",
+        "passed": 8,
+        "status": "passed",
+        "sha256": "4dbdae26a3f020a29dfa240e7f5c51e78262fad333bdb1a6220e9f801141fcbf"
+      },
+      {
+        "path": "tests/integration/s2-infrastructure.test.ts",
+        "passed": 13,
+        "status": "passed",
+        "sha256": "1855a6acc300514ff7f79e88c0cfe0f8e572959deec7bbed811f3eb0143c8ebd"
+      },
+      {
+        "path": "tests/integration/security.test.ts",
+        "passed": 17,
+        "status": "passed",
+        "sha256": "12423a03cc3105455b83ddc1a7d2b1fa3eda4ac3b335b4651aa1ba4c00ab8b0f"
+      },
+      {
+        "path": "tests/integration/services-s3.test.ts",
+        "passed": 19,
+        "status": "passed",
+        "sha256": "dd3cf2fd9a24ff95fc57ce11b088455dae1f89b20bfa73168adea0fa3646647f"
+      },
+      {
+        "path": "tests/integration/storage-migration.test.ts",
+        "passed": 14,
+        "status": "passed",
+        "sha256": "3170c13604ee28ba50dd8b66860c35d175e73797bdc46cb44344b81e3bde1033"
+      },
+      {
+        "path": "tests/integration/storage-s5.test.ts",
+        "passed": 33,
+        "status": "passed",
+        "sha256": "b46d649f7a62db201ee3584d4086565884995c4fa18911e9ff8ba40a9505a89e"
+      },
+      {
+        "path": "tests/integration/tasks-s3.test.ts",
+        "passed": 14,
+        "status": "passed",
+        "sha256": "f4291351a5830c19d1c3d563ac7bce71ae1845f16cd41912becac80d1d2240d0"
+      },
+      {
+        "path": "tests/integration/tasks.test.ts",
+        "passed": 18,
+        "status": "passed",
+        "sha256": "f628d8e1da418a479abd7829cb71a2fb324af83042b785e934cfb0fa1deb8a4f"
+      }
+    ]
+  },
+  "finalLint": {
+    "command": "pnpm lint",
+    "execSessionId": 55396,
+    "exitCode": 0,
+    "log": ".local/s5-final-lint-after-ui.log",
+    "sha256": "69c40394cb20ab53fb4a57cb1f4990adbf2e6be916adbbb9d51f4402fe0cab92"
+  },
+  "finalFormat": {
+    "command": "pnpm format:check",
+    "execSessionId": 49944,
+    "exitCode": 0,
+    "log": ".local/s5-final-format-after-ui.log",
+    "sha256": "4233f7e814de08f195dac4225cff8a5f7c855ab8cc41d02d87d4cd409049b280"
+  },
+  "codegen": {
+    "status": "passed",
+    "checks": [
+      {
+        "path": "docs/openapi.json",
+        "sha256": "b5b772e534179d467ed4923bafb989e20775e7d306f8c0cd4dfa8e89a1fec311",
+        "unchanged": true
+      },
+      {
+        "path": "packages/api-client/src/schema.ts",
+        "sha256": "7022bdb1dc8492c6570fae53ae5b12d0eebd4a3c7fbf7750d0c845ea6a5fc97b",
+        "unchanged": true
+      }
+    ]
+  },
+  "sourceHashes": {
+    "packages/infrastructure/src/storage/adapter.ts": "b8288f66ae7a11505f3ff913c8a5e83c355c3694879007ff06ccdfa77fd1b524",
+    "packages/infrastructure/src/workload/resources.ts": "60ecefbd97d8dba2707dbfffc16863234be22354cc0e1c9b1b5f25aee52c8e4f",
+    "packages/infrastructure/src/workload/observation.ts": "51635f5f209c6850940166bbb8ec452dfb81d65a299bb5deabc6f8efb3fcf15f",
+    "packages/infrastructure/src/kubernetes/database-exec.ts": "6c77a844c9951679ed6af4c45975e0431233b47ab654ac6b84f7d1b1506a9c7c",
+    "packages/control-plane/src/storage/ledger.ts": "48e3e620c64a380b258e9d14184d2f444292bed9741bac1a4e6ca0eeae98cf6d",
+    "packages/control-plane/src/storage/commands.ts": "d941e7cc623cb66076632bdba966849747bf86ab8c683f6fd0cca61c6e1f2d24",
+    "packages/control-plane/src/tasks/contracts.ts": "492569d590cc1ab6e06d3d17298337b26a1932b19eeb29d5e0e3c55d39d2682a",
+    "packages/control-plane/src/tasks/records.ts": "86898f08dd234ad888d4fc598b8d7dd3b7c5138f87fb50e8f9087332441a0ad1",
+    "apps/api/src/openapi.ts": "201110a1edddcf3aa1863986c6eeee05f3a109fd1ae91c3aca1ff75b9c6829f8",
+    "tests/infrastructure/storage.test.ts": "d424c8de09b2e4900a7422ce66cb8d7994a77861deb64d7d97b56e22a8cd677d",
+    "tests/infrastructure/workload.test.ts": "2cca52d3a766f166439ae4caf858480dc1ba495b5b7e1a57f5d33519d79b6a6b",
+    "tests/infrastructure/database-verification.test.ts": "1fd40a2aed1a9f31fe5dd538aa7a5d33b634dce907d656b3fa473a78ebdd47e7",
+    "tests/unit/workload-volume-defaults.test.ts": "72940dd12562b5deeef31417e55f68c96b4cc09f2ba6167691fbaa403fd8347b",
+    "tests/integration/storage-s5.test.ts": "b46d649f7a62db201ee3584d4086565884995c4fa18911e9ff8ba40a9505a89e",
+    "tests/integration/metadata.test.ts": "c28eed08b62305b05efc88a10ee69fc3ac7ed58039bf9c74dd249d4265865f47",
+    "packages/database/prisma/migrations/202610260003_s5_storage/migration.sql": "30a94a8c22b101f1e66786b81ed4a0b9fea5afa347b799df18081157dc89b817",
+    "package.json": "49265c0146bf1525a71b40e5fbe035e924c8c898385e5154de8b555a32b26f75",
+    "pnpm-lock.yaml": "b4fc09a35d05c630e0a37cf8380937d7e9cfa28b2d921148e2808bb54b946b13"
+  },
+  "retainedFailures": [
+    {
+      "path": ".local/s5-final-check-before-format-fix.log",
+      "sha256": "bd6ce6b8ee20e78969b72499c36ea8e7950da9327e7f482b5fc5f8de2f0471cc",
+      "reason": "Two existing task files required Prettier formatting; build, typecheck and lint had passed. Formatting was corrected and the complete command rerun successfully."
+    }
+  ],
+  "remaining": [
+    "Frozen S5 Linux ARM64 image build/Compose/export",
+    "Cloud/public GitHub/physical off-host acceptance remains outside this engineering report"
+  ],
+  "observationProbeFollowUp": {
+    "recordedAt": "2026-10-26T00:32:01.940628+00:00",
+    "sourceHashes": {
+      "tests/probes/s5-observation-local-lab.mjs": "5e252d0e8bb21b59d48799422d656c8fd4040d0212f01bf1541740eb924a2c90",
+      "tests/probes/s5-observation-policy-local-lab.mjs": "f917ed91fea9643b4e1f56d0f87df8f1b018b714aaa4437d82f06b25802078b6"
+    },
+    "compatibility": {
+      "path": ".local/local-lab/s5-observation-compatibility-20261026T000952Z.json",
+      "sha256": "0126043419185dcd2efd4686789e7b0d386f44c1907aef88cac057399dce8e94"
+    },
+    "policyImplementation": {
+      "path": ".local/local-lab/s5-observation-policy-implementation.json",
+      "sha256": "a9b4123ded22160b348e565e46ed843a5397aeda54d52442f024bead41f742a7"
+    },
+    "validation": [
+      "Node syntax, ESLint and Prettier",
+      "Remote Python and independent watchdog AST/identity checks",
+      "Seven stale-policy boundary classifications",
+      "Real policy window 13/13 with original resource and process recovery"
+    ],
+    "realResults": {
+      "path": "docs/acceptance/s5-observation-policy-local-results.json",
+      "sha256": "b1871cdb2cdcf61c16a7bf1975d458bacfce9ca0f391f1169357d36d2e7b883c",
+      "passed": 13,
+      "pausedSeconds": 44.00224208831787
+    },
+    "retainedFailedWindow": {
+      "path": "docs/acceptance/s5-observation-local-results.json",
+      "sha256": "add36662f31929478ad70c55ab4b258034ef6d3aa85a663a74ba8f5b0cbb54a3",
+      "reason": "The original 45-second observation window was shorter than the unchanged 90-second stale policy. This separate 115-second profile records a new authorized window and does not rewrite the failure."
+    }
+  }
+}

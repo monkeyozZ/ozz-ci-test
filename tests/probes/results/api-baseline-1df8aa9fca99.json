@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "1df8aa9fca99",
+  "startedAt": "2026-10-25T11:25:45.117Z",
+  "status": "failed",
+  "scope": "Local S1 metadata baseline; not the PRD 100-Service/10000-Deployment/10-minute gate.",
+  "settings": {
+    "durationSeconds": 60,
+    "warmupSeconds": 10,
+    "concurrency": 5,
+    "projectCount": 50,
+    "clusterCount": 5,
+    "serverCount": 10,
+    "secretCount": 10
+  },
+  "host": {
+    "platform": "darwin",
+    "osRelease": "23.6.0",
+    "architecture": "arm64",
+    "logicalCpuCount": 8,
+    "cpuModel": "Apple M1 Pro",
+    "totalMemoryBytes": 17179869184
+  },
+  "process": {
+    "mode": "production",
+    "build": "apps/api/dist/main.js",
+    "node": "v24.22.1",
+    "transport": "HTTP loopback to a production Node process; no TLS proxy or public RTT",
+    "instrumentation": "1 Hz process.cpuUsage/memoryUsage over IPC; no product metrics endpoint",
+    "logLevel": "info"
+  },
+  "limits": [
+    "Developer machine, not Oracle or the 2-core/12-GB target.",
+    "S1 has no Service or Deployment history tables; only existing metadata models are seeded.",
+    "No Kubernetes/SSH/build/rollout, log-window or model-provider workload.",
+    "No Redis outage or queue acceptance load is injected.",
+    "The isolated schema has no Worker heartbeat; a degraded queue observation does not constitute a Redis fault test.",
+    "CPU/RSS describe the isolated API process, excluding the driver, PostgreSQL, Redis and Worker.",
+    "Pool wait time and per-query timing are not instrumented; database connection snapshots are database-wide."
+  ],
+  "cleanup": {
+    "schema": "ozz_baseline_1df8aa9fca99",
+    "schemaDropped": true,
+    "apiStopped": true
+  },
+  "versions": {
+    "nest": "11.2.8",
+    "fastify": "5.12.7"
+  },
+  "failure": {
+    "stage": "migrate-isolated-schema",
+    "errorType": "Error",
+    "code": "BASELINE_FAILED"
+  },
+  "finishedAt": "2026-10-25T11:25:45.179Z"
+}

@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "runId": "e1ebff3d-3282-45b2-ac26-16b4aa4cf89b",
+  "startedAt": "2026-10-25T23:23:54.895Z",
+  "scope": "Real local K3s A, product service deletion and independent volume destruction. Only dedicated probe data may be destroyed; original S3/S4/S5 data remain intact.",
+  "checks": [
+    {
+      "name": "redis: destroying a mounted volume is rejected",
+      "passed": true,
+      "observedAt": "2026-10-25T23:22:30.546Z",
+      "code": "VOLUME_MOUNT_REFERENCED",
+      "volumeId": "40728090-5488-4b55-87d5-414c04166d0a"
+    },
+    {
+      "name": "files: destroying a mounted volume is rejected",
+      "passed": true,
+      "observedAt": "2026-10-25T23:23:25.690Z",
+      "code": "VOLUME_MOUNT_REFERENCED",
+      "volumeId": "e69a596e-0d4e-4be1-a8a1-4143e534648f"
+    },
+    {
+      "name": "another application cannot repurpose a protected database volume",
+      "passed": true,
+      "observedAt": "2026-10-25T23:23:55.202Z",
+      "code": "VOLUME_DATABASE_PROTECTED"
+    },
+    {
+      "name": "redis: service deletion preview explicitly retains the original data volume",
+      "passed": true,
+      "observedAt": "2026-10-25T23:24:24.613Z"
+    },
+    {
+      "name": "redis: deleting the service retains the original PVC and PV",
+      "passed": true,
+      "observedAt": "2026-10-25T23:24:35.073Z",
+      "volumeId": "40728090-5488-4b55-87d5-414c04166d0a",
+      "pvcUid": "fd22daaa-849d-4b66-a972-b68f55dc833d",
+      "pvUid": "3ca354bc-d6e8-4a30-ab89-53afca90d16f"
+    },
+    {
+      "name": "files: service deletion preview explicitly retains the original data volume",
+      "passed": true,
+      "observedAt": "2026-10-25T23:25:06.730Z"
+    },
+    {
+      "name": "files: deleting the service retains the original PVC and PV",
+      "passed": true,
+      "observedAt": "2026-10-25T23:25:10.068Z",
+      "volumeId": "e69a596e-0d4e-4be1-a8a1-4143e534648f",
+      "pvcUid": "780e190e-77f3-4808-b430-bf4a6a7d3049",
+      "pvUid": "4c740e87-a538-4aaf-a2df-160fd0639cc1"
+    },
+    {
+      "name": "retained database keeps its original identity and protected credential after service deletion",
+      "passed": true,
+      "observedAt": "2026-10-25T23:25:10.109Z",
+      "databaseId": "519e7fbc-8360-4e43-b31b-80639ab656f4",
+      "credentialDeletionCode": "DATABASE_DATA_PROTECTED"
+    },
+    {
+      "name": "the original file content remains readable after service deletion",
+      "passed": true,
+      "observedAt": "2026-10-25T23:25:10.627Z"
+    },
+    {
+      "name": "separate confirmed destruction records a tombstone while unrelated retained data survive",
+      "passed": true,
+      "observedAt": "2026-10-25T23:25:13.774Z",
+      "destroyedVolumeId": "e69a596e-0d4e-4be1-a8a1-4143e534648f",
+      "retainedDatabaseVolumeId": "40728090-5488-4b55-87d5-414c04166d0a"
+    }
+  ],
+  "completedAt": "2026-10-25T23:25:13.775Z",
+  "resources": {
+    "projectId": "e9e1f8e5-e362-476f-a8f2-d3165403e85c",
+    "environmentId": "ee27d6bd-72f6-4dfe-8f69-908b34e90e84",
+    "redis": {
+      "serviceId": "cffdfb28-9421-48a1-900a-6bedf07e5bc2",
+      "volumeId": "40728090-5488-4b55-87d5-414c04166d0a",
+      "databaseId": "519e7fbc-8360-4e43-b31b-80639ab656f4",
+      "credentialRefId": "c19f22b0-3132-4e1f-9d09-f099183479a1",
+      "pvcUid": "fd22daaa-849d-4b66-a972-b68f55dc833d",
+      "pvUid": "3ca354bc-d6e8-4a30-ab89-53afca90d16f"
+    },
+    "files": {
+      "serviceId": "cb24dab5-8a32-48cb-8e5d-31a2cac398ec",
+      "volumeId": "e69a596e-0d4e-4be1-a8a1-4143e534648f",
+      "pvcUid": "780e190e-77f3-4808-b430-bf4a6a7d3049",
+      "pvUid": "4c740e87-a538-4aaf-a2df-160fd0639cc1"
+    }
+  }
+}

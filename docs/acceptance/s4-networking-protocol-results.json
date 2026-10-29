@@ -1,0 +1,413 @@
+{
+  "stage": "S4 networking adapter protocol acceptance",
+  "generatedAt": "2026-10-25T20:36:55.670Z",
+  "success": true,
+  "total": 81,
+  "passed": 81,
+  "failed": 0,
+  "report": {
+    "path": ".local/local-lab/s4-networking-protocol/results.json",
+    "sha256": "879c901243f234c142a4f7bd9ebf0ea3073b8cd4c38cc817c03f87fbcc5daad9"
+  },
+  "suites": [
+    {
+      "file": "tests/infrastructure/kubernetes.test.ts",
+      "status": "passed",
+      "total": 17,
+      "cases": [
+        {
+          "name": "accepts embedded certificates or tokens and keeps secrets out of serializable connections",
+          "status": "passed"
+        },
+        {
+          "name": "rejects executable, file, impersonation, proxy and insecure configuration even in unused entries",
+          "status": "passed"
+        },
+        {
+          "name": "rejects malformed YAML, aliases, duplicate keys, extra documents and mismatched keys without echoing input",
+          "status": "passed"
+        },
+        {
+          "name": "rejects expired and not-yet-valid credentials before connecting",
+          "status": "passed"
+        },
+        {
+          "name": "treats decoded token times as metadata and lets the API authenticate a token despite local clock skew",
+          "status": "passed"
+        },
+        {
+          "name": "isolates two live TLS endpoints with the same user and Node name, and reports actual usage separately",
+          "status": "passed"
+        },
+        {
+          "name": "requires a matching trust chain and the endpoint SAN, including explicit endpoint replacement",
+          "status": "passed"
+        },
+        {
+          "name": "pins CA and cluster UID and refuses a different target before reading its nodes",
+          "status": "passed"
+        },
+        {
+          "name": "uses replacement credentials immediately and never reuses the old token under the same user name",
+          "status": "passed"
+        },
+        {
+          "name": "reports unavailable metrics and unknown permissions without fabricating zero usage",
+          "status": "passed"
+        },
+        {
+          "name": "classifies 429, 410 and permission failures with bounded retry hints and safe errors",
+          "status": "passed"
+        },
+        {
+          "name": "does not follow redirects or send the source credential to another server",
+          "status": "passed"
+        },
+        {
+          "name": "bounds bodies and releases timed-out and cancelled sockets",
+          "status": "passed"
+        },
+        {
+          "name": "supports a consistent Node list and rejects repeated or inconsistent pagination without partial results",
+          "status": "passed"
+        },
+        {
+          "name": "rejects a metric for a replaced Node or an old sample, and preserves genuine zero usage",
+          "status": "passed"
+        },
+        {
+          "name": "discovers ingress and storage settings without mistaking an old Traefik generation for readiness",
+          "status": "passed"
+        },
+        {
+          "name": "returns bounded workload previews without specifications or secrets, and does not count unreadable collections as zero",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "tests/infrastructure/networking.test.ts",
+      "status": "passed",
+      "total": 21,
+      "cases": [
+        {
+          "name": "creates named HTTP/HTTPS resources and reserves controller TLS creation before Certificate admission",
+          "status": "passed"
+        },
+        {
+          "name": "retries without writes and never rotates the existing account key",
+          "status": "passed"
+        },
+        {
+          "name": "recovers a create whose HTTP response was lost using the original nonce and key",
+          "status": "passed"
+        },
+        {
+          "name": "recovers a create whose durable receipt was interrupted",
+          "status": "passed"
+        },
+        {
+          "name": "refuses an unrecorded TLS Secret with missing_parent proof",
+          "status": "passed"
+        },
+        {
+          "name": "refuses an unrecorded TLS Secret with wrong_issuer proof",
+          "status": "passed"
+        },
+        {
+          "name": "rejects a TLS Secret with a mismatching private key without exposing key material",
+          "status": "passed"
+        },
+        {
+          "name": "does not claim production trust for a self-signed chain even with a current Ready status",
+          "status": "passed"
+        },
+        {
+          "name": "follows only the current Certificate owner chain to diagnose failed ACME Orders",
+          "status": "passed"
+        },
+        {
+          "name": "accepts private IPv6 ACME fixtures while retaining strict HTTPS and private resolver bounds",
+          "status": "passed"
+        },
+        {
+          "name": "preflights all owned names and rejects a foreign resource before any Kubernetes writes",
+          "status": "passed"
+        },
+        {
+          "name": "does not adopt a same-name replacement, including on explicit reconcile",
+          "status": "passed"
+        },
+        {
+          "name": "records proven absence and uses a fresh nonce only on explicit reconcile",
+          "status": "passed"
+        },
+        {
+          "name": "keeps sync read-only and reports spec drift without changing the ledger",
+          "status": "passed"
+        },
+        {
+          "name": "requires the published Service UID and verifies EndpointSlice Service ownership",
+          "status": "passed"
+        },
+        {
+          "name": "removes only domain resources with UID and resourceVersion preconditions and retries a lost delete receipt",
+          "status": "passed"
+        },
+        {
+          "name": "does not reuse a stale Ready condition while production issuance has a newer generation",
+          "status": "passed"
+        },
+        {
+          "name": "respects cancellation before writing and redacts rejected Kubernetes response bodies",
+          "status": "passed"
+        },
+        {
+          "name": "installs all 47 fixed manifests with digest images, bounded CRD requests and owned receipts",
+          "status": "passed"
+        },
+        {
+          "name": "refuses to overwrite a compatible external cert-manager installation",
+          "status": "passed"
+        },
+        {
+          "name": "keeps the ordinary transport 64 KiB request limit and rejects arbitrary paths",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "tests/infrastructure/workload.test.ts",
+      "status": "passed",
+      "total": 43,
+      "cases": [
+        {
+          "name": "applies digest configuration with durable UID receipts and verifies the target Pods and metrics",
+          "status": "passed"
+        },
+        {
+          "name": "replays the same plan without recreating or replacing completed resources",
+          "status": "passed"
+        },
+        {
+          "name": "keeps prior snapshot and unused pull Secrets owned across two publications and runtime operations",
+          "status": "passed"
+        },
+        {
+          "name": "still rejects an untracked same-label Secret when historical Secrets are registered",
+          "status": "passed"
+        },
+        {
+          "name": "allows confirmed missing historical Secrets while a missing current Secret prevents health",
+          "status": "passed"
+        },
+        {
+          "name": "protects a historical Secret with changed uid before restart writes",
+          "status": "passed"
+        },
+        {
+          "name": "protects a historical Secret with changed ownership_label before restart writes",
+          "status": "passed"
+        },
+        {
+          "name": "protects a historical Secret with changed creation_nonce before restart writes",
+          "status": "passed"
+        },
+        {
+          "name": "protects a historical Secret with changed revision before restart writes",
+          "status": "passed"
+        },
+        {
+          "name": "bounds the combined required and known inventory before opening a read connection",
+          "status": "passed"
+        },
+        {
+          "name": "rejects an invalid inherited namespace, missing reservation and oversized secret before network writes",
+          "status": "passed"
+        },
+        {
+          "name": "supports IANA port names starting with digits, container-port aliases and 2048-character HTTP probe paths",
+          "status": "passed"
+        },
+        {
+          "name": "rejects malformed IANA port names and control characters in HTTP probe paths before network access",
+          "status": "passed"
+        },
+        {
+          "name": "requires a durable creation attempt and never adopts a resource based on matching labels alone",
+          "status": "passed"
+        },
+        {
+          "name": "recovers a create whose response was lost only after the creation intent was persisted",
+          "status": "passed"
+        },
+        {
+          "name": "uses the current resourceVersion while retaining the recorded UID and allows status-only changes",
+          "status": "passed"
+        },
+        {
+          "name": "refuses replaced UIDs and remote revisions newer than the accepted operation, including explicit repair",
+          "status": "passed"
+        },
+        {
+          "name": "reports drift without writing and repairs only after explicit full-republish confirmation",
+          "status": "passed"
+        },
+        {
+          "name": "surfaces version conflicts without forcing a replacement and retains partial receipts",
+          "status": "passed"
+        },
+        {
+          "name": "stops before a remote write when the durable lease callback rejects",
+          "status": "passed"
+        },
+        {
+          "name": "retains a known UID if receipt persistence fails after Kubernetes changed",
+          "status": "passed"
+        },
+        {
+          "name": "cancels an in-flight create without claiming its remote side effects were rolled back",
+          "status": "passed"
+        },
+        {
+          "name": "does not confuse old healthy Pods or an unobserved generation with a completed rollout",
+          "status": "passed"
+        },
+        {
+          "name": "verifies a newly created Pod controller when the ReplicaSet list came from an earlier rollout snapshot",
+          "status": "passed"
+        },
+        {
+          "name": "retains ownership protection for a missing controller absent from the ReplicaSet list",
+          "status": "passed"
+        },
+        {
+          "name": "retains ownership protection for a wrong_uid controller absent from the ReplicaSet list",
+          "status": "passed"
+        },
+        {
+          "name": "retains ownership protection for a foreign_deployment controller absent from the ReplicaSet list",
+          "status": "passed"
+        },
+        {
+          "name": "retains ownership protection for a wrong_label controller absent from the ReplicaSet list",
+          "status": "passed"
+        },
+        {
+          "name": "marks an observation incomplete when an unverified Pod disappears before its named read",
+          "status": "passed"
+        },
+        {
+          "name": "waits for a complete Pod set even when an incomplete read contains all expected healthy replicas",
+          "status": "passed"
+        },
+        {
+          "name": "detects a Pod image changed outside its controller even while runtime status reports the old image",
+          "status": "passed"
+        },
+        {
+          "name": "rejects relabelled old Pods and withholds an unverified snapshot from log readers",
+          "status": "passed"
+        },
+        {
+          "name": "keeps a failed probe separate from complete application and returns bounded, non-secret events",
+          "status": "passed"
+        },
+        {
+          "name": "bounds health callbacks and cancellation even when a consumer never settles",
+          "status": "passed"
+        },
+        {
+          "name": "stops a drifted workload by changing only replica intent and waits for active Pods to disappear",
+          "status": "passed"
+        },
+        {
+          "name": "restores the published replicas and template, refreshes current pull auth, and restarts with a new rollout token",
+          "status": "passed"
+        },
+        {
+          "name": "refuses resume when a supplied published identity does not match the actual template",
+          "status": "passed"
+        },
+        {
+          "name": "recovers a completed runtime write whose receipt was lost without changing its template or restarting twice",
+          "status": "passed"
+        },
+        {
+          "name": "deletes only inventoried resources with UID preconditions and waits for 404, preserving the Namespace",
+          "status": "passed"
+        },
+        {
+          "name": "detects a replaced resource before beginning a multi-resource deletion",
+          "status": "passed"
+        },
+        {
+          "name": "reports unavailable/stale metrics as unknown and does not attach values to a reused Pod name",
+          "status": "passed"
+        },
+        {
+          "name": "does not mistake changed Secret labels for a confirmed 404 and exposes actual missing resource identity",
+          "status": "passed"
+        },
+        {
+          "name": "rejects a same-label Pod with a different controller UID and keeps two cluster contexts separate",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "infrastructureBuild": "passed",
+    "eslint": "passed",
+    "prettier": "passed"
+  },
+  "sources": [
+    {
+      "path": "packages/infrastructure/src/kubernetes/transport.ts",
+      "sha256": "5c3b20b8ddec2d199195f7a2edfb18dacc78cf3bda21fb8e107fd696f652a943"
+    },
+    {
+      "path": "packages/infrastructure/src/networking.ts",
+      "sha256": "7eb525c7053ae11c83066cf335ba5f243ea6f3e4002762e3a9baa9427e7858e4"
+    },
+    {
+      "path": "packages/infrastructure/src/networking/adapter.ts",
+      "sha256": "914906332594b7f06af53c17742053157935f88ae9fcedfa71dd52f2dc576f22"
+    },
+    {
+      "path": "packages/infrastructure/src/networking/resources.ts",
+      "sha256": "7a1cef2057237eb56085e3d111890b02a8aa213f48b2d384fbb9201293f75861"
+    },
+    {
+      "path": "packages/infrastructure/src/networking/manifests.ts",
+      "sha256": "395003f883822b550aa46bfa2290ae301461df72fe82c23623045e595ab3b895"
+    },
+    {
+      "path": "packages/infrastructure/src/networking/observation.ts",
+      "sha256": "691f6c71f21ce51fcadcc51816980e759fd9f022eaa16867ebb80fee370b142d"
+    },
+    {
+      "path": "tests/infrastructure/networking-fixture.ts",
+      "sha256": "29b87955cc33d83d30328d2f84f21d6c6c7d803e3bde190841fec79a74f42cef"
+    },
+    {
+      "path": "tests/infrastructure/networking.test.ts",
+      "sha256": "847ef992d7fd96f83718d949622270029daf7d33372610601c68ce8ac05a0f28"
+    }
+  ],
+  "guarantees": [
+    "Pinned v1.21.3 manifest creates all 47 resources; all four OCI references carry verified index digests.",
+    "Installation uses a 256 KiB request and 32 MiB total response budget; normal requests remain limited to 64 KiB.",
+    "Installation waits on Deployments without repeatedly downloading large CRD schemas.",
+    "TLS child creation is durably reserved before Certificate admission and requires trusted Certificate and cert-manager child metadata before its first UID receipt.",
+    "ACME account private keys are created once and preserved across retries; TLS keys and returned certificate chains are validated without exposing material.",
+    "Lost create and delete receipts recover by exact nonce, UID and resourceVersion; explicit reconcile is required for known missing resources.",
+    "Same-name replacements and configuration drift stop mutations; shared Issuers and account Secrets survive domain removal.",
+    "Observations do not write to Kubernetes; failed ACME diagnostics follow bounded current owner chains.",
+    "Local test certificates are marked local_test; production certificates require an independently verified built-in ISRG root chain."
+  ],
+  "limits": [
+    "These are real TLS/HTTP protocol fixtures with synthetic Kubernetes resources, not a claim of publicly reachable DNS or publicly trusted ACME issuance.",
+    "Real K3s/Pebble HTTP-01, renewal, domain deletion and cross-cluster probes are reported separately by the main S4 acceptance run."
+  ]
+}

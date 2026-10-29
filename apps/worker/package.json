@@ -1,0 +1,22 @@
+{
+  "name": "@ozz/worker",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node --env-file-if-exists=../../.env dist/main.js",
+    "dev": "concurrently -k \"tsc -p tsconfig.json --watch --preserveWatchOutput\" \"node --env-file=../../.env --watch dist/main.js\""
+  },
+  "dependencies": {
+    "@nestjs/common": "11.2.8",
+    "@nestjs/core": "11.2.8",
+    "@ozz/config": "workspace:*",
+    "@ozz/control-plane": "workspace:*",
+    "@ozz/database": "workspace:*",
+    "@ozz/infrastructure": "workspace:*",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2"
+  }
+}

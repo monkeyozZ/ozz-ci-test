@@ -1,0 +1,61 @@
+{
+  "name": "@ozz/infrastructure",
+  "version": "0.1.0",
+  "private": true,
+  "files": [
+    "dist",
+    "assets"
+  ],
+  "exports": {
+    "./ssh": {
+      "types": "./dist/ssh.d.ts",
+      "default": "./dist/ssh.js"
+    },
+    "./kubernetes": {
+      "types": "./dist/kubernetes.d.ts",
+      "default": "./dist/kubernetes.js"
+    },
+    "./registry": {
+      "types": "./dist/registry.d.ts",
+      "default": "./dist/registry.js"
+    },
+    "./workload": {
+      "types": "./dist/workload.d.ts",
+      "default": "./dist/workload.js"
+    },
+    "./networking": {
+      "types": "./dist/networking.d.ts",
+      "default": "./dist/networking.js"
+    },
+    "./storage": {
+      "types": "./dist/storage.d.ts",
+      "default": "./dist/storage.js"
+    },
+    "./build": {
+      "types": "./dist/build.d.ts",
+      "default": "./dist/build.js"
+    },
+    "./log-redaction": {
+      "types": "./dist/log-redaction.d.ts",
+      "default": "./dist/log-redaction.js"
+    },
+    "./github": {
+      "types": "./dist/github.d.ts",
+      "default": "./dist/github.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "2.0.1",
+    "ssh2": "1.17.0",
+    "ws": "8.22.0",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@types/ssh2": "1.15.6",
+    "@types/ws": "8.18.1"
+  }
+}

@@ -1,0 +1,1200 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SecretKind {
+  ssh
+  kubeconfig
+  git
+  registry
+  database
+  generic
+  webhook
+  builder
+}
+
+enum ConnectionStatus {
+  unverified
+  connected
+  unreachable
+  unknown
+}
+
+enum OperationStatus {
+  queued
+  running
+  succeeded
+  failed
+  cancelled
+}
+
+enum ServiceDesiredState {
+  running
+  stopped
+}
+
+enum ServiceConfigurationState {
+  unpublished
+  consistent
+  partial
+  drifted
+  unknown
+}
+
+model Admin {
+  id           String   @id @default(uuid()) @db.Uuid
+  singleton    Int      @unique @default(1)
+  username     String   @unique @db.VarChar(64)
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  sessions     Session[]
+  operations   Operation[]
+  deployments  Deployment[]
+}
+
+model Session {
+  id        String    @id @default(uuid()) @db.Uuid
+  adminId   String    @db.Uuid
+  tokenHash String    @unique @db.Char(64)
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  admin     Admin     @relation(fields: [adminId], references: [id], onDelete: Restrict)
+
+  @@index([expiresAt])
+}
+
+model LoginAttempt {
+  key         String   @id @db.Char(64)
+  windowStart DateTime
+  attempts    Int      @default(0)
+  updatedAt   DateTime @updatedAt
+}
+
+model SecretReference {
+  id               String     @id @default(uuid()) @db.Uuid
+  name             String     @db.VarChar(120)
+  kind             SecretKind
+  encryptedPayload Bytes
+  nonce            Bytes
+  tag              Bytes
+  keyVersion       Int
+  revision         Int        @default(1)
+  // Payload semantics are independent of display metadata and master-key rewrapping.
+  contentRevision  Int        @default(1)
+  expiresAt        DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  servers          Server[]
+  clusters         Cluster[]
+  candidateOperations Operation[] @relation("CandidateCredential")
+  registryServices Service[] @relation("ServiceRegistryCredential")
+  serviceReferences ServiceSecretReference[]
+  deploymentReferences DeploymentSecretReference[]
+  databaseInstances DatabaseInstance[]
+  githubConnections GitHubConnection[]
+  repositoryHookSecrets GitRepository[] @relation("RepositoryHookSecret")
+  repositoryPreviousHookSecrets GitRepository[] @relation("RepositoryPreviousHookSecret")
+  repositoryCandidateHookSecrets GitRepository[] @relation("RepositoryCandidateHookSecret")
+  registryPushConnections RegistryConnection[] @relation("RegistryPushCredential")
+  registryPullConnections RegistryConnection[] @relation("RegistryPullCredential")
+  builders Builder[]
+  gitSourceReferences GitSourceSecretReference[]
+
+  @@index([createdAt, id])
+}
+
+model Server {
+  id              String           @id @default(uuid()) @db.Uuid
+  name            String           @db.VarChar(120)
+  host            String           @db.VarChar(253)
+  sshPort         Int              @default(22)
+  sshUser         String           @db.VarChar(64)
+  region          String?          @db.VarChar(80)
+  tags            String[]         @default([])
+  credentialRefId String?          @db.Uuid
+  connectionStatus ConnectionStatus @default(unverified)
+  lastObservedAt  DateTime?
+  revision        Int              @default(1)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  credential      SecretReference? @relation(fields: [credentialRefId], references: [id], onDelete: Restrict)
+  connectionRevision Int           @default(1)
+  hostKeyFingerprint String?       @db.VarChar(128)
+  hostKeyAlgorithm String?         @db.VarChar(80)
+  hostKeyTrustedAt DateTime?
+  hostKeyTrustSource String?       @db.VarChar(500)
+  observedHostKeyFingerprint String? @db.VarChar(128)
+  observedHostKeyAlgorithm String? @db.VarChar(80)
+  observedHostKeyAt DateTime?
+  hostKeyDiscoveryOperationId String? @db.Uuid
+  machineId       String?          @unique @db.VarChar(128)
+  preflightJson   Json?
+  preflightAt     DateTime?
+  lastAttemptAt   DateTime?
+  lastErrorCode   String?          @db.VarChar(80)
+  lastErrorMessage String?         @db.VarChar(1000)
+  nodes           Node[]
+  bootstrappedClusters Cluster[]
+  operations      Operation[]
+
+  @@index([createdAt, id])
+}
+
+model Cluster {
+  id               String           @id @default(uuid()) @db.Uuid
+  name             String           @db.VarChar(120)
+  slug             String           @unique @db.VarChar(63)
+  description      String?          @db.VarChar(1000)
+  region           String?          @db.VarChar(80)
+  apiEndpoint      String?          @db.VarChar(2048)
+  credentialRefId  String?          @db.Uuid
+  connectionStatus ConnectionStatus @default(unverified)
+  lastObservedAt   DateTime?
+  revision         Int              @default(1)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  credential       SecretReference? @relation(fields: [credentialRefId], references: [id], onDelete: Restrict)
+  projects         Project[]
+  networking       ClusterNetworking?
+  networkResources NetworkManagedResource[]
+  connectionRevision Int           @default(1)
+  kubeSystemUid    String?          @unique @db.VarChar(128)
+  caFingerprint    String?          @db.VarChar(128)
+  observationJson  Json?
+  lastAttemptAt    DateTime?
+  lastErrorCode    String?          @db.VarChar(80)
+  lastErrorMessage String?          @db.VarChar(1000)
+  nextObservationAt DateTime        @default(now())
+  observationFailures Int          @default(0)
+  observationLeaseToken String?     @db.Uuid
+  observationLeaseExpiresAt DateTime?
+  bootstrapServerId String?        @unique @db.Uuid
+  bootstrapConfig  Json?
+  bootstrapServer  Server?         @relation(fields: [bootstrapServerId], references: [id], onDelete: Restrict)
+  nodes            Node[]
+  operations       Operation[]
+  managedResources ManagedResource[]
+
+  volumes          Volume[]
+  storageCapabilitiesJson Json?
+  storageCapabilitiesAt DateTime?
+  storageLastAttemptAt DateTime?
+  storageErrorCode String? @db.VarChar(80)
+  storageLeaseToken String? @db.Uuid
+  storageLeaseExpiresAt DateTime?
+  storageNextObservationAt DateTime @default(now())
+
+  @@index([createdAt, id])
+  @@index([nextObservationAt])
+}
+
+model Node {
+  id               String   @id @default(uuid()) @db.Uuid
+  clusterId        String   @db.Uuid
+  uid              String   @db.VarChar(128)
+  name             String   @db.VarChar(253)
+  serverId         String?  @db.Uuid
+  snapshotJson     Json
+  present          Boolean  @default(true)
+  lastObservedAt   DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  cluster          Cluster  @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+  server           Server?  @relation(fields: [serverId], references: [id], onDelete: SetNull)
+
+  @@unique([clusterId, uid])
+  @@index([serverId])
+  @@index([createdAt, id])
+}
+
+model Project {
+  id          String        @id @default(uuid()) @db.Uuid
+  name        String        @db.VarChar(120)
+  slug        String        @unique @db.VarChar(63)
+  description String?       @db.VarChar(1000)
+  clusterId   String        @db.Uuid
+  revision    Int           @default(1)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  cluster     Cluster       @relation(fields: [clusterId], references: [id], onDelete: Restrict)
+  environments Environment[]
+
+  @@index([clusterId])
+  @@index([createdAt, id])
+}
+
+model Environment {
+  id          String   @id @default(uuid()) @db.Uuid
+  projectId   String   @db.Uuid
+  name        String   @db.VarChar(120)
+  slug        String   @db.VarChar(63)
+  description String?  @db.VarChar(1000)
+  revision    Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  services    Service[]
+  managedResources ManagedResource[]
+  volumes     Volume[]
+
+  @@unique([projectId, slug])
+  @@index([createdAt, id])
+}
+
+model ControlPlaneState {
+  id            String   @id @default("control-plane")
+  restoreLocked Boolean  @default(false)
+  generation    Int      @default(0)
+  installationId String  @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  updatedAt     DateTime @updatedAt
+}
+
+model KeyVerification {
+  keyVersion       Int      @id
+  encryptedPayload Bytes
+  nonce            Bytes
+  tag              Bytes
+  createdAt        DateTime @default(now())
+}
+
+model Operation {
+  id               String          @id @default(uuid()) @db.Uuid
+  kind             String          @default("diagnostic") @db.VarChar(64)
+  scope            String          @default("control_plane") @db.VarChar(64)
+  status           OperationStatus @default(queued)
+  input            Json
+  result           Json?
+  logsJson         Json?
+  generation       Int             @default(0)
+  createdById      String?         @db.Uuid
+  requestId        String?         @db.VarChar(128)
+  idempotencyScope  String          @db.VarChar(160)
+  idempotencyKey    String          @db.VarChar(128)
+  requestHash      String          @db.Char(64)
+  attempts         Int             @default(0)
+  maxAttempts      Int             @default(3)
+  nextAttemptAt    DateTime        @default(now())
+  leaseOwner       String?         @db.VarChar(128)
+  leaseToken       String?         @db.Uuid
+  leaseExpiresAt   DateTime?
+  cancelRequestedAt DateTime?
+  errorCode        String?         @db.VarChar(80)
+  errorMessage     String?         @db.VarChar(1000)
+  retryOfId        String?         @db.Uuid
+  startedAt        DateTime?
+  finishedAt       DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  createdBy        Admin?          @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  outbox           Outbox?
+  retryOf          Operation?     @relation("OperationRetries", fields: [retryOfId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  retries          Operation[]    @relation("OperationRetries")
+  serverId         String?         @db.Uuid
+  clusterId        String?         @db.Uuid
+  candidateCredentialRefId String? @db.Uuid
+  serviceId        String?         @db.Uuid
+  server           Server?         @relation(fields: [serverId], references: [id], onDelete: SetNull)
+  cluster          Cluster?        @relation(fields: [clusterId], references: [id], onDelete: SetNull)
+  candidateCredential SecretReference? @relation("CandidateCredential", fields: [candidateCredentialRefId], references: [id], onDelete: SetNull)
+  service          Service?        @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  mutationSlot     ServiceMutation?
+  volumeMutations  VolumeMutation[]
+
+  @@unique([idempotencyScope, idempotencyKey])
+  @@index([status, nextAttemptAt])
+  @@index([createdAt, id])
+  @@index([serverId, createdAt])
+  @@index([clusterId, createdAt])
+  @@index([serviceId, createdAt])
+}
+
+model Service {
+  id                         String @id @default(uuid()) @db.Uuid
+  environmentId              String @db.Uuid
+  name                       String @db.VarChar(120)
+  slug                       String @db.VarChar(63)
+  description                String? @db.VarChar(1000)
+  kind                       String @default("application") @db.VarChar(32)
+  templateId                 String? @db.VarChar(64)
+  templateVersion            String? @db.VarChar(64)
+  revision                   Int @default(1)
+  configRevision             Int @default(1)
+  configJson                 Json
+  registryCredentialRefId    String? @db.Uuid
+  desiredState               ServiceDesiredState @default(running)
+  configurationState         ServiceConfigurationState @default(unpublished)
+  mutationRevision           Int @default(0)
+  publishedDeploymentId      String? @unique @db.Uuid
+  lastSuccessfulDeploymentId String? @unique @db.Uuid
+  remoteCreatedAt            DateTime?
+  observationJson            Json?
+  lastObservedAt             DateTime?
+  lastAttemptAt              DateTime?
+  lastErrorCode              String? @db.VarChar(80)
+  lastErrorMessage           String? @db.VarChar(1000)
+  nextObservationAt          DateTime @default(now())
+  observationFailures        Int @default(0)
+  observationErrorCode       String? @db.VarChar(80)
+  observationLeaseToken      String? @db.Uuid
+  observationLeaseExpiresAt  DateTime?
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+  environment                Environment @relation(fields: [environmentId], references: [id], onDelete: Restrict)
+  registryCredential         SecretReference? @relation("ServiceRegistryCredential", fields: [registryCredentialRefId], references: [id], onDelete: Restrict)
+  publishedDeployment        Deployment? @relation("PublishedDeployment", fields: [publishedDeploymentId], references: [id], onDelete: Restrict)
+  lastSuccessfulDeployment   Deployment? @relation("SuccessfulDeployment", fields: [lastSuccessfulDeploymentId], references: [id], onDelete: Restrict)
+  ports                      ServicePort[]
+  secretReferences           ServiceSecretReference[]
+  deployments                Deployment[] @relation("ServiceDeployments")
+  operations                 Operation[]
+  activeMutation             ServiceMutation?
+  managedResources           ManagedResource[]
+  domain                     Domain?
+  volumeMounts               VolumeMount[]
+  database                   DatabaseInstance?
+  databaseBindings           DatabaseBinding[]
+  sourceKind                 String @default("image") @db.VarChar(16)
+  gitSource                  GitSource?
+  webhookTargets             WebhookTarget[]
+  gitPreviews                GitPublicationPreview[]
+
+  @@unique([environmentId, slug])
+  @@index([createdAt, id])
+  @@index([nextObservationAt])
+}
+
+model ServicePort {
+  id            String @id @default(uuid()) @db.Uuid
+  serviceId     String @db.Uuid
+  name          String @db.VarChar(15)
+  protocol      String @db.VarChar(8)
+  containerPort Int
+  servicePort   Int
+  service       Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  domains       Domain[]
+
+  @@unique([serviceId, name])
+  @@unique([id, serviceId])
+}
+
+model PlatformSettings {
+  id               Int @id @default(1)
+  revision         Int @default(1)
+  appsDomainSuffix String? @db.VarChar(253)
+  acmeEmail        String? @db.VarChar(254)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ClusterNetworking {
+  clusterId          String @id @db.Uuid
+  revision           Int @default(1)
+  subdomain          String @unique @db.VarChar(63)
+  entryAddresses     String[] @default([])
+  cnameTarget        String? @db.VarChar(253)
+  capabilitiesJson   Json?
+  capabilitiesAt     DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  cluster            Cluster @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+}
+
+model Domain {
+  id                       String @id @default(uuid()) @db.Uuid
+  serviceId                String @unique @db.Uuid
+  servicePortId            String @db.Uuid
+  hostname                 String @unique @db.VarChar(253)
+  kind                     String @default("default") @db.VarChar(16)
+  targetJson               Json
+  portJson                 Json
+  revision                 Int @default(1)
+  desiredState             String @default("active") @db.VarChar(16)
+  certificateEnvironment   String @default("staging") @db.VarChar(16)
+  dnsJson                  Json?
+  routeJson                Json?
+  certificateJson          Json?
+  lastObservedAt           DateTime?
+  observationErrorCode     String? @db.VarChar(80)
+  lastAttemptAt            DateTime?
+  lastErrorCode            String? @db.VarChar(80)
+  lastErrorMessage         String? @db.VarChar(1000)
+  nextObservationAt        DateTime @default(now())
+  observationLeaseToken    String? @db.Uuid
+  observationLeaseExpiresAt DateTime?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  service                  Service @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  servicePort              ServicePort @relation(fields: [servicePortId, serviceId], references: [id, serviceId], onDelete: Restrict)
+  managedResources         NetworkManagedResource[]
+
+  @@index([createdAt, id])
+  @@index([nextObservationAt])
+}
+
+model NetworkManagedResource {
+  id                    String @id @default(uuid()) @db.Uuid
+  clusterId             String? @db.Uuid
+  domainId              String? @db.Uuid
+  apiVersion            String @db.VarChar(100)
+  kind                  String @db.VarChar(64)
+  namespace             String @db.VarChar(63)
+  name                  String @db.VarChar(253)
+  role                  String @db.VarChar(32)
+  scope                 String @db.VarChar(16)
+  ledgerVersion         Int @default(0)
+  targetJson            Json
+  creationNonce         String @default(uuid()) @db.Uuid
+  creationAttempted     Boolean @default(false)
+  uid                   String? @db.VarChar(128)
+  resourceVersion       String? @db.VarChar(128)
+  revision              Int @default(0)
+  receiptJson           Json?
+  deletedAt             DateTime?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  cluster               Cluster? @relation(fields: [clusterId], references: [id], onDelete: SetNull)
+  domain                Domain? @relation(fields: [domainId], references: [id], onDelete: SetNull)
+
+  @@unique([clusterId, kind, namespace, name])
+  @@index([domainId])
+}
+
+model ServiceSecretReference {
+  serviceId   String @db.Uuid
+  secretRefId String @db.Uuid
+  service     Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  secret      SecretReference @relation(fields: [secretRefId], references: [id], onDelete: Restrict)
+
+  @@id([serviceId, secretRefId])
+}
+
+model Deployment {
+  id                String @id @default(uuid()) @db.Uuid
+  kind              String @default("image_deploy") @db.VarChar(64)
+  scope             String @default("service") @db.VarChar(64)
+  status            OperationStatus @default(queued)
+  phase             String @default("queued") @db.VarChar(64)
+  input             Json
+  result            Json?
+  logsJson          Json?
+  generation        Int @default(0)
+  createdById       String? @db.Uuid
+  requestId         String? @db.VarChar(128)
+  idempotencyScope   String @db.VarChar(160)
+  idempotencyKey     String @db.VarChar(128)
+  requestHash       String @db.Char(64)
+  attempts          Int @default(0)
+  maxAttempts       Int @default(3)
+  nextAttemptAt     DateTime @default(now())
+  leaseOwner        String? @db.VarChar(128)
+  leaseToken        String? @db.Uuid
+  leaseExpiresAt    DateTime?
+  cancelRequestedAt DateTime?
+  errorCode         String? @db.VarChar(80)
+  errorMessage      String? @db.VarChar(1000)
+  retryOfId         String? @db.Uuid
+  startedAt         DateTime?
+  finishedAt        DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  serviceId         String? @db.Uuid
+  configRevision    Int
+  mutationRevision  Int
+  snapshotJson      Json
+  targetJson        Json
+  resolvedImageJson Json?
+  appliedAt         DateTime?
+  createdBy         Admin? @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  service           Service? @relation("ServiceDeployments", fields: [serviceId], references: [id], onDelete: SetNull)
+  publishedBy       Service? @relation("PublishedDeployment")
+  successfulBy      Service? @relation("SuccessfulDeployment")
+  retryOf           Deployment? @relation("DeploymentRetries", fields: [retryOfId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  retries           Deployment[] @relation("DeploymentRetries")
+  stages            DeploymentStage[]
+  secretReferences  DeploymentSecretReference[]
+  outbox            Outbox?
+  mutationSlot      ServiceMutation?
+  volumeMutations   VolumeMutation[]
+  volumeReferences  DeploymentVolumeReference[]
+  databaseReferences DeploymentDatabaseReference[]
+  sourceRevisionId   String? @db.Uuid
+  reuseArtifactId    String? @db.Uuid
+  artifactId         String? @db.Uuid
+  initiatorKind      String @default("admin") @db.VarChar(16)
+  webhookDeliveryId  String? @db.Uuid
+  webhookTargetId    String? @unique @db.Uuid
+  sourceRevision     GitSourceRevision? @relation(fields: [sourceRevisionId], references: [id], onDelete: Restrict)
+  reuseArtifact      BuildArtifact? @relation("ReuseArtifact", fields: [reuseArtifactId], references: [id], onDelete: Restrict)
+  artifact           BuildArtifact? @relation("DeploymentArtifact", fields: [artifactId], references: [id], onDelete: Restrict)
+  buildRuns          BuildRun[]
+  webhookDelivery    WebhookDelivery? @relation(fields: [webhookDeliveryId], references: [id], onDelete: Restrict)
+  webhookTarget      WebhookTarget? @relation("DeploymentInitiatorTarget", fields: [webhookTargetId], references: [id], onDelete: Restrict)
+  admittedWebhookTarget WebhookTarget? @relation("TargetDeployment")
+  consumedGitPreview GitPublicationPreview?
+
+  @@unique([idempotencyScope, idempotencyKey])
+  @@index([status, nextAttemptAt])
+  @@index([serviceId, createdAt])
+  @@index([createdAt, id])
+}
+
+model DeploymentStage {
+  id           String @id @default(uuid()) @db.Uuid
+  deploymentId String @db.Uuid
+  name         String @db.VarChar(64)
+  attempt      Int @default(1)
+  status       String @db.VarChar(32)
+  startedAt    DateTime?
+  finishedAt   DateTime?
+  errorCode    String? @db.VarChar(80)
+  deployment   Deployment @relation(fields: [deploymentId], references: [id], onDelete: Cascade)
+
+  @@unique([deploymentId, attempt, name])
+}
+
+model DeploymentSecretReference {
+  deploymentId String @db.Uuid
+  secretRefId  String @db.Uuid
+  deployment   Deployment @relation(fields: [deploymentId], references: [id], onDelete: Cascade)
+  secret       SecretReference @relation(fields: [secretRefId], references: [id], onDelete: Restrict)
+
+  @@id([deploymentId, secretRefId])
+}
+
+// One durable slot is shared by both kinds of service mutation. The migration
+// enforces exactly one of operationId/deploymentId for this row and Outbox.
+model ServiceMutation {
+  serviceId    String @id @db.Uuid
+  operationId  String? @unique @db.Uuid
+  deploymentId String? @unique @db.Uuid
+  createdAt    DateTime @default(now())
+  service      Service @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  operation    Operation? @relation(fields: [operationId], references: [id], onDelete: Restrict)
+  deployment   Deployment? @relation(fields: [deploymentId], references: [id], onDelete: Restrict)
+}
+
+model ManagedResource {
+  id                  String @id @default(uuid()) @db.Uuid
+  clusterId           String? @db.Uuid
+  environmentId       String? @db.Uuid
+  serviceId           String? @db.Uuid
+  kind                String @db.VarChar(64)
+  namespace           String @db.VarChar(63)
+  name                String @db.VarChar(253)
+  targetJson          Json
+  creationNonce       String @default(uuid()) @db.Uuid
+  creationAttempted   Boolean @default(false)
+  uid                 String? @db.VarChar(128)
+  resourceVersion     String? @db.VarChar(128)
+  mutationRevision    Int @default(0)
+  receiptJson         Json?
+  deletedAt           DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  cluster             Cluster? @relation(fields: [clusterId], references: [id], onDelete: SetNull)
+  environment         Environment? @relation(fields: [environmentId], references: [id], onDelete: SetNull)
+  service             Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+
+  @@unique([clusterId, kind, namespace, name])
+  @@index([environmentId])
+  @@index([serviceId])
+}
+
+// A Volume owns exactly one PVC. Neither its claim nor its data is owned by a
+// Service/controller. Destroyed rows retain the original target and receipts.
+model Volume {
+  id                        String @id @default(uuid()) @db.Uuid
+  environmentId             String? @db.Uuid
+  clusterId                 String? @db.Uuid
+  name                      String @db.VarChar(120)
+  slug                      String @db.VarChar(63)
+  targetJson                Json
+  namespace                 String @db.VarChar(63)
+  requestedBytes            BigInt
+  storageClassName          String @db.VarChar(253)
+  storageClassUid           String? @db.VarChar(128)
+  volumeMode                String @default("Filesystem") @db.VarChar(16)
+  accessModes               String[] @default(["ReadWriteOnce"])
+  revision                  Int @default(1)
+  mutationRevision          Int @default(0)
+  ledgerVersion             Int @default(0)
+  pvcName                   String @db.VarChar(253)
+  creationNonce             String @default(uuid()) @db.Uuid
+  creationAttempted         Boolean @default(false)
+  pvcUid                    String? @db.VarChar(128)
+  resourceVersion           String? @db.VarChar(128)
+  specFingerprint           String? @db.Char(64)
+  receiptJson               Json?
+  deletionIntentJson        Json?
+  destroyedAt               DateTime?
+  observationJson           Json?
+  lastObservedAt            DateTime?
+  lastAttemptAt             DateTime?
+  observationErrorCode      String? @db.VarChar(80)
+  lastErrorCode             String? @db.VarChar(80)
+  lastErrorMessage          String? @db.VarChar(1000)
+  nextObservationAt         DateTime @default(now())
+  observationLeaseToken     String? @db.Uuid
+  observationLeaseExpiresAt DateTime?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+  environment               Environment? @relation(fields: [environmentId], references: [id], onDelete: SetNull)
+  cluster                   Cluster? @relation(fields: [clusterId], references: [id], onDelete: SetNull)
+  mounts                    VolumeMount[]
+  activeMutation            VolumeMutation?
+  maintenances              VolumeMaintenance[]
+  database                  DatabaseInstance?
+  deploymentReferences      DeploymentVolumeReference[]
+
+  @@unique([environmentId, slug])
+  @@unique([clusterId, namespace, pvcName])
+  @@index([createdAt, id])
+  @@index([nextObservationAt])
+}
+
+// Removing a draft mount retains the occupancy until no published/active Pod
+// uses it. The migration enforces unique active paths, volumes and writers.
+model VolumeMount {
+  id                      String @id @default(uuid()) @db.Uuid
+  serviceId               String? @db.Uuid
+  volumeId                String @db.Uuid
+  mountPath               String @db.VarChar(512)
+  readOnly                Boolean @default(false)
+  desired                 Boolean @default(true)
+  detachedAt              DateTime?
+  lastPublishedDeploymentId String? @db.Uuid
+  originalServiceJson     Json
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  service                 Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  volume                  Volume @relation(fields: [volumeId], references: [id], onDelete: Restrict)
+
+  @@index([serviceId])
+  @@index([volumeId])
+}
+
+model VolumeMutation {
+  volumeId     String @id @db.Uuid
+  operationId  String? @db.Uuid
+  deploymentId String? @db.Uuid
+  createdAt    DateTime @default(now())
+  volume       Volume @relation(fields: [volumeId], references: [id], onDelete: Restrict)
+  operation    Operation? @relation(fields: [operationId], references: [id], onDelete: Restrict)
+  deployment   Deployment? @relation(fields: [deploymentId], references: [id], onDelete: Restrict)
+
+  @@index([operationId])
+  @@index([deploymentId])
+}
+
+// A task completing or a time limit elapsing does not release data maintenance.
+model VolumeMaintenance {
+  id             String @id @default(uuid()) @db.Uuid
+  volumeId       String @db.Uuid
+  purpose        String @db.VarChar(16)
+  state          String @default("entering") @db.VarChar(16)
+  revision       Int @default(1)
+  intentJson     Json
+  enteredAt      DateTime?
+  expiresAt      DateTime
+  exitedAt       DateTime?
+  lastErrorCode  String? @db.VarChar(80)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  volume         Volume @relation(fields: [volumeId], references: [id], onDelete: Restrict)
+
+  @@index([volumeId, createdAt])
+}
+
+// Data identity survives service deletion. Initialization fences are monotonic
+// and credential semantic revisions do not change during master-key rewrapping.
+model DatabaseInstance {
+  id                        String @id @default(uuid()) @db.Uuid
+  serviceId                 String? @unique @db.Uuid
+  dataVolumeId              String @unique @db.Uuid
+  originalServiceJson       Json
+  engine                    String @db.VarChar(16)
+  majorVersion              Int
+  exactVersion              String @db.VarChar(80)
+  templateId                String @db.VarChar(64)
+  templateVersion           String @db.VarChar(64)
+  image                     String @db.VarChar(2048)
+  dataLayout                String @db.VarChar(100)
+  credentialRefId           String @db.Uuid
+  credentialContentRevision Int @default(1)
+  username                  String @db.VarChar(63)
+  databaseName              String? @db.VarChar(63)
+  redisDatabase             Int?
+  revision                  Int @default(1)
+  protectionRevision        Int @default(0)
+  initializationFenceAt     DateTime?
+  initializationIntentJson  Json?
+  initializationPvcUid      String? @db.VarChar(128)
+  initializedAt             DateTime?
+  initializationState       String @default("not_started") @db.VarChar(24)
+  observationJson           Json?
+  lastObservedAt            DateTime?
+  observationErrorCode      String? @db.VarChar(80)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+  service                   Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  dataVolume                Volume @relation(fields: [dataVolumeId], references: [id], onDelete: Restrict)
+  credential                SecretReference @relation(fields: [credentialRefId], references: [id], onDelete: Restrict)
+  consumerBindings          DatabaseBinding[]
+  deploymentReferences      DeploymentDatabaseReference[]
+
+  @@index([createdAt, id])
+  @@index([credentialRefId])
+}
+
+model DatabaseBinding {
+  id                   String @id @default(uuid()) @db.Uuid
+  consumerServiceId    String @db.Uuid
+  databaseInstanceId   String @db.Uuid
+  profile              String @db.VarChar(16)
+  mappingJson          Json
+  desired              Boolean @default(true)
+  revision             Int @default(1)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  consumer             Service @relation(fields: [consumerServiceId], references: [id], onDelete: Cascade)
+  database             DatabaseInstance @relation(fields: [databaseInstanceId], references: [id], onDelete: Restrict)
+  deploymentReferences DeploymentDatabaseReference[]
+
+  @@unique([consumerServiceId, databaseInstanceId])
+  @@index([databaseInstanceId])
+}
+
+model DeploymentVolumeReference {
+  deploymentId String @db.Uuid
+  volumeId     String @db.Uuid
+  referenceJson Json
+  resolutionJson Json?
+  deployment   Deployment @relation(fields: [deploymentId], references: [id], onDelete: Cascade)
+  volume       Volume @relation(fields: [volumeId], references: [id], onDelete: Restrict)
+
+  @@id([deploymentId, volumeId])
+  @@index([volumeId])
+}
+
+model DeploymentDatabaseReference {
+  deploymentId       String @db.Uuid
+  databaseInstanceId String @db.Uuid
+  bindingId          String? @db.Uuid
+  referenceJson      Json
+  deployment         Deployment @relation(fields: [deploymentId], references: [id], onDelete: Cascade)
+  database           DatabaseInstance @relation(fields: [databaseInstanceId], references: [id], onDelete: Restrict)
+  binding            DatabaseBinding? @relation(fields: [bindingId], references: [id], onDelete: SetNull)
+
+  @@id([deploymentId, databaseInstanceId])
+  @@index([databaseInstanceId])
+}
+
+// Used by synchronous, multi-object commands (template drafts), not task queues.
+// Public response only: no generated credential material is ever stored here.
+model CommandReceipt {
+  id               String @id @default(uuid()) @db.Uuid
+  idempotencyScope String @db.VarChar(160)
+  idempotencyKey   String @db.VarChar(128)
+  requestHash      String @db.Char(64)
+  resultJson       Json
+  createdAt        DateTime @default(now())
+
+  @@unique([idempotencyScope, idempotencyKey])
+}
+
+model Outbox {
+  id               String    @id @default(uuid()) @db.Uuid
+  operationId      String?   @unique @db.Uuid
+  deploymentId     String?   @unique @db.Uuid
+  availableAt      DateTime  @default(now())
+  publishedAt      DateTime?
+  attempts         Int       @default(0)
+  deliverySequence Int       @default(0)
+  leaseToken       String?   @db.Uuid
+  leaseExpiresAt   DateTime?
+  lastErrorCode    String?   @db.VarChar(80)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  operation        Operation? @relation(fields: [operationId], references: [id], onDelete: Restrict)
+  deployment       Deployment? @relation(fields: [deploymentId], references: [id], onDelete: Restrict)
+
+  @@index([availableAt, publishedAt])
+}
+
+model WorkerHeartbeat {
+  id               String   @id @db.VarChar(128)
+  startedAt        DateTime @default(now())
+  lastSeenAt       DateTime @default(now())
+  queueConnected   Boolean  @default(false)
+  recoveryMode     Boolean  @default(false)
+  activeOperations Int      @default(0)
+  errorCode        String?  @db.VarChar(80)
+}
+
+model AuditEvent {
+  id           String   @id @default(uuid()) @db.Uuid
+  actorId      String?  @db.Uuid
+  requestId    String?  @db.VarChar(128)
+  action       String   @db.VarChar(100)
+  resourceType String   @db.VarChar(80)
+  resourceId   String?  @db.VarChar(128)
+  outcome      String   @db.VarChar(32)
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt, id])
+}
+
+// Maintenance credentials are looked up from these connections at actual use.
+// Neither tokens nor clone locators are frozen into a source/build specification.
+model GitHubConnection {
+  id                String @id @default(uuid()) @db.Uuid
+  name              String @db.VarChar(120)
+  credentialRefId   String @db.Uuid
+  revision          Int @default(1)
+  verificationState String @default("unverified") @db.VarChar(32)
+  verifiedCredentialRefId String? @db.Uuid
+  verifiedAt        DateTime?
+  accountId         String? @db.VarChar(32)
+  accountLogin      String? @db.VarChar(100)
+  verificationJson  Json?
+  lastErrorCode     String? @db.VarChar(80)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  credential        SecretReference @relation(fields: [credentialRefId], references: [id], onDelete: Restrict)
+  repositories      GitRepository[]
+  sourceRevisions   GitSourceRevision[]
+
+  @@index([createdAt, id])
+}
+
+model GitRepository {
+  id                      String @id @default(uuid()) @db.Uuid
+  githubConnectionId      String @db.Uuid
+  githubRepositoryId      String @db.VarChar(32)
+  fullName                String @db.VarChar(255)
+  defaultBranch           String @db.VarChar(255)
+  private                 Boolean
+  revision                Int @default(1)
+  lastVerifiedAt          DateTime
+  hookId                  String? @db.VarChar(32)
+  hookSecretRefId         String? @db.Uuid
+  previousHookSecretRefId String? @db.Uuid
+  previousHookSecretUntil DateTime?
+  candidateHookSecretRefId String? @db.Uuid
+  candidateHookSecretUntil DateTime?
+  hookState               String @default("unregistered") @db.VarChar(32)
+  hookVerifiedAt          DateTime?
+  hookErrorCode           String? @db.VarChar(80)
+  hookOperationId         String? @db.Uuid
+  hookCallbackId          String? @db.Uuid
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  connection              GitHubConnection @relation(fields: [githubConnectionId], references: [id], onDelete: Restrict)
+  hookSecret              SecretReference? @relation("RepositoryHookSecret", fields: [hookSecretRefId], references: [id], onDelete: Restrict)
+  previousHookSecret      SecretReference? @relation("RepositoryPreviousHookSecret", fields: [previousHookSecretRefId], references: [id], onDelete: Restrict)
+  candidateHookSecret     SecretReference? @relation("RepositoryCandidateHookSecret", fields: [candidateHookSecretRefId], references: [id], onDelete: Restrict)
+  sourceRevisions         GitSourceRevision[]
+  deliveries              WebhookDelivery[]
+  rejections              WebhookRejection[]
+
+  @@unique([githubConnectionId, githubRepositoryId])
+  @@index([createdAt, id])
+}
+
+model RegistryConnection {
+  id                    String @id @default(uuid()) @db.Uuid
+  name                  String @db.VarChar(120)
+  authority             String @db.VarChar(253)
+  namespace             String @db.VarChar(255)
+  pushCredentialRefId   String @db.Uuid
+  pullCredentialRefId   String @db.Uuid
+  revision              Int @default(1)
+  pushVerificationState String @default("unverified") @db.VarChar(32)
+  pullVerificationState String @default("unverified") @db.VarChar(32)
+  pushVerifiedAt        DateTime?
+  pullVerifiedAt        DateTime?
+  pushVerificationJson  Json?
+  pullVerificationJson  Json?
+  pushErrorCode         String? @db.VarChar(80)
+  pullErrorCode         String? @db.VarChar(80)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  pushCredential        SecretReference @relation("RegistryPushCredential", fields: [pushCredentialRefId], references: [id], onDelete: Restrict)
+  pullCredential        SecretReference @relation("RegistryPullCredential", fields: [pullCredentialRefId], references: [id], onDelete: Restrict)
+  sourceRevisions       GitSourceRevision[]
+  artifacts             BuildArtifact[]
+
+  @@unique([authority, namespace])
+  @@index([createdAt, id])
+}
+
+model Builder {
+  id                    String @id @default(uuid()) @db.Uuid
+  name                  String @db.VarChar(120)
+  instanceId            String @unique @db.Uuid
+  identityPublicKey     String @db.VarChar(2048)
+  endpoint              String @db.VarChar(2048)
+  credentialRefId       String @db.Uuid
+  revision              Int @default(1)
+  profileRevision       Int @default(1)
+  profileJson           Json
+  verificationState     String @default("unverified") @db.VarChar(32)
+  verifiedAt            DateTime?
+  capabilitiesJson      Json?
+  lastObservedAt        DateTime?
+  lastErrorCode         String? @db.VarChar(80)
+  enabled               Boolean @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  credential            SecretReference @relation(fields: [credentialRefId], references: [id], onDelete: Restrict)
+  sourceRevisions       GitSourceRevision[]
+  runs                  BuildRun[]
+
+  @@index([createdAt, id])
+}
+
+model GitSource {
+  id                  String @id @default(uuid()) @db.Uuid
+  originalServiceId   String @db.Uuid
+  serviceId           String? @unique @db.Uuid
+  currentRevisionId   String? @unique @db.Uuid
+  autoDeploy          Boolean @default(false)
+  policyRevision      Int @default(1)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  service             Service? @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  currentRevision     GitSourceRevision? @relation("CurrentGitSourceRevision", fields: [currentRevisionId], references: [id], onDelete: Restrict)
+  revisions           GitSourceRevision[] @relation("GitSourceRevisions")
+}
+
+model GitSourceRevision {
+  id                   String @id @default(uuid()) @db.Uuid
+  sourceId             String @db.Uuid
+  revision             Int
+  githubConnectionId   String @db.Uuid
+  repositoryId         String @db.Uuid
+  builderId            String @db.Uuid
+  registryConnectionId String @db.Uuid
+  branchRef            String @db.VarChar(270)
+  recipeHash           String @db.Char(64)
+  snapshotJson         Json
+  createdAt            DateTime @default(now())
+  source               GitSource @relation("GitSourceRevisions", fields: [sourceId], references: [id], onDelete: Restrict)
+  currentFor           GitSource? @relation("CurrentGitSourceRevision")
+  connection           GitHubConnection @relation(fields: [githubConnectionId], references: [id], onDelete: Restrict)
+  repository           GitRepository @relation(fields: [repositoryId], references: [id], onDelete: Restrict)
+  builder              Builder @relation(fields: [builderId], references: [id], onDelete: Restrict)
+  registry             RegistryConnection @relation(fields: [registryConnectionId], references: [id], onDelete: Restrict)
+  secrets              GitSourceSecretReference[]
+  deployments          Deployment[]
+  artifacts            BuildArtifact[]
+  webhookTargets       WebhookTarget[]
+  previews             GitPublicationPreview[]
+
+  @@unique([sourceId, revision])
+  @@index([repositoryId, branchRef])
+}
+
+// A semantic secret change creates a new SecretReference. These FKs retain the
+// actual historical ciphertext; incrementing a counter cannot replace the bytes.
+model GitSourceSecretReference {
+  sourceRevisionId String @db.Uuid
+  mountId          String @db.VarChar(64)
+  secretRefId      String @db.Uuid
+  secretKey        String @db.VarChar(128)
+  contentRevision  Int
+  revision        GitSourceRevision @relation(fields: [sourceRevisionId], references: [id], onDelete: Restrict)
+  secret          SecretReference @relation(fields: [secretRefId], references: [id], onDelete: Restrict)
+
+  @@id([sourceRevisionId, mountId])
+  @@index([secretRefId])
+}
+
+model GitPublicationPreview {
+  id                   String @id @default(uuid()) @db.Uuid
+  serviceId            String @db.Uuid
+  serviceRevision      Int
+  configRevision       Int
+  policyRevision       Int
+  sourceRevisionId     String @db.Uuid
+  webhookTargetId      String? @db.Uuid
+  commitSha            String @db.Char(40)
+  snapshotJson         Json
+  targetJson           Json
+  issuesJson           Json
+  consumedDeploymentId String? @unique @db.Uuid
+  expiresAt            DateTime
+  createdAt            DateTime @default(now())
+  service              Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  revision             GitSourceRevision @relation(fields: [sourceRevisionId], references: [id], onDelete: Restrict)
+  webhookTarget        WebhookTarget? @relation(fields: [webhookTargetId], references: [id], onDelete: Restrict)
+  deployment           Deployment? @relation(fields: [consumedDeploymentId], references: [id], onDelete: Restrict)
+
+  @@index([serviceId, createdAt])
+  @@index([expiresAt])
+}
+
+model WebhookDelivery {
+  id                   String @id @default(uuid()) @db.Uuid
+  provider             String @default("github") @db.VarChar(16)
+  externalDeliveryId   String @db.VarChar(128)
+  repositoryId         String @db.Uuid
+  githubRepositoryId   String @db.VarChar(32)
+  payloadHash          String @db.Char(64)
+  event                String @db.VarChar(64)
+  ref                  String? @db.VarChar(270)
+  afterSha             String? @db.Char(40)
+  deleted              Boolean @default(false)
+  state                String @default("received") @db.VarChar(32)
+  reason               String? @db.VarChar(80)
+  duplicateCount       Int @default(0)
+  lastReceivedAt       DateTime @default(now())
+  createdAt            DateTime @default(now())
+  repository           GitRepository @relation(fields: [repositoryId], references: [id], onDelete: Restrict)
+  targets              WebhookTarget[]
+  deployments          Deployment[]
+
+  @@unique([provider, externalDeliveryId])
+  @@index([createdAt, id])
+}
+
+// Unauthenticated requests cannot allocate a delivery ID. Rejections are
+// aggregated into a bounded time bucket and expire independently of deliveries.
+model WebhookRejection {
+  repositoryId String @db.Uuid
+  bucket       DateTime
+  reason       String @db.VarChar(80)
+  count        Int @default(1)
+  repository   GitRepository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+
+  @@id([repositoryId, bucket, reason])
+}
+
+model WebhookTarget {
+  id                       String @id @default(uuid()) @db.Uuid
+  webhookDeliveryId        String @db.Uuid
+  serviceId                String @db.Uuid
+  currentServiceId         String? @db.Uuid
+  sourceRevisionId         String @db.Uuid
+  commitSha                String @db.Char(40)
+  configRevisionAtReceipt  Int
+  policyRevisionAtReceipt  Int
+  targetJson               Json
+  receiptSequence          BigInt @unique @default(autoincrement())
+  manualRequired           Boolean @default(false)
+  state                    String @default("waiting") @db.VarChar(32)
+  reason                   String @default("ready") @db.VarChar(80)
+  deploymentId             String? @unique @db.Uuid
+  admittedAt               DateTime?
+  nextAttemptAt            DateTime @default(now())
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  delivery                 WebhookDelivery @relation(fields: [webhookDeliveryId], references: [id], onDelete: Restrict)
+  currentService           Service? @relation(fields: [currentServiceId], references: [id], onDelete: SetNull)
+  revision                 GitSourceRevision @relation(fields: [sourceRevisionId], references: [id], onDelete: Restrict)
+  deployment               Deployment? @relation("TargetDeployment", fields: [deploymentId], references: [id], onDelete: Restrict)
+  initiatorFor             Deployment? @relation("DeploymentInitiatorTarget")
+  previews                 GitPublicationPreview[]
+
+  @@unique([webhookDeliveryId, serviceId])
+  @@index([currentServiceId, state, receiptSequence])
+  @@index([state, nextAttemptAt, receiptSequence])
+}
+
+model BuildRun {
+  id                       String @id @db.Uuid
+  deploymentId             String @db.Uuid
+  runNumber                Int
+  builderId                String @db.Uuid
+  builderInstanceId        String @db.Uuid
+  specJson                 Json
+  specHash                 String @db.Char(64)
+  generation               Int
+  ownershipEpoch           Int @default(1)
+  submissionAttemptedAt    DateTime?
+  executionState           String @default("prepared") @db.VarChar(32)
+  executionClosedAt        DateTime?
+  closureReason            String? @db.VarChar(80)
+  endProofJson             Json?
+  proofVerifiedAt          DateTime?
+  phase                    String @default("prepared") @db.VarChar(64)
+  cancelRequestedAt        DateTime?
+  observedAt               DateTime?
+  observationState         String @default("unknown") @db.VarChar(32)
+  lastErrorCode            String? @db.VarChar(80)
+  remoteLedgerRevision     BigInt @default(0)
+  remoteEpochJson          Json?
+  reconcileLeaseToken      String? @db.Uuid
+  reconcileLeaseExpiresAt  DateTime?
+  nextReconcileAt           DateTime @default(now())
+  afterSequence            BigInt @default(0)
+  logBytes                 Int @default(0)
+  logsTruncated            Boolean @default(false)
+  logsExpireAt             DateTime?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  deployment               Deployment @relation(fields: [deploymentId], references: [id], onDelete: Restrict)
+  builder                  Builder @relation(fields: [builderId], references: [id], onDelete: Restrict)
+  artifact                 BuildArtifact?
+  logs                     BuildLogChunk[]
+
+  @@unique([deploymentId, runNumber])
+  @@index([executionClosedAt, nextReconcileAt])
+}
+
+model BuildArtifact {
+  id                   String @id @db.Uuid
+  producedByRunId      String @unique @db.Uuid
+  sourceRevisionId     String @db.Uuid
+  registryConnectionId String @db.Uuid
+  commitSha            String @db.Char(40)
+  recipeHash           String @db.Char(64)
+  specHash             String @db.Char(64)
+  descriptorJson       Json
+  rootDigest           String @db.VarChar(80)
+  mediaType            String @db.VarChar(128)
+  platformsJson        Json
+  archiveHandle        String @db.VarChar(255)
+  builderInstanceId    String @db.Uuid
+  archiveSha256        String @db.Char(64)
+  archiveBytes         BigInt
+  archiveExpiresAt     DateTime
+  producedAt           DateTime @default(now())
+  locationState        String @default("oci") @db.VarChar(16)
+  destinationJson      Json
+  resolvedImageJson    Json?
+  pushedAt             DateTime?
+  lastVerifiedAt       DateTime?
+  availability         String @default("available") @db.VarChar(32)
+  updatedAt            DateTime @updatedAt
+  run                  BuildRun @relation(fields: [producedByRunId], references: [id], onDelete: Restrict)
+  sourceRevision       GitSourceRevision @relation(fields: [sourceRevisionId], references: [id], onDelete: Restrict)
+  registry             RegistryConnection @relation(fields: [registryConnectionId], references: [id], onDelete: Restrict)
+  reusedBy             Deployment[] @relation("ReuseArtifact")
+  deployments          Deployment[] @relation("DeploymentArtifact")
+
+  @@index([archiveExpiresAt])
+}
+
+model BuildLogChunk {
+  runId       String @db.Uuid
+  sequence    BigInt
+  phase       String @db.VarChar(64)
+  timestamp   DateTime
+  content     String
+  bytes       Int
+  truncated   Boolean @default(false)
+  expiresAt   DateTime
+  run         BuildRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@id([runId, sequence])
+  @@index([expiresAt])
+}

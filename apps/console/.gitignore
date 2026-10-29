@@ -1,0 +1,6 @@
+dist/
+node_modules/
+test-results/
+playwright-report/
+tests-login-initial.png
+tests/artifacts/

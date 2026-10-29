@@ -1,0 +1,475 @@
+{
+  "version": 1,
+  "owner": "ozz-gmvp-c-node-persistence-v1",
+  "attemptId": "07e98df5-99cc-4a60-9a04-def03a21196d",
+  "recordedAt": "2026-10-26T08:10:59.753Z",
+  "status": "passed-after-cache-assistance-and-retained-preparation-failures",
+  "accepted": true,
+  "scope": "One existing C VM stop/start with retained local-path PVC and one synthetic marker. The first actual node-fault run passed after two retained preparation deployment failures.",
+  "summary": {
+    "acceptanceChecks": 11,
+    "passedChecks": 11,
+    "preparationDeploymentCount": 3,
+    "retainedFailedPreparationDeployments": 2,
+    "nodeFaultRuns": 1,
+    "firstNodeFaultRunPassed": true,
+    "firstPreparationPassed": false,
+    "cacheAssisted": true,
+    "originalRegistryPullPathAccepted": false,
+    "markerWritesBeforeOutage": 1,
+    "markerWritesDuringRecovery": 0
+  },
+  "resources": {
+    "vm": "ozz-lab-c",
+    "clusterId": "4555faaf-8d4e-4841-b87c-e26a76895b95",
+    "serverId": "93fad728-3f1e-4af8-8d2e-0bd5f028a08c",
+    "projectId": "51c8fa79-9ce8-426d-8e5f-e8e159628515",
+    "environmentId": "afa582a0-a2e4-43ac-ad14-50b551cbfe50",
+    "serviceId": "f7506102-4e67-4eb2-8036-32b0f8f47237",
+    "volumeId": "2b8be15e-7e8a-4022-93df-e5ff55cd8b92",
+    "namespace": "ozz-e-afa582a0a2e443acad1450b551cbfe50",
+    "controllerUid": "142b43d0-99ed-406f-8a10-00b615f4e029",
+    "pvc": {
+      "name": "ozz-v-2b8be15e7e8a402293dfe5ff55cd8b92",
+      "uid": "7d01de4d-ff4e-44f1-8494-b567f14cf897"
+    },
+    "pv": {
+      "name": "pvc-7d01de4d-ff4e-44f1-8494-b567f14cf897",
+      "uid": "73b1d6ef-5959-4531-bc70-d9996a6e9232"
+    },
+    "storageClass": "local-path",
+    "requestedBytes": "1073741824",
+    "hardQuotaClaim": false,
+    "acceptedPublicationId": "b0b74490-f358-4870-9941-d3bee6baea79",
+    "image": "docker.io/library/node@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53"
+  },
+  "preparation": [
+    {
+      "kind": "initial-publication",
+      "deploymentId": "4ba2870a-3a86-450c-92a3-72f477812f2a",
+      "status": "failed",
+      "errorCode": "WORKLOAD_ROLLOUT_TIMEOUT",
+      "cause": "C could not reach registry-1.docker.io for the fixed Node index; Pod was Pending/ImagePullBackOff and the application had not started.",
+      "markerWritten": false,
+      "nodeStopped": false,
+      "evidence": {
+        "deployment": {
+          "path": ".local/local-lab/g-mvp-node-persistence/first-failed-deployment-1793001196184-802ff536.json",
+          "sha256": "a6a1b6f891c9392c2fa6a6a1947137f0895a9ddf405a5b94e7bcc94db50b5e44"
+        },
+        "containerDiagnostics": {
+          "path": ".local/local-lab/g-mvp-node-persistence/preparation-container-diagnostics-20261026T073605Z-889331c5.json",
+          "sha256": "61c15f27f1d3801c405979d4efb0519ea437b78ef824ea57226d4169628bf37b"
+        }
+      }
+    },
+    {
+      "kind": "formal-product-retry",
+      "deploymentId": "053a6709-eaf2-4404-8b16-c0fcac18ed12",
+      "retryOfId": "4ba2870a-3a86-450c-92a3-72f477812f2a",
+      "status": "failed",
+      "errorCode": "WORKLOAD_ROLLOUT_TIMEOUT",
+      "cause": "Image cache was available and the container ran. The retained snapshot inherited startup HTTP /, which correctly returned 404 before any marker existed; readiness was /healthz.",
+      "markerWritten": false,
+      "nodeStopped": false,
+      "evidence": {
+        "deployment": {
+          "path": ".local/local-lab/g-mvp-node-persistence/preparation-retry-deployment-1793001327224-6500c43c.json",
+          "sha256": "b286425fffcebf469891ad3b3748a82ae36b338dc83666cd8d4b6ac9d9d4cc18"
+        },
+        "containerDiagnostics": {
+          "path": ".local/local-lab/g-mvp-node-persistence/retry-container-diagnostics-20261026T075518Z-812e1d1b.json",
+          "sha256": "78fd34cea44c7dcf23b23e028e6c8978c22f5361d26c7b6b1aee3cbdae20e24b"
+        }
+      }
+    },
+    {
+      "kind": "explicit-publication-after-startup-correction",
+      "deploymentId": "b0b74490-f358-4870-9941-d3bee6baea79",
+      "status": "succeeded",
+      "retryOfId": null,
+      "afterFailedDeploymentId": "053a6709-eaf2-4404-8b16-c0fcac18ed12",
+      "correction": {
+        "startupPathBefore": "/",
+        "startupPathAfter": "/healthz",
+        "readinessPath": "/healthz",
+        "livenessProbe": null,
+        "sameImageAndPvc": true
+      },
+      "markerWritePermittedOnlyAfterPublication": true,
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-node-persistence/preparation-repair-deployment-1793001667819-33c57408.json",
+        "sha256": "be5b1cfb2c9628b3c3fc661059eee19d8bc2e735f4f0a38ea31a568abdd17e8d"
+      }
+    }
+  ],
+  "cacheAssistance": {
+    "source": "existing B containerd cache, read-only export",
+    "target": "existing C containerd k8s.io cache and arm64 unpacked layers",
+    "indexDigest": "sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53",
+    "manifestDigest": "sha256:398bcf38afb035ae76feb9ad3c7493a93feff4751351c65310811761e37bbfc7",
+    "platform": "linux/arm64",
+    "archive": {
+      "path": ".local/local-lab/g-mvp-node-persistence/cache-assist/b-export-20261026T074823Z-0a32aef5/node-arm64.oci.tar",
+      "bytes": 62288384,
+      "sha256": "635c05daf2e05856622f616248d98cc1d1d9d0083cceec22fa364f9151a09402"
+    },
+    "blobCount": 7,
+    "expandedLayerBytes": 169425408,
+    "allDescriptorDigestsAndSizesVerified": true,
+    "allExpandedDiffIdsVerified": true,
+    "allImportedBlobsRehashedOnC": true,
+    "criExactReferenceVerified": true,
+    "cBootUnchangedDuringImport": true,
+    "dnsOrProxyChanged": false,
+    "evidence": {
+      "sourceInventory": {
+        "path": ".local/local-lab/g-mvp-node-persistence/cache-inventory-b-20261026T074035Z-ba60ada3.json",
+        "sha256": "7c9003264552e75297e64edb3d1eaa195822d81b996036171a30754f4f443721"
+      },
+      "archiveVerification": {
+        "path": ".local/local-lab/g-mvp-node-persistence/cache-assist/b-export-20261026T074823Z-0a32aef5/verified.json",
+        "sha256": "e263b301e8f816fff0dea28751f8715e768fcc10fc8bddcffa491f2a626c4b6e"
+      },
+      "importExit": {
+        "path": ".local/local-lab/g-mvp-node-persistence/cache-assist/c-import-20261026T075045Z-318a32b6/exit.json",
+        "sha256": "6bb492b1a6a524e6f50ecbf79bee32b317432c0e64a8eed23239bd0dec97402a"
+      },
+      "targetVerification": {
+        "path": ".local/local-lab/g-mvp-node-persistence/cache-assist/c-import-20261026T075045Z-318a32b6/stdout.json",
+        "sha256": "a32af872189801c9ffa9a73ad41ed780fe62d73d9f8568ac4e07971868faedc0"
+      }
+    }
+  },
+  "fault": {
+    "vm": "ozz-lab-c",
+    "stopIntentId": "094a14b1-6535-497e-823d-67bb52c2e41e",
+    "stopIntentAt": "2026-10-26T08:01:57.318Z",
+    "confirmedStoppedAt": "2026-10-26T08:02:28.006Z",
+    "startIntentAt": "2026-10-26T08:02:59.269Z",
+    "confirmedRunningAt": "2026-10-26T08:03:17.617Z",
+    "confirmedStoppedBeforeStartSeconds": 31.263,
+    "requiredStoppedSeconds": 30,
+    "independentObserver": "B",
+    "bSamplesDuringOutage": 9,
+    "allObservedBReady": true,
+    "bIdentityAndBootRetained": true,
+    "beforeC": {
+      "kubeSystemUid": "3acbc89d-ce71-4fa2-9af2-660020df4827",
+      "nodeName": "ozz-node",
+      "nodeUid": "81bdf48b-7543-4b54-bc9d-110656ef8f95",
+      "bootId": "31f981bb-cbd9-4e83-b31a-e127a4602935",
+      "nodeReady": true
+    },
+    "afterC": {
+      "kubeSystemUid": "3acbc89d-ce71-4fa2-9af2-660020df4827",
+      "nodeName": "ozz-node",
+      "nodeUid": "81bdf48b-7543-4b54-bc9d-110656ef8f95",
+      "bootId": "d1c73ebb-2ef1-4524-8716-10f5efd4bca0",
+      "nodeReady": true
+    },
+    "beforeB": {
+      "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+      "nodeName": "ozz-node",
+      "nodeUid": "abfbe31a-76dc-41d3-8c2a-e223f12d4cf4",
+      "bootId": "1aeb32b6-1fd4-4bd3-a338-ba9a7e65ac4f",
+      "nodeReady": true
+    },
+    "afterB": {
+      "kubeSystemUid": "2a048caa-4bec-400f-8a46-6da6b3a86954",
+      "nodeName": "ozz-node",
+      "nodeUid": "abfbe31a-76dc-41d3-8c2a-e223f12d4cf4",
+      "bootId": "1aeb32b6-1fd4-4bd3-a338-ba9a7e65ac4f",
+      "nodeReady": true
+    },
+    "bObservationTimes": [
+      "2026-10-26T08:02:28.769669+00:00",
+      "2026-10-26T08:02:32.221787+00:00",
+      "2026-10-26T08:02:35.533299+00:00",
+      "2026-10-26T08:02:38.945899+00:00",
+      "2026-10-26T08:02:42.531892+00:00",
+      "2026-10-26T08:02:45.977074+00:00",
+      "2026-10-26T08:02:49.368936+00:00",
+      "2026-10-26T08:02:52.746825+00:00",
+      "2026-10-26T08:02:56.172482+00:00"
+    ],
+    "evidence": {
+      "stopIntent": {
+        "path": ".local/local-lab/g-mvp-node-persistence/c-stop-intent-1793001717390-75629f64.json",
+        "sha256": "9a36715a3d592be94c51e846b5807366bda7941a2d94ba2e45e148def3a84b54"
+      },
+      "startIntent": {
+        "path": ".local/local-lab/g-mvp-node-persistence/c-start-intent-1793001779269-18e64218.json",
+        "sha256": "bb89f7c69f123df0420a0794adf530cafc85dff35f18263df71810de62381f66"
+      },
+      "verification": {
+        "path": ".local/local-lab/g-mvp-node-persistence/verified-1793001810698-45e258d1.json",
+        "sha256": "09f69c7502a56a7756479ec1e0c265ec5d92904b7ad62b61ec27e3e5d8c9c8a4"
+      }
+    }
+  },
+  "persistence": {
+    "originalPvcAndPvRetained": true,
+    "oneExclusiveFsyncedMarkerWrite": true,
+    "writeIntentId": "3e376043-069f-4beb-ae61-2095a37599ec",
+    "before": {
+      "sha256": "b631f20241d383dd51583dcf25755669c403513f34c77bfca677f0866f209e2b",
+      "bytes": 65,
+      "inode": 2379978,
+      "mtimeMilliseconds": 1793001672270.0688
+    },
+    "after": {
+      "sha256": "b631f20241d383dd51583dcf25755669c403513f34c77bfca677f0866f209e2b",
+      "bytes": 65,
+      "inode": 2379978,
+      "mtimeMilliseconds": 1793001672270.0688
+    },
+    "httpAfter": {
+      "sha256": "b631f20241d383dd51583dcf25755669c403513f34c77bfca677f0866f209e2b",
+      "bytes": 65,
+      "readOnly": true
+    },
+    "markerReadOnlyAfterRestart": true,
+    "recoveryMarkerWrites": 0,
+    "evidence": {
+      "path": ".local/local-lab/g-mvp-node-persistence/initial-marker-write-1793001673099-61be45f8.json",
+      "sha256": "9a2b97181f5ebe98f97a7dfccd8f47a18a1136cdf00500ff1ad2c33c1373ce25"
+    }
+  },
+  "checks": {
+    "wholeCNodeStopped": true,
+    "cBootChanged": true,
+    "cNodeIdentityRetained": true,
+    "persistentVolumeIdentityRetained": true,
+    "originalMarkerReadWithoutRewrite": true,
+    "markerMetadataRetained": true,
+    "independentBUnchanged": true,
+    "applicationServedOriginalMarker": true,
+    "originalPublicationRetained": true,
+    "volumeNotDestroyed": true,
+    "noActiveProductTask": true
+  },
+  "handoff": {
+    "finalObservedAt": "2026-10-26T08:07:31.594413+00:00",
+    "cVmAtFinalReport": {
+      "name": "ozz-lab-c",
+      "status": "Running"
+    },
+    "cNodeReadyAtFinalReadback": true,
+    "serviceId": "f7506102-4e67-4eb2-8036-32b0f8f47237",
+    "stopOperationId": "7cccf414-6e8e-46b7-b6f4-11236cbed962",
+    "desiredState": "stopped",
+    "runtimeState": "stopped",
+    "configurationState": "consistent",
+    "activeTask": null,
+    "actualControllerReplicas": 0,
+    "actualCurrentReplicas": 0,
+    "actualReadyReplicas": 0,
+    "actualPodCount": 0,
+    "originalPvcAndPvKept": true,
+    "markerWritesDuringFinalReadback": 0,
+    "localAvailableBytes": 22450585600,
+    "minimumLocalFreeBytes": 8589934592,
+    "runtimeWindowReturnedToRoot": true,
+    "furtherRuntimeOperationsByThisAgent": false,
+    "evidence": {
+      "actualStopReadback": {
+        "path": ".local/local-lab/g-mvp-node-persistence/service-stop-readback-20261026T080731Z-a39839fe.json",
+        "sha256": "e25568ef72733cf7b14e2b30fdca4b2f6254102ec4ec699b1f839f40b4c68bd9"
+      },
+      "finalReport": {
+        "path": ".local/local-lab/g-mvp-node-persistence/final-1793002051441-1592b851.json",
+        "sha256": "c94a1fd9de36b201e89d1c1dfae3f2239cd9fe4e367db631afd7b3772c1da8ac"
+      }
+    }
+  },
+  "invocations": [
+    {
+      "mode": "prepare",
+      "exitCode": 1,
+      "startedAt": "2026-10-26T07:32:06.438Z",
+      "completedAt": "2026-10-26T07:34:23.269Z",
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T073206.437978Z-prepare-12711b48/exit.json",
+        "sha256": "469b771031b2f4540f505cf78336b5bb1f3a54a8960253e350dd79232c059785"
+      },
+      "stdout": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T073206.437978Z-prepare-12711b48/stdout.log",
+        "sha256": "ccb504bac3e2217a124e976268a99761decb9f64d654a701f04192be28575783"
+      },
+      "stderr": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T073206.437978Z-prepare-12711b48/stderr.log",
+        "sha256": "66615cb93e0ac0909933fce2d4d53daa01fa7fda53f67dd2080f2321aff75b59"
+      },
+      "sourceAtInvocation": {
+        "sourceFile": "tests/probes/g-mvp-node-persistence-local-lab.mjs",
+        "sourceBytes": 31030,
+        "recordedSourceSha256": "073d7bfdb9106f4a654b43fa8c944d56a4f1b479e6b000b5dbf5ecdf297c4087"
+      },
+      "invocationIntent": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T073206.437978Z-prepare-12711b48/intent.json",
+        "sha256": "2ae7b39d455c3185b25cf85539bfa09bb200fe6b225943add9b9d4e029b03500"
+      }
+    },
+    {
+      "mode": "retry-prepare",
+      "exitCode": 1,
+      "startedAt": "2026-10-26T07:53:15.249Z",
+      "completedAt": "2026-10-26T07:55:27.280Z",
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T075315.248269Z-retry-prepare-48dec2e7/exit.json",
+        "sha256": "38f8e299210cf897fd99176abbf9605751263c152de484f2796d61ced4793cc4"
+      },
+      "stdout": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T075315.248269Z-retry-prepare-48dec2e7/stdout.log",
+        "sha256": "af6354b8788e026a46bd565746ffdf7c7185b3cd6f892ac12ead4e8f2f6aa8c4"
+      },
+      "stderr": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T075315.248269Z-retry-prepare-48dec2e7/stderr.log",
+        "sha256": "16c5c555ae218ffaabb1fa4893aa386ade20556917cd4045a5f8e8f3f6f0bc2a"
+      },
+      "sourceAtInvocation": {
+        "sourceFile": "tests/probes/g-mvp-node-persistence-local-lab.mjs",
+        "sourceBytes": 34560,
+        "recordedSourceSha256": "a35bcd66f5611cb650700ba8b03f8a6bb2feb15f480f208781a59fbcd7990b54"
+      },
+      "invocationIntent": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T075315.248269Z-retry-prepare-48dec2e7/intent.json",
+        "sha256": "f527635036d2b6514b80eaa6a7840df4961d2b7a33c6b50201fb87424fe91ac0"
+      }
+    },
+    {
+      "mode": "repair-prepare",
+      "exitCode": 0,
+      "startedAt": "2026-10-26T08:00:20.164Z",
+      "completedAt": "2026-10-26T08:01:15.703Z",
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080020.163675Z-repair-prepare-501afc7a/exit.json",
+        "sha256": "78357f11473233471b8cbc4482344c0f4f85ea05a708ce9f9273c73b82aaf9d0"
+      },
+      "stdout": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080020.163675Z-repair-prepare-501afc7a/stdout.log",
+        "sha256": "c0466280a85fb9be4cf8567645b604c713520efe49e4007fb0d6182acf27e151"
+      },
+      "stderr": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080020.163675Z-repair-prepare-501afc7a/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceAtInvocation": {
+        "sourceFile": "tests/probes/g-mvp-node-persistence-local-lab.mjs",
+        "sourceBytes": 38209,
+        "recordedSourceSha256": "8b4fa1422dbef51d06f42aab2537e7fbbb1e7c0cf7017fe206c7edee3a507073"
+      },
+      "invocationIntent": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080020.163675Z-repair-prepare-501afc7a/intent.json",
+        "sha256": "67c82ff81b0d707b3ef53aa4881ad6f60a07165cda26a33588fdc0ab5bed9f24"
+      }
+    },
+    {
+      "mode": "run",
+      "exitCode": 0,
+      "startedAt": "2026-10-26T08:01:55.034Z",
+      "completedAt": "2026-10-26T08:03:30.736Z",
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080155.034163Z-run-8c9ad5ad/exit.json",
+        "sha256": "73bc8d803f9f67c4d4f25ce2d1404f1b6eaa114c6705b48265b7aae712f8db7e"
+      },
+      "stdout": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080155.034163Z-run-8c9ad5ad/stdout.log",
+        "sha256": "a62a677a1b4b3fc1ca4fd6c19fdbb149857d491bbe8e5c95a3d17eebad7ec307"
+      },
+      "stderr": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080155.034163Z-run-8c9ad5ad/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceAtInvocation": {
+        "sourceFile": "tests/probes/g-mvp-node-persistence-local-lab.mjs",
+        "sourceBytes": 38209,
+        "recordedSourceSha256": "8b4fa1422dbef51d06f42aab2537e7fbbb1e7c0cf7017fe206c7edee3a507073"
+      },
+      "invocationIntent": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080155.034163Z-run-8c9ad5ad/intent.json",
+        "sha256": "e7adc4e07acc137358dd23c6c6608b5f94e2bd6ca0ecac3bd53c76ec4d4f66af"
+      }
+    },
+    {
+      "mode": "stop-service",
+      "exitCode": 0,
+      "startedAt": "2026-10-26T08:05:03.033Z",
+      "completedAt": "2026-10-26T08:05:36.102Z",
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080503.032630Z-stop-service-b14726bb/exit.json",
+        "sha256": "0651c5af9f1fe3176172d45ff70d3fc57955769ba2ee98a2523cf6595c243cf3"
+      },
+      "stdout": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080503.032630Z-stop-service-b14726bb/stdout.log",
+        "sha256": "3884be5cd4c4d96d603e66df932e35f30c44fdf890f5f8048b1c1d991fbbef2b"
+      },
+      "stderr": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080503.032630Z-stop-service-b14726bb/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceAtInvocation": {
+        "sourceFile": "tests/probes/g-mvp-node-persistence-local-lab.mjs",
+        "sourceBytes": 38209,
+        "recordedSourceSha256": "8b4fa1422dbef51d06f42aab2537e7fbbb1e7c0cf7017fe206c7edee3a507073"
+      },
+      "invocationIntent": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080503.032630Z-stop-service-b14726bb/intent.json",
+        "sha256": "f1d7491c47ed31a7a650cdd124ed6b0252de9346837aa2fe018a470cc34bf848"
+      }
+    },
+    {
+      "mode": "report",
+      "exitCode": 0,
+      "startedAt": "2026-10-26T08:07:30.278Z",
+      "completedAt": "2026-10-26T08:07:31.452Z",
+      "evidence": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080730.278090Z-report-3cc91354/exit.json",
+        "sha256": "c7feb30881fc7c7410244da79ea0b52f8ec48bab87b35a41834b98d066246aa9"
+      },
+      "stdout": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080730.278090Z-report-3cc91354/stdout.log",
+        "sha256": "61a5ba6741af46bb259198d04694930511a2d6288d07d160e1dd0fe86efebfde"
+      },
+      "stderr": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080730.278090Z-report-3cc91354/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceAtInvocation": {
+        "sourceFile": "tests/probes/g-mvp-node-persistence-local-lab.mjs",
+        "sourceBytes": 38209,
+        "recordedSourceSha256": "8b4fa1422dbef51d06f42aab2537e7fbbb1e7c0cf7017fe206c7edee3a507073"
+      },
+      "invocationIntent": {
+        "path": ".local/local-lab/g-mvp-node-persistence/outer-invocations/20261026T080730.278090Z-report-3cc91354/intent.json",
+        "sha256": "467de08bef2bd5169dff2cf278529f8ade6092606552928ddaf5c549c1657bcd"
+      }
+    }
+  ],
+  "probeChanges": [
+    "Explicit retry-prepare retains the first failed deployment and uses the official product retry API.",
+    "Explicit repair-prepare changes the inherited startup path through the service API and publishes the changed configuration; a retry cannot change its old snapshot.",
+    "Both initial startup and readiness use /healthz. Marker content is read from / only after a successful publication; no recovery path creates or rewrites it."
+  ],
+  "probeSourceAtAcceptedRun": {
+    "path": "tests/probes/g-mvp-node-persistence-local-lab.mjs",
+    "sha256": "8b4fa1422dbef51d06f42aab2537e7fbbb1e7c0cf7017fe206c7edee3a507073"
+  },
+  "hostHelper": {
+    "path": "tests/probes/support/g-mvp-node-persistence-host.py",
+    "sha256": "265867256edca3a5c06c637ed272bf4c5e1eed85a7350a7298c424ef4e55ecda"
+  },
+  "validation": {
+    "javascriptSyntax": "passed",
+    "eslint": "passed",
+    "runtimeChecks": "11 of 11 passed",
+    "actualStopReadback": "passed",
+    "outerInvocationLogsMode": "0600",
+    "outerInvocationDirectoriesMode": "0700"
+  },
+  "limitations": [
+    "C public-registry connectivity did not pass; the successful node test used the explicitly approved fixed-digest cache assistance.",
+    "The 1 GiB local-path request is not a hard quota. This result covers one controlled C restart and marker persistence, not volume deletion, cross-node failover or database backup recovery."
+  ]
+}

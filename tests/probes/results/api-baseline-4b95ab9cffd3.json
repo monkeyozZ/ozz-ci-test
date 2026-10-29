@@ -1,0 +1,1081 @@
+{
+  "schemaVersion": 1,
+  "runId": "4b95ab9cffd3",
+  "startedAt": "2026-10-25T11:26:58.026Z",
+  "status": "completed",
+  "scope": "Local S1 metadata baseline; not the PRD 100-Service/10000-Deployment/10-minute gate.",
+  "settings": {
+    "durationSeconds": 60,
+    "warmupSeconds": 10,
+    "concurrency": 5,
+    "projectCount": 50,
+    "clusterCount": 5,
+    "serverCount": 10,
+    "secretCount": 10
+  },
+  "host": {
+    "platform": "darwin",
+    "osRelease": "23.6.0",
+    "architecture": "arm64",
+    "logicalCpuCount": 8,
+    "cpuModel": "Apple M1 Pro",
+    "totalMemoryBytes": 17179869184
+  },
+  "process": {
+    "mode": "production",
+    "build": "apps/api/dist/main.js",
+    "node": "v24.22.1",
+    "transport": "HTTP loopback to a production Node process; no TLS proxy or public RTT",
+    "instrumentation": "1 Hz process.cpuUsage/memoryUsage over IPC; no product metrics endpoint",
+    "logLevel": "info",
+    "pid": 71815,
+    "port": 62288
+  },
+  "limits": [
+    "Developer machine, not Oracle or the 2-core/12-GB target.",
+    "S1 has no Service or Deployment history tables; only existing metadata models are seeded.",
+    "No Kubernetes/SSH/build/rollout, log-window or model-provider workload.",
+    "No Redis outage or queue acceptance load is injected.",
+    "The isolated schema has no Worker heartbeat; a degraded queue observation does not constitute a Redis fault test.",
+    "CPU/RSS describe the isolated API process, excluding the driver, PostgreSQL, Redis and Worker.",
+    "Pool wait time and per-query timing are not instrumented; database connection snapshots are database-wide."
+  ],
+  "cleanup": {
+    "schema": "ozz_baseline_4b95ab9cffd3",
+    "schemaDropped": true,
+    "apiStopped": true
+  },
+  "versions": {
+    "nest": "11.2.8",
+    "fastify": "5.12.7"
+  },
+  "database": {
+    "version": "17.11",
+    "isolation": "temporary schema",
+    "configuredConnectionLimit": "5",
+    "configuredPoolTimeoutSeconds": "5"
+  },
+  "initialReadiness": {
+    "status": "ready",
+    "mode": "read_write",
+    "queue": "degraded"
+  },
+  "datasetSeeded": {
+    "clusters": 5,
+    "projects": 50,
+    "environments": 100,
+    "servers": 10,
+    "secrets": 10,
+    "operations": 0,
+    "unavailableModels": [
+      "Service",
+      "Deployment"
+    ],
+    "schemaRelationBytes": 737280
+  },
+  "datasetBefore": {
+    "clusters": 5,
+    "projects": 50,
+    "environments": 100,
+    "servers": 10,
+    "secrets": 10,
+    "operations": 0,
+    "unavailableModels": [
+      "Service",
+      "Deployment"
+    ],
+    "schemaRelationBytes": 1048576
+  },
+  "databaseConnectionsBefore": {
+    "scope": "whole database; includes other idle local applications and the baseline driver",
+    "total": 17,
+    "active": 0
+  },
+  "measurementStartedAt": "2026-10-25T11:27:10.923Z",
+  "requestWindowSeconds": 60.006141541999995,
+  "resources": {
+    "type": "baseline.summary",
+    "elapsedSeconds": 60.208831875,
+    "cpuUserMicroseconds": 74099145,
+    "cpuSystemMicroseconds": 17136374,
+    "averageCpuPercent": 151.53178721257163,
+    "rssStartBytes": 304775168,
+    "rssEndBytes": 337412096,
+    "rssPeakBytes": 358318080,
+    "eventLoopDelay": {
+      "resolutionMs": 20,
+      "p50Ms": 20.021247,
+      "p95Ms": 20.889599,
+      "maxMs": 86.704127
+    }
+  },
+  "resourceSamples": [
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 1.001297292,
+      "cpuUserPercent": 138.7132484125404,
+      "cpuSystemPercent": 30.6697124274256,
+      "cpuPercent": 169.382960839966,
+      "rssBytes": 321273856,
+      "heapUsedBytes": 141346248,
+      "externalBytes": 3411105,
+      "arrayBuffersBytes": 441290
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 2.001041958,
+      "cpuUserPercent": 130.14843131956255,
+      "cpuSystemPercent": 30.866181185506818,
+      "cpuPercent": 161.01461250506935,
+      "rssBytes": 337592320,
+      "heapUsedBytes": 161135016,
+      "externalBytes": 3410916,
+      "arrayBuffersBytes": 441101
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 3.001094958,
+      "cpuUserPercent": 133.2839359513946,
+      "cpuSystemPercent": 31.599525225163067,
+      "cpuPercent": 164.88346117655763,
+      "rssBytes": 352927744,
+      "heapUsedBytes": 59796872,
+      "externalBytes": 3280031,
+      "arrayBuffersBytes": 310216
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 4.001296208,
+      "cpuUserPercent": 136.00712856537623,
+      "cpuSystemPercent": 31.43357399323386,
+      "cpuPercent": 167.44070255861007,
+      "rssBytes": 358318080,
+      "heapUsedBytes": 85276064,
+      "externalBytes": 3345567,
+      "arrayBuffersBytes": 375752
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 5.00138,
+      "cpuUserPercent": 103.75200641187874,
+      "cpuSystemPercent": 23.514429678908343,
+      "cpuPercent": 127.26643609078707,
+      "rssBytes": 353140736,
+      "heapUsedBytes": 99938536,
+      "externalBytes": 3345705,
+      "arrayBuffersBytes": 375890
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 6.001039917,
+      "cpuUserPercent": 131.1977181135692,
+      "cpuSystemPercent": 31.837627435851267,
+      "cpuPercent": 163.03534554942047,
+      "rssBytes": 354500608,
+      "heapUsedBytes": 120913248,
+      "externalBytes": 3345577,
+      "arrayBuffersBytes": 375762
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 7.001359875,
+      "cpuUserPercent": 129.39269977056682,
+      "cpuSystemPercent": 30.65049312951927,
+      "cpuPercent": 160.0431929000861,
+      "rssBytes": 352518144,
+      "heapUsedBytes": 136161480,
+      "externalBytes": 3345449,
+      "arrayBuffersBytes": 375634
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 8.001245792,
+      "cpuUserPercent": 94.36106499337764,
+      "cpuSystemPercent": 18.758139984883897,
+      "cpuPercent": 113.11920497826154,
+      "rssBytes": 281231360,
+      "heapUsedBytes": 167413128,
+      "externalBytes": 3411689,
+      "arrayBuffersBytes": 441874
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 9.00104475,
+      "cpuUserPercent": 103.28436449520683,
+      "cpuSystemPercent": 23.74947464188095,
+      "cpuPercent": 127.0338391370878,
+      "rssBytes": 242483200,
+      "heapUsedBytes": 176273680,
+      "externalBytes": 3345769,
+      "arrayBuffersBytes": 375954
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 10.001252042,
+      "cpuUserPercent": 133.16379621035597,
+      "cpuSystemPercent": 32.03815874599722,
+      "cpuPercent": 165.2019549563532,
+      "rssBytes": 292339712,
+      "heapUsedBytes": 54055112,
+      "externalBytes": 3345065,
+      "arrayBuffersBytes": 375250
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 11.001261875,
+      "cpuUserPercent": 132.93939280695054,
+      "cpuSystemPercent": 30.899296167220786,
+      "cpuPercent": 163.8386889741713,
+      "rssBytes": 305414144,
+      "heapUsedBytes": 73012104,
+      "externalBytes": 3345193,
+      "arrayBuffersBytes": 375378
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 12.001100625,
+      "cpuUserPercent": 109.92572552324063,
+      "cpuSystemPercent": 24.40153474747803,
+      "cpuPercent": 134.32726027071865,
+      "rssBytes": 310984704,
+      "heapUsedBytes": 95117952,
+      "externalBytes": 3410793,
+      "arrayBuffersBytes": 440978
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 13.001142042,
+      "cpuUserPercent": 117.14854805858505,
+      "cpuSystemPercent": 26.30431055436977,
+      "cpuPercent": 143.45285861295483,
+      "rssBytes": 313573376,
+      "heapUsedBytes": 130901968,
+      "externalBytes": 3411561,
+      "arrayBuffersBytes": 441746
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 14.001156542,
+      "cpuUserPercent": 117.43679716644108,
+      "cpuSystemPercent": 25.98322324326297,
+      "cpuPercent": 143.42002040970405,
+      "rssBytes": 305446912,
+      "heapUsedBytes": 165814144,
+      "externalBytes": 3412265,
+      "arrayBuffersBytes": 442450
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 15.001053708,
+      "cpuUserPercent": 118.26006115512884,
+      "cpuSystemPercent": 28.636344789880123,
+      "cpuPercent": 146.89640594500895,
+      "rssBytes": 275628032,
+      "heapUsedBytes": 164692352,
+      "externalBytes": 3345897,
+      "arrayBuffersBytes": 376082
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 16.001263,
+      "cpuUserPercent": 128.8101410679556,
+      "cpuSystemPercent": 31.41332544229153,
+      "cpuPercent": 160.22346651024714,
+      "rssBytes": 293126144,
+      "heapUsedBytes": 186374640,
+      "externalBytes": 3345705,
+      "arrayBuffersBytes": 375890
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 17.001520292,
+      "cpuUserPercent": 128.59351391761712,
+      "cpuSystemPercent": 31.680948745335414,
+      "cpuPercent": 160.27446266295252,
+      "rssBytes": 331841536,
+      "heapUsedBytes": 90622504,
+      "externalBytes": 3412329,
+      "arrayBuffersBytes": 442514
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 18.001059708,
+      "cpuUserPercent": 106.65692447290142,
+      "cpuSystemPercent": 24.438756100039583,
+      "cpuPercent": 131.095680572941,
+      "rssBytes": 310460416,
+      "heapUsedBytes": 110066440,
+      "externalBytes": 3477929,
+      "arrayBuffersBytes": 508114
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 19.001698833,
+      "cpuUserPercent": 121.06762265567019,
+      "cpuSystemPercent": 28.326895572866988,
+      "cpuPercent": 149.39451822853718,
+      "rssBytes": 320880640,
+      "heapUsedBytes": 114918768,
+      "externalBytes": 3411433,
+      "arrayBuffersBytes": 441618
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 20.001119708,
+      "cpuUserPercent": 119.93655825930192,
+      "cpuSystemPercent": 27.50132670582851,
+      "cpuPercent": 147.43788496513045,
+      "rssBytes": 329089024,
+      "heapUsedBytes": 115569024,
+      "externalBytes": 3345193,
+      "arrayBuffersBytes": 375378
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 21.001384875,
+      "cpuUserPercent": 119.85701787414136,
+      "cpuSystemPercent": 27.924195424871773,
+      "cpuPercent": 147.78121329901316,
+      "rssBytes": 306249728,
+      "heapUsedBytes": 158234064,
+      "externalBytes": 3411753,
+      "arrayBuffersBytes": 441938
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 22.001681833,
+      "cpuUserPercent": 122.142928680185,
+      "cpuSystemPercent": 28.22791749407679,
+      "cpuPercent": 150.3708461742618,
+      "rssBytes": 290865152,
+      "heapUsedBytes": 166454456,
+      "externalBytes": 3345833,
+      "arrayBuffersBytes": 376018
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 23.002559125,
+      "cpuUserPercent": 100.47355535367666,
+      "cpuSystemPercent": 23.78293542101862,
+      "cpuPercent": 124.2564907746953,
+      "rssBytes": 255639552,
+      "heapUsedBytes": 179510432,
+      "externalBytes": 3345577,
+      "arrayBuffersBytes": 375762
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 24.001051458,
+      "cpuUserPercent": 35.21389082113263,
+      "cpuSystemPercent": 8.21027836575286,
+      "cpuPercent": 43.424169186885486,
+      "rssBytes": 272596992,
+      "heapUsedBytes": 170542488,
+      "externalBytes": 3344937,
+      "arrayBuffersBytes": 375122
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 25.001067292,
+      "cpuUserPercent": 75.40130609571928,
+      "cpuSystemPercent": 15.437455563328609,
+      "cpuPercent": 90.83876165904789,
+      "rssBytes": 250281984,
+      "heapUsedBytes": 80296328,
+      "externalBytes": 3406446,
+      "arrayBuffersBytes": 442002
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 26.00124325,
+      "cpuUserPercent": 123.95618891691056,
+      "cpuSystemPercent": 29.71677109639142,
+      "cpuPercent": 153.67296001330197,
+      "rssBytes": 260521984,
+      "heapUsedBytes": 85959240,
+      "externalBytes": 3405870,
+      "arrayBuffersBytes": 441426
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 27.001252292,
+      "cpuUserPercent": 127.52624690767547,
+      "cpuSystemPercent": 30.68922250805008,
+      "cpuPercent": 158.21546941572555,
+      "rssBytes": 278937600,
+      "heapUsedBytes": 102067800,
+      "externalBytes": 3340014,
+      "arrayBuffersBytes": 375570
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 28.00133325,
+      "cpuUserPercent": 117.20181157573846,
+      "cpuSystemPercent": 27.011713185723913,
+      "cpuPercent": 144.21352476146237,
+      "rssBytes": 293928960,
+      "heapUsedBytes": 137949032,
+      "externalBytes": 3406254,
+      "arrayBuffersBytes": 441810
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 29.00140325,
+      "cpuUserPercent": 127.65766396352257,
+      "cpuSystemPercent": 30.749147559670824,
+      "cpuPercent": 158.40681152319337,
+      "rssBytes": 279592960,
+      "heapUsedBytes": 154855816,
+      "externalBytes": 3340526,
+      "arrayBuffersBytes": 376082
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 30.001128167,
+      "cpuUserPercent": 125.7242846133843,
+      "cpuSystemPercent": 30.510292862891603,
+      "cpuPercent": 156.2345774762759,
+      "rssBytes": 300597248,
+      "heapUsedBytes": 167345552,
+      "externalBytes": 3340206,
+      "arrayBuffersBytes": 375762
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 31.001306375,
+      "cpuUserPercent": 135.0418344647637,
+      "cpuSystemPercent": 32.7545628748592,
+      "cpuPercent": 167.7963973396229,
+      "rssBytes": 336805888,
+      "heapUsedBytes": 60682912,
+      "externalBytes": 3338446,
+      "arrayBuffersBytes": 375378
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 32.00118175,
+      "cpuUserPercent": 120.70094235494098,
+      "cpuSystemPercent": 27.44191994927368,
+      "cpuPercent": 148.14286230421467,
+      "rssBytes": 336363520,
+      "heapUsedBytes": 103174376,
+      "externalBytes": 3339470,
+      "arrayBuffersBytes": 376402
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 33.001099708,
+      "cpuUserPercent": 131.64930077193392,
+      "cpuSystemPercent": 30.65731518745261,
+      "cpuPercent": 162.30661595938653,
+      "rssBytes": 336199680,
+      "heapUsedBytes": 125581464,
+      "externalBytes": 3405006,
+      "arrayBuffersBytes": 441938
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 34.001232083,
+      "cpuUserPercent": 126.69192915587799,
+      "cpuSystemPercent": 28.318651318531707,
+      "cpuPercent": 155.0105804744097,
+      "rssBytes": 335052800,
+      "heapUsedBytes": 127150136,
+      "externalBytes": 3404110,
+      "arrayBuffersBytes": 441042
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 35.001179542,
+      "cpuUserPercent": 123.63019565410987,
+      "cpuSystemPercent": 27.424440907549723,
+      "cpuPercent": 151.05463656165958,
+      "rssBytes": 335364096,
+      "heapUsedBytes": 162958736,
+      "externalBytes": 3404878,
+      "arrayBuffersBytes": 441810
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 36.001311917,
+      "cpuUserPercent": 114.19208382290394,
+      "cpuSystemPercent": 24.94609776030898,
+      "cpuPercent": 139.1381815832129,
+      "rssBytes": 331055104,
+      "heapUsedBytes": 192225512,
+      "externalBytes": 3405326,
+      "arrayBuffersBytes": 442258
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 37.0013675,
+      "cpuUserPercent": 129.43070585307657,
+      "cpuSystemPercent": 28.55971256549647,
+      "cpuPercent": 157.99041841857303,
+      "rssBytes": 332562432,
+      "heapUsedBytes": 68576880,
+      "externalBytes": 3338766,
+      "arrayBuffersBytes": 375698
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 38.001165417,
+      "cpuUserPercent": 133.3498477372803,
+      "cpuSystemPercent": 29.934249202881663,
+      "cpuPercent": 163.28409694016196,
+      "rssBytes": 334168064,
+      "heapUsedBytes": 95348888,
+      "externalBytes": 3338958,
+      "arrayBuffersBytes": 375890
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 39.001090958,
+      "cpuUserPercent": 132.56847091577592,
+      "cpuSystemPercent": 30.26285334179698,
+      "cpuPercent": 162.8313242575729,
+      "rssBytes": 323092480,
+      "heapUsedBytes": 121800184,
+      "externalBytes": 3339100,
+      "arrayBuffersBytes": 376032
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 40.001247333,
+      "cpuUserPercent": 131.02721061993932,
+      "cpuSystemPercent": 29.881927213631972,
+      "cpuPercent": 160.9091378335713,
+      "rssBytes": 329465856,
+      "heapUsedBytes": 142595136,
+      "externalBytes": 3339165,
+      "arrayBuffersBytes": 376097
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 41.001244875,
+      "cpuUserPercent": 133.37612783852222,
+      "cpuSystemPercent": 31.09877644079249,
+      "cpuPercent": 164.47490427931473,
+      "rssBytes": 336920576,
+      "heapUsedBytes": 172103664,
+      "externalBytes": 3339165,
+      "arrayBuffersBytes": 376097
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 42.001118125,
+      "cpuUserPercent": 136.26007096399468,
+      "cpuSystemPercent": 31.96705182381867,
+      "cpuPercent": 168.22712278781336,
+      "rssBytes": 341688320,
+      "heapUsedBytes": 73681392,
+      "externalBytes": 3339360,
+      "arrayBuffersBytes": 376292
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 43.001288417,
+      "cpuUserPercent": 135.45913239342647,
+      "cpuSystemPercent": 32.406181486542295,
+      "cpuPercent": 167.86531387996874,
+      "rssBytes": 341622784,
+      "heapUsedBytes": 101583704,
+      "externalBytes": 3405091,
+      "arrayBuffersBytes": 442023
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 44.0011745,
+      "cpuUserPercent": 134.24799312863325,
+      "cpuSystemPercent": 30.81331015985348,
+      "cpuPercent": 165.06130328848673,
+      "rssBytes": 342016000,
+      "heapUsedBytes": 125777192,
+      "externalBytes": 3405221,
+      "arrayBuffersBytes": 442153
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 45.001233125,
+      "cpuUserPercent": 116.92934501714838,
+      "cpuSystemPercent": 27.319398400268785,
+      "cpuPercent": 144.24874341741716,
+      "rssBytes": 339836928,
+      "heapUsedBytes": 120965096,
+      "externalBytes": 3405871,
+      "arrayBuffersBytes": 375317
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 46.001782833,
+      "cpuUserPercent": 133.4067652338968,
+      "cpuSystemPercent": 32.31323715502998,
+      "cpuPercent": 165.7200023889268,
+      "rssBytes": 340525056,
+      "heapUsedBytes": 151437248,
+      "externalBytes": 3339035,
+      "arrayBuffersBytes": 375967
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 47.001114833,
+      "cpuUserPercent": 126.07511817894353,
+      "cpuSystemPercent": 28.025821248594063,
+      "cpuPercent": 154.1009394275376,
+      "rssBytes": 321732608,
+      "heapUsedBytes": 80325880,
+      "externalBytes": 3340010,
+      "arrayBuffersBytes": 376942
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 48.001046583,
+      "cpuUserPercent": 110.68895452114606,
+      "cpuSystemPercent": 24.132947073637776,
+      "cpuPercent": 134.82190159478384,
+      "rssBytes": 304840704,
+      "heapUsedBytes": 102236832,
+      "externalBytes": 3471101,
+      "arrayBuffersBytes": 508033
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 49.001128875,
+      "cpuUserPercent": 129.02398235844376,
+      "cpuSystemPercent": 29.662858984008487,
+      "cpuPercent": 158.68684134245223,
+      "rssBytes": 305823744,
+      "heapUsedBytes": 119374696,
+      "externalBytes": 3470912,
+      "arrayBuffersBytes": 507844
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 50.001331125,
+      "cpuUserPercent": 130.2250619812143,
+      "cpuSystemPercent": 29.74518403652861,
+      "cpuPercent": 159.9702460177429,
+      "rssBytes": 313606144,
+      "heapUsedBytes": 141632496,
+      "externalBytes": 3470912,
+      "arrayBuffersBytes": 507844
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 51.002195792,
+      "cpuUserPercent": 135.99470986220757,
+      "cpuSystemPercent": 32.69962571273385,
+      "cpuPercent": 168.69433557494142,
+      "rssBytes": 322535424,
+      "heapUsedBytes": 132567488,
+      "externalBytes": 3338256,
+      "arrayBuffersBytes": 375188
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 52.002179708,
+      "cpuUserPercent": 131.38991327536513,
+      "cpuSystemPercent": 31.36530447955725,
+      "cpuPercent": 162.75521775492237,
+      "rssBytes": 336199680,
+      "heapUsedBytes": 160351944,
+      "externalBytes": 3338784,
+      "arrayBuffersBytes": 375716
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 53.002028958,
+      "cpuUserPercent": 136.46727244132052,
+      "cpuSystemPercent": 30.781240271971,
+      "cpuPercent": 167.24851271329152,
+      "rssBytes": 337952768,
+      "heapUsedBytes": 55918768,
+      "externalBytes": 3405772,
+      "arrayBuffersBytes": 375188
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 54.004385333,
+      "cpuUserPercent": 128.0939625889046,
+      "cpuSystemPercent": 29.817039872670037,
+      "cpuPercent": 157.9110024615746,
+      "rssBytes": 337100800,
+      "heapUsedBytes": 77686736,
+      "externalBytes": 3338322,
+      "arrayBuffersBytes": 375254
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 55.004179542,
+      "cpuUserPercent": 132.9849671093664,
+      "cpuSystemPercent": 30.106695687012124,
+      "cpuPercent": 163.09166279637853,
+      "rssBytes": 338444288,
+      "heapUsedBytes": 111256800,
+      "externalBytes": 3338718,
+      "arrayBuffersBytes": 375650
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 56.004087,
+      "cpuUserPercent": 133.67967098411222,
+      "cpuSystemPercent": 30.028778923259114,
+      "cpuPercent": 163.70844990737132,
+      "rssBytes": 339230720,
+      "heapUsedBytes": 139822416,
+      "externalBytes": 3404452,
+      "arrayBuffersBytes": 441384
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 57.004157917,
+      "cpuUserPercent": 131.57276925392281,
+      "cpuSystemPercent": 29.660796545291397,
+      "cpuPercent": 161.2335657992142,
+      "rssBytes": 340901888,
+      "heapUsedBytes": 163882064,
+      "externalBytes": 3404650,
+      "arrayBuffersBytes": 441582
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 58.004304667,
+      "cpuUserPercent": 138.0470415966457,
+      "cpuSystemPercent": 31.25771293062743,
+      "cpuPercent": 169.3047545272731,
+      "rssBytes": 341016576,
+      "heapUsedBytes": 70033056,
+      "externalBytes": 3404584,
+      "arrayBuffersBytes": 441516
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 59.004031125,
+      "cpuUserPercent": 132.22877012223677,
+      "cpuSystemPercent": 30.99647883881453,
+      "cpuPercent": 163.2252489610513,
+      "rssBytes": 338722816,
+      "heapUsedBytes": 93510592,
+      "externalBytes": 3404518,
+      "arrayBuffersBytes": 441450
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 60.004163083,
+      "cpuUserPercent": 134.7944127988759,
+      "cpuSystemPercent": 31.87229419580251,
+      "cpuPercent": 166.6667069946784,
+      "rssBytes": 337395712,
+      "heapUsedBytes": 119651856,
+      "externalBytes": 3404782,
+      "arrayBuffersBytes": 441714
+    },
+    {
+      "type": "baseline.sample",
+      "elapsedSeconds": 60.208762625,
+      "cpuUserPercent": 0.8787898459714051,
+      "cpuSystemPercent": 0.20381277295332362,
+      "cpuPercent": 1.0826026189247286,
+      "rssBytes": 337412096,
+      "heapUsedBytes": 119782568,
+      "externalBytes": 3404807,
+      "arrayBuffersBytes": 441739
+    }
+  ],
+  "unmatchedServerLogs": 0,
+  "requests": {
+    "requests": 64647,
+    "errors": 0,
+    "errorRate": 0,
+    "statuses": {
+      "200": 64647
+    },
+    "problemCodes": {},
+    "clientLatency": {
+      "samples": 64647,
+      "p50Ms": 3.6022919999959413,
+      "p95Ms": 10.251000000003842,
+      "maxMs": 171.62600000000384
+    },
+    "serverLatency": {
+      "samples": 64647,
+      "p50Ms": 3,
+      "p95Ms": 10,
+      "maxMs": 150
+    },
+    "successfulClientLatency": {
+      "samples": 64647,
+      "p50Ms": 3.6022919999959413,
+      "p95Ms": 10.251000000003842,
+      "maxMs": 171.62600000000384
+    },
+    "successfulServerLatency": {
+      "samples": 64647,
+      "p50Ms": 3,
+      "p95Ms": 10,
+      "maxMs": 150
+    },
+    "requestsPerSecond": 1077.3397245472238
+  },
+  "routes": {
+    "servers.list": {
+      "requests": 6466,
+      "errors": 0,
+      "errorRate": 0,
+      "statuses": {
+        "200": 6466
+      },
+      "problemCodes": {},
+      "clientLatency": {
+        "samples": 6466,
+        "p50Ms": 3.0381670000060694,
+        "p95Ms": 5.382249999995111,
+        "maxMs": 147.24291699999958
+      },
+      "serverLatency": {
+        "samples": 6466,
+        "p50Ms": 3,
+        "p95Ms": 5,
+        "maxMs": 141
+      },
+      "successfulClientLatency": {
+        "samples": 6466,
+        "p50Ms": 3.0381670000060694,
+        "p95Ms": 5.382249999995111,
+        "maxMs": 147.24291699999958
+      },
+      "successfulServerLatency": {
+        "samples": 6466,
+        "p50Ms": 3,
+        "p95Ms": 5,
+        "maxMs": 141
+      }
+    },
+    "clusters.list": {
+      "requests": 6465,
+      "errors": 0,
+      "errorRate": 0,
+      "statuses": {
+        "200": 6465
+      },
+      "problemCodes": {},
+      "clientLatency": {
+        "samples": 6465,
+        "p50Ms": 3.032541000000492,
+        "p95Ms": 5.482833999998547,
+        "maxMs": 157.3009579999998
+      },
+      "serverLatency": {
+        "samples": 6465,
+        "p50Ms": 3,
+        "p95Ms": 5,
+        "maxMs": 122
+      },
+      "successfulClientLatency": {
+        "samples": 6465,
+        "p50Ms": 3.032541000000492,
+        "p95Ms": 5.482833999998547,
+        "maxMs": 157.3009579999998
+      },
+      "successfulServerLatency": {
+        "samples": 6465,
+        "p50Ms": 3,
+        "p95Ms": 5,
+        "maxMs": 122
+      }
+    },
+    "projects.detail": {
+      "requests": 12930,
+      "errors": 0,
+      "errorRate": 0,
+      "statuses": {
+        "200": 12930
+      },
+      "problemCodes": {},
+      "clientLatency": {
+        "samples": 12930,
+        "p50Ms": 3.484833999998955,
+        "p95Ms": 6.365166000001409,
+        "maxMs": 171.62600000000384
+      },
+      "serverLatency": {
+        "samples": 12930,
+        "p50Ms": 3,
+        "p95Ms": 6,
+        "maxMs": 150
+      },
+      "successfulClientLatency": {
+        "samples": 12930,
+        "p50Ms": 3.484833999998955,
+        "p95Ms": 6.365166000001409,
+        "maxMs": 171.62600000000384
+      },
+      "successfulServerLatency": {
+        "samples": 12930,
+        "p50Ms": 3,
+        "p95Ms": 6,
+        "maxMs": 150
+      }
+    },
+    "environments.list": {
+      "requests": 12929,
+      "errors": 0,
+      "errorRate": 0,
+      "statuses": {
+        "200": 12929
+      },
+      "problemCodes": {},
+      "clientLatency": {
+        "samples": 12929,
+        "p50Ms": 3.5302499999961583,
+        "p95Ms": 6.068166999997629,
+        "maxMs": 159.31779200000165
+      },
+      "serverLatency": {
+        "samples": 12929,
+        "p50Ms": 3,
+        "p95Ms": 5,
+        "maxMs": 150
+      },
+      "successfulClientLatency": {
+        "samples": 12929,
+        "p50Ms": 3.5302499999961583,
+        "p95Ms": 6.068166999997629,
+        "maxMs": 159.31779200000165
+      },
+      "successfulServerLatency": {
+        "samples": 12929,
+        "p50Ms": 3,
+        "p95Ms": 5,
+        "maxMs": 150
+      }
+    },
+    "projects.list": {
+      "requests": 12928,
+      "errors": 0,
+      "errorRate": 0,
+      "statuses": {
+        "200": 12928
+      },
+      "problemCodes": {},
+      "clientLatency": {
+        "samples": 12928,
+        "p50Ms": 4.041540999998688,
+        "p95Ms": 6.721583999998984,
+        "maxMs": 150.30658299999777
+      },
+      "serverLatency": {
+        "samples": 12928,
+        "p50Ms": 4,
+        "p95Ms": 6,
+        "maxMs": 146
+      },
+      "successfulClientLatency": {
+        "samples": 12928,
+        "p50Ms": 4.041540999998688,
+        "p95Ms": 6.721583999998984,
+        "maxMs": 150.30658299999777
+      },
+      "successfulServerLatency": {
+        "samples": 12928,
+        "p50Ms": 4,
+        "p95Ms": 6,
+        "maxMs": 146
+      }
+    },
+    "secrets.metadata-list": {
+      "requests": 6465,
+      "errors": 0,
+      "errorRate": 0,
+      "statuses": {
+        "200": 6465
+      },
+      "problemCodes": {},
+      "clientLatency": {
+        "samples": 6465,
+        "p50Ms": 2.9790410000023257,
+        "p95Ms": 5.160166000001482,
+        "maxMs": 86.09783299999981
+      },
+      "serverLatency": {
+        "samples": 6465,
+        "p50Ms": 3,
+        "p95Ms": 4,
+        "maxMs": 72
+      },
+      "successfulClientLatency": {
+        "samples": 6465,
+        "p50Ms": 2.9790410000023257,
+        "p95Ms": 5.160166000001482,
+        "maxMs": 86.09783299999981
+      },
+      "successfulServerLatency": {
+        "samples": 6465,
+        "p50Ms": 3,
+        "p95Ms": 4,
+        "maxMs": 72
+      }
+    },
+    "projects.patch": {
+      "requests": 6464,
+      "errors": 0,
+      "errorRate": 0,
+      "statuses": {
+        "200": 6464
+      },
+      "problemCodes": {},
+      "clientLatency": {
+        "samples": 6464,
+        "p50Ms": 9.823583999999755,
+        "p95Ms": 16.54108300000007,
+        "maxMs": 123.8805829999983
+      },
+      "serverLatency": {
+        "samples": 6464,
+        "p50Ms": 9,
+        "p95Ms": 16,
+        "maxMs": 122
+      },
+      "successfulClientLatency": {
+        "samples": 6464,
+        "p50Ms": 9.823583999999755,
+        "p95Ms": 16.54108300000007,
+        "maxMs": 123.8805829999983
+      },
+      "successfulServerLatency": {
+        "samples": 6464,
+        "p50Ms": 9,
+        "p95Ms": 16,
+        "maxMs": 122
+      }
+    }
+  },
+  "methodology": {
+    "concurrency": "closed-loop; five clients by default, each has at most one request in flight",
+    "workload": "20% project lists, 20% project details, 20% environment lists, 10% cluster lists, 10% server lists, 10% credential metadata, 10% revision-conditional project PATCH",
+    "percentile": "nearest rank, computed from every observed request; no automatic retries or excluded failures",
+    "serverLatency": "API production onResponse durationMs, rounded to milliseconds; correlated by synthetic request ID",
+    "clientLatency": "loopback fetch through complete JSON response; includes local transport and driver scheduling",
+    "cpu": "process.cpuUsage user + system microseconds divided by elapsed wall time; 100% equals one CPU core",
+    "rss": "process.memoryUsage.rss sampled each second and at stop; peak is the largest observed sample"
+  },
+  "datasetAfter": {
+    "clusters": 5,
+    "projects": 50,
+    "environments": 100,
+    "servers": 10,
+    "secrets": 10,
+    "operations": 0,
+    "unavailableModels": [
+      "Service",
+      "Deployment"
+    ],
+    "schemaRelationBytes": 2818048
+  },
+  "databaseConnectionsAfter": {
+    "scope": "whole database; includes other idle local applications and the baseline driver",
+    "total": 17,
+    "active": 0
+  },
+  "finishedAt": "2026-10-25T11:28:11.396Z"
+}
