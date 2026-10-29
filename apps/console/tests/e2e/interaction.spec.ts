@@ -143,18 +143,53 @@ test('切换项目后，迟到响应不能覆盖新的项目与继承目标', as
 
 test('会话撤销后返回登录，重新认证不重放写操作', async ({ page }) => {
   await login(page);
-  const me = (await (await page.request.get('/api/auth/me')).json()).data;
-  const logout = await page.request.post('/api/auth/logout', {
-    headers: { Origin: baseURL, 'X-CSRF-Token': me.csrfToken },
+  const refresh = page.getByRole('button', { name: '刷新项目', exact: true });
+  await expect(refresh).toBeEnabled();
+  let release!: () => void;
+  let intercepted = false;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
   });
-  expect(logout.status()).toBe(204);
-  let writes = 0;
-  page.on('request', (request) => {
-    if (request.method() === 'POST' && !request.url().endsWith('/api/auth/login')) writes++;
+  const isProjectsRequest = (url: URL) =>
+    url.origin === new URL(baseURL).origin && url.pathname === '/api/projects';
+  await page.route(isProjectsRequest, async (route) => {
+    if (route.request().method() !== 'GET' || intercepted) return route.continue();
+    intercepted = true;
+    await gate;
+    await route.continue();
   });
-  await page.getByRole('button', { name: '刷新项目', exact: true }).click();
-  await expect(page).toHaveURL(/\/login\?.*expired=1/);
-  await expect(page.getByText(/会话已过期/)).toBeVisible();
-  await login(page);
-  expect(writes).toBe(0);
+  try {
+    // Start the real refresh while the page is ready, then revoke its session
+    // before dispatch. An earlier 401 must not race a click on an unmounted page.
+    await refresh.click();
+    await expect.poll(() => intercepted).toBe(true);
+    const me = (await (await page.request.get('/api/auth/me')).json()).data;
+    const logout = await page.request.post('/api/auth/logout', {
+      headers: { Origin: baseURL, 'X-CSRF-Token': me.csrfToken },
+    });
+    expect(logout.status()).toBe(204);
+    let writes = 0;
+    page.on('request', (request) => {
+      if (
+        ['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method()) &&
+        !request.url().endsWith('/api/auth/login')
+      )
+        writes++;
+    });
+    const refreshResponse = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'GET' && isProjectsRequest(new URL(response.url())),
+    );
+    release();
+    expect((await refreshResponse).status()).toBe(401);
+    await expect(page).toHaveURL(/\/login\?.*expired=1/);
+    await expect(page.getByText(/会话已过期/)).toBeVisible();
+    await page.unrouteAll({ behavior: 'wait' });
+    await login(page);
+    await expect(refresh).toBeEnabled();
+    expect(writes).toBe(0);
+  } finally {
+    release();
+    await page.unrouteAll({ behavior: 'ignoreErrors' });
+  }
 });

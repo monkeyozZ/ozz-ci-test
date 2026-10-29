@@ -2,6 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests/e2e',
+  // 用户已取消无障碍专项验收，默认运行保留普通功能测试。
+  grepInvert: /@accessibility/,
   outputDir: './test-results',
   timeout: 90_000,
   expect: { timeout: 12_000 },
