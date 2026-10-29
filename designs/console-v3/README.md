@@ -1,18 +1,18 @@
 # Ozz Console v3：完整交互原型
 
-在浏览器打开 [index.html](index.html) 即可体验，无需启动服务或后端。项目、服务、资源、任务和规划共用一份内存数据；刷新重置演示内容，仅主题偏好保存在浏览器本地。
+在浏览器打开 [index.html](index.html) 即可体验，无需启动服务或后端。项目、服务、资源、任务和规划共用一份内存数据；刷新重置演示资源，主题在本机保存，列表筛选通过 URL 保留，历史返回恢复阅读位置。
 
 本版取代早期只覆盖创建主路径的简版。按用户已确认的方向采用 Zeabur 的项目创建页、项目内服务导航、服务六页签和添加服务命令面板，补齐 Ozz 当前管理能力与独立规划流程。参考范围是本次在 Chrome 实际查看的创建项目、项目服务工作区、添加来源与 Docker 配置；管理业务与能力边界仍以 Ozz 源码和 [覆盖规划](coverage-plan.md) 为准。
 
 ## 先体验这条路径
 
 1. 点击项目列表中的“个人博客”，直接进入 `web` 服务。左侧包含返回项目、项目资料、整合、新建服务与服务列表；服务顶部提供“服务状态、环境变量、用量、网络、硬盘、设置”。
-2. 点击“新建服务”，用鼠标或方向键选择 GitHub、Docker、应用模板、数据库。选择 Docker 后可输入 `nginx:1.28.3-alpine3.23`，端口改为 `80`。取消回到来源列表；重新选择会恢复该来源草稿。
+2. 点击“新建服务”，用鼠标或方向键选择 GitHub、Docker、应用模板、数据库。选择 Docker 后可输入 `nginx:1.28.3-alpine3.23`，端口改为 `80`。面板内返回上一步会保留各来源草稿；关闭会确认未保存输入，再次添加从新的创建会话开始，已经保存的服务仍保留在项目中。
 3. 点击“核对部署配置”会先保存服务草稿并固定服务 ID，再在同一个面板检查来源、资源、端口和存储。点击“确认发布”才创建部署任务；“稍后部署”保留草稿。返回修改继续保存同一个服务，保存响应未知时先核对原请求。失败沿原记录创建独立重试，不会重复创建服务。
 4. 修改环境变量或挂载后“保存草稿”，运行中的已发布快照保持独立。停止、恢复与重启使用原已发布快照；新草稿需要再次部署。
 5. 回到项目列表创建项目：先选择部署位置，名称可选。提交后直接打开首个服务来源面板。只有多个环境时，项目内才显示切换器。
 
-顶栏“交互原型 · 演示数据”可切换下一次任务失败、未知结果、版本冲突、列表失败、空态、缺少 Git 集成、会话到期和恢复只读。它们只改变本地状态。
+顶栏“交互原型 · 演示数据”可切换慢响应、下一次任务失败、未知结果、版本冲突、列表失败、空态、缺少 Git 集成、会话到期和恢复只读。它们只改变本地状态。
 
 ## 完整功能入口
 
@@ -54,15 +54,18 @@ Node.js 使用预构建运行时与固定示例程序；静态站点使用 Nginx
 
 ## 验证与实现说明
 
-本轮使用独立、无用户资料的 headless Chrome 加载真正的 `index.html`，同时包含核心与管理模块。控制台未连接后端，检查不操作用户 Chrome、不创建服务器或容器、不产生 HTTP 请求。
+2026-10-30 的 P0–P2 精修已完成当前源码的原有 **18/18** 组与新增 **16/16** 组复验。两份报告的五个运行文件摘要一致，新增脚本的页面/控制台错误与外部请求均为 0；失败尝试和修复过程另存，完整结果见 [精修记录](../../docs/console-interaction-polish.md)。下面保留初版历史记录。
 
-2026-10-29 的完整页面检查 **18/18 组通过**，包含 29 个路由入口、五模板、先保存再复核、同 ID 修改与未知保存核对、发布与 Git、资源/维护/凭证、明暗与 390/1024/1440 宽度。未观察到 JavaScript 错误或 HTTP 请求；报告中的五个运行文件 SHA256 与当前文件一致。
+以下 2026-10-29 记录属于 v3 初版。验证使用独立、无用户资料的 headless Chrome 加载 `index.html`，包含核心与管理模块；未连接后端、不操作用户 Chrome、不创建服务器或容器。后续精修的新证据见 [Interaction Polish](../../docs/console-interaction-polish.md)，不能用初版结果替代当前源码验收。
+
+2026-10-29 的完整页面检查 **18/18 组通过**，包含 29 个路由入口、五模板、先保存再复核、同 ID 修改与未知保存核对、发布与 Git、资源/维护/凭证、明暗与 390/1024/1440 宽度。未观察到 JavaScript 错误或 HTTP 请求；报告中的五个运行文件 SHA256 对应该次运行的源码，后续精修已有变化。
 
 - [完整浏览器结果](verification/full-index-results.json)：逐组控件、状态断言、路由、错误与网络记录，以及最终五个运行文件的 SHA256。
+- [新增精修脚本](verification/interaction-polish-browser.mjs)：`node designs/console-v3/verification/interaction-polish-browser.mjs`，包含等待、焦点、返回、日志与复制等新增交互。支持同一个 `OZZ_PROTO_OUTPUT_DIR`，报告文件名与初版脚本分开。
 - [可复跑脚本](verification/full-index-browser.mjs)：在仓库根目录运行 `pnpm test:prototype`。macOS 默认使用本机 Google Chrome，Linux 使用 Playwright 安装的 Chromium；可通过 `OZZ_TEST_BROWSER` 指定浏览器路径。`OZZ_PROTO_OUTPUT_DIR` 可将报告和四张核对图输出到独立目录，CI 使用 `apps/console/tests/artifacts/console-v3-prototype`。
 - [覆盖规划](coverage-plan.md)：78 场景、12 FLOW、F01–F50 与 28 个当前页面的源码映射。映射完整不代表这 78 场景已逐项通过浏览器测试。
 
-保留四张本轮核对图：[服务工作区](verification/full-workspace-1440.png)、[添加服务](verification/full-create-1440.png)、[390 px 日志](verification/full-logs-390.png)、[1024 px 管理页面](verification/full-management-1024.png)。旧简版 `checks.json` 和核心隔离检查 `full-core-results.json` 属于不同版本或不同范围，不能计入本轮完整页面通过项。
+保留四张初版历史核对图：[服务工作区](verification/full-workspace-1440.png)、[添加服务](verification/full-create-1440.png)、[390 px 日志](verification/full-logs-390.png)、[1024 px 管理页面](verification/full-management-1024.png)。旧简版 `checks.json` 和核心隔离检查 `full-core-results.json` 属于不同版本或不同范围，不能计入本轮完整页面通过项。
 
 当前浏览器检查是定向连续流程；组合输入使用合成 composition/Enter 事件，不代表真实中文输入法通过。实际浏览器缩放、长时间日志流、全部旧场景逐项复查、真实 API/基础设施/备份恢复不由本原型结果证明。用户已排除旁白和无障碍专项验收。
 

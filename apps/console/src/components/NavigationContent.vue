@@ -272,6 +272,9 @@ async function changeEnvironment(event: Event) {
   padding: 0.625rem 0.875rem;
   border-radius: 0.5rem;
   color: var(--muted-foreground);
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
 }
 .nav-item svg {
   width: 1.125rem;
@@ -298,6 +301,9 @@ async function changeEnvironment(event: Event) {
   background: var(--secondary);
   color: var(--foreground);
 }
+.nav-item:active {
+  background: var(--accent);
+}
 .nav-item[aria-current='page'] {
   background: var(--accent);
   color: var(--primary);
@@ -310,6 +316,11 @@ async function changeEnvironment(event: Event) {
   color: var(--muted-foreground);
   font-size: 0.8125rem;
   padding: 0.5rem;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.back-link:hover,
+.context-cluster:hover {
+  color: var(--primary);
 }
 .project-context {
   padding: 1.25rem 0.625rem 1.5rem;
@@ -332,6 +343,7 @@ async function changeEnvironment(event: Event) {
   font-size: 0.8125rem;
   color: var(--muted-foreground);
   margin-top: 0.5rem;
+  transition: color var(--motion-fast) var(--ease-out);
 }
 .context-cluster span {
   min-width: 0;

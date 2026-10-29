@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import { creationStepQuery } from '@/composables/useCreationDialogState';
+import { useRouteFilter } from '@/composables/useRouteFilter';
 import { Package, Plus, RefreshCw, Search, ArrowUpRight, Activity } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,7 +28,7 @@ const props = withDefaults(
 );
 const auth = useAuthStore();
 const route = useRoute();
-const search = ref('');
+const search = useRouteFilter('serviceSearch');
 const filters = computed(() => ({
   ...(props.projectId ? { projectId: props.projectId } : {}),
   ...(props.environmentId ? { environmentId: props.environmentId } : {}),
@@ -35,6 +36,10 @@ const filters = computed(() => ({
   ...(search.value.trim() ? { search: search.value.trim() } : {}),
 }));
 const collection = useCollection<Service>('/services', filters, true, { refetchInterval: 15_000 });
+const searchVisible = ref(false);
+watchEffect(() => {
+  if (collection.items.value.length || search.value) searchVisible.value = true;
+});
 const createLocation = computed(() =>
   props.projectId && props.environmentId && props.environmentSlug
     ? {
@@ -71,7 +76,7 @@ const createLocation = computed(() =>
         >
       </div>
     </div>
-    <div v-if="collection.items.value.length || search" class="relative max-w-md mb-5">
+    <div v-if="searchVisible" class="relative max-w-md mb-5">
       <Search class="absolute left-3 top-3 size-4 text-muted-foreground" /><Input
         v-model="search"
         class="pl-10"
@@ -82,6 +87,7 @@ const createLocation = computed(() =>
     <QueryState
       :pending="collection.isPending.value"
       :error="collection.error.value"
+      :refreshing="collection.isFetching.value"
       @retry="collection.refetch()"
     >
       <div v-if="collection.items.value.length" class="service-list">
@@ -94,9 +100,12 @@ const createLocation = computed(() =>
           <div class="service-identity">
             <span class="service-icon"><Package /></span>
             <div class="min-w-0">
-              <RouterLink :to="serviceLocation(service)" class="service-name text-link">{{
-                service.name
-              }}</RouterLink>
+              <RouterLink
+                :to="serviceLocation(service)"
+                class="service-name text-link"
+                :title="service.name"
+                >{{ service.name }}</RouterLink
+              >
               <p v-if="showContext" class="meta mt-1">
                 {{ service.project.name }} / {{ service.environment.name }} ·
                 {{ service.cluster.name }}
@@ -145,7 +154,7 @@ const createLocation = computed(() =>
         </article>
       </div>
       <EmptyState
-        v-else
+        v-else-if="!collection.error.value"
         :icon="Package"
         :title="search ? '没有匹配的服务' : '添加第一个服务'"
         :description="search ? '试试其他名称或标识。' : '从 GitHub、Docker 镜像或模板开始。'"
@@ -198,9 +207,12 @@ const createLocation = computed(() =>
   color: var(--muted-foreground);
 }
 .service-name {
+  display: block;
   font-size: 1rem;
   font-weight: 600;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .service-open {
   display: inline-flex;

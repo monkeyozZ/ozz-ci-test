@@ -28,6 +28,12 @@
 }
 
 :root {
+  --motion-fast: 120ms;
+  --motion-menu: 160ms;
+  --motion-dialog: 200ms;
+  --motion-content: 160ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --background: oklch(97.6% 0.006 283);
   --card: oklch(99.1% 0.003 283);
   --sidebar: oklch(96.4% 0.01 292);
@@ -156,6 +162,30 @@
   }
 }
 @layer components {
+  .ui-button {
+    transition:
+      background-color var(--motion-fast) var(--ease-out),
+      color var(--motion-fast) var(--ease-out),
+      border-color var(--motion-fast) var(--ease-out),
+      box-shadow var(--motion-fast) var(--ease-out);
+  }
+  .ui-button:active:not(:disabled):not([aria-disabled='true']) {
+    box-shadow: inset 0 1px 3px oklch(20% 0.02 284 / 0.16);
+  }
+  .query-state {
+    min-width: 0;
+  }
+  .query-refresh {
+    min-height: 1.5rem;
+    margin-bottom: 0.375rem;
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+  }
+  .query-refresh > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
   .input {
     width: 100%;
     min-height: 2.5rem;
@@ -164,7 +194,9 @@
     border-radius: 0.5rem;
     background: var(--card);
     color: var(--foreground);
-    transition: border-color 0.15s;
+    transition:
+      border-color var(--motion-fast) var(--ease-out),
+      background-color var(--motion-fast) var(--ease-out);
   }
   .input::placeholder {
     color: var(--muted-foreground);
@@ -173,6 +205,11 @@
   .input:focus-visible {
     border-color: var(--primary);
     outline-offset: 2px;
+  }
+  @media (hover: hover) {
+    .input:not(:disabled):not([readonly]):not(:focus-visible):hover {
+      border-color: color-mix(in oklch, var(--primary) 55%, var(--input));
+    }
   }
   .input:disabled,
   .input[readonly] {
@@ -296,6 +333,15 @@
     border-bottom: 2px solid transparent;
     color: var(--muted-foreground);
     white-space: nowrap;
+    transition:
+      color var(--motion-fast) var(--ease-out),
+      border-color var(--motion-fast) var(--ease-out);
+  }
+  .page-tab:hover {
+    color: var(--foreground);
+  }
+  .page-tab:active {
+    color: var(--primary);
   }
   .page-tab[aria-current='page'],
   .page-tab[data-state='active'] {
@@ -318,6 +364,7 @@
   .text-link {
     color: var(--primary);
     text-underline-offset: 4px;
+    transition: color var(--motion-fast) var(--ease-out);
   }
   .text-link:hover {
     text-decoration: underline;
@@ -449,7 +496,13 @@
     inset: 0;
     z-index: 300;
     background: oklch(18% 0.024 284 / 0.42);
-    animation: fade-in 0.15s ease-out;
+  }
+  .dialog-overlay[data-state='open'] {
+    animation: fade-in var(--motion-menu) var(--ease-out);
+  }
+  .dialog-overlay[data-state='closed'] {
+    animation: fade-out var(--motion-fast) var(--ease-in);
+    pointer-events: none;
   }
   .dialog-content {
     position: fixed;
@@ -464,7 +517,14 @@
     border-radius: 0.875rem;
     background: var(--card);
     box-shadow: var(--shadow);
-    animation: fade-in 0.15s ease-out;
+    overscroll-behavior: contain;
+  }
+  .dialog-content[data-state='open'] {
+    animation: dialog-enter var(--motion-dialog) var(--ease-out);
+  }
+  .dialog-content[data-state='closed'] {
+    animation: dialog-exit var(--motion-fast) var(--ease-in);
+    pointer-events: none;
   }
   .dialog-wide {
     width: min(42rem, calc(100vw - 2rem));
@@ -479,6 +539,9 @@
   .dialog-header > div {
     min-width: 0;
     overflow-wrap: anywhere;
+  }
+  .dialog-header-without-body {
+    padding-bottom: 1.5rem;
   }
   .dialog-body {
     padding: 1.5rem;
@@ -547,6 +610,23 @@
     opacity: 1;
   }
 }
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes dialog-enter {
+  from {
+    opacity: 0;
+    translate: 0 0.375rem;
+  }
+}
+@keyframes dialog-exit {
+  to {
+    opacity: 0;
+    translate: 0 0.25rem;
+  }
+}
 .theme-switching *,
 .theme-switching *::before,
 .theme-switching *::after {
@@ -613,6 +693,7 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }

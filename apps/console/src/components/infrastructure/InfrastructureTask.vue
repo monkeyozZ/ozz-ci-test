@@ -1,8 +1,19 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/vue-query';
-import { AlertCircle, Clock3, ExternalLink, RefreshCw, RotateCcw, Square } from '@lucide/vue';
+import {
+  AlertCircle,
+  ArrowDown,
+  Clock3,
+  ExternalLink,
+  LoaderCircle,
+  Pause,
+  RefreshCw,
+  RotateCcw,
+  Square,
+} from '@lucide/vue';
 import { Button } from '@/components/ui/button';
+import CopyButton from '@/components/CopyButton.vue';
 import StatusBadge from '@/components/StatusBadge.vue';
 import QueryState from '@/components/QueryState.vue';
 import MutationError from '@/components/MutationError.vue';
@@ -14,6 +25,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useUiStore } from '@/stores/ui';
 import type { Operation, OperationLogPage } from '@/lib/types';
 import { operationLabel } from './operation-presentation';
+import { matchesLogSearch, useLogViewport } from '@/components/services/useBufferedLog';
 
 const props = withDefaults(
   defineProps<{ operationId: string; title?: string; disabled?: boolean }>(),
@@ -77,6 +89,52 @@ const logRows = computed(() =>
     ).values(),
   ].sort((a, b) => a.sequence - b.sequence),
 );
+const logSearch = ref('');
+const wrapLogs = ref(true);
+const {
+  output,
+  following,
+  unread,
+  pause,
+  jumpToLatest,
+  appended,
+  onScroll,
+  onWheel,
+  onHistoryKey,
+  reset,
+} = useLogViewport();
+const filteredLogs = computed(() =>
+  logRows.value.filter((line) =>
+    matchesLogSearch(
+      `${line.timestamp} ${line.level} ${line.message} ${line.code ?? ''}`,
+      logSearch.value,
+    ),
+  ),
+);
+const copyText = computed(() =>
+  filteredLogs.value
+    .map(
+      (line) =>
+        `${line.timestamp} ${line.level} ${line.message}${line.code ? ` [${line.code}]` : ''}`,
+    )
+    .join('\n'),
+);
+const copyContext = computed(() => JSON.stringify([props.operationId, logSearch.value]));
+watch(logRows, (_value, old) => {
+  const previous = old.at(-1)?.sequence ?? 0;
+  appended(filteredLogs.value.filter((line) => line.sequence > previous).length);
+});
+watch(logSearch, () => {
+  unread.value = 0;
+  appended(0);
+});
+watch(
+  () => props.operationId,
+  () => {
+    logSearch.value = '';
+    reset();
+  },
+);
 const logUnavailable = computed(() => {
   switch (logs.data.value?.pages[0]?.unavailableReason) {
     case 'expired':
@@ -110,7 +168,20 @@ const retry = useMutation({
     ui.toast('重试任务已受理，原执行记录保留。');
   },
 });
+const mutationError = computed(
+  () =>
+    (cancel.variables.value === props.operationId ? cancel.error.value : null) ??
+    (retry.variables.value === props.operationId ? retry.error.value : null),
+);
+const mutationLocked = computed(
+  () => props.disabled || auth.restoreMode || cancel.isPending.value || retry.isPending.value,
+);
+const canCancel = computed(
+  () => !mutationLocked.value && active.value && !operation.data.value?.cancelRequestedAt,
+);
+const canRetry = computed(() => !mutationLocked.value && operation.data.value?.status === 'failed');
 async function requestCancel() {
+  if (!canCancel.value) return;
   const reviewedId = props.operationId;
   if (
     await ui.confirm({
@@ -119,11 +190,16 @@ async function requestCancel() {
       confirmText: '请求取消',
     })
   ) {
-    if (isViewActive() && props.operationId === reviewedId) cancel.mutate(reviewedId);
+    if (isViewActive() && props.operationId === reviewedId && canCancel.value)
+      cancel.mutate(reviewedId);
   }
+}
+function requestRetry() {
+  if (canRetry.value) retry.mutate(props.operationId);
 }
 function toggleLogs(event: Event) {
   logsOpen.value = (event.currentTarget as HTMLDetailsElement).open;
+  if (logsOpen.value) appended(0);
 }
 </script>
 
@@ -146,6 +222,7 @@ function toggleLogs(event: Event) {
     <QueryState
       :pending="operation.isPending.value"
       :error="operation.error.value"
+      :refreshing="operation.isFetching.value"
       @retry="operation.refetch()"
     >
       <template v-if="operation.data.value">
@@ -190,51 +267,106 @@ function toggleLogs(event: Event) {
             <dd>{{ dateTime(operation.data.value.finishedAt) }}</dd>
           </div>
         </dl>
-        <MutationError class="mt-4" :error="cancel.error.value ?? retry.error.value" />
+        <MutationError class="mt-4" :error="mutationError" />
         <div class="actions mt-4">
           <Button
             v-if="active && !auth.restoreMode"
             variant="outline"
-            :disabled="
-              disabled || cancel.isPending.value || !!operation.data.value.cancelRequestedAt
-            "
+            :disabled="!canCancel"
+            :aria-busy="cancel.isPending.value || undefined"
             @click="requestCancel"
-            ><Square />{{
-              operation.data.value.cancelRequestedAt ? '取消待确认' : '请求取消'
+            ><LoaderCircle v-if="cancel.isPending.value" class="animate-spin" /><Square v-else />{{
+              cancel.isPending.value
+                ? '正在提交取消…'
+                : operation.data.value.cancelRequestedAt
+                  ? '取消待确认'
+                  : '请求取消'
             }}</Button
           >
           <Button
             v-if="operation.data.value.status === 'failed' && !auth.restoreMode"
             variant="outline"
-            :disabled="disabled || retry.isPending.value"
-            @click="retry.mutate(operationId)"
-            ><RotateCcw />创建重试任务</Button
+            :disabled="!canRetry"
+            :aria-busy="retry.isPending.value || undefined"
+            @click="requestRetry"
+            ><LoaderCircle v-if="retry.isPending.value" class="animate-spin" /><RotateCcw
+              v-else
+            />{{ retry.isPending.value ? '正在创建重试任务…' : '创建重试任务' }}</Button
           >
           <Button as-child variant="ghost">
             <RouterLink :to="`/operations/${operationId}`"><ExternalLink />完整任务记录</RouterLink>
           </Button>
         </div>
-        <details class="task-logs mt-5" @toggle="toggleLogs">
+        <details class="task-logs mt-5" :open="logsOpen" @toggle="toggleLogs">
           <summary>
             执行日志<span class="meta ml-2">{{ active ? '展开后持续更新' : '已记录的输出' }}</span>
           </summary>
           <QueryState
-            v-if="logsOpen"
+            v-if="logsOpen || logs.isFetched.value"
             :pending="logs.isPending.value"
             :error="logs.error.value"
+            :refreshing="logs.isFetching.value"
             @retry="logs.refetch()"
           >
+            <div v-if="logRows.length" class="log-toolbar mt-4">
+              <span role="status"
+                >{{ logSearch ? `${filteredLogs.length} 条匹配 / ` : ''
+                }}{{ logRows.length }} 条已载入 ·
+                {{ following ? '自动滚动' : '自动滚动已暂停' }}</span
+              >
+              <input
+                v-model="logSearch"
+                type="search"
+                class="input log-search"
+                aria-label="搜索基础设施日志"
+                placeholder="搜索已载入的日志"
+              />
+              <label class="flex items-center gap-2"
+                ><input v-model="wrapLogs" type="checkbox" />长行换行</label
+              >
+              <Button v-if="following" variant="ghost" size="sm" @click="pause"
+                ><Pause />暂停滚动</Button
+              >
+              <Button v-else variant="ghost" size="sm" @click="jumpToLatest"
+                ><ArrowDown />回到最新{{ unread ? ` · ${unread} 条新输出` : '' }}</Button
+              >
+              <CopyButton
+                :text="copyText"
+                :context-key="copyContext"
+                :label="logSearch ? '复制匹配日志' : '复制基础设施日志'"
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="刷新基础设施日志"
+                :disabled="logs.isFetching.value"
+                @click="logs.refetch()"
+                ><RefreshCw
+              /></Button>
+            </div>
             <div
               v-if="logRows.length"
-              class="log-scroll mt-4"
+              ref="output"
+              class="log-scroll"
+              :class="{ 'nowrap-lines': !wrapLogs }"
               tabindex="0"
+              role="region"
               aria-label="基础设施执行日志"
+              @scroll="onScroll"
+              @wheel="onWheel"
+              @keydown="onHistoryKey"
             >
-              <div v-for="line in logRows" :key="line.sequence" class="log-line">
+              <div v-for="line in filteredLogs" :key="line.sequence" class="log-line">
                 <time :datetime="line.timestamp">{{ dateTime(line.timestamp) }}</time>
                 <span :class="['log-level', `log-${line.level}`]">{{ line.level }}</span>
-                <span>{{ line.message }}</span>
+                <span class="log-message"
+                  >{{ line.message
+                  }}<small v-if="line.code" class="block muted">{{ line.code }}</small></span
+                >
               </div>
+              <p v-if="!filteredLogs.length" class="muted py-4">
+                已载入的日志中没有匹配内容。清除搜索可查看全部缓冲。
+              </p>
             </div>
             <p v-else-if="!logs.error.value" class="muted mt-4">{{ logUnavailable }}</p>
             <p v-if="logs.data.value?.pages.some((page) => page.truncated)" class="meta mt-3">
@@ -291,11 +423,37 @@ function toggleLogs(event: Event) {
 .log-scroll {
   max-height: 20rem;
   overflow: auto;
-  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  border-top: 0;
+  border-radius: 0 0 0.5rem 0.5rem;
   padding: 1rem;
   background: var(--background);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
+}
+.log-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: var(--secondary);
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+.log-search {
+  width: min(100%, 18rem);
+}
+.log-message {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.nowrap-lines .log-message {
+  white-space: pre;
+  overflow-wrap: normal;
 }
 .log-line {
   display: grid;

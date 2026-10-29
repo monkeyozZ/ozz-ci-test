@@ -276,6 +276,7 @@ try {
     await mgInput('name').fill('Temporary credential'); await mgInput('kind').selectOption('ssh');
     await mgInput('privateKey').fill('demo-secret-never-retained');
     await mgInput('kind').selectOption('generic');
+    await page.getByRole('button', { name: '清空并切换', exact: true }).click();
     assert.equal(await mgInput('secret').inputValue(), '');
     await mgInput('secret').fill('demo-generic-never-retained');
     await submit('mg:credential-save');
@@ -377,7 +378,10 @@ try {
 
   await check('domain unbind and service deletion retains data', async () => {
     await reset('#/resources?type=domains');
-    await page.locator('main a[href="#/domain/dom-web"]').click();
+    await page.locator('main a[href="#/domain/dom-web"], main a[href^="#/domain/dom-web?"]').click();
+    await page.waitForFunction(() => window.OzzPrototype.context().kind === 'domain' && window.OzzPrototype.context().id === 'dom-web');
+    assert.equal(await state(() => window.OzzPrototype.context().params.get('list')), '#/resources?type=domains');
+    assert.equal(await page.getByRole('link', { name: '域名列表', exact: true }).getAttribute('href'), '#/resources?type=domains');
     await control('mg:domain-unbind').click(); await input('modal.input').fill('blog.tokyo.ozz.test'); await confirm(); await done((await lastTask()).id);
     assert.equal(await state(() => window.OzzPrototype.state.domains.some(d => d.id === 'dom-web')), false);
     await route('#/volume/vol-archive'); await control('mg:volume-mount').click(); await mgInput('serviceId').selectOption('blog-worker'); await submit('mg:volume-mount-save');
@@ -387,10 +391,16 @@ try {
     assert.equal(await state(() => Boolean(window.OzzPrototype.api.findService('blog-worker'))), false);
     const v = await state(() => window.OzzPrototype.state.volumes.find(v => v.id === 'vol-archive'));
     assert.equal(v.retained, true); assert.equal(v.serviceId, null); assert.deepEqual(v.actualReferences, []);
-    await page.locator('main a[href="#/volume/vol-archive"]').click();
+    const retainedList = '#/resources?type=volumes&project=blog&env=blog-production';
+    await page.locator('main a[href="#/volume/vol-archive"], main a[href^="#/volume/vol-archive?"]').click();
+    await page.waitForFunction(() => window.OzzPrototype.context().kind === 'volume' && window.OzzPrototype.context().id === 'vol-archive');
+    assert.equal(await state(() => window.OzzPrototype.context().params.get('list')), retainedList);
+    assert.equal(await page.getByRole('link', { name: '数据卷列表', exact: true }).getAttribute('href'), retainedList);
     await page.locator('main h1').filter({ hasText: 'archive-data' }).waitFor();
     assert.match(await page.locator('main h1').innerText(), /archive-data/);
-    return { domainBindingRemoved: true, serviceDeleted: true, independentVolume: v.id, retainedVolumeReachable: true };
+    await page.getByRole('link', { name: '数据卷列表', exact: true }).click();
+    assert.equal(await state(() => location.hash), retainedList);
+    return { domainReturnContextPreserved: true, domainBindingRemoved: true, serviceDeleted: true, independentVolume: v.id, retainedVolumeReachable: true, retainedVolumeReturnContextPreserved: true };
   });
 
   await check('task unknown reconciliation and cancellation', async () => {

@@ -8,6 +8,7 @@ export default defineConfig({
   testMatch: [
     '**/creation-v3.spec.ts',
     '**/service-workspace-v3.spec.ts',
+    '**/*-polish.spec.ts',
     '**/s5-interface.spec.ts',
     '**/s6-interface.spec.ts',
   ],

@@ -1,23 +1,44 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, onScopeDispose, ref, watch } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
 import { ArrowDown, Pause, RefreshCw } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import QueryState from '@/components/QueryState.vue';
+import CopyButton from '@/components/CopyButton.vue';
 import { request } from '@/lib/api';
 import { dateTime } from '@/lib/utils';
 import { stageLabels } from '@/components/services/presentation';
+import { matchesLogSearch, useLogViewport } from '@/components/services/useBufferedLog';
 import { decimalSequenceCompare } from './presentation';
 import type { BuildLogChunk, BuildLogPage, BuildRun } from './types';
 const props = defineProps<{ deploymentId: string; runs: BuildRun[]; active: boolean }>();
 const selectedRun = ref('');
 const cursor = ref('');
 const rows = ref<BuildLogChunk[]>([]);
-const following = ref(true);
-const unread = ref(0);
+const search = ref('');
+const draining = ref(false);
 const wrap = ref(true);
 const clipped = ref(false);
-const output = ref<HTMLElement>();
+const {
+  output,
+  following,
+  unread,
+  pause,
+  jumpToLatest,
+  appended,
+  onScroll,
+  onWheel,
+  onHistoryKey,
+  reset,
+} = useLogViewport();
+const filteredRows = computed(() =>
+  rows.value.filter((row) => matchesLogSearch(row.content, search.value)),
+);
+const copyText = computed(() => filteredRows.value.map((row) => row.content).join(''));
+const copyContext = computed(() =>
+  JSON.stringify([props.deploymentId, selectedRun.value, search.value]),
+);
+let drainGeneration = 0;
 watch(
   () => props.runs,
   (runs) => {
@@ -31,9 +52,12 @@ watch(
     cursor.value = '';
     rows.value = [];
     clipped.value = false;
-    unread.value = 0;
+    draining.value = !!selectedRun.value && !props.active;
+    drainGeneration++;
+    search.value = '';
+    reset();
   },
-  { flush: 'sync' },
+  { flush: 'sync', immediate: true },
 );
 const logs = useQuery({
   queryKey: computed(() => ['build-logs', props.deploymentId, selectedRun.value, cursor.value]),
@@ -49,22 +73,19 @@ const logs = useQuery({
   },
   refetchInterval: () => (props.active ? 3000 : false),
 });
-async function jumpToLatest() {
-  following.value = true;
-  unread.value = 0;
-  await nextTick();
-  if (output.value) output.value.scrollTop = output.value.scrollHeight;
-}
-watch(logs.data, async (page) => {
+watch([logs.data, logs.dataUpdatedAt], ([page]) => {
   if (!page || page.runId !== selectedRun.value) return;
   if (!page.available) {
     rows.value = [];
     unread.value = 0;
     clipped.value = false;
+    draining.value = false;
     return;
   }
   const existing = new Map(rows.value.map((row) => [row.sequence, row]));
-  const added = page.items.filter((row) => !existing.has(row.sequence)).length;
+  const added = page.items.filter(
+    (row) => !existing.has(row.sequence) && matchesLogSearch(row.content, search.value),
+  ).length;
   for (const row of page.items) existing.set(row.sequence, row);
   const merged = [...existing.values()].sort((a, b) =>
     decimalSequenceCompare(a.sequence, b.sequence),
@@ -81,22 +102,44 @@ watch(logs.data, async (page) => {
     characters += row.content.length;
   }
   rows.value = retained;
-  if (following.value) await jumpToLatest();
-  else unread.value += added;
-  // While running, catch up one bounded page at a time, then poll only the tail page.
+  appended(added);
+  // Catch up in bounded pages, including the final tail after the task becomes terminal.
   if (
-    props.active &&
+    (props.active || draining.value) &&
     page.pageInfo.hasMore &&
     page.pageInfo.nextCursor &&
+    page.pageInfo.nextCursor !== cursor.value &&
     page.runId === selectedRun.value
   )
     cursor.value = page.pageInfo.nextCursor;
+  else draining.value = false;
 });
-function onScroll() {
-  if (!output.value) return;
-  if (output.value.scrollHeight - output.value.scrollTop - output.value.clientHeight > 48)
-    following.value = false;
-}
+watch(
+  () => props.active,
+  async (active, wasActive) => {
+    if (active || !wasActive || !selectedRun.value) return;
+    const generation = ++drainGeneration;
+    const pendingInitialRead = logs.isFetching.value && !logs.data.value;
+    draining.value = true;
+    await logs.refetch();
+    // An initial request cannot be cancelled by refetch. Its snapshot may precede
+    // the terminal transition, so take one fresh snapshot once it has settled.
+    if (pendingInitialRead && generation === drainGeneration) {
+      draining.value = true;
+      await logs.refetch();
+    }
+  },
+);
+watch(logs.error, (failure) => {
+  if (failure) draining.value = false;
+});
+watch(search, () => {
+  unread.value = 0;
+  appended(0);
+});
+onScopeDispose(() => {
+  drainGeneration++;
+});
 const unavailable = computed(() => {
   if (!selectedRun.value) return '尚无已登记的构建执行，任务开始后会显示对应输出。';
   return logs.data.value?.unavailableReason === 'expired'
@@ -134,14 +177,34 @@ const unavailable = computed(() => {
       <label class="flex items-center gap-2"
         ><input v-model="wrap" type="checkbox" />长行换行</label
       >
-      <Button v-if="following" variant="ghost" @click="following = false"><Pause />暂停跟随</Button>
+      <Button v-if="following" variant="ghost" @click="pause"><Pause />暂停跟随</Button>
       <Button v-else variant="ghost" @click="jumpToLatest"
         ><ArrowDown />{{ unread ? '新增 ' + unread + ' 段 · ' : '' }}回到底部</Button
+      >
+      <CopyButton
+        :text="copyText"
+        :context-key="copyContext"
+        :label="search ? '复制匹配输出' : '复制构建日志'"
+      />
+    </div>
+    <div v-if="runs.length" class="build-log-search mt-3">
+      <input
+        v-model="search"
+        type="search"
+        class="input"
+        aria-label="搜索构建日志"
+        placeholder="搜索已载入的输出"
+      />
+      <span class="meta" role="status"
+        >{{ search ? `${filteredRows.length} 段匹配 / ` : '' }}{{ rows.length }} 段已载入{{
+          draining ? ' · 正在补齐最终输出' : ''
+        }}</span
       >
     </div>
     <QueryState
       :pending="!!selectedRun && logs.isPending.value && !rows.length"
       :error="logs.error.value"
+      :refreshing="logs.isFetching.value"
       @retry="logs.refetch()"
     >
       <div
@@ -153,8 +216,10 @@ const unavailable = computed(() => {
         tabindex="0"
         aria-label="构建与推送日志，可滚动"
         @scroll="onScroll"
+        @wheel="onWheel"
+        @keydown="onHistoryKey"
       >
-        <div v-for="row in rows" :key="row.sequence" class="build-chunk">
+        <div v-for="row in filteredRows" :key="row.sequence" class="build-chunk">
           <p class="meta">
             <time :datetime="row.timestamp">{{ dateTime(row.timestamp) }}</time> ·
             {{ stageLabels[row.phase] || row.phase }}
@@ -162,6 +227,9 @@ const unavailable = computed(() => {
           <pre>{{ row.content }}</pre>
           <p v-if="row.truncated" class="meta">此段输出已截断。</p>
         </div>
+        <p v-if="!filteredRows.length" class="meta py-4">
+          已载入的输出中没有匹配内容。清除搜索可查看全部缓冲。
+        </p>
       </div>
       <p v-else-if="!logs.error.value" class="meta py-5">{{ unavailable }}</p>
       <p v-if="logs.data.value?.truncated" class="meta mt-3">
@@ -193,6 +261,15 @@ const unavailable = computed(() => {
 }
 .build-log-toolbar .field {
   max-width: 100%;
+}
+.build-log-search {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+.build-log-search .input {
+  width: min(100%, 22rem);
 }
 .build-output {
   max-height: 34rem;

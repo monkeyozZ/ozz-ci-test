@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, useId } from 'vue';
 import { useMutation } from '@tanstack/vue-query';
-import { Copy, RefreshCw, RotateCw, ShieldCheck, Unlink, LoaderCircle, Info } from '@lucide/vue';
+import { RefreshCw, RotateCw, ShieldCheck, Unlink, LoaderCircle, Info } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
+import CopyButton from '@/components/CopyButton.vue';
 import { Input } from '@/components/ui/input';
 import { Dialog } from '@/components/ui/dialog';
 import ServiceMutationError from '@/components/services/ServiceMutationError.vue';
@@ -58,6 +59,11 @@ const locked = computed(
     !!props.domain.activeTask ||
     props.domain.desiredState === 'deleting',
 );
+const pendingAction = computed(() =>
+  task.isPending.value && task.variables.value?.domainId === props.domain.id
+    ? task.variables.value.action
+    : null,
+);
 const canRequestProduction = computed(
   () =>
     props.domain.certificateEnvironment === 'staging' &&
@@ -65,14 +71,6 @@ const canRequestProduction = computed(
     !props.domain.observationStale &&
     certificateStatus(props.domain.certificate).tone !== 'danger',
 );
-async function copyHostname() {
-  try {
-    await navigator.clipboard.writeText(props.domain.hostname);
-    if (active()) ui.toast('完整域名已复制。');
-  } catch {
-    if (active()) ui.toast('未能复制域名，请选中完整域名后复制。', 'error');
-  }
-}
 function dispatch(action: Parameters<typeof requestDomainAction>[0]['action'], domain: Domain) {
   if (locked.value) return;
   const token = `${domain.id}:${domain.revision}:${action}`;
@@ -134,20 +132,35 @@ function preserveComposition(event: KeyboardEvent) {
 <template>
   <div data-domain-actions>
     <div class="actions">
-      <Button variant="outline" @click="copyHostname"><Copy />复制完整域名</Button>
-      <Button variant="outline" :disabled="locked" @click="dispatch('sync', domain)"
-        ><RefreshCw />重新检查</Button
+      <CopyButton :text="domain.hostname" label="复制完整域名" />
+      <Button
+        variant="outline"
+        :disabled="locked"
+        :aria-busy="pendingAction === 'sync' || undefined"
+        @click="dispatch('sync', domain)"
+        ><LoaderCircle v-if="pendingAction === 'sync'" class="animate-spin" /><RefreshCw v-else />{{
+          pendingAction === 'sync' ? '正在提交检查…' : '重新检查'
+        }}</Button
       >
       <Button
         v-if="domain.desiredState === 'active'"
         variant="outline"
         :disabled="locked"
+        :aria-busy="pendingAction === 'reconcile' || undefined"
         :aria-describedby="reconcileHelpId"
         @click="dispatch('reconcile', domain)"
-        ><RotateCw />重新应用绑定</Button
+        ><LoaderCircle v-if="pendingAction === 'reconcile'" class="animate-spin" /><RotateCw
+          v-else
+        />{{ pendingAction === 'reconcile' ? '正在提交重新应用…' : '重新应用绑定' }}</Button
       >
-      <Button v-if="canRequestProduction" :disabled="locked" @click="requestProduction"
-        ><ShieldCheck />申请正式证书</Button
+      <Button
+        v-if="canRequestProduction || pendingAction === 'production'"
+        :disabled="locked"
+        :aria-busy="pendingAction === 'production' || undefined"
+        @click="requestProduction"
+        ><LoaderCircle v-if="pendingAction === 'production'" class="animate-spin" /><ShieldCheck
+          v-else
+        />{{ pendingAction === 'production' ? '正在提交证书申请…' : '申请正式证书' }}</Button
       >
       <Button variant="outline" :disabled="locked" @click="openUnbind"><Unlink />解绑审查</Button>
     </div>
@@ -214,13 +227,14 @@ function preserveComposition(event: KeyboardEvent) {
             ><Button
               type="submit"
               variant="destructive"
+              :aria-busy="task.isPending.value || undefined"
               :disabled="
                 task.isPending.value ||
                 auth.restoreMode ||
                 confirmation.trim() !== unbindTarget.hostname
               "
               ><LoaderCircle v-if="task.isPending.value" class="animate-spin" />{{
-                task.isPending.value ? '正在受理…' : '提交解绑请求'
+                task.isPending.value ? '正在提交解绑…' : '提交解绑请求'
               }}</Button
             >
           </div>

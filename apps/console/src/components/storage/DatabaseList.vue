@@ -2,9 +2,10 @@
 import { Database as DatabaseIcon, ArrowUpRight, ShieldCheck } from '@lucide/vue';
 import NetworkStateBadge from '@/components/networking/NetworkStateBadge.vue';
 import { dateTime } from '@/lib/utils';
+import { resourceDetailLocation } from '@/lib/resource-list-navigation';
 import type { Database } from './types';
 import { databaseState, engineLabel } from './presentation';
-defineProps<{ databases: Database[] }>();
+defineProps<{ databases: Database[]; listPath?: string }>();
 </script>
 <template>
   <div class="panel database-list" data-database-list>
@@ -17,9 +18,11 @@ defineProps<{ databases: Database[] }>();
       <div class="database-name">
         <DatabaseIcon class="size-5 shrink-0 text-primary" />
         <div class="min-w-0">
-          <RouterLink :to="`/databases/${database.id}`" class="text-link font-semibold">{{
-            database.service?.name ?? database.originalService.name
-          }}</RouterLink>
+          <RouterLink
+            :to="resourceDetailLocation(`/databases/${database.id}`, listPath, 'databases')"
+            class="text-link font-semibold"
+            >{{ database.service?.name ?? database.originalService.name }}</RouterLink
+          >
           <p class="meta mt-2">{{ engineLabel(database.engine) }} {{ database.exactVersion }}</p>
           <p v-if="!database.service" class="meta mt-2">原服务已删除 · 数据与保护身份保留</p>
           <RouterLink
@@ -49,7 +52,7 @@ defineProps<{ databases: Database[] }>();
         </p>
       </div>
       <RouterLink
-        :to="`/databases/${database.id}`"
+        :to="resourceDetailLocation(`/databases/${database.id}`, listPath, 'databases')"
         class="text-link database-open inline-flex items-center gap-1"
         :aria-label="`查看数据库 ${database.service?.name ?? database.originalService.name}`"
         >详情<ArrowUpRight class="size-4"

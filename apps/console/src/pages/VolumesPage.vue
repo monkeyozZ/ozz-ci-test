@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { HardDrive, Plus, Search, RefreshCw } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
@@ -11,12 +11,13 @@ import StorageScopeFilters from '@/components/storage/StorageScopeFilters.vue';
 import type { Volume } from '@/components/storage/types';
 import { useCollection } from '@/lib/query';
 import { useAuthStore } from '@/stores/auth';
+import { useRouteFilter } from '@/composables/useRouteFilter';
 const route = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
 const value = (key: string) =>
   typeof route.query[key] === 'string' ? String(route.query[key]) : '';
-const search = ref('');
+const search = useRouteFilter('search');
 const params = computed<Record<string, string>>(() => ({
   ...Object.fromEntries(
     ['projectId', 'environmentId', 'clusterId', 'serviceId', 'retained'].flatMap((key) =>
@@ -100,9 +101,14 @@ function filter(key: string, next: string) {
   <QueryState
     :pending="volumes.isPending.value"
     :error="volumes.error.value"
+    :refreshing="volumes.isFetching.value"
     @retry="volumes.refetch()"
-    ><VolumeList v-if="volumes.items.value.length" :volumes="volumes.items.value" /><EmptyState
-      v-else
+    ><VolumeList
+      v-if="volumes.items.value.length"
+      :volumes="volumes.items.value"
+      :list-path="route.fullPath"
+    /><EmptyState
+      v-else-if="!volumes.error.value"
       :icon="HardDrive"
       :title="Object.keys(params).length ? '没有匹配的卷' : '还没有持久卷'"
       :description="

@@ -3,10 +3,11 @@ import { HardDrive, ArrowUpRight, Activity } from '@lucide/vue';
 import NetworkStateBadge from '@/components/networking/NetworkStateBadge.vue';
 import { taskLocation } from '@/components/services/presentation';
 import { dateTime } from '@/lib/utils';
+import { resourceDetailLocation } from '@/lib/resource-list-navigation';
 import type { Volume } from './types';
 import { formatStorageBytes } from './format';
 import { volumeState, maintenanceState } from './presentation';
-defineProps<{ volumes: Volume[] }>();
+defineProps<{ volumes: Volume[]; listPath?: string }>();
 </script>
 <template>
   <div class="panel volume-list" data-volume-list>
@@ -19,9 +20,11 @@ defineProps<{ volumes: Volume[] }>();
       <div class="volume-name">
         <HardDrive class="size-5 shrink-0 text-primary" />
         <div class="min-w-0">
-          <RouterLink :to="`/volumes/${volume.id}`" class="text-link font-semibold">{{
-            volume.name
-          }}</RouterLink>
+          <RouterLink
+            :to="resourceDetailLocation(`/volumes/${volume.id}`, listPath, 'volumes')"
+            class="text-link font-semibold"
+            >{{ volume.name }}</RouterLink
+          >
           <p class="meta mt-2">
             {{ volume.project?.name ?? '项目已归档' }} /
             {{ volume.environment?.name ?? '环境已归档' }} ·
@@ -49,7 +52,7 @@ defineProps<{ volumes: Volume[] }>();
       </div>
       <div class="volume-actions">
         <RouterLink
-          :to="`/volumes/${volume.id}`"
+          :to="resourceDetailLocation(`/volumes/${volume.id}`, listPath, 'volumes')"
           class="text-link inline-flex items-center gap-1"
           :aria-label="`查看卷 ${volume.name}`"
           >详情<ArrowUpRight class="size-4" /></RouterLink

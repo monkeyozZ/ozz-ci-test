@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { RefreshCw, History } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import QueryState from '@/components/QueryState.vue';
@@ -11,7 +12,29 @@ import { stageLabels } from './presentation';
 import type { Deployment } from './types';
 import { deploymentSourceLabel } from '@/components/git/presentation';
 const props = defineProps<{ serviceId?: string; projectId?: string; environmentId?: string }>();
-const status = ref('');
+const route = useRoute();
+const router = useRouter();
+const filterScope = computed(() =>
+  [props.serviceId ?? '', props.projectId ?? '', props.environmentId ?? ''].join(':'),
+);
+const status = computed({
+  get: () =>
+    route.query.deploymentScope === filterScope.value &&
+    typeof route.query.deploymentStatus === 'string' &&
+    ['queued', 'running', 'succeeded', 'failed', 'cancelled'].includes(route.query.deploymentStatus)
+      ? route.query.deploymentStatus
+      : '',
+  set: (value: string) => {
+    void router.replace({
+      path: route.path,
+      query: {
+        ...route.query,
+        deploymentScope: value ? filterScope.value : undefined,
+        deploymentStatus: value || undefined,
+      },
+    });
+  },
+});
 const query = computed(() => ({
   ...(props.serviceId ? { serviceId: props.serviceId } : {}),
   ...(props.projectId ? { projectId: props.projectId } : {}),
@@ -50,6 +73,7 @@ const deployments = useCollection<Deployment>('/deployments', query, true, {
     <QueryState
       :pending="deployments.isPending.value"
       :error="deployments.error.value"
+      :refreshing="deployments.isFetching.value"
       @retry="deployments.refetch()"
       ><div v-if="deployments.items.value.length" class="deployment-list">
         <RouterLink
@@ -77,7 +101,7 @@ const deployments = useCollection<Deployment>('/deployments', query, true, {
         >
       </div>
       <EmptyState
-        v-else
+        v-else-if="!deployments.error.value"
         :icon="History"
         title="尚无匹配的部署记录"
         description="发布后会在这里保留固定来源、配置、产物与执行结果。"

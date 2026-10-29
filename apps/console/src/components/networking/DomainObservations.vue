@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onScopeDispose, ref } from 'vue';
 import { Info } from '@lucide/vue';
+import CopyButton from '@/components/CopyButton.vue';
 import { dateTime } from '@/lib/utils';
 import NetworkObservationSection from './NetworkObservationSection.vue';
 import {
@@ -32,8 +33,18 @@ const certificate = computed(() => certificateStatus(props.domain.certificate, n
         <div>
           <dt>预期入口</dt>
           <dd class="mono">
-            <p v-for="address in domain.dns.expectedAddresses" :key="address">{{ address }}</p>
-            <p v-if="domain.dns.expectedCname">CNAME {{ domain.dns.expectedCname }}</p>
+            <p v-for="address in domain.dns.expectedAddresses" :key="address" class="dns-value">
+              <span>{{ address }}</span
+              ><CopyButton
+                :text="address"
+                :label="`复制预期 ${address.includes(':') ? 'AAAA' : 'A'} 记录值 ${address}`"
+                compact
+              />
+            </p>
+            <p v-if="domain.dns.expectedCname" class="dns-value">
+              <span>CNAME {{ domain.dns.expectedCname }}</span
+              ><CopyButton :text="domain.dns.expectedCname" label="复制预期 CNAME 目标" compact />
+            </p>
             <span v-if="!domain.dns.expectedAddresses.length && !domain.dns.expectedCname"
               >尚未配置</span
             >
@@ -42,13 +53,29 @@ const certificate = computed(() => certificateStatus(props.domain.certificate, n
         <div>
           <dt>解析地址</dt>
           <dd class="mono">
-            <p v-for="address in domain.dns.addresses" :key="address">{{ address }}</p>
+            <p v-for="address in domain.dns.addresses" :key="address" class="dns-value">
+              <span>{{ address }}</span
+              ><CopyButton
+                :text="address"
+                :label="`复制解析 ${address.includes(':') ? 'AAAA' : 'A'} 记录值 ${address}`"
+                compact
+              />
+            </p>
             <span v-if="!domain.dns.addresses.length">本次没有地址结果</span>
           </dd>
         </div>
         <div v-if="domain.dns.cnameChain.length">
           <dt>CNAME 路径</dt>
-          <dd class="mono">{{ domain.dns.cnameChain.join(' → ') }}</dd>
+          <dd class="mono">
+            <p
+              v-for="(hostname, index) in domain.dns.cnameChain"
+              :key="`${index}:${hostname}`"
+              class="dns-value"
+            >
+              <span>{{ index ? '→ ' : '' }}{{ hostname }}</span
+              ><CopyButton :text="hostname" :label="`复制 CNAME 路径 ${hostname}`" compact />
+            </p>
+          </dd>
         </div>
       </dl>
       <p class="meta mt-3">这是本次解析结果，不能据此确认所有地区的 DNS 已更新。</p>
@@ -159,3 +186,15 @@ const certificate = computed(() => certificateStatus(props.domain.certificate, n
     </NetworkObservationSection>
   </div>
 </template>
+<style scoped>
+.dns-value {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+}
+.dns-value > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+</style>

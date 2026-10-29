@@ -8,6 +8,7 @@ import {
   HardDrive,
 } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
+import CopyButton from '@/components/CopyButton.vue';
 import NetworkStateBadge from '@/components/networking/NetworkStateBadge.vue';
 import NetworkObservationSection from '@/components/networking/NetworkObservationSection.vue';
 import { dateTime } from '@/lib/utils';
@@ -17,6 +18,11 @@ import type { Database } from './types';
 
 const props = defineProps<{ database: Database; compact?: boolean }>();
 const serviceLocation = computed(() => databaseServiceLocation(props.database));
+const databaseName = computed(() =>
+  props.database.engine === 'postgresql'
+    ? props.database.connection.database
+    : props.database.connection.redisDatabase,
+);
 const lockLabels: Record<string, string> = {
   'configuration.image': '镜像版本',
   'configuration.replicas': '副本数',
@@ -89,25 +95,46 @@ const unknownLockedFields = computed(() =>
         </div>
         <div>
           <dt>私有地址</dt>
-          <dd class="mono">{{ database.connection.host || '发布后由实际 Service 确认' }}</dd>
+          <dd class="mono connection-value">
+            <span>{{ database.connection.host || '发布后由实际 Service 确认' }}</span
+            ><CopyButton
+              v-if="database.connection.host"
+              :text="database.connection.host"
+              label="复制数据库地址"
+              compact
+            />
+          </dd>
         </div>
         <div>
           <dt>端口</dt>
-          <dd class="mono">{{ database.connection.port }}</dd>
+          <dd class="mono connection-value">
+            <span>{{ database.connection.port }}</span
+            ><CopyButton :text="String(database.connection.port)" label="复制数据库端口" compact />
+          </dd>
         </div>
         <div>
           <dt>{{ database.engine === 'postgresql' ? '数据库' : '逻辑库编号' }}</dt>
-          <dd class="mono">
-            {{
-              database.engine === 'postgresql'
-                ? (database.connection.database ?? '未知')
-                : (database.connection.redisDatabase ?? '未知')
-            }}
+          <dd class="mono connection-value">
+            <span>{{ databaseName ?? '未知' }}</span
+            ><CopyButton
+              v-if="databaseName !== null && databaseName !== undefined"
+              :text="String(databaseName)"
+              :label="database.engine === 'postgresql' ? '复制数据库名' : '复制逻辑库编号'"
+              compact
+            />
           </dd>
         </div>
         <div>
           <dt>用户</dt>
-          <dd class="mono">{{ database.connection.username }}</dd>
+          <dd class="mono connection-value">
+            <span>{{ database.connection.username }}</span
+            ><CopyButton
+              v-if="database.connection.username"
+              :text="database.connection.username"
+              label="复制数据库用户名"
+              compact
+            />
+          </dd>
         </div>
       </dl>
       <div class="database-protection">
@@ -264,6 +291,16 @@ const unknownLockedFields = computed(() =>
   color: var(--muted-foreground);
 }
 .storage-facts dd {
+  overflow-wrap: anywhere;
+}
+.connection-value {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+}
+.connection-value > span {
+  min-width: 0;
   overflow-wrap: anywhere;
 }
 @media (max-width: 850px) {

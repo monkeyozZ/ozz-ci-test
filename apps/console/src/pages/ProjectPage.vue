@@ -148,6 +148,7 @@ async function deleteProject() {
     if (isViewActive()) removeProject.mutate(reviewedRevision);
 }
 const editorOpen = ref(false);
+let environmentTrigger: HTMLElement | null = null;
 const editingEnvironment = ref<Environment | null>(null);
 const environmentForm = reactive({ name: '', slug: '', description: '', revision: 1 });
 let environmentKey = idempotencyKey();
@@ -157,6 +158,7 @@ const environmentGuard = useDirtyForm(
 );
 async function editEnvironment(environment?: Environment) {
   if (saveEnvironment.isPending.value) return;
+  const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   if (
     editorOpen.value &&
     environmentGuard.dirty.value &&
@@ -167,6 +169,8 @@ async function editEnvironment(environment?: Environment) {
     }))
   )
     return;
+  if (!isViewActive() || tab.value !== 'environments') return;
+  environmentTrigger = trigger;
   editingEnvironment.value = environment ?? null;
   Object.assign(environmentForm, {
     name: environment?.name ?? '',
@@ -181,6 +185,12 @@ async function editEnvironment(environment?: Environment) {
   await nextTick();
   document.getElementById('environment-name')?.focus();
 }
+async function restoreEnvironmentFocus() {
+  await nextTick();
+  if (!isViewActive() || tab.value !== 'environments' || editorOpen.value) return;
+  if (environmentTrigger?.isConnected) environmentTrigger.focus({ preventScroll: true });
+  else document.getElementById('create-project-environment')?.focus({ preventScroll: true });
+}
 async function closeEditor() {
   if (saveEnvironment.isPending.value) return;
   if (
@@ -194,6 +204,7 @@ async function closeEditor() {
     return;
   editorOpen.value = false;
   environmentGuard.markClean();
+  await restoreEnvironmentFocus();
 }
 const saveEnvironment = useMutation({
   mutationFn: () =>
@@ -219,6 +230,7 @@ const saveEnvironment = useMutation({
     await invalidateCollection('/environments');
     if (!isViewActive()) return;
     ui.toast(editingEnvironment.value ? '环境资料已保存。' : '环境已创建，继承项目的固定集群。');
+    await restoreEnvironmentFocus();
   },
 });
 const removeEnvironment = useMutation({
@@ -261,7 +273,7 @@ async function reloadProject() {
   reloadingProject.value = true;
   try {
     const result = await project.refetch();
-    if (result.data && isViewActive()) {
+    if (!result.isError && result.data && isViewActive()) {
       Object.assign(projectForm, {
         name: result.data.name,
         description: result.data.description ?? '',
@@ -293,6 +305,7 @@ function tabLocation(value: string) {
   <QueryState
     :pending="project.isPending.value"
     :error="project.error.value"
+    :refreshing="project.isFetching.value"
     @retry="project.refetch()"
   >
     <template v-if="project.data.value">
@@ -343,6 +356,7 @@ function tabLocation(value: string) {
         <QueryState
           :pending="environments.isResolving.value"
           :error="environments.error.value"
+          :refreshing="environments.isFetching.value"
           @retry="environments.refetch()"
         >
           <template v-if="currentEnvironment">
@@ -455,6 +469,7 @@ function tabLocation(value: string) {
           </div>
           <Button
             v-if="!auth.restoreMode"
+            id="create-project-environment"
             :disabled="saveEnvironment.isPending.value"
             @click="editEnvironment()"
             ><Plus />创建环境</Button
@@ -654,7 +669,9 @@ function tabLocation(value: string) {
                 variant="outline"
                 :disabled="saveProject.isPending.value || reloadingProject"
                 @click="reloadProject"
-                >载入最新资料</Button
+                ><LoaderCircle v-if="reloadingProject" class="animate-spin" />{{
+                  reloadingProject ? '正在载入最新资料…' : '载入最新资料'
+                }}</Button
               ><Button
                 type="submit"
                 :disabled="

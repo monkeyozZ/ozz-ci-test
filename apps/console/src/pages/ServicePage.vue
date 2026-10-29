@@ -102,6 +102,22 @@ const panel = computed<WorkspacePanel | null>(() =>
     ? (route.query.tab as WorkspacePanel)
     : null,
 );
+const displayedPanel = ref(panel.value);
+const displayedTarget = ref<string>();
+watch(
+  () => [panel.value, route.query.target] as const,
+  ([value, target]) => {
+    if (!value) return;
+    displayedPanel.value = value;
+    displayedTarget.value = typeof target === 'string' ? target : undefined;
+  },
+  { immediate: true },
+);
+function clearClosedPanel() {
+  if (panel.value) return;
+  displayedPanel.value = null;
+  displayedTarget.value = undefined;
+}
 const tab = computed<WorkspaceTab>(() => {
   const value = panel.value ? route.query.view : route.query.tab;
   if (value === 'source' || value === 'configuration') return 'settings';
@@ -132,6 +148,7 @@ const panelTitles: Record<WorkspacePanel, string> = {
   deployments: '部署记录',
 };
 const reviewBusy = ref(false);
+const actionMenuOpen = ref(false);
 const tabNavigation = ref<HTMLElement>();
 watch(
   [tab, tabNavigation],
@@ -168,13 +185,16 @@ const contextMismatch = computed(
 );
 const form = ref(serviceDraft());
 const guard = useDirtyForm(form, '服务配置草稿');
+const reloadingDraft = ref(false);
+let draftEditGeneration = 0;
+watch(form, () => draftEditGeneration++, { deep: true, flush: 'sync' });
 const localError = ref<Error | null>(null);
 const editor = ref<InstanceType<typeof ServiceConfigurationEditor>>();
 const draftForm = ref<HTMLFormElement>();
 watch(
   service.data,
   (value) => {
-    if (value && !guard.dirty.value) {
+    if (value && !guard.dirty.value && !reloadingDraft.value) {
       form.value = serviceDraft(value);
       guard.markClean();
     }
@@ -197,6 +217,7 @@ async function saveDraft() {
     !service.data.value ||
     auth.restoreMode ||
     save.isPending.value ||
+    reloadingDraft.value ||
     service.data.value.activeTask
   )
     return;
@@ -236,21 +257,38 @@ async function saveDraft() {
   }
 }
 async function reloadDraft() {
-  if (
-    guard.dirty.value &&
-    !(await ui.confirm({
-      title: '载入最新的已保存草稿？',
-      description: '本页尚未保存的修改会被替换。已发布快照保持不变。',
-      confirmText: '载入最新草稿',
-    }))
-  )
-    return;
-  const result = await service.refetch();
-  if (result.data && active()) {
+  if (reloadingDraft.value || save.isPending.value) return;
+  reloadingDraft.value = true;
+  try {
+    if (
+      guard.dirty.value &&
+      !(await ui.confirm({
+        title: '载入最新的已保存草稿？',
+        description: '本页尚未保存的修改会被替换。已发布快照保持不变。',
+        confirmText: '载入最新草稿',
+      }))
+    )
+      return;
+    if (!active()) return;
+    const generation = draftEditGeneration;
+    const result = await service.refetch({ throwOnError: true });
+    if (!active()) return;
+    if (result.error) throw result.error;
+    if (!result.data) throw new Error('未能载入最新草稿，请重试。');
+    if (generation !== draftEditGeneration) {
+      ui.toast('读取期间有新的修改，已保留当前编辑。需要时可再次载入最新草稿。');
+      return;
+    }
     form.value = serviceDraft(result.data);
     guard.markClean();
     localError.value = null;
     save.reset();
+    ui.toast('已载入最新的已保存草稿。');
+  } catch (error) {
+    if (active())
+      localError.value = error instanceof Error ? error : new Error('载入失败，当前编辑已保留。');
+  } finally {
+    reloadingDraft.value = false;
   }
 }
 const operation = useMutation({
@@ -414,6 +452,7 @@ onScopeDispose(() => {
   <QueryState
     :pending="service.isPending.value"
     :error="service.error.value"
+    :refreshing="service.isFetching.value && !service.isPending.value"
     @retry="service.refetch()"
   >
     <template v-if="service.data.value">
@@ -477,14 +516,19 @@ onScopeDispose(() => {
             <Button as-child :disabled="writesLocked" data-service-deploy>
               <RouterLink :to="location('review')"><Play />部署</RouterLink>
             </Button>
-            <DropdownMenuRoot>
+            <DropdownMenuRoot v-model:open="actionMenuOpen">
               <DropdownMenuTrigger as-child>
                 <Button variant="outline" size="icon" aria-label="更多服务操作"
                   ><Ellipsis
                 /></Button>
               </DropdownMenuTrigger>
               <DropdownMenuPortal>
-                <DropdownMenuContent class="service-action-menu" align="end" :side-offset="8">
+                <DropdownMenuContent
+                  class="service-action-menu"
+                  align="end"
+                  :side-offset="8"
+                  :inert="!actionMenuOpen"
+                >
                   <DropdownMenuItem
                     class="service-action-item"
                     :disabled="service.isFetching.value"
@@ -863,11 +907,13 @@ onScopeDispose(() => {
               <Button
                 type="button"
                 variant="outline"
-                :disabled="save.isPending.value"
+                :disabled="save.isPending.value || reloadingDraft"
                 @click="reloadDraft"
-                >载入最新草稿</Button
+                ><LoaderCircle v-if="reloadingDraft" class="animate-spin" />{{
+                  reloadingDraft ? '正在载入…' : '载入最新草稿'
+                }}</Button
               >
-              <Button type="submit" :disabled="writesLocked || !guard.dirty.value"
+              <Button type="submit" :disabled="writesLocked || reloadingDraft || !guard.dirty.value"
                 ><LoaderCircle v-if="save.isPending.value" class="animate-spin" />{{
                   save.isPending.value ? '正在保存…' : '保存草稿'
                 }}</Button
@@ -906,8 +952,9 @@ onScopeDispose(() => {
           :description="`${service.data.value.project.name} / ${service.data.value.name}`"
           :busy="reviewBusy"
           @update:open="closePanel"
+          @after-close="clearClosedPanel"
         >
-          <template v-if="panel === 'review'">
+          <template v-if="displayedPanel === 'review'">
             <div v-if="guard.dirty.value" class="notice notice-warning mb-5">
               <Info />
               <div>
@@ -926,15 +973,16 @@ onScopeDispose(() => {
             </div>
             <ConfigurationReview
               :service="service.data.value"
-              :pending-target-id="
-                typeof route.query.target === 'string' ? route.query.target : undefined
-              "
+              :pending-target-id="displayedTarget"
               @submitted="deployed"
               @busy-change="reviewBusy = $event"
             />
           </template>
-          <DeploymentCollection v-else-if="panel === 'deployments'" :service-id="serviceId" />
-          <template v-else-if="panel === 'logs'">
+          <DeploymentCollection
+            v-else-if="displayedPanel === 'deployments'"
+            :service-id="serviceId"
+          />
+          <template v-else-if="displayedPanel === 'logs'">
             <p v-if="isGit" class="meta mb-4">
               这里显示所选实例的容器运行输出。
               <RouterLink
@@ -1159,6 +1207,14 @@ onScopeDispose(() => {
   background: var(--card);
   color: var(--foreground);
   box-shadow: var(--shadow);
+  transform-origin: var(--reka-dropdown-menu-content-transform-origin);
+}
+.service-action-menu[data-state='open'] {
+  animation: service-menu-enter var(--motion-menu) var(--ease-out);
+}
+.service-action-menu[data-state='closed'] {
+  animation: service-menu-exit var(--motion-fast) var(--ease-in);
+  pointer-events: none !important;
 }
 .service-action-item {
   display: flex;
@@ -1169,6 +1225,9 @@ onScopeDispose(() => {
   font-size: 0.875rem;
   outline: none;
   cursor: pointer;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
 }
 .service-action-item svg {
   width: 1rem;
@@ -1188,6 +1247,18 @@ onScopeDispose(() => {
   height: 1px;
   background: var(--border);
   margin: 0.375rem;
+}
+@keyframes service-menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem) scale(0.98);
+  }
+}
+@keyframes service-menu-exit {
+  to {
+    opacity: 0;
+    transform: translateY(-0.125rem) scale(0.99);
+  }
 }
 @media (max-width: 900px) {
   .service-status-facts {

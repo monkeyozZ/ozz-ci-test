@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import { computed, nextTick, onScopeDispose, ref, useId } from 'vue';
-import { useMutation } from '@tanstack/vue-query';
+import {
+  computed,
+  nextTick,
+  onDeactivated,
+  onScopeDispose,
+  ref,
+  shallowRef,
+  useId,
+  watch,
+} from 'vue';
 import { FileInput, KeyRound, Plus, Trash2, X } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +22,7 @@ import { useViewScope } from '@/composables/useViewScope';
 import { variableDraft } from './presentation';
 import type { EnvironmentImport, VariableDraft } from './types';
 const variables = defineModel<VariableDraft[]>({ required: true });
-defineProps<{ disabled?: boolean }>();
+const props = defineProps<{ disabled?: boolean }>();
 const uid = useId();
 const active = useViewScope();
 const references = useCollection<SecretReference>('/secrets', { kind: 'generic' });
@@ -22,15 +30,42 @@ const importOpen = ref(false);
 const text = ref('');
 const importResult = ref<EnvironmentImport | null>(null);
 const protectImport = ref(true);
-const importGuard = useDirtyForm(() => (importOpen.value ? text.value : ''), '.env 导入内容');
-const parse = useMutation({
-  gcTime: 0,
-  mutationFn: (source: string) =>
-    api.create<EnvironmentImport>('/services/parse-env', { text: source }),
-  onSuccess: (value) => {
-    if (active()) importResult.value = value;
-  },
-});
+const importGuard = useDirtyForm(text, '.env 导入内容');
+const parsePending = ref(false);
+const parseError = shallowRef<unknown>(null);
+let parseGeneration = 0;
+function invalidateImport() {
+  parseGeneration++;
+  importResult.value = null;
+  parsePending.value = false;
+  parseError.value = null;
+}
+watch(text, invalidateImport, { flush: 'sync' });
+watch(importOpen, invalidateImport, { flush: 'sync' });
+async function toggleImport() {
+  importOpen.value = !importOpen.value;
+  if (importOpen.value) {
+    await nextTick();
+    document.getElementById(`${uid}-env-source`)?.focus();
+  }
+}
+async function parseImport() {
+  if (props.disabled || !importOpen.value || !text.value || parsePending.value) return;
+  const generation = ++parseGeneration;
+  const source = text.value;
+  parsePending.value = true;
+  parseError.value = null;
+  importResult.value = null;
+  const current = () => active() && importOpen.value && generation === parseGeneration;
+  try {
+    const result = await api.create<EnvironmentImport>('/services/parse-env', { text: source });
+    if (current()) importResult.value = result;
+  } catch (error) {
+    if (current()) parseError.value = error;
+  } finally {
+    if (generation === parseGeneration) parsePending.value = false;
+  }
+}
 const duplicateNames = computed(
   () =>
     importResult.value?.variables
@@ -56,14 +91,13 @@ function changeMode(row: VariableDraft) {
   row.secretKey = '';
 }
 function clearImport() {
+  invalidateImport();
   text.value = '';
-  importResult.value = null;
   importOpen.value = false;
-  parse.reset();
   importGuard.markClean();
 }
 function applyImport() {
-  if (!canImport.value || !importResult.value) return;
+  if (props.disabled || parsePending.value || !canImport.value || !importResult.value) return;
   variables.value.push(
     ...importResult.value.variables.map((value) => ({
       ...variableDraft(value),
@@ -72,7 +106,9 @@ function applyImport() {
   );
   clearImport();
 }
+onDeactivated(invalidateImport);
 onScopeDispose(() => {
+  invalidateImport();
   text.value = '';
   importResult.value = null;
 });
@@ -89,7 +125,8 @@ onScopeDispose(() => {
           type="button"
           variant="outline"
           :disabled="disabled"
-          @click="importOpen = !importOpen"
+          :aria-expanded="importOpen"
+          @click="toggleImport"
           ><FileInput />导入 .env</Button
         ><Button
           type="button"
@@ -121,8 +158,7 @@ onScopeDispose(() => {
         autocomplete="off"
         class="mono"
         placeholder="APP_TITLE=Ozz&#10;API_KEY=…"
-        :disabled="disabled || parse.isPending.value"
-        @input="importResult = null"
+        :disabled="disabled"
       />
       <p class="meta mt-2">逐行校验，不执行命令或展开变量。最多 24 KiB；重复变量请先处理。</p>
       <label class="check-line mt-3"
@@ -132,7 +168,7 @@ onScopeDispose(() => {
           :disabled="disabled"
         />将导入的值全部作为秘密保存</label
       >
-      <MutationError class="mt-3" :error="parse.error.value" />
+      <MutationError class="mt-3" :error="parseError" />
       <ul v-if="importResult?.issues.length" class="notice notice-danger block mt-3" role="alert">
         <li v-for="issue in importResult.issues" :key="`${issue.line}:${issue.code}`">
           第 {{ issue.line }} 行：{{ issue.message }}
@@ -157,10 +193,13 @@ onScopeDispose(() => {
         <Button
           type="button"
           variant="outline"
-          :disabled="disabled || !text || parse.isPending.value"
-          @click="parse.mutate(text)"
-          >{{ parse.isPending.value ? '正在校验…' : '解析并检查' }}</Button
-        ><Button type="button" :disabled="disabled || !canImport" @click="applyImport"
+          :disabled="disabled || !text || parsePending"
+          @click="parseImport"
+          >{{ parsePending ? '正在校验…' : '解析并检查' }}</Button
+        ><Button
+          type="button"
+          :disabled="disabled || parsePending || !canImport"
+          @click="applyImport"
           >加入当前草稿</Button
         >
       </div>

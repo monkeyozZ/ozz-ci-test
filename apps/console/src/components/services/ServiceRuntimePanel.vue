@@ -196,11 +196,13 @@ const containerStates: Record<string, string> = {
         <Info />
         <p>
           {{
-            service.desiredState === 'stopped'
+            current && observation && service.runtimeState === 'stopped'
               ? '服务已停止，没有当前实例可连接。发布历史和任务日志仍可查看。'
-              : service.runtimeState === 'unpublished'
-                ? '服务尚未发布，保存配置后可在发布预览中启动。'
-                : '本次观察尚未发现当前服务的实例。'
+              : service.desiredState === 'stopped'
+                ? '期望状态为停止，尚无最新观察确认实际是否已停止。发布历史和任务日志仍可查看。'
+                : service.runtimeState === 'unpublished'
+                  ? '服务尚未发布，保存配置后可在发布预览中启动。'
+                  : '本次观察尚未发现当前服务的实例。'
           }}
         </p>
       </div>

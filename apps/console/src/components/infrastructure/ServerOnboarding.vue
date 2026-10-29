@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, shallowRef, watch } from 'vue';
 import { useMutation } from '@tanstack/vue-query';
+import { useRoute } from 'vue-router';
 import {
   AlertCircle,
   Check,
@@ -36,6 +37,7 @@ const props = withDefaults(
 const emit = defineEmits<{ changed: []; busy: [busy: boolean] }>();
 const auth = useAuthStore();
 const ui = useUiStore();
+const route = useRoute();
 const isViewActive = useViewScope();
 const clusters = useCollection<Cluster>('/clusters');
 const linkedNodes = useCollection<ClusterNode>(() => `/servers/${props.server.id}/nodes`);
@@ -96,7 +98,19 @@ const run = useMutation({
     await invalidateCollection('/operations');
   },
 });
+const pendingAction = computed(() =>
+  run.isPending.value && run.variables.value?.serverId === props.server.id
+    ? run.variables.value.action
+    : null,
+);
 function submit(action: Submission['action'], body: Record<string, unknown>) {
+  if (
+    !isViewActive() ||
+    locked.value ||
+    createCluster.isPending.value ||
+    (action !== 'discover-host-key' && !preflightAllowed.value)
+  )
+    return;
   const mapKey = `${action}:${JSON.stringify(body)}`;
   if (!keys.has(mapKey)) keys.set(mapKey, idempotencyKey());
   run.mutate({ action, body, serverId: props.server.id, key: keys.get(mapKey)! });
@@ -129,18 +143,29 @@ const trust = useMutation({
   }) => api.create<Server>(`/servers/${props.server.id}/trust-host-key`, body),
   onSuccess: async (value) => {
     queryClient.setQueryData(['server', value.id], value);
-    trustForm.source = '';
-    trustForm.confirmed = false;
-    trustGuard.markClean();
+    if (isViewActive() && value.id === props.server.id) {
+      trustForm.source = '';
+      trustForm.confirmed = false;
+      trustGuard.markClean();
+    }
     await invalidateCollection('/servers');
-    if (!isViewActive()) return;
+    if (!isViewActive() || value.id !== props.server.id) return;
     emit('changed');
     ui.toast('已保存核对来源与可信主机指纹，可以执行只读预检。');
   },
 });
 function trustFingerprint() {
   const key = props.server.hostKey;
-  if (!key.discoveryOperationId || !key.observedFingerprint || !trustForm.confirmed) return;
+  if (
+    !isViewActive() ||
+    locked.value ||
+    createCluster.isPending.value ||
+    !key.discoveryOperationId ||
+    !key.observedFingerprint ||
+    !trustForm.confirmed ||
+    !trustForm.source.trim()
+  )
+    return;
   trust.mutate({
     revision: props.server.revision,
     discoveryOperationId: key.discoveryOperationId,
@@ -156,11 +181,6 @@ const locked = computed(
     run.isPending.value ||
     trust.isPending.value ||
     taskBusy.value,
-);
-watch(
-  () => run.isPending.value || trust.isPending.value || taskBusy.value,
-  (value) => emit('busy', value),
-  { immediate: true },
 );
 const preflightAllowed = computed(
   () =>
@@ -229,12 +249,26 @@ async function initialize() {
   }
 }
 const createOpen = ref(false);
+const clusterConfirmationPending = ref(false);
 const clusterDraft = reactive({ name: '', slug: '' });
 const clusterDraftGuard = useDirtyForm(
   () => (createOpen.value ? clusterDraft : null),
   '新集群登记',
 );
 let clusterKey = idempotencyKey();
+type ClusterFormOwner = { session: number; serverId: string; route: string };
+let clusterFormSession = 0;
+let clusterFormOwner: ClusterFormOwner | null = null;
+let pendingClusterFocus: ClusterFormOwner | null = null;
+function ownsClusterForm(owner: ClusterFormOwner | null) {
+  return (
+    owner !== null &&
+    isViewActive() &&
+    clusterFormSession === owner.session &&
+    props.server.id === owner.serverId &&
+    route.fullPath === owner.route
+  );
+}
 const createCluster = useMutation({
   mutationFn: () =>
     api.create<Cluster>(
@@ -243,42 +277,89 @@ const createCluster = useMutation({
       clusterKey,
     ),
   onSuccess: async (value) => {
+    const owner = clusterFormOwner;
+    await invalidateCollection('/clusters');
+    if (!ownsClusterForm(owner)) return;
     createOpen.value = false;
     clusterDraft.name = '';
     clusterDraft.slug = '';
     clusterDraftGuard.markClean();
-    await invalidateCollection('/clusters');
-    if (!isViewActive()) return;
     initForm.clusterId = value.id;
     ui.toast('集群登记已保存，初始化会使用这个唯一目标。');
-    await nextTick();
-    document.getElementById('initialize-cluster')?.focus();
+    pendingClusterFocus = owner;
   },
 });
+watch(
+  () =>
+    run.isPending.value || trust.isPending.value || createCluster.isPending.value || taskBusy.value,
+  (value) => emit('busy', value),
+  { immediate: true },
+);
+watch(
+  () => createCluster.isPending.value,
+  async (pending) => {
+    if (pending || !pendingClusterFocus) return;
+    const owner = pendingClusterFocus;
+    pendingClusterFocus = null;
+    await nextTick();
+    if (!ownsClusterForm(owner) || createOpen.value || locked.value || ui.confirmation) return;
+    document.getElementById('initialize-cluster')?.focus();
+  },
+);
 async function openClusterForm() {
+  if (locked.value || createCluster.isPending.value || createOpen.value || !isViewActive()) return;
+  const owner = {
+    session: ++clusterFormSession,
+    serverId: props.server.id,
+    route: route.fullPath,
+  };
+  clusterFormOwner = owner;
+  pendingClusterFocus = null;
   createOpen.value = true;
   clusterKey = idempotencyKey();
   createCluster.reset();
   clusterDraftGuard.markClean();
   await nextTick();
+  if (!ownsClusterForm(owner) || !createOpen.value || ui.confirmation) return;
   document.getElementById('initialize-cluster-name')?.focus();
 }
-async function closeClusterForm() {
-  if (createCluster.isPending.value) return;
+function saveCluster() {
   if (
-    clusterDraftGuard.dirty.value &&
-    !(await ui.confirm({
-      title: '放弃新集群资料？',
-      description: '尚未保存的名称和标识会被清空。',
-      confirmText: '清空并关闭',
-    }))
+    !createOpen.value ||
+    !ownsClusterForm(clusterFormOwner) ||
+    locked.value ||
+    createCluster.isPending.value ||
+    clusterConfirmationPending.value
   )
     return;
-  if (!isViewActive()) return;
-  createOpen.value = false;
-  clusterDraft.name = '';
-  clusterDraft.slug = '';
-  clusterDraftGuard.markClean();
+  createCluster.mutate();
+}
+async function closeClusterForm() {
+  if (createCluster.isPending.value || clusterConfirmationPending.value || !createOpen.value)
+    return;
+  const owner = clusterFormOwner;
+  clusterConfirmationPending.value = true;
+  try {
+    if (
+      clusterDraftGuard.dirty.value &&
+      !(await ui.confirm({
+        title: '放弃新集群资料？',
+        description: '尚未保存的名称和标识会被清空。',
+        confirmText: '清空并关闭',
+      }))
+    )
+      return;
+    if (!ownsClusterForm(owner) || !createOpen.value || createCluster.isPending.value) return;
+    createOpen.value = false;
+    clusterDraft.name = '';
+    clusterDraft.slug = '';
+    clusterDraftGuard.markClean();
+    await nextTick();
+    if (!ownsClusterForm(owner) || createOpen.value || locked.value || ui.confirmation) return;
+    document.getElementById('open-cluster-form')?.focus();
+  } finally {
+    clusterConfirmationPending.value = false;
+  }
 }
 function taskObserved(value: Operation) {
   observedOperation.value = value;
@@ -325,10 +406,16 @@ function retried(value: Operation) {
         <h2 class="flex items-center gap-2"><Fingerprint class="size-5" />1. 核对 SSH 主机身份</h2>
         <Button
           variant="outline"
-          :disabled="locked"
+          :disabled="locked || createCluster.isPending.value"
+          :aria-busy="pendingAction === 'discover-host-key' || undefined"
           @click="submit('discover-host-key', { revision: server.revision })"
-          ><RefreshCw />{{
-            server.hostKey.observedFingerprint ? '重新读取指纹' : '读取主机指纹'
+          ><LoaderCircle v-if="pendingAction === 'discover-host-key'" class="animate-spin" />
+          <RefreshCw v-else />{{
+            pendingAction === 'discover-host-key'
+              ? '正在受理指纹读取…'
+              : server.hostKey.observedFingerprint
+                ? '重新读取指纹'
+                : '读取主机指纹'
           }}</Button
         >
       </div>
@@ -364,8 +451,13 @@ function retried(value: Operation) {
         <AlertCircle />
         <p>本次指纹与可信记录不同。预检与初始化已暂停；核实主机身份后，才能明确替换可信记录。</p>
       </div>
-      <form v-if="needsTrust" class="mt-5" @submit.prevent="trustFingerprint">
-        <fieldset class="stack" :disabled="locked">
+      <form
+        v-if="needsTrust"
+        class="mt-5"
+        :aria-busy="trust.isPending.value || undefined"
+        @submit.prevent="trustFingerprint"
+      >
+        <fieldset class="stack" :disabled="locked || createCluster.isPending.value">
           <div class="field">
             <label for="host-key-source">独立核对来源</label
             ><Textarea
@@ -385,8 +477,18 @@ function retried(value: Operation) {
             ></label
           >
           <div class="actions">
-            <Button type="submit" :disabled="!trustForm.confirmed || !trustForm.source.trim()"
-              ><ShieldCheck />{{ mismatch ? '确认并替换可信指纹' : '确认并保存可信指纹' }}</Button
+            <Button
+              type="submit"
+              :disabled="!trustForm.confirmed || !trustForm.source.trim()"
+              :aria-busy="trust.isPending.value || undefined"
+              ><LoaderCircle v-if="trust.isPending.value" class="animate-spin" />
+              <ShieldCheck v-else />{{
+                trust.isPending.value
+                  ? '正在保存可信指纹…'
+                  : mismatch
+                    ? '确认并替换可信指纹'
+                    : '确认并保存可信指纹'
+              }}</Button
             >
           </div>
         </fieldset>
@@ -406,9 +508,17 @@ function retried(value: Operation) {
         </div>
         <Button
           variant="outline"
-          :disabled="!preflightAllowed"
+          :disabled="!preflightAllowed || createCluster.isPending.value"
+          :aria-busy="pendingAction === 'preflight' || undefined"
           @click="submit('preflight', { revision: server.revision })"
-          ><RefreshCw />{{ report ? '重新执行预检' : '执行只读预检' }}</Button
+          ><LoaderCircle v-if="pendingAction === 'preflight'" class="animate-spin" />
+          <RefreshCw v-else />{{
+            pendingAction === 'preflight'
+              ? '正在受理预检…'
+              : report
+                ? '重新执行预检'
+                : '执行只读预检'
+          }}</Button
         >
       </div>
       <p v-if="!server.credentialRefId" class="muted mb-4">
@@ -475,8 +585,9 @@ function retried(value: Operation) {
               <div class="actions mb-5">
                 <Button
                   v-if="!createOpen"
+                  id="open-cluster-form"
                   variant="outline"
-                  :disabled="locked"
+                  :disabled="locked || createCluster.isPending.value"
                   @click="openClusterForm"
                   ><Plus />先登记一个集群</Button
                 ><Button
@@ -490,10 +601,14 @@ function retried(value: Operation) {
               <form
                 v-if="createOpen"
                 class="inline-cluster-form mb-5"
-                @submit.prevent="createCluster.mutate()"
+                :aria-busy="createCluster.isPending.value || undefined"
+                @submit.prevent="saveCluster"
               >
                 <h3 class="font-medium mb-4">新集群登记</h3>
-                <fieldset class="form-grid" :disabled="locked || createCluster.isPending.value">
+                <fieldset
+                  class="form-grid"
+                  :disabled="locked || createCluster.isPending.value || clusterConfirmationPending"
+                >
                   <div class="field">
                     <label for="initialize-cluster-name">集群名称</label
                     ><Input
@@ -517,12 +632,19 @@ function retried(value: Operation) {
                 </fieldset>
                 <MutationError class="mt-4" :error="createCluster.error.value" />
                 <div class="actions mt-4">
-                  <Button type="submit" :disabled="locked || createCluster.isPending.value"
-                    >保存集群登记</Button
+                  <Button
+                    type="submit"
+                    :disabled="
+                      locked || createCluster.isPending.value || clusterConfirmationPending
+                    "
+                    :aria-busy="createCluster.isPending.value || undefined"
+                    ><LoaderCircle v-if="createCluster.isPending.value" class="animate-spin" />{{
+                      createCluster.isPending.value ? '正在保存集群登记…' : '保存集群登记'
+                    }}</Button
                   ><Button
                     type="button"
                     variant="ghost"
-                    :disabled="createCluster.isPending.value"
+                    :disabled="createCluster.isPending.value || clusterConfirmationPending"
                     @click="closeClusterForm"
                     >取消</Button
                   >
@@ -584,10 +706,10 @@ function retried(value: Operation) {
                     <Button
                       type="submit"
                       :disabled="!selectedCluster || !initForm.reviewed || !preflightAllowed"
-                      ><LoaderCircle
-                        v-if="run.isPending.value"
-                        class="animate-spin"
-                      />确认初始化配置</Button
+                      :aria-busy="pendingAction === 'initialize' || undefined"
+                      ><LoaderCircle v-if="pendingAction === 'initialize'" class="animate-spin" />{{
+                        pendingAction === 'initialize' ? '正在受理初始化…' : '确认初始化配置'
+                      }}</Button
                     >
                   </div>
                 </fieldset>

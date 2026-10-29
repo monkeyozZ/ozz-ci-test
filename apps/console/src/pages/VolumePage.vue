@@ -31,9 +31,11 @@ import { serviceLocation, taskLocation } from '@/components/services/presentatio
 import { api } from '@/lib/api';
 import { queryClient } from '@/lib/query';
 import { dateTime, idempotencyKey } from '@/lib/utils';
+import { resourceListPath } from '@/lib/resource-list-navigation';
 import { useAuthStore } from '@/stores/auth';
 import { useViewScope } from '@/composables/useViewScope';
 const route = useRoute();
+const listLocation = computed(() => resourceListPath(route.query.list, 'volumes') ?? '/volumes');
 const router = useRouter();
 const auth = useAuthStore();
 const active = useViewScope();
@@ -148,7 +150,7 @@ function destroy() {
   >
     <template v-if="volume.data.value">
       <nav class="breadcrumbs" aria-label="面包屑">
-        <RouterLink to="/volumes" class="text-link">持久卷</RouterLink><ChevronRight /><span>{{
+        <RouterLink :to="listLocation" class="text-link">持久卷</RouterLink><ChevronRight /><span>{{
           volume.data.value.name
         }}</span>
       </nav>

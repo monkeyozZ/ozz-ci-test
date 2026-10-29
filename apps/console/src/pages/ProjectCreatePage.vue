@@ -15,6 +15,10 @@ import { useCollection, invalidateCollection, queryClient } from '@/lib/query';
 import { useDirtyForm } from '@/composables/useDirtyForm';
 import { useUiStore } from '@/stores/ui';
 import { useViewScope } from '@/composables/useViewScope';
+import {
+  projectCreationNavigationLocked,
+  useProjectCreationState,
+} from '@/composables/useProjectCreationState';
 import { useAuthStore } from '@/stores/auth';
 import { idempotencyKey, resourceSlug } from '@/lib/utils';
 import type { Cluster, Project } from '@/lib/types';
@@ -78,7 +82,20 @@ async function openFirstService(project: Project) {
   });
 }
 const create = useMutation({
-  mutationFn: () => api.create<Project>('/projects', payload!, key),
+  mutationFn: async () => {
+    const project = await api.create<Project>('/projects', payload!, key);
+    if (
+      !project ||
+      !/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(project.id) ||
+      project.clusterId !== payload!.clusterId ||
+      project.slug !== payload!.slug
+    )
+      throw new ApiError(0, {
+        code: 'RESPONSE_UNCONFIRMED',
+        detail: '项目创建结果不完整，请重试确认同一次创建。',
+      });
+    return project;
+  },
   onSuccess: async (project) => {
     createdProject.value = project;
     uncertain.value = false;
@@ -95,6 +112,10 @@ const create = useMutation({
       (!(error instanceof ApiError) || error.status === 0 || error.status >= 500);
   },
 });
+useProjectCreationState(
+  () => create.isPending.value && !createdProject.value,
+  () => uncertain.value && !createdProject.value,
+);
 function submit() {
   if (
     create.isPending.value ||
@@ -151,7 +172,12 @@ function revealInvalid(event: Event) {
       <section class="panel">
         <div class="section-head">
           <h2>选择部署位置</h2>
-          <Button v-if="!auth.restoreMode" as-child variant="outline" size="sm"
+          <Button
+            v-if="!auth.restoreMode"
+            as-child
+            variant="outline"
+            size="sm"
+            :disabled="projectCreationNavigationLocked"
             ><RouterLink :to="{ path: '/clusters/new', query: { returnTo: '/projects/new' } }"
               ><Plus />登记集群</RouterLink
             ></Button
@@ -193,7 +219,7 @@ function revealInvalid(event: Event) {
             :icon="Layers3"
             title="先登记一个承载目标"
             description="已登记但未验证的集群也可以保存项目资料。"
-            ><Button v-if="!auth.restoreMode" as-child
+            ><Button v-if="!auth.restoreMode" as-child :disabled="projectCreationNavigationLocked"
               ><RouterLink :to="{ path: '/clusters/new', query: { returnTo: '/projects/new' } }"
                 ><Plus />登记集群</RouterLink
               ></Button
@@ -267,7 +293,12 @@ function revealInvalid(event: Event) {
         </div>
         <MutationError class="mt-4" :error="create.error.value" />
         <div class="form-footer">
-          <Button as-child variant="outline"><RouterLink to="/projects">取消</RouterLink></Button
+          <Button
+            type="button"
+            variant="outline"
+            :disabled="projectCreationNavigationLocked"
+            @click="router.push('/projects')"
+            >取消</Button
           ><Button
             type="submit"
             :disabled="

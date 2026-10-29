@@ -351,24 +351,23 @@ test('F06：构建日志保留大序号顺序、分页和过期状态，平台�
   await expect(logs.locator('.build-chunk pre')).toHaveText([
     'large-sequence-first',
     'large-sequence-second',
-  ]);
-  await logs.getByRole('button', { name: '暂停跟随', exact: true }).click();
-  await logs.getByRole('button', { name: '载入后续构建日志', exact: true }).click();
-  await expect(logs.getByRole('button', { name: /新增 1 段/ })).toBeVisible();
-  await expect(logs).toContainText('服务端已按保留上限截断部分构建输出');
-  await expect(logs.locator('.build-chunk pre')).toHaveText([
-    'large-sequence-first',
-    'large-sequence-second',
     'retained-registry-digest',
   ]);
+  expect(
+    state.reads.filter(
+      (entry) => entry.path.endsWith('/build-logs') && entry.query.cursor === 'fixture:1',
+    ),
+  ).toHaveLength(1);
+  await expect(logs.getByRole('button', { name: '载入后续构建日志', exact: true })).toHaveCount(0);
+  await expect(logs).toContainText('服务端已按保留上限截断部分构建输出');
   await expect(page.getByText('controlled-platform-deployment-log', { exact: true })).toBeVisible();
   await logs.getByLabel('选择构建执行', { exact: true }).selectOption(s6Ids.secondRun);
   await expect(logs.locator('.build-chunk')).toHaveCount(0);
   await expect(logs).toContainText('已超过保留期限');
   await logs.getByLabel('选择构建执行', { exact: true }).selectOption(s6Ids.run);
-  await expect(logs.locator('.build-chunk')).toHaveCount(2);
-  state.logPages[0] = {
-    ...state.logPages[0]!,
+  await expect(logs.locator('.build-chunk')).toHaveCount(3);
+  state.logPages[1] = {
+    ...state.logPages[1]!,
     available: false,
     unavailableReason: 'expired',
     items: [],

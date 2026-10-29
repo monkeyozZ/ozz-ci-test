@@ -44,6 +44,7 @@ async function changeCluster(event: Event) {
     <QueryState
       :pending="clusters.isPending.value"
       :error="clusters.error.value"
+      :refreshing="clusters.isFetching.value"
       @retry="clusters.refetch()"
     >
       <template v-if="clusters.items.value.length || clusterId">
@@ -80,7 +81,7 @@ async function changeCluster(event: Event) {
         /></QueryState>
       </template>
       <EmptyState
-        v-else
+        v-else-if="!clusters.error.value"
         :icon="Layers3"
         title="先登记一个集群"
         description="应用入口属于具体集群，登记后可配置域名后缀与预期地址。"

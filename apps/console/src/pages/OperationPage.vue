@@ -12,9 +12,12 @@ import {
   Square,
   Info,
   AlertCircle,
+  ArrowDown,
+  Pause,
 } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import QueryState from '@/components/QueryState.vue';
+import CopyButton from '@/components/CopyButton.vue';
 import MutationError from '@/components/MutationError.vue';
 import StatusBadge from '@/components/StatusBadge.vue';
 import {
@@ -25,6 +28,7 @@ import {
   volumeOperationInput,
 } from '@/components/infrastructure/operation-presentation';
 import { serviceLocation } from '@/components/services/presentation';
+import { matchesLogSearch, useLogViewport } from '@/components/services/useBufferedLog';
 import ServiceMutationError from '@/components/services/ServiceMutationError.vue';
 import NetworkOperationContext from '@/components/networking/NetworkOperationContext.vue';
 import { invalidateNetworking } from '@/components/networking/queries';
@@ -138,6 +142,44 @@ const logRows = computed(() =>
     ).values(),
   ].sort((a, b) => a.sequence - b.sequence),
 );
+const logSearch = ref('');
+const wrapLogs = ref(true);
+const {
+  output: logOutput,
+  following,
+  unread,
+  pause,
+  jumpToLatest,
+  appended,
+  onScroll,
+  onWheel,
+  onHistoryKey,
+} = useLogViewport();
+const filteredLogRows = computed(() =>
+  logRows.value.filter((line) =>
+    matchesLogSearch(
+      `${line.timestamp} ${line.level} ${line.message} ${line.code ?? ''}`,
+      logSearch.value,
+    ),
+  ),
+);
+const copyText = computed(() =>
+  filteredLogRows.value
+    .map(
+      (line) =>
+        `${line.timestamp} ${line.level} ${line.message}${line.code ? ` [${line.code}]` : ''}`,
+    )
+    .join('\n'),
+);
+const copyContext = computed(() => JSON.stringify([operationId, logSearch.value]));
+watch(logRows, (_value, old) => {
+  const previous = old.at(-1)?.sequence ?? 0;
+  appended(filteredLogRows.value.filter((line) => line.sequence > previous).length);
+});
+watch(logSearch, () => {
+  unread.value = 0;
+  appended(0);
+});
 const hasMoreLogs = computed(() =>
   extraLogs.value.length ? !!moreCursor.value : logs.data.value?.page.hasMore,
 );
@@ -253,6 +295,7 @@ const logUnavailable = computed(
   <QueryState
     :pending="operation.isPending.value"
     :error="operation.error.value"
+    :refreshing="operation.isFetching.value"
     @retry="operation.refetch()"
     ><template v-if="operation.data.value">
       <div class="page-head">
@@ -406,27 +449,79 @@ const logUnavailable = computed(
               </li>
             </ol>
           </section>
-          <section class="panel">
+          <section class="panel" data-operation-logs>
             <div class="section-head">
               <h2>{{ diagnostic ? '诊断日志' : '执行日志' }}</h2>
-              <span class="meta">{{ active ? '每 2 秒更新' : '执行记录' }}</span>
+              <div class="actions">
+                <span class="meta">{{ active ? '每 2 秒更新' : '执行记录' }}</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="刷新任务日志"
+                  :disabled="logs.isFetching.value"
+                  @click="logs.refetch()"
+                  ><RefreshCw
+                /></Button>
+              </div>
             </div>
             <QueryState
               :pending="logs.isPending.value"
               :error="logs.error.value"
+              :refreshing="logs.isFetching.value || loadingMore"
               @retry="logs.refetch()"
-              ><div
-                v-if="logRows.length"
-                class="operation-log"
-                tabindex="0"
-                :aria-label="diagnostic ? '诊断日志' : '执行日志'"
-              >
-                <div v-for="line in logRows" :key="line.sequence" class="log-line">
-                  <time>{{ dateTime(line.timestamp) }}</time
-                  ><span :class="['log-level', `log-${line.level}`]">{{ line.level }}</span
-                  ><span>{{ line.message }}</span>
+              ><template v-if="logRows.length">
+                <div class="log-toolbar">
+                  <span role="status"
+                    >{{ logSearch ? `${filteredLogRows.length} 条匹配 / ` : ''
+                    }}{{ logRows.length }} 条已载入 ·
+                    {{ following ? '自动滚动' : '自动滚动已暂停' }}</span
+                  >
+                  <input
+                    v-model="logSearch"
+                    type="search"
+                    class="input log-search"
+                    aria-label="搜索任务日志"
+                    placeholder="搜索已载入的日志"
+                  />
+                  <label class="flex items-center gap-2"
+                    ><input v-model="wrapLogs" type="checkbox" />长行换行</label
+                  >
+                  <Button v-if="following" variant="ghost" size="sm" @click="pause"
+                    ><Pause />暂停滚动</Button
+                  >
+                  <Button v-else variant="ghost" size="sm" @click="jumpToLatest"
+                    ><ArrowDown />回到最新{{ unread ? ` · ${unread} 条新输出` : '' }}</Button
+                  >
+                  <CopyButton
+                    :text="copyText"
+                    :context-key="copyContext"
+                    :label="logSearch ? '复制匹配日志' : '复制任务日志'"
+                  />
                 </div>
-              </div>
+                <div
+                  ref="logOutput"
+                  class="operation-log"
+                  :class="{ 'nowrap-lines': !wrapLogs }"
+                  tabindex="0"
+                  role="region"
+                  :aria-label="diagnostic ? '诊断日志' : '执行日志'"
+                  @scroll="onScroll"
+                  @wheel="onWheel"
+                  @keydown="onHistoryKey"
+                >
+                  <div v-for="line in filteredLogRows" :key="line.sequence" class="log-line">
+                    <time>{{ dateTime(line.timestamp) }}</time
+                    ><span :class="['log-level', `log-${line.level}`]">{{ line.level }}</span
+                    ><span class="log-message"
+                      >{{ line.message
+                      }}<small v-if="line.code" class="block muted">{{ line.code }}</small></span
+                    >
+                  </div>
+                  <p v-if="!filteredLogRows.length" class="muted py-4">
+                    已载入的日志中没有匹配内容。清除搜索可查看全部缓冲。
+                  </p>
+                </div>
+              </template>
               <p v-else-if="!logs.error.value" class="muted py-6">{{ logUnavailable }}</p>
               <p v-if="logs.data.value?.truncated" class="meta mt-3">
                 日志已达到容量上限，部分内容按保留规则裁剪。
@@ -662,9 +757,35 @@ const logUnavailable = computed(
   font-size: 0.75rem;
   background: var(--background);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  border-top: 0;
+  border-radius: 0 0 0.5rem 0.5rem;
   max-height: 26rem;
   overflow: auto;
+}
+.log-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: var(--secondary);
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+.log-search {
+  width: min(100%, 18rem);
+}
+.log-message {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.nowrap-lines .log-message {
+  white-space: pre;
+  overflow-wrap: normal;
 }
 .log-line {
   display: grid;

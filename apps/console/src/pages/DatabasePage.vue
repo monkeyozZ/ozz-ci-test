@@ -10,7 +10,11 @@ import StorageTarget from '@/components/storage/StorageTarget.vue';
 import type { Database } from '@/components/storage/types';
 import type { Project, Environment } from '@/lib/types';
 import { api } from '@/lib/api';
+import { resourceListPath } from '@/lib/resource-list-navigation';
 const route = useRoute();
+const listLocation = computed(
+  () => resourceListPath(route.query.list, 'databases') ?? '/databases',
+);
 const databaseId = String(route.params.databaseId);
 const database = useQuery({
   queryKey: ['database', databaseId],
@@ -44,7 +48,7 @@ const context = computed(() =>
     @retry="database.refetch()"
     ><template v-if="database.data.value">
       <nav class="breadcrumbs" aria-label="面包屑">
-        <RouterLink to="/databases" class="text-link">数据库</RouterLink><ChevronRight /><span>{{
+        <RouterLink :to="listLocation" class="text-link">数据库</RouterLink><ChevronRight /><span>{{
           database.data.value.service?.name ?? database.data.value.originalService.name
         }}</span>
       </nav>

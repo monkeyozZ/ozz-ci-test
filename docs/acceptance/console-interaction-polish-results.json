@@ -1,0 +1,59 @@
+{
+  "scope": "Console interaction polish on the existing UI v3 prototype and API contracts",
+  "verifiedAt": "2026-10-29T17:43:05.928164+00:00",
+  "status": "local-passed-remote-ci-pending",
+  "local": {
+    "consoleBrowser": {
+      "passed": 112,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    "nativeZoomSeparateRun": {
+      "passed": 1,
+      "factor": 2,
+      "nativeWindowWidth": 1440,
+      "cssViewportWidth": 720,
+      "devicePixelRatio": 2,
+      "cssZoom": 1
+    },
+    "consoleUnitTests": 69,
+    "prototype": {
+      "fullGroups": 18,
+      "polishGroups": 16,
+      "scriptErrors": 0,
+      "polishConsoleErrors": 0,
+      "externalRequests": 0
+    },
+    "responsive": {
+      "s5": 66,
+      "s6": 10,
+      "copyControls": 12
+    },
+    "consoleRuntimeFilesUnchangedSinceRegression": 166,
+    "localRecord": ".local/interaction-polish/evidence/local-final-record.json",
+    "localRecordSha256": "ea0376a7e18713184f6a343a53e3e7fb4a33982f38df0c6a816e9a8636a9780f",
+    "servedIndexSha256": "bddae8527a735c354efcfde761823420403686e730482d62aa9c89db6d09ece0"
+  },
+  "remoteCi": {
+    "status": "pending",
+    "repository": "monkeyozZ/ozz-ci-test",
+    "branch": "ci/console-interaction-polish-20261030",
+    "expectedConsoleFixtures": 113,
+    "expectedE2e": 16,
+    "expectedPrototypeGroups": [18, 16]
+  },
+  "prototypeRuntimeSha256": {
+    "index.html": "d23af9e8c997fb9fc67f379caa448d7a8567f23837c5d1affc003b14ac0f3db1",
+    "app.js": "01b3b083aef261d150758ae53d9b9e61d9bea24a8cbfd938a61b2ae5b31694bf",
+    "styles.css": "b316e25e3be32dce3f6a732e494a00da5e32101f3802d8deef9567ecf3a54bfb",
+    "management.js": "012e2cad8544fc89abddff570b1a4e89ccd01311095a6b64938fd71e3b969d30",
+    "management.css": "3a09e4b20cae2b6b85bdf829cb2cb97e32d474cf9c2dcd09c8c3cf39362a29f2"
+  },
+  "limitations": [
+    "Local browser fixtures and the prototype do not certify real SSH, K3s, public DNS, ACME or data operations.",
+    "Native zoom was executed separately after the local 112-test complete regression.",
+    "Synthetic composition tests do not certify a real Chinese IME. VoiceOver and specialist accessibility acceptance were excluded by the user.",
+    "S6 and G-MVP external acceptance gates are unchanged."
+  ]
+}

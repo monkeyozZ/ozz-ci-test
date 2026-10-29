@@ -17,9 +17,13 @@ import { useAuthStore } from '@/stores/auth';
 import { useUiStore } from '@/stores/ui';
 import { useViewScope } from '@/composables/useViewScope';
 import { dateTime, idempotencyKey, slugify } from '@/lib/utils';
+import { resourceListPath } from '@/lib/resource-list-navigation';
 import type { Cluster, Project, SecretReference } from '@/lib/types';
 const isViewActive = useViewScope();
 const route = useRoute();
+const listLocation = computed(
+  () => resourceListPath(route.query.list, 'infrastructure') ?? '/infrastructure',
+);
 const router = useRouter();
 const auth = useAuthStore();
 const ui = useUiStore();
@@ -167,7 +171,7 @@ async function reload() {
 </script>
 <template>
   <nav class="breadcrumbs" aria-label="面包屑">
-    <RouterLink to="/infrastructure" class="text-link">基础设施</RouterLink><ChevronRight /><span>{{
+    <RouterLink :to="listLocation" class="text-link">基础设施</RouterLink><ChevronRight /><span>{{
       editing ? '集群登记' : '登记集群'
     }}</span>
   </nav>
@@ -335,7 +339,7 @@ async function reload() {
               @click="reload"
               >载入最新资料</Button
             ><Button v-else as-child variant="outline"
-              ><RouterLink to="/infrastructure">取消</RouterLink></Button
+              ><RouterLink :to="listLocation">取消</RouterLink></Button
             ><Button
               type="submit"
               :disabled="

@@ -3,36 +3,48 @@ import { CheckCircle2, AlertCircle, X } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { useUiStore } from '@/stores/ui';
+import { shallowRef, watch } from 'vue';
 const ui = useUiStore();
+const displayedConfirmation = shallowRef(ui.confirmation);
+watch(
+  () => ui.confirmation,
+  (value) => {
+    if (value) displayedConfirmation.value = value;
+  },
+  { immediate: true },
+);
 </script>
 <template>
   <Dialog
     :open="!!ui.confirmation"
-    :title="ui.confirmation?.title ?? ''"
-    :description="ui.confirmation?.description"
+    :title="displayedConfirmation?.title ?? ''"
+    :description="displayedConfirmation?.description"
+    @after-close="!ui.confirmation && (displayedConfirmation = null)"
     @update:open="
       (value) => {
         if (!value) ui.settleConfirmation(false);
       }
     "
   >
-    <p class="muted">
-      {{
-        ui.confirmation?.destructive
-          ? '请确认对象与影响范围，再继续操作。'
-          : '选择继续编辑可以回到当前内容。'
-      }}
-    </p>
     <template #footer
-      ><Button variant="outline" @click="ui.settleConfirmation(false)">取消</Button
+      ><Button type="button" variant="outline" @click="ui.settleConfirmation(false)">{{
+        displayedConfirmation?.cancelText ?? '取消'
+      }}</Button
       ><Button
-        :variant="ui.confirmation?.destructive ? 'destructive' : 'default'"
+        type="button"
+        :variant="displayedConfirmation?.destructive ? 'destructive' : 'default'"
         @click="ui.settleConfirmation(true)"
-        >{{ ui.confirmation?.confirmText ?? '离开此页' }}</Button
+        >{{ displayedConfirmation?.confirmText ?? '离开此页' }}</Button
       ></template
     >
   </Dialog>
-  <div class="toast-region" aria-live="polite" aria-atomic="false">
+  <TransitionGroup
+    name="toast"
+    tag="div"
+    class="toast-region"
+    aria-live="polite"
+    aria-atomic="false"
+  >
     <div
       v-for="notice in ui.notices"
       :key="notice.id"
@@ -47,7 +59,7 @@ const ui = useUiStore();
         ><X
       /></Button>
     </div>
-  </div>
+  </TransitionGroup>
 </template>
 <style scoped>
 .toast-region {
@@ -56,7 +68,7 @@ const ui = useUiStore();
   bottom: max(1.5rem, env(safe-area-inset-bottom));
   width: min(26rem, calc(100vw - 2rem));
   /* Background notices must not cover an active dialog's confirmation controls. */
-  z-index: 250;
+  z-index: 210;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -76,5 +88,24 @@ const ui = useUiStore();
 }
 .toast-error > svg {
   color: var(--destructive);
+}
+.toast-enter-active,
+.toast-leave-active {
+  transition:
+    opacity var(--motion-content) var(--ease-out),
+    transform var(--motion-content) var(--ease-out);
+}
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(0.375rem);
+}
+.toast-move {
+  transition: transform var(--motion-content) var(--ease-out);
+}
+.toast-leave-active {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
 }
 </style>

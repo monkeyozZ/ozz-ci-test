@@ -13,6 +13,9 @@
   const btn = (label, name, opts = {}) => `<button type="${opts.submit ? 'submit' : 'button'}" class="btn ${opts.primary ? 'primary' : ''} ${opts.danger ? 'danger' : ''} ${opts.small ? 'small' : ''} ${opts.subtle ? 'subtle' : ''}"${name ? ` data-action="mg:${name}"` : ''}${opts.id ? ` data-id="${e(opts.id)}"` : ''}${opts.extra || ''}${disabled(opts.disabled)}>${opts.icon ? icon(opts.icon) : ''}${label}</button>`;
   const link = (label, href, symbol = '') => `<a class="btn" href="${e(href)}">${symbol ? icon(symbol) : ''}${label}</a>`;
   const textLink = (label, href) => `<a class="mg-text-link" href="${e(href)}">${e(label)}</a>`;
+  const hasValue = (value) => value !== null && value !== undefined && value !== '';
+  const copyButton = (value, label) => hasValue(value) ? `<button type="button" class="btn subtle small" data-action="copy" data-copy="${e(value)}" aria-label="复制${e(label)}">${icon('copy')}复制</button>` : '';
+  const copyField = (value, label) => hasValue(value) ? `<span class="mg-copy-value"><code>${e(value)}</code>${copyButton(value, label)}</span>` : '<span class="mg-muted">尚未观察</span>';
   const notice = (body, type = '') => `<div class="notice ${type}">${icon(type === 'error' ? 'alert' : 'info')}<span>${body}</span></div>`;
   const facts = (rows) => `<dl class="mg-facts">${rows.map(([label, value]) => `<dt>${e(label)}</dt><dd>${value ?? '尚无记录'}</dd>`).join('')}</dl>`;
   const section = (title, body, action = '') => `<section class="mg-section"><div class="mg-section-head"><h2>${title}</h2>${action}</div>${body}</section>`;
@@ -43,9 +46,36 @@
     for (const [key, value] of Object.entries(values)) value ? params.set(key, value) : params.delete(key);
     return `#/${path}${params.size ? '?' + params : ''}`;
   }
+  function listHref(value, resource) {
+    if (typeof value !== 'string' || !value.startsWith('#/')) return '';
+    try {
+      const url = new URL(value.slice(1), 'https://ozz-prototype.invalid');
+      if (url.origin !== 'https://ozz-prototype.invalid') return '';
+      const infrastructure = ['server', 'cluster'].includes(resource);
+      if (url.pathname !== (infrastructure ? '/servers' : '/resources')) return '';
+      if (infrastructure && (url.searchParams.get('tab') === 'clusters' ? 'cluster' : 'server') !== resource) return '';
+      if (!infrastructure && url.searchParams.get('type') !== { volume: 'volumes', database: 'databases', domain: 'domains' }[resource]) return '';
+      const keys = infrastructure ? ['tab', 'q', 'status', 'page'] : ['type', 'q', 'project', 'env', 'service', 'cluster', 'retained', 'status', 'page'];
+      const clean = new URLSearchParams();
+      for (const key of keys) {
+        if (url.searchParams.getAll(key).length > 1) return '';
+        if (url.searchParams.has(key)) clean.set(key, url.searchParams.get(key));
+      }
+      return '#' + url.pathname + (clean.size ? '?' + clean : '');
+    } catch { return ''; }
+  }
+  function detailHref(resource, id, ctx, values = {}) {
+    const inherited = ctx?.params.getAll('list').length === 1 ? ctx.params.get('list') : '';
+    const current = ctx && ['servers', 'resources'].includes(ctx.kind) ? queryHref(ctx.kind, {}, ctx) : inherited;
+    const list = listHref(current, resource);
+    const params = new URLSearchParams(values);
+    if (list) params.set('list', list);
+    return `#/${resource}/${id}${params.size ? '?' + params : ''}`;
+  }
+  const returnHref = (ctx, resource, fallback) => ctx.params.getAll('list').length === 1 ? listHref(ctx.params.get('list'), resource) || fallback : fallback;
   function field(label, name, value = '', opts = {}) {
     const id = `mg-${name}`;
-    const attrs = `id="${id}" name="${name}" ${opts.secret ? 'data-mg-secret' : `data-mg-field="${name}"`}${opts.required ? ' required' : ''}${opts.readonly ? ' readonly' : ''}${opts.min != null ? ` min="${opts.min}"` : ''}${opts.max != null ? ` max="${opts.max}"` : ''}${opts.pattern ? ` pattern="${e(opts.pattern)}"` : ''} autocomplete="off"`;
+    const attrs = `id="${id}" name="${name}" ${opts.secret ? 'data-mg-secret' : `data-mg-field="${name}"`}${opts.mask && opts.area ? ' class="mg-secret-mask"' : ''}${opts.required ? ' required' : ''}${opts.readonly ? ' readonly' : ''}${opts.min != null ? ` min="${opts.min}"` : ''}${opts.max != null ? ` max="${opts.max}"` : ''}${opts.pattern ? ` pattern="${e(opts.pattern)}"` : ''} autocomplete="off"`;
     const control = opts.choices ? `<select ${attrs}>${opts.choices.map(([key, text]) => `<option value="${e(key)}"${String(key) === String(value) ? ' selected' : ''}>${e(text)}</option>`).join('')}</select>` : opts.area ? `<textarea ${attrs} rows="${opts.rows || 3}" placeholder="${e(opts.placeholder || '')}">${opts.secret ? '' : e(value)}</textarea>` : `<input ${attrs} type="${opts.type || 'text'}" value="${opts.secret ? '' : e(value)}" placeholder="${e(opts.placeholder || '')}" />`;
     return `<div class="field"><label for="${id}">${label}</label>${control}${opts.hint ? `<small class="hint">${opts.hint}</small>` : ''}</div>`;
   }
@@ -78,9 +108,51 @@
     if (next) { next.focus({ preventScroll: true }); if (typeof next.setSelectionRange === 'function' && start != null) try { next.setSelectionRange(start, end); } catch {} }
   }
   function openDialog(name, draft, ctx, body, title, subtitle = '', extra = {}) {
-    ui.dialog = { name, draft: copy(draft), ctx, ...extra };
+    const dialog = { name, draft: copy(draft), ctx, revealSecret: false, ...extra };
+    ui.dialog = dialog;
     ui.formErrors = {};
-    api.openModal({ title, subtitle, body: typeof body === 'function' ? () => body(ui.dialog?.draft || draft) : body, wide: true });
+    api.openModal({ title, subtitle, body: typeof body === 'function' ? () => body(ui.dialog?.draft || draft) : body, wide: true, management: dialog, beforeClose: () => confirmFormClose(dialog), onClosed: () => { if (ui.dialog === dialog) { delete ui.drafts[draftKey(name, dialog.draft.id)]; ui.dialog = null; } } });
+    const element = document.querySelector(`form[data-mg-draft="${name}"]`);
+    if (element) dialog.initial = safeFormValues(element);
+  }
+  function safeFormValues(element) {
+    const secretNames = new Set([...element.querySelectorAll('[data-mg-secret]')].map((input) => input.name));
+    return JSON.stringify([...new FormData(element)].filter(([key]) => !secretNames.has(key)));
+  }
+  function secretSnapshot(element, dialog, modal) {
+    const values = [...element.querySelectorAll('[data-mg-secret]')].map((input) => [input.name, input.value]);
+    const kind = element.querySelector('[name="kind"]')?.value;
+    return {
+      clear() { values.forEach((value) => { value[1] = ''; }); values.length = 0; },
+      restore() {
+        const formElement = document.querySelector('form[data-mg-draft="credential-save"]');
+        if (state.modal === modal && ui.dialog === dialog && formElement?.querySelector('[name="kind"]')?.value === kind) {
+          for (const [name, value] of values) { const input = formElement.elements.namedItem(name); if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) input.value = value; }
+          applySecretVisibility(formElement, dialog.revealSecret);
+        }
+        this.clear();
+      },
+    };
+  }
+  function preserveInputs() {
+    const element = document.querySelector('form[data-mg-draft="credential-save"]');
+    if (!element || state.modal?.management !== ui.dialog || ui.dialog?.name !== 'credential-save') return;
+    const snapshot = secretSnapshot(element, ui.dialog, state.modal);
+    return () => snapshot.restore();
+  }
+  function applySecretVisibility(element, visible) {
+    element.querySelectorAll('[data-mg-secret]').forEach((input) => { if (input instanceof HTMLTextAreaElement) input.classList.toggle('mg-secret-mask', !visible); else input.type = visible ? 'text' : 'password'; });
+    const trigger = element.querySelector('[data-action="mg:credential-visibility"]');
+    if (trigger) { trigger.textContent = visible ? '隐藏内容' : '显示内容'; trigger.setAttribute('aria-pressed', String(visible)); }
+  }
+  function confirmFormClose(dialog) {
+    if (ui.dialog !== dialog || !['credential-save', 'cluster-save'].includes(dialog.name) || (dialog.name === 'cluster-save' && dialog.draft.id)) return true;
+    const element = document.querySelector(`form[data-mg-draft="${dialog.name}"]`);
+    if (!element || (safeFormValues(element) === dialog.initial && ![...element.querySelectorAll('[data-mg-secret]')].some((input) => input.value))) return true;
+    const parent = state.modal;
+    const secrets = dialog.name === 'credential-save' ? secretSnapshot(element, dialog, parent) : null;
+    api.confirm({ title: dialog.name === 'credential-save' ? '放弃凭证输入？' : '放弃新集群资料？', description: '关闭后清空本次尚未保存的输入。已保存的资源与引用保持不变。', confirmText: '清空并关闭', onCancel: () => secrets?.restore(), onConfirm: () => { secrets?.clear(); delete ui.drafts[draftKey(dialog.name, dialog.draft.id)]; if (ui.dialog === dialog) ui.dialog = null; } });
+    return false;
   }
   const refreshDialog = (body) => { if (state.modal) { state.modal.body = body; redraw(); } };
   function blockWrite(formElement) {
@@ -143,11 +215,11 @@
   function serversPage(ctx) {
     const tab = ctx.params.get('tab') === 'clusters' ? 'clusters' : 'servers';
     const rows = state.scenario === 'empty' ? [] : filtered(tab === 'servers' ? state.servers : state.clusters, ctx);
-    return header('服务器', '连接自己的服务器，或导入已有 Kubernetes 集群。', btn(tab === 'servers' ? '添加服务器' : '登记集群', tab === 'servers' ? 'server-new' : 'cluster-new', { primary: true, icon: 'plus' }) + btn('导入已有集群', 'cluster-import')) + tabs([['servers', '服务器', '#/servers'], ['clusters', '集群', '#/servers?tab=clusters']], tab) + filters(ctx, { statuses: [['ready', '已连接'], ['unverified', '未验证'], ['offline', '已失联']] }) + pageList(rows, ctx, (item) => tab === 'servers' ? row([textLink(item.name, `#/server/${item.id}`), `<code>${e(item.address || item.host)}</code><small class="mg-sub">${e(item.user || item.sshUser)} · SSH ${item.port || item.sshPort || 22}</small>`, e(item.region || item.location || '未填写'), badge(item.status), item.clusterId ? textLink(state.clusters.find((c) => c.id === item.clusterId)?.name || '关联集群', `#/cluster/${item.clusterId}`) : btn('继续接入', 'server-onboard', { id: item.id, small: true }), btn('管理', 'server-open', { id: item.id, small: true })]) : row([textLink(item.name, `#/cluster/${item.id}`), e(item.location || item.region || '未填写'), badge(item.status), `${item.nodeCount || item.nodes?.length || 0} 个节点`, `${state.projects.filter((p) => (p.targetId || p.clusterId) === item.id).length} 个项目`, btn('管理', 'cluster-open', { id: item.id, small: true })]), tab === 'servers' ? ['服务器', '连接地址', '地区', '状态', '所属集群', ''] : ['集群', '地区', '状态', '节点', '项目', ''], tab === 'servers' ? '还没有登记服务器' : '还没有登记集群') + notice('服务器是 SSH 主机，集群是项目的部署位置。一个多节点集群只作为一个部署目标。');
+    return header('服务器', '连接自己的服务器，或导入已有 Kubernetes 集群。', btn(tab === 'servers' ? '添加服务器' : '登记集群', tab === 'servers' ? 'server-new' : 'cluster-new', { primary: true, icon: 'plus' }) + btn('导入已有集群', 'cluster-import')) + tabs([['servers', '服务器', queryHref('servers', { tab: '', page: '' }, ctx)], ['clusters', '集群', queryHref('servers', { tab: 'clusters', page: '' }, ctx)]], tab) + filters(ctx, { statuses: [['ready', '已连接'], ['unverified', '未验证'], ['offline', '已失联']] }) + pageList(rows, ctx, (item) => tab === 'servers' ? row([textLink(item.name, detailHref('server', item.id, ctx)), `<code>${e(item.address || item.host)}</code><small class="mg-sub">${e(item.user || item.sshUser)} · SSH ${item.port || item.sshPort || 22}</small>`, e(item.region || item.location || '未填写'), badge(item.status), item.clusterId ? textLink(state.clusters.find((c) => c.id === item.clusterId)?.name || '关联集群', `#/cluster/${item.clusterId}`) : btn('继续接入', 'server-onboard', { id: item.id, small: true }), btn('管理', 'server-open', { id: item.id, small: true })]) : row([textLink(item.name, detailHref('cluster', item.id, ctx)), e(item.location || item.region || '未填写'), badge(item.status), `${item.nodeCount || item.nodes?.length || 0} 个节点`, `${state.projects.filter((p) => (p.targetId || p.clusterId) === item.id).length} 个项目`, btn('管理', 'cluster-open', { id: item.id, small: true })]), tab === 'servers' ? ['服务器', '连接地址', '地区', '状态', '所属集群', ''] : ['集群', '地区', '状态', '节点', '项目', ''], tab === 'servers' ? '还没有登记服务器' : '还没有登记集群') + notice('服务器是 SSH 主机，集群是项目的部署位置。一个多节点集群只作为一个部署目标。');
   }
   function serverForm(d) {
     d = draftFor('server-save', d);
-    return form('server-save', `<input type="hidden" name="id" value="${e(d.id || '')}" /><input type="hidden" name="revision" value="${d.revision || 1}" />${field('服务器名称', 'name', d.name, { required: true })}<div class="mg-two">${field('地址', 'address', d.address || d.host || '', { required: true, pattern: '[A-Za-z0-9.:-]+', placeholder: '例如：192.0.2.30' })}${field('SSH 端口', 'port', d.port || d.sshPort || 22, { type: 'number', required: true, min: 1, max: 65535 })}</div><div class="mg-two">${field('SSH 用户', 'user', d.user || d.sshUser || 'deploy', { required: true })}${field('SSH 凭证', 'credentialId', d.credentialId, { choices: credentialChoices('ssh'), required: true })}</div><div class="mg-two">${field('地区', 'region', d.region || '')}${field('标签', 'tags', Array.isArray(d.tags) ? d.tags.join(', ') : d.tags || '', { hint: '用逗号分隔，例如 blog, production。' })}</div>${notice('保存登记后，再核对主机指纹和执行只读预检。')}`, d.id ? '保存服务器资料' : '登记服务器', d.id ? reloadButton('server-save', d.id) : closeButton());
+    return form('server-save', `<input type="hidden" name="id" value="${e(d.id || '')}" /><input type="hidden" name="revision" value="${d.revision || 1}" />${field('服务器名称', 'name', d.name, { required: true })}<div class="mg-two">${field('地址', 'address', d.address || d.host || '', { required: true, pattern: '(?:[A-Za-z0-9.:]|-)+', placeholder: '例如：192.0.2.30' })}${field('SSH 端口', 'port', d.port || d.sshPort || 22, { type: 'number', required: true, min: 1, max: 65535 })}</div><div class="mg-two">${field('SSH 用户', 'user', d.user || d.sshUser || 'deploy', { required: true })}${field('SSH 凭证', 'credentialId', d.credentialId, { choices: credentialChoices('ssh'), required: true })}</div><div class="mg-two">${field('地区', 'region', d.region || '')}${field('标签', 'tags', Array.isArray(d.tags) ? d.tags.join(', ') : d.tags || '', { hint: '用逗号分隔，例如 blog, production。' })}</div>${notice('保存登记后，再核对主机指纹和执行只读预检。')}`, d.id ? '保存服务器资料' : '登记服务器', d.id ? reloadButton('server-save', d.id) : closeButton());
   }
   function serverPage(ctx) {
     const s = state.servers.find((item) => item.id === ctx.id);
@@ -158,7 +230,7 @@
     if (tab === 'settings') body = section('服务器资料', serverForm(s)) + section('移除登记', '<p>移除后不卸载远端软件，不删除集群或数据。</p>' + btn('移除服务器登记', 'server-remove', { id: s.id, danger: true }));
     else if (tab === 'preflight') body = section('主机指纹', facts([['已发现指纹', `<code>${e(s.fingerprint || '尚未发现')}</code>`], ['信任状态', badge(s.fingerprintConfirmed ? 'ready' : 'unverified', s.fingerprintConfirmed ? '已明确确认' : '等待确认')]]) + `<div class="mg-actions">${btn('发现主机指纹', 'fingerprint-discover', { id: s.id })}${s.fingerprint && !s.fingerprintConfirmed ? btn('确认这个指纹', 'fingerprint-confirm', { id: s.id, primary: true }) : ''}</div>`) + section('只读预检', s.preflight ? table(['检查项', '观察结果', '状态'], s.preflight.checks.map((item) => row([e(item.name), e(item.value), badge(item.ok ? 'ready' : 'failed', item.ok ? '通过' : '需要处理')]))) + `<p class="mg-muted">观察时间 ${date(s.preflight.observedAt)}。预检没有安装软件。</p>` : notice('尚未执行预检。检查系统、架构、资源、磁盘、端口和现有安装。'), btn('执行只读预检', 'server-preflight', { id: s.id, primary: true, disabled: !s.fingerprintConfirmed })) + section('初始化 K3s', cluster ? notice(`已关联 ${e(cluster.name)}，不会覆盖已有安装。`) + link('查看集群', `#/cluster/${cluster.id}`) : notice('先通过指纹和预检，再确认固定版本安装。安装结果通过独立任务核对。') + btn('初始化 K3s', 'server-install', { id: s.id, primary: true, disabled: !s.preflight?.passed }));
     else body = section('连接信息', facts([['服务器', e(s.name)], ['SSH 地址', `<code>${e(s.user || s.sshUser)}@${e(s.address || s.host)}:${s.port || s.sshPort || 22}</code>`], ['凭证引用', textLink(state.credentials.find((c) => c.id === s.credentialId)?.name || '尚未选择', '#/settings?tab=credentials')], ['主机指纹', `<code>${e(s.fingerprint || '待发现')}</code>`], ['所属集群', cluster ? textLink(cluster.name, `#/cluster/${cluster.id}`) : '尚未关联'], ['观察时间', date(s.observedAt)]]), btn('检查连接', 'server-onboard', { id: s.id })) + section('主机与工作负载', facts([['系统', e(s.os || '待预检')], ['CPU / 内存', s.cpu ? `${s.cpu} 核 / ${s.memory} GiB` : '未知'], ['可用磁盘', s.disk ? `${s.disk} GiB` : '未知']]) + (cluster ? `<div class="mg-link-list">${state.projects.filter((p) => (p.targetId || p.clusterId) === cluster.id).map((p) => textLink(p.name, api.projectUrl(p))).join('') || '<p>暂无关联项目。</p>'}</div>` : notice('初始化或导入集群后，才能创建承载在这里的项目。'))) + section('最近操作', taskLinks(state.tasks.filter((t) => t.resourceId === s.id || t.targetId === s.id).slice(0, 5)));
-    return header(e(s.name), `${e(s.region || s.location || '未填写地区')} · ${e(s.address || s.host)}`, badge(s.status) + link('服务器列表', '#/servers', 'back')) + tabs([['overview', '概览', `#/server/${s.id}`], ['preflight', '连接与接入', `#/server/${s.id}?tab=preflight`], ['settings', '设置', `#/server/${s.id}?tab=settings`]], tab) + body;
+    return header(e(s.name), `${e(s.region || s.location || '未填写地区')} · ${e(s.address || s.host)}`, badge(s.status) + link('服务器列表', returnHref(ctx, 'server', '#/servers'), 'back')) + tabs([['overview', '概览', detailHref('server', s.id, ctx)], ['preflight', '连接与接入', detailHref('server', s.id, ctx, { tab: 'preflight' })], ['settings', '设置', detailHref('server', s.id, ctx, { tab: 'settings' })]], tab) + body;
   }
   function clusterForm(d) {
     d = draftFor('cluster-save', d);
@@ -173,7 +245,7 @@
     if (tab === 'settings') body = section('集群资料', clusterForm(c)) + section('集群入口', entryForm(c)) + section('移除登记', '<p>关联项目、数据和活动任务会阻止移除。该操作不卸载远端集群。</p>' + btn('移除集群登记', 'cluster-remove', { id: c.id, danger: true }));
     else if (tab === 'connection') body = section('固定集群身份', facts([['Kubernetes API', `<code>${e(c.endpoint || '尚未导入')}</code>`], ['kube-system UID', `<code>${e(c.identity || '待核对')}</code>`], ['凭证引用', c.credentialId ? textLink(c.credentialId, '#/settings?tab=credentials') : '尚未登记'], ['最后观察', date(c.observedAt)]]), btn(c.endpoint ? '更新连接' : '导入 kubeconfig', 'cluster-import', { id: c.id, primary: true })) + section('连接与能力检查', table(['项目', '结果', '状态'], [['rbac', '访问 Kubernetes API'], ['ingress', 'HTTP 入口'], ['storage', 'local-path 持久存储'], ['metrics', '即时指标'], ['certificate', 'cert-manager 证书组件']].map(([key, label]) => row([label, c.capabilities?.[key] ? '已观察到所需能力' : '尚未验证或未安装', badge(c.capabilities?.[key] ? 'ready' : 'unverified')]))), btn('重新检查集群', 'cluster-check', { id: c.id })) + (!c.capabilities?.certificate ? section('证书组件', notice('默认 HTTPS 需要 cert-manager。安装将创建独立任务，完成后再核对能力。'), btn('检查或安装 cert-manager', 'certificate-install', { id: c.id })) : '');
     else body = section('集群概览', facts([['部署位置', e(c.location || c.region || '未填写')], ['API 地址', `<code>${e(c.endpoint || '尚未导入')}</code>`], ['关联服务器', c.serverId ? textLink(state.servers.find((s) => s.id === c.serverId)?.name || '服务器', `#/server/${c.serverId}`) : '外部导入'], ['观察时间', date(c.observedAt)]]), btn('运行诊断', 'cluster-check', { id: c.id })) + section('节点', table(['节点', '架构', '资源', '状态', ''], (c.nodes || []).map((node) => row([identity(node.name, `<code>${e(node.uid)}</code>`), e(node.architecture), `${node.cpu} 核 / ${node.memory} GiB`, badge(c.status === 'offline' ? 'unknown' : node.status), btn('查看节点', 'node-detail', { id: node.id, small: true, extra: ` data-cluster="${c.id}"` })])), '尚未观察到节点'), btn('节点维护', 'plan', { extra: ' data-feature="F41"', small: true }) + '<span class="mg-planned">P1 规划演示</span>') + section('关联项目', projects.length ? `<div class="mg-link-list">${projects.map((p) => textLink(p.name, api.projectUrl(p))).join('')}</div>` : notice('这个集群还没有项目。'), link('在此创建项目', `#/new-project?target=${c.id}`, 'plus')) + section('最近操作', taskLinks(state.tasks.filter((t) => t.targetId === c.id || t.resourceId === c.id).slice(0, 5)));
-    return header(e(c.name), '项目、环境与服务共享这个固定部署目标。', badge(c.status) + link('集群列表', '#/servers?tab=clusters', 'back')) + tabs([['overview', '概览与节点', `#/cluster/${c.id}`], ['connection', '连接与能力', `#/cluster/${c.id}?tab=connection`], ['settings', '设置', `#/cluster/${c.id}?tab=settings`]], tab) + body;
+    return header(e(c.name), '项目、环境与服务共享这个固定部署目标。', badge(c.status) + link('集群列表', returnHref(ctx, 'cluster', '#/servers?tab=clusters'), 'back')) + tabs([['overview', '概览与节点', detailHref('cluster', c.id, ctx)], ['connection', '连接与能力', detailHref('cluster', c.id, ctx, { tab: 'connection' })], ['settings', '设置', detailHref('cluster', c.id, ctx, { tab: 'settings' })]], tab) + body;
   }
 
   const credentialKinds = [['ssh', 'SSH 私钥'], ['kubeconfig', 'Kubernetes 连接'], ['git', 'Git 授权'], ['registry', '镜像仓库'], ['database', '数据库密码'], ['generic', '通用秘密'], ['webhook', 'Webhook 签名'], ['builder', 'Builder mTLS']];
@@ -199,7 +271,7 @@
     const d = input || { kind: 'ssh' };
     const kind = d.kind || 'ssh';
     const secretNames = kind === 'ssh' ? [['privateKey', 'SSH 私钥', true]] : kind === 'kubeconfig' ? [['kubeconfig', 'kubeconfig 内容', true]] : kind === 'builder' ? [['ca', 'CA 证书', true], ['certificate', '客户端证书', true], ['privateKey', '客户端私钥', true]] : [['secret', kind === 'git' ? '访问令牌' : kind === 'registry' ? '密码或访问令牌' : kind === 'database' ? '数据库密码' : kind === 'webhook' ? '签名密钥' : '秘密值', false]];
-    return form('credential-save', `<input type="hidden" name="replaceId" value="${e(replacing)}" />${field('名称', 'name', d.name || '', { required: true })}<div class="mg-two">${field('凭证类型', 'kind', kind, { choices: credentialKinds })}${field('到期日期（可选）', 'expiresAt', d.expiresAt || '', { type: 'date' })}</div>${kind === 'registry' ? field('用户名', 'username', d.username || '', { required: true }) : ''}${secretNames.map(([key, label, area]) => field(label, key, '', { secret: true, required: true, type: area ? 'text' : 'password', area, rows: 3, hint: '请用示例值体验。原型不保存或发送秘密内容。' })).join('')}${field('说明', 'description', d.description || '', { area: true })}${notice(replacing ? '这会创建一个新凭证引用。原引用仍保留，下一步选择需要切换的使用方并重新验证。' : '保存后只保留名称、类型、到期和引用关系。秘密不能读回；取消、切换类型或离开后会清空。')}`, replacing ? '创建替换凭证' : '创建凭证引用', closeButton());
+    return form('credential-save', `<input type="hidden" name="replaceId" value="${e(replacing)}" />${field('名称', 'name', d.name || '', { required: true })}<div class="mg-two">${field('凭证类型', 'kind', kind, { choices: credentialKinds })}${field('到期日期（可选）', 'expiresAt', d.expiresAt || '', { type: 'date' })}</div>${['registry', 'database'].includes(kind) ? field('用户名', 'username', d.username || '', { required: true }) : ''}<div class="mg-actions">${btn('显示内容', 'credential-visibility', { subtle: true, small: true, extra: ' aria-pressed="false"' })}</div>${secretNames.map(([key, label, area]) => field(label, key, '', { secret: true, mask: true, required: true, type: area ? 'text' : 'password', area, rows: 3, hint: '请用示例值体验。原型不保存或发送秘密内容。' })).join('')}${kind === 'ssh' ? field('私钥口令（选填）', 'passphrase', '', { secret: true, type: 'password' }) : ''}${field('说明', 'description', d.description || '', { area: true })}${notice(replacing ? '这会创建一个新凭证引用。原引用仍保留，下一步选择需要切换的使用方并重新验证。' : '保存后只保留名称、类型、到期和引用关系。秘密不能读回；关闭后清空，有输入时切换类型需先确认。')}`, replacing ? '创建替换凭证' : '创建凭证引用', closeButton());
   }
   function credentialPage(ctx) {
     const kind = ctx.params.get('kind') || '';
@@ -260,9 +332,9 @@
     const actions = type === 'volumes' ? btn('创建数据卷', 'volume-new', { primary: true, icon: 'plus' }) : type === 'domains' ? btn('分配默认域名', 'domain-new', { primary: true, icon: 'plus' }) : type === 'databases' ? p ? link('添加数据库服务', api.projectUrl(p, '', ctx.params.get('env') || p.lastEnvironmentId)) : link('进入项目添加数据库', '#/projects') : '';
     const renderRow = (item) => {
       if (type === 'services') return row([textLink(item.draft.name, api.serviceUrl(item.project, item)), scope(item), badge(item.status), e(target(item).name || '目标已移除'), e(item.draft.source), link('查看服务', api.serviceUrl(item.project, item))]);
-      if (type === 'domains') return row([textLink(item.hostname, `#/domain/${item.id}`), scope(item), serviceLink(item.serviceId, 'network'), badge(item.status), `${badge(item.dns, 'DNS')} ${badge(item.route, '路由')} ${badge(item.tls, 'TLS')}`, date(item.observedAt)]);
-      if (type === 'databases') return row([textLink(item.name, `#/database/${item.id}`), scope(item), `${e(item.engine)} ${e(item.version)}`, serviceLink(item.serviceId, 'data'), badge(item.status), textLink(state.volumes.find((v) => v.id === item.volumeId)?.name || '数据卷', `#/volume/${item.volumeId}`)]);
-      return row([textLink(item.name, `#/volume/${item.id}`), scope(item), `${item.sizeGiB || item.capacity} GiB<small class="mg-sub">${e(item.storageClass)}</small>`, badge(item.status), item.retained ? '<span class="mg-token">已保留</span>' : `${volumeRefs(item).length} 个引用`, item.maintenance ? badge('paused', '维护锁定') : item.protected ? '已保护' : '未保护']);
+      if (type === 'domains') return row([textLink(item.hostname, detailHref('domain', item.id, ctx)), scope(item), serviceLink(item.serviceId, 'network'), badge(item.status), `${badge(item.dns, 'DNS')} ${badge(item.route, '路由')} ${badge(item.tls, 'TLS')}`, date(item.observedAt)]);
+      if (type === 'databases') return row([textLink(item.name, detailHref('database', item.id, ctx)), scope(item), `${e(item.engine)} ${e(item.version)}`, serviceLink(item.serviceId, 'data'), badge(item.status), textLink(state.volumes.find((v) => v.id === item.volumeId)?.name || '数据卷', `#/volume/${item.volumeId}`)]);
+      return row([textLink(item.name, detailHref('volume', item.id, ctx)), scope(item), `${item.sizeGiB || item.capacity} GiB<small class="mg-sub">${e(item.storageClass)}</small>`, badge(item.status), item.retained ? '<span class="mg-token">已保留</span>' : `${volumeRefs(item).length} 个引用`, item.maintenance ? badge('paused', '维护锁定') : item.protected ? '已保护' : '未保护']);
     };
     const heads = { services: ['服务', '归属', '状态', '部署位置', '来源', ''], domains: ['域名', '归属', '服务', '状态', '分别观察', '观察时间'], databases: ['数据库', '归属', '版本', '源服务', '状态', '持久数据'], volumes: ['数据卷', '归属', '申请容量', '状态', '引用', '保护与维护'] }[type];
     return header(p ? `${e(p.name)} · 资源` : '所有资源', '按归属查找资源；服务移除后，保留的数据仍可独立访问。', actions + (p ? link('返回项目', api.projectUrl(p, '', ctx.params.get('env') || p.lastEnvironmentId), 'back') : '')) + tabs(['services', 'domains', 'databases', 'volumes'].map((key) => [key, { services: '服务', domains: '域名', databases: '数据库', volumes: '持久卷' }[key], queryHref('resources', { type: key, status: '', page: '' }, ctx)]), type) + filters(ctx, { projects: true, statuses, placeholder: `搜索${name}` }) + pageList(rows, ctx, renderRow, heads, `没有匹配的${name}`) + (type === 'volumes' ? notice('申请容量是存储请求值。local-path 不代表硬配额，也不自动跨节点迁移。') : '') + (type === 'domains' ? `<div class="mg-actions">${planButton('F33', '自定义域名 / Cloudflare')}${planButton('F34', '公网 TCP')}</div><p class="mg-planned">增强网络为 P1 规划演示。</p>` : '');
@@ -282,19 +354,26 @@
     if (tab === 'maintenance') body = maintenancePanel(v, ctx);
     else if (tab === 'records') body = recordsPanel(v, ctx);
     else body = section('持久数据', facts([['归属', scope(v)], ['源服务', serviceLink(v.serviceId, 'data')], ['部署集群', textLink(target(v).name || '目标已移除', `#/cluster/${target(v).id}`)], ['PVC / PV', `<code>${e(v.pvc || '尚未观察')}</code><br /><code>${e(v.pv || '等待使用方调度后绑定')}</code>`], ['申请容量 / StorageClass', `${v.sizeGiB || v.capacity} GiB / ${e(v.storageClass)}`], ['实际节点 / 回收策略', `${e(v.node || '尚未绑定')} / Retain`], ['数据身份', v.databaseId ? textLink(state.databases.find((db) => db.id === v.databaseId)?.name || '数据库', `#/database/${v.databaseId}`) : '普通文件'], ['观察时间', date(v.observedAt)]])) + section('挂载与引用', table(['服务', '草稿', '已发布', '在途任务', '实际观察', ''], volumeRefs(v).map((r) => row([serviceLink(r.service.id, 'data'), r.draft ? `<code>${e(r.draft.path)}</code>${r.draft.readOnly ? ' · 只读' : ' · 可写'}` : '无', r.published ? `<code>${e(r.published.path)}</code>` : '无', r.pending.length ? r.pending.map((t) => textLink(t.name, `#/task/${t.id}`)).join('<br />') : '无', r.actual ? '仍有引用' : '无已观察引用', r.draft ? btn('移除挂载草稿', 'volume-unmount', { id: v.id, small: true, extra: ` data-service="${e(r.service.id)}"` }) : ''])), '这个卷没有服务引用') + notice('保存或移除挂载只修改服务草稿。已发布与实际挂载会保留到部署成功后。'), btn('挂载到服务', 'volume-mount', { id: v.id, primary: true, disabled: Boolean(v.maintenance) })) + section('保护与销毁', facts([['保留状态', v.retained ? '源服务已移除，数据独立保留' : '属于当前项目与环境'], ['保护状态', v.protected ? '开启防销毁保护' : '未开启保护'], ['维护状态', v.maintenance ? badge('paused', '维护锁定') : '未进入维护']]) + `<div class="mg-actions">${btn(v.protected ? '关闭防销毁保护' : '开启防销毁保护', 'volume-protection', { id: v.id })}${btn('审查并销毁数据卷', 'volume-destroy', { id: v.id, danger: true })}</div>` + notice('销毁是独立的数据操作。任何草稿、已发布、在途、实际引用或维护锁都会阻止销毁。')) + section('最近操作', taskLinks(state.tasks.filter((t) => t.resourceId === v.id).slice(0, 5)));
-    return header(e(v.name), `${scope(v)} · ${v.sizeGiB || v.capacity} GiB · ${e(v.storageClass)}`, badge(v.status) + link('数据卷列表', `#/resources?type=volumes&project=${v.projectId}&env=${v.environmentId}`, 'back')) + tabs([['overview', '概览与挂载', `#/volume/${v.id}`], ['maintenance', '手工备份 / 恢复', `#/volume/${v.id}?tab=maintenance`], ['records', '备份与恢复记录', `#/volume/${v.id}?tab=records`]], tab) + body;
+    return header(e(v.name), `${scope(v)} · ${v.sizeGiB || v.capacity} GiB · ${e(v.storageClass)}`, badge(v.status) + link('数据卷列表', returnHref(ctx, 'volume', `#/resources?type=volumes&project=${v.projectId}&env=${v.environmentId}`), 'back')) + tabs([['overview', '概览与挂载', detailHref('volume', v.id, ctx)], ['maintenance', '手工备份 / 恢复', detailHref('volume', v.id, ctx, { tab: 'maintenance' })], ['records', '备份与恢复记录', detailHref('volume', v.id, ctx, { tab: 'records' })]], tab) + body;
   }
   function databasePage(ctx) {
     const db = state.databases.find((item) => item.id === ctx.id);
     if (!db) return missing('数据库', '#/resources?type=databases');
     const v = state.volumes.find((item) => item.id === db.volumeId);
-    return header(e(db.name), `${scope(db)} · ${e(db.engine)} ${e(db.version)}`, badge(db.status) + link('数据库列表', `#/resources?type=databases&project=${db.projectId}&env=${db.environmentId}`, 'back')) + section('数据身份', facts([['数据库 ID', `<code>${e(db.identity || db.id)}</code>`], ['引擎 / 版本', `${e(db.engine)} / ${e(db.version)}`], ['初始化凭证', textLink(state.credentials.find((c) => c.id === db.credentialId)?.name || db.credentialId || '缺失', '#/settings?tab=credentials')], ['源服务', serviceLink(db.serviceId, 'data')], ['持久数据卷', v ? textLink(v.name, `#/volume/${v.id}`) : '数据卷已移除'], ['认证 / 持久化', db.kind === 'redis' ? 'AUTH 引用 · AOF everysec' : '密码引用 · 单实例 PostgreSQL']])) + section('私有连接', facts([['Host', `<code>${e(db.host)}</code>`], ['Port', e(db.port)], ['数据库 / 用户', `${e(db.databaseName || '默认')} / ${e(db.username || 'default')}`], ['连接示意', `<code>${db.kind === 'redis' ? 'redis' : 'postgresql'}://&lt;凭证引用&gt;@${e(db.host)}:${db.port}/${e(db.databaseName || '')}</code>`]]) + notice('选择同环境应用，先核对变量映射，再保存连接草稿。发布成功后才会注入运行实例。'), btn('连接到应用', 'database-connect', { id: db.id, primary: true, disabled: !reference(db.serviceId) || !db.identity })) + section('消费者', table(['应用', '草稿变量', '已发布变量', '在途发布', ''], databaseRefs(db).map((r) => row([serviceLink(r.service.id, 'variables'), r.draft.map((c) => `<code>${e(c.variable)}</code>`).join(', ') || '无', r.published.map((c) => `<code>${e(c.variable)}</code>`).join(', ') || '无', r.pending.length ? taskLinks(r.pending) : '无', r.draft.length ? btn('移除连接草稿', 'database-disconnect', { id: db.id, small: true, extra: ` data-service="${r.service.id}"` }) : ''])), '尚无应用引用此数据库')) + section('备份与恢复', v ? `<p>手工维护与证据跟随持久数据保存，源服务移除后仍可访问。</p><div class="mg-actions">${link('手工维护与指引', `#/volume/${v.id}?tab=maintenance`)}${link('查看证据记录', `#/volume/${v.id}?tab=records`)}${planButton('F35', '自动备份与恢复')}</div>` : notice('当前没有可达的持久数据卷，请核对原任务和保留资源。', 'error')) + section('版本与迁移', '<p>密码轮换、主版本升级与跨集群迁移是独立流程，需要新目标与数据验证。</p>', planButton('F48', '查看 P2 规划'));
+    const databaseName = db.kind === 'redis' ? db.redisDatabase ?? db.databaseName : db.databaseName;
+    return header(e(db.name), `${scope(db)} · ${e(db.engine)} ${e(db.version)}`, badge(db.status) + link('数据库列表', returnHref(ctx, 'database', `#/resources?type=databases&project=${db.projectId}&env=${db.environmentId}`), 'back')) + section('数据身份', facts([['数据库 ID', `<code>${e(db.identity || db.id)}</code>`], ['引擎 / 版本', `${e(db.engine)} / ${e(db.version)}`], ['初始化凭证', textLink(state.credentials.find((c) => c.id === db.credentialId)?.name || db.credentialId || '缺失', '#/settings?tab=credentials')], ['源服务', serviceLink(db.serviceId, 'data')], ['持久数据卷', v ? textLink(v.name, `#/volume/${v.id}`) : '数据卷已移除'], ['认证 / 持久化', db.kind === 'redis' ? 'AUTH 引用 · AOF everysec' : '密码引用 · 单实例 PostgreSQL']])) + section('私有连接', facts([['Host', copyField(db.host, 'Host')], ['Port', copyField(db.port, 'Port')], [db.kind === 'redis' ? 'Redis 数据库编号' : '数据库名称', copyField(databaseName, '数据库')], ['用户名', copyField(db.username, '用户名')], ['连接示意', hasValue(db.host) && hasValue(db.port) ? `<code>${db.kind === 'redis' ? 'redis' : 'postgresql'}://&lt;凭证引用&gt;@${e(db.host)}:${db.port}/${e(databaseName ?? '')}</code>` : '等待服务发布后的私有端点。']]) + notice('选择同环境应用，先核对变量映射，再保存连接草稿。发布成功后才会注入运行实例。'), btn('连接到应用', 'database-connect', { id: db.id, primary: true, disabled: !reference(db.serviceId) || !db.identity })) + section('消费者', table(['应用', '草稿变量', '已发布变量', '在途发布', ''], databaseRefs(db).map((r) => row([serviceLink(r.service.id, 'variables'), r.draft.map((c) => `<code>${e(c.variable)}</code>`).join(', ') || '无', r.published.map((c) => `<code>${e(c.variable)}</code>`).join(', ') || '无', r.pending.length ? taskLinks(r.pending) : '无', r.draft.length ? btn('移除连接草稿', 'database-disconnect', { id: db.id, small: true, extra: ` data-service="${r.service.id}"` }) : ''])), '尚无应用引用此数据库')) + section('备份与恢复', v ? `<p>手工维护与证据跟随持久数据保存，源服务移除后仍可访问。</p><div class="mg-actions">${link('手工维护与指引', `#/volume/${v.id}?tab=maintenance`)}${link('查看证据记录', `#/volume/${v.id}?tab=records`)}${planButton('F35', '自动备份与恢复')}</div>` : notice('当前没有可达的持久数据卷，请核对原任务和保留资源。', 'error')) + section('版本与迁移', '<p>密码轮换、主版本升级与跨集群迁移是独立流程，需要新目标与数据验证。</p>', planButton('F48', '查看 P2 规划'));
   }
 
   function domainPage(ctx) {
     const d = state.domains.find((item) => item.id === ctx.id);
     if (!d) return missing('域名绑定', '#/resources?type=domains');
-    return header(e(d.hostname), `${scope(d)} · ${date(d.observedAt)} 观察`, badge(d.status) + link('域名列表', `#/resources?type=domains&project=${d.projectId}&env=${d.environmentId}`, 'back')) + section('绑定', facts([['服务', serviceLink(d.serviceId, 'network')], ['已发布端口', `<code>${e(d.portName)}:${d.port}</code>`], ['部署集群', textLink(target(d).name || '目标已移除', `#/cluster/${target(d).id}`)], ['DNS 目标', `<code>${e(d.target || '尚未配置')}</code>`], ['证书环境', e(d.certificate || 'staging')], ['证书到期', d.expiresAt ? e(d.expiresAt) : '尚未签发']])) + section('DNS、路由与 TLS', table(['检查', '观察状态', '说明', '观察时间'], [['DNS', d.dns, d.dns === 'ready' ? '解析目标与集群入口一致' : '请核对 DNS 记录与传播'], ['路由', d.route, d.route === 'ready' ? 'Ingress 指向指定服务和端口' : '需核对入口与已发布 HTTP 端口'], ['TLS', d.tls, d.tls === 'ready' ? `${d.certificate === 'production' ? '生产' : 'staging'} 证书已观察就绪` : '证书尚未观察就绪']].map(([label, status, detail]) => row([label, badge(status), detail, date(d.observedAt)]))), `<div class="mg-actions">${btn('重新检查', 'domain-check', { id: d.id })}${btn('重新应用路由', 'domain-reapply', { id: d.id })}${d.certificate !== 'production' ? btn('申请 production 证书', 'domain-production', { id: d.id, primary: true }) : ''}</div>`) + notice(d.certificate === 'production' && d.tls === 'ready' ? '当前结果对应此域名、端口与观察时间。证书和路由会随后续配置变化重新核对。' : '先确认 staging 的 DNS、路由和 TLS 均通过，再显式申请 production 证书。') + section('解除绑定', '<p>解除后清理本绑定拥有的路由与证书记录。手工 DNS 和共享集群入口仍保留。</p>', btn('审查并解除绑定', 'domain-unbind', { id: d.id, danger: true })) + section('操作记录', taskLinks(state.tasks.filter((t) => t.resourceId === d.id).slice(0, 6)));
+    const dnsRecords = [
+      ...(d.expectedAddresses || []).map((value, index) => ['预期地址 ' + (index + 1), copyField(value, '预期地址 ' + (index + 1))]),
+      ...(hasValue(d.expectedCname) ? [['预期 CNAME', copyField(d.expectedCname, '预期 CNAME')]] : []),
+      ...(d.addresses || []).map((value, index) => ['已观察地址 ' + (index + 1), copyField(value, '已观察地址 ' + (index + 1))]),
+      ...(d.cnameChain || []).map((value, index) => ['CNAME 链 ' + (index + 1), copyField(value, 'CNAME 链 ' + (index + 1))]),
+    ];
+    return header(e(d.hostname), `${scope(d)} · ${date(d.observedAt)} 观察`, badge(d.status) + copyButton(d.hostname, '域名') + link('域名列表', returnHref(ctx, 'domain', `#/resources?type=domains&project=${d.projectId}&env=${d.environmentId}`), 'back')) + section('绑定', facts([['服务', serviceLink(d.serviceId, 'network')], ['已发布端口', `<code>${e(d.portName)}:${d.port}</code>`], ['部署集群', textLink(target(d).name || '目标已移除', `#/cluster/${target(d).id}`)], ['DNS 目标', copyField(d.target, 'DNS 目标')], ['证书环境', e(d.certificate || 'staging')], ['证书到期', d.expiresAt ? e(d.expiresAt) : '尚未签发']])) + (dnsRecords.length ? section('DNS 记录', facts(dnsRecords)) : '') + section('DNS、路由与 TLS', table(['检查', '观察状态', '说明', '观察时间'], [['DNS', d.dns, d.dns === 'ready' ? '解析目标与集群入口一致' : '请核对 DNS 记录与传播'], ['路由', d.route, d.route === 'ready' ? 'Ingress 指向指定服务和端口' : '需核对入口与已发布 HTTP 端口'], ['TLS', d.tls, d.tls === 'ready' ? `${d.certificate === 'production' ? '生产' : 'staging'} 证书已观察就绪` : '证书尚未观察就绪']].map(([label, status, detail]) => row([label, badge(status), detail, date(d.observedAt)]))), `<div class="mg-actions">${btn('重新检查', 'domain-check', { id: d.id })}${btn('重新应用路由', 'domain-reapply', { id: d.id })}${d.certificate !== 'production' ? btn('申请 production 证书', 'domain-production', { id: d.id, primary: true }) : ''}</div>`) + notice(d.certificate === 'production' && d.tls === 'ready' ? '当前结果对应此域名、端口与观察时间。证书和路由会随后续配置变化重新核对。' : '先确认 staging 的 DNS、路由和 TLS 均通过，再显式申请 production 证书。') + section('解除绑定', '<p>解除后清理本绑定拥有的路由与证书记录。手工 DNS 和共享集群入口仍保留。</p>', btn('审查并解除绑定', 'domain-unbind', { id: d.id, danger: true })) + section('操作记录', taskLinks(state.tasks.filter((t) => t.resourceId === d.id).slice(0, 6)));
   }
 
   const backupRecords = () => state.volumes.flatMap((v) => (v.records || []).filter((r) => r.type === 'backup').map((r) => ({ ...r, volume: v })));
@@ -361,9 +440,7 @@
     const active = ['queued', 'running'].includes(t.status);
     const actions = active ? btn('请求取消', 'task-cancel', { id: t.id }) : t.status === 'failed' || t.status === 'cancelled' ? btn('创建独立重试', 'task-retry', { id: t.id, primary: true }) : t.status === 'unknown' ? btn('核对原任务结果', 'task-reconcile', { id: t.id, primary: true }) : '';
     const logTab = ctx.params.get('output') || 'all';
-    const logs = t.logs || [];
-    const shown = logTab === 'all' ? logs : logs.filter((line) => logTab === 'build' ? /构建|build|推送/i.test(line) : !/构建|build|推送/i.test(line));
-    return header(e(t.name), `${t.kind === 'deployment' ? 'Deployment' : 'Operation'} · ${e(t.id)}`, badge(t.status) + actions + link('活动列表', `#/activity?tab=${t.kind === 'deployment' ? 'deployments' : 'operations'}${t.projectId ? `&project=${t.projectId}` : ''}${t.environmentId ? `&env=${t.environmentId}` : ''}`)) + (t.status === 'unknown' ? notice('结果未知时保持原请求与固定目标，不能直接重试。先核对原任务，保留远端完成证据与资源版本。', 'error') : t.status === 'cancelling' ? notice('取消请求已记录，正在等待执行器确认。已发生的操作不会在此提前回滚。') : '') + section('执行阶段', `<ol class="mg-timeline">${(t.stages || []).map((stage, index) => `<li class="${e(stage.status)}"><span>${stage.status === 'succeeded' ? icon('check') : index + 1}</span><div><strong>${e(stage.name)}</strong>${badge(stage.status)}</div></li>`).join('')}</ol>`) + `<div class="mg-two">${section('固定对象', facts([['项目 / 环境', scope(t)], ['资源', t.serviceId ? serviceLink(t.serviceId, 'deployments') : resourceLink(t)], ['部署目标', t.targetId ? textLink(state.clusters.find((c) => c.id === t.targetId)?.name || state.servers.find((s) => s.id === t.targetId)?.name || t.targetId, state.servers.some((s) => s.id === t.targetId) ? `#/server/${t.targetId}` : state.clusters.some((c) => c.id === t.targetId) ? `#/cluster/${t.targetId}` : '#/settings?tab=platform') : '控制面'], ['创建 / 完成', `${date(t.createdAt)} / ${t.finishedAt ? date(t.finishedAt) : '尚未完成'}`], ['重试来源', t.attemptOf ? textLink(t.attemptOf, `#/task/${t.attemptOf}`) : '初次请求']]))}${section('执行结果', `<p>${e(t.error || t.result || '任务尚未给出终态。')}</p>${t.reconciliation ? notice(e(t.reconciliation)) : ''}${t.targetInstance ? facts([['目标实例', e(t.targetInstance)], ['观察时间', date(t.finishedAt)]]) : ''}`)}</div>` + section('执行输出', tabs([['all', '全部输出', queryHref(`task/${t.id}`, { output: 'all' }, ctx)], ['build', '构建 / 推送', queryHref(`task/${t.id}`, { output: 'build' }, ctx)], ['runtime', '部署 / 操作', queryHref(`task/${t.id}`, { output: 'runtime' }, ctx)]], logTab) + (t.logsExpired ? notice('本任务输出已超过演示留存时间；任务结果与快照仍保留。') : logTab === 'build' && t.source !== 'git' ? notice('此任务没有 Git 构建与推送阶段。镜像部署直接解析固定镜像。') : `<pre class="mg-task-log">${e(shown.join('\n') || '此分组尚无输出。')}</pre>`)) + section('固定请求快照', `<details class="mg-snapshot"><summary>查看配置、输入与数据引用</summary><pre>${e(JSON.stringify(t.snapshot || {}, null, 2))}</pre></details><p class="mg-muted">快照只记录安全输入与凭证引用，不记录秘密原文。后续编辑不会改写旧任务。</p>`);
+    return header(e(t.name), `${t.kind === 'deployment' ? 'Deployment' : 'Operation'} · ${e(t.id)}`, badge(t.status) + actions + link('活动列表', `#/activity?tab=${t.kind === 'deployment' ? 'deployments' : 'operations'}${t.projectId ? `&project=${t.projectId}` : ''}${t.environmentId ? `&env=${t.environmentId}` : ''}`)) + (t.status === 'unknown' ? notice('结果未知时保持原请求与固定目标，不能直接重试。先核对原任务，保留远端完成证据与资源版本。', 'error') : t.status === 'cancelling' ? notice('取消请求已记录，正在等待执行器确认。已发生的操作不会在此提前回滚。') : '') + section('执行阶段', `<ol class="mg-timeline">${(t.stages || []).map((stage, index) => `<li class="${e(stage.status)}"><span>${stage.status === 'succeeded' ? icon('check') : index + 1}</span><div><strong>${e(stage.name)}</strong>${badge(stage.status)}</div></li>`).join('')}</ol>`) + `<div class="mg-two">${section('固定对象', facts([['项目 / 环境', scope(t)], ['资源', t.serviceId ? serviceLink(t.serviceId, 'deployments') : resourceLink(t)], ['部署目标', t.targetId ? textLink(state.clusters.find((c) => c.id === t.targetId)?.name || state.servers.find((s) => s.id === t.targetId)?.name || t.targetId, state.servers.some((s) => s.id === t.targetId) ? `#/server/${t.targetId}` : state.clusters.some((c) => c.id === t.targetId) ? `#/cluster/${t.targetId}` : '#/settings?tab=platform') : '控制面'], ['创建 / 完成', `${date(t.createdAt)} / ${t.finishedAt ? date(t.finishedAt) : '尚未完成'}`], ['重试来源', t.attemptOf ? textLink(t.attemptOf, `#/task/${t.attemptOf}`) : '初次请求']]))}${section('执行结果', `<p>${e(t.error || t.result || '任务尚未给出终态。')}</p>${t.reconciliation ? notice(e(t.reconciliation)) : ''}${t.targetInstance ? facts([['目标实例', e(t.targetInstance)], ['观察时间', date(t.finishedAt)]]) : ''}`)}</div>` + section('执行输出', tabs([['all', '全部输出', queryHref(`task/${t.id}`, { output: 'all' }, ctx)], ['build', '构建 / 推送', queryHref(`task/${t.id}`, { output: 'build' }, ctx)], ['runtime', '部署 / 操作', queryHref(`task/${t.id}`, { output: 'runtime' }, ctx)]], logTab) + (t.logsExpired ? notice('本任务输出已超过演示留存时间；任务结果与快照仍保留。') : logTab === 'build' && t.source !== 'git' ? notice('此任务没有 Git 构建与推送阶段。镜像部署直接解析固定镜像。') : api.taskLogPanel(t, logTab))) + section('固定请求快照', `<details class="mg-snapshot"><summary>查看配置、输入与数据引用</summary><pre>${e(JSON.stringify(t.snapshot || {}, null, 2))}</pre></details><p class="mg-muted">快照只记录安全输入与凭证引用，不记录秘密原文。后续编辑不会改写旧任务。</p>`);
   }
 
   function projectSettingsPage(ctx) {
@@ -421,7 +498,8 @@
   function confirmWrite(options) {
     if (blockWrite()) return;
     const callback = options.onConfirm;
-    api.confirm({ ...options, onConfirm: () => { if (!blockWrite()) callback(); } });
+    const pendingLabel = { '删除凭证': '正在删除凭证…', '申请 production 证书': '正在提交证书申请…', '解除域名绑定': '正在提交解绑…', '安装证书组件': '正在受理安装…' }[options.title];
+    api.confirm({ pendingLabel, ...options, onConfirm: () => { if (!blockWrite()) callback(); } });
   }
   const formOf = (el) => el?.closest('form');
   const getVolume = (id) => state.volumes.find((v) => v.id === id);
@@ -524,16 +602,23 @@
     const found = reference(d.serviceId);
     const ports = publishedHttpPorts(found?.service);
     const selectedPort = ports.find((p) => p.name === d.portName) || ports[0];
-    return form('domain-create', `<input type="hidden" name="projectId" value="${e(d.projectId || '')}" /><input type="hidden" name="environmentId" value="${e(d.environmentId || '')}" />${field('服务', 'serviceId', d.serviceId || '', { choices: [['', '选择服务'], ...list.map((s) => [s.id, `${s.project.name} / ${s.draft.name} · ${publishedHttpPorts(s).length} 个 HTTP 端口`])], required: true })}${field('已发布 HTTP 端口', 'portName', selectedPort?.name || '', { choices: ports.length ? ports.map((p) => [p.name, `${p.name}:${p.port}`]) : [['', '先选择服务']], required: true })}${field('域名前缀', 'prefix', d.prefix || '', { required: true, pattern: '[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?' })}${found ? facts([['完整域名', `<code>${e(d.prefix || found.service.draft.slug)}.${e(api.targetFor(found.project).suffix)}.${e(state.platform.suffix)}</code>`], ['固定端口', selectedPort ? `${e(selectedPort.name)}:${selectedPort.port}` : '尚未选择']]) : ''}${notice('先以 staging 证书检查 DNS、路由与 TLS；完成后再显式申请 production。')}`, '分配并创建检查任务', closeButton());
+    return form('domain-create', `<input type="hidden" name="projectId" value="${e(d.projectId || '')}" /><input type="hidden" name="environmentId" value="${e(d.environmentId || '')}" />${field('服务', 'serviceId', d.serviceId || '', { choices: [['', '选择服务'], ...list.map((s) => [s.id, `${s.project.name} / ${s.draft.name} · ${publishedHttpPorts(s).length} 个 HTTP 端口`])], required: true })}${field('已发布 HTTP 端口', 'portName', selectedPort?.name || '', { choices: ports.length ? ports.map((p) => [p.name, `${p.name}:${p.port}`]) : [['', '先选择服务']], required: true })}${field('域名前缀', 'prefix', d.prefix || '', { required: true, pattern: '[a-z0-9]((?:[a-z0-9]|-){0,61}[a-z0-9])?' })}${found ? facts([['完整域名', `<code>${e(d.prefix || found.service.draft.slug)}.${e(api.targetFor(found.project).suffix)}.${e(state.platform.suffix)}</code>`], ['固定端口', selectedPort ? `${e(selectedPort.name)}:${selectedPort.port}` : '尚未选择'], ['DNS 入口目标', copyField(api.targetFor(found.project).entryAddress, 'DNS 入口目标')]]) : ''}${notice('先以 staging 证书检查 DNS、路由与 TLS；完成后再显式申请 production。')}`, '分配并创建检查任务', closeButton());
   }
 
-  function action(name, el, ctx) {
+  function action(name, el, ctx, accepted = false) {
     if (!name?.startsWith('mg:')) return false;
     name = name.slice(3);
     const id = el.dataset.id;
-    const reads = ['close', 'page', 'clear-filters', 'server-open', 'server-onboard', 'cluster-open', 'node-detail', 'credential-detail', 'integration-detail', 'github-repositories', 'git-event', 'record-detail', 'plan', 'plan-record', 'environment-switch', 'project-reload', 'form-reload', 'platform-diagnostic'];
+    const reads = ['close', 'page', 'clear-filters', 'server-open', 'server-onboard', 'cluster-open', 'node-detail', 'credential-detail', 'credential-visibility', 'integration-detail', 'github-repositories', 'git-event', 'record-detail', 'plan', 'plan-record', 'environment-switch', 'project-reload', 'form-reload', 'platform-diagnostic'];
     if (!reads.includes(name) && blockWrite(formOf(el))) return true;
-    if (name === 'close') { ui.dialog = null; api.closeModal(); return true; }
+    if (state.pendingAction && !accepted) return true;
+    const requestLabels = { 'fingerprint-discover': '正在受理指纹读取…', 'server-preflight': '正在受理预检…', 'cluster-check': '正在受理同步…', 'domain-check': '正在提交检查…', 'domain-reapply': '正在提交重新应用…' };
+    if (!accepted && state.scenario === 'slow-response' && requestLabels[name]) {
+      api.demoRequest('mg:' + name, requestLabels[name], () => action('mg:' + name, el, ctx, true));
+      return true;
+    }
+    if (name === 'close') { api.closeModal(); return true; }
+    if (name === 'credential-visibility') { if (ui.dialog?.name !== 'credential-save' || state.modal?.management !== ui.dialog) return true; ui.dialog.revealSecret = !ui.dialog.revealSecret; applySecretVisibility(formOf(el), ui.dialog.revealSecret); return true; }
     if (name === 'form-reload') {
       const targetForm = el.dataset.formName;
       if (!['server-save', 'cluster-save', 'cluster-entry', 'platform-entry'].includes(targetForm)) return false;
@@ -559,8 +644,8 @@
       if (!run) return error(null, '规划记录已不存在。');
       api.openModal({ title: `${features.find(([key]) => key === run.featureId)?.[1] || run.featureId} · 演示记录`, wide: true, body: facts([['记录', e(run.id)], ['状态', badge(run.status)], ['开始时间', date(run.createdAt)], ['结果', e(run.result || (run.status === 'succeeded' ? '规划状态演示已完成，未修改真实资源。' : '请核对演示阶段结果。'))]]) + `<details class="mg-snapshot" open><summary>本次参数</summary><pre>${e(JSON.stringify(run.parameters || run.input || {}, null, 2))}</pre></details>`, footer: planButton(run.featureId, '重新配置演示') + btn('关闭', 'close') }); return true;
     }
-    if (name === 'server-open' || name === 'server-onboard') { api.goto(`#/server/${id}${name === 'server-onboard' ? '?tab=preflight' : ''}`); return true; }
-    if (name === 'cluster-open') { api.goto(`#/cluster/${id}`); return true; }
+    if (name === 'server-open' || name === 'server-onboard') { api.goto(detailHref('server', id, ctx, name === 'server-onboard' ? { tab: 'preflight' } : {})); return true; }
+    if (name === 'cluster-open') { api.goto(detailHref('cluster', id, ctx)); return true; }
     if (name === 'server-new' || name === 'server-edit') {
       const d = id ? state.servers.find((s) => s.id === id) : { name: '', address: '', port: 22, user: 'deploy', credentialId: '' };
       if (!d) return error(null, '服务器已不存在。');
@@ -582,7 +667,7 @@
       if (name === 'fingerprint-confirm') {
         if (!s.fingerprint) return error(null, '请先发现主机指纹。');
         const fp = s.fingerprint;
-        confirmWrite({ title: '确认主机指纹', description: `请与可信来源核对 ${fp}。确认仅适用于 ${s.address}:${s.port || 22}。`, confirmText: '确认这个指纹', onConfirm: () => { if (s.fingerprint !== fp) return error(null, '指纹已变化，请重新核对。'); s.fingerprintConfirmed = true; bump(s); api.closeModal(); api.render(); } });
+        confirmWrite({ title: '确认主机指纹', description: `请与可信来源核对 ${fp}。确认仅适用于 ${s.address}:${s.port || 22}。`, confirmText: '确认这个指纹', pendingLabel: '正在保存可信指纹…', onConfirm: () => { if (s.fingerprint !== fp) return error(null, '指纹已变化，请重新核对。'); s.fingerprintConfirmed = true; bump(s); api.closeModal(); api.render(); } });
       }
       if (name === 'server-preflight') {
         if (!s.fingerprintConfirmed) return error(null, '先明确确认当前主机指纹。');
@@ -590,7 +675,7 @@
       }
       if (name === 'server-install') {
         if (!s.fingerprintConfirmed || !s.preflight?.passed || s.clusterId || s.existingInstallation) return error(null, '需要已确认指纹且预检通过的空主机，已有安装不能覆盖。');
-        confirmWrite({ title: '初始化 K3s', description: `在 ${s.name} 安装固定版本 v1.35.9+k3s1。确认后生成独立任务，失败、取消或未知结果会保留原记录。`, requireName: s.name, confirmText: '开始初始化', onConfirm: () => {
+        confirmWrite({ title: '初始化 K3s', description: `在 ${s.name} 安装固定版本 v1.35.9+k3s1。确认后生成独立任务，失败、取消或未知结果会保留原记录。`, requireName: s.name, confirmText: '开始初始化', pendingLabel: '正在受理初始化…', onConfirm: () => {
           if (s.clusterId || !s.preflight?.passed) return error(null, '主机状态已变化，请重新核对。');
           queue(s, { type: 'k3s-install', name: `${s.name} · 初始化 K3s`, snapshot: { serverId: s.id, address: s.address, fingerprint: s.fingerprint, version: 'v1.35.9+k3s1', revision: s.revision } }, (t) => { const c = { id: api.uid('cluster'), name: s.name, location: s.region, region: s.region, status: 'ready', connectionStatus: 'ready', serverId: s.id, endpoint: `https://${s.address}:6443`, identity: `kube-system-demo-${s.id}`, revision: 1, suffix: s.name.toLowerCase().replace(/[^a-z0-9-]/g, '') || 'cluster', entryType: 'ip', entryAddress: s.address, email: state.platform.email, capabilities: { rbac: true, ingress: true, storage: true, metrics: true, certificate: false }, nodes: [{ id: `node-${s.id}`, name: s.name, uid: `node-uid-${s.id}`, architecture: 'amd64', cpu: s.cpu, memory: s.memory, status: 'ready', observedAt: api.now() }], observedAt: api.now(), credentialId: `cred-kube-${s.id}` }; state.credentials.push({ id: c.credentialId, name: `${c.name} · Kubernetes`, kind: 'kubeconfig', status: 'active', revision: 1 }); state.clusters.push(c); s.clusterId = c.id; s.status = 'ready'; s.observedAt = api.now(); t.result = '演示安装任务完成，已观察并关联同一台服务器的集群。'; }, ctx);
         } });
@@ -798,7 +883,7 @@
     if (name === 'environment-new' || name === 'environment-edit') {
       const p = ctx.project; const env = name === 'environment-edit' ? p?.environments.find((item) => item.id === id) : { name: '', slug: '', description: '' };
       if (!p || !env) return error(null, '项目或环境已不存在。');
-      openDialog('environment-save', { ...env, projectId: p.id }, ctx, (d) => form('environment-save', revisionInput(d) + `<input type="hidden" name="projectId" value="${e(p.id)}" /><div class="mg-two">${field('环境名称', 'name', d.name, { required: true })}${field('稳定标识', 'slug', d.slug, { required: true, readonly: Boolean(env.id), pattern: '[a-z][a-z0-9-]{0,47}', placeholder: 'staging' })}</div>${field('描述', 'description', d.description || '', { area: true })}${notice('环境继承项目的固定集群。创建环境不会复制其他环境的服务、变量或数据。')}`, env.id ? '保存环境资料' : '创建环境', closeButton()), env.id ? '编辑环境' : '添加环境'); return true;
+      openDialog('environment-save', { ...env, projectId: p.id }, ctx, (d) => form('environment-save', revisionInput(d) + `<input type="hidden" name="projectId" value="${e(p.id)}" /><div class="mg-two">${field('环境名称', 'name', d.name, { required: true })}${field('稳定标识', 'slug', d.slug, { required: true, readonly: Boolean(env.id), pattern: '[a-z](?:[a-z0-9]|-){0,47}', placeholder: 'staging' })}</div>${field('描述', 'description', d.description || '', { area: true })}${notice('环境继承项目的固定集群。创建环境不会复制其他环境的服务、变量或数据。')}`, env.id ? '保存环境资料' : '创建环境', closeButton()), env.id ? '编辑环境' : '添加环境'); return true;
     }
     if (name === 'environment-switch') {
       const p = ctx.project; const env = p?.environments.find((item) => item.id === id);
@@ -816,7 +901,7 @@
     return false;
   }
 
-  function submit(name, formElement, ctx) {
+  function submit(name, formElement, ctx, accepted = false) {
     if (!name?.startsWith('mg:')) return false;
     name = name.slice(3);
     if (blockWrite(formElement)) return true;
@@ -825,6 +910,15 @@
     const d = data(formElement);
     const dialog = formElement.closest('.dialog') ? ui.dialog : null;
     const origin = dialog?.ctx || ctx;
+    if (!accepted && state.pendingAction) return true;
+    if (!accepted && state.scenario === 'slow-response' && ['credential-save', 'cluster-save'].includes(name)) {
+      api.demoRequest('mg:' + name, name === 'credential-save' ? '正在保存凭证…' : '正在保存集群登记…', () => {
+        api.render();
+        const current = document.querySelector(`form[data-mg-draft="${name}"]`);
+        if (current) submit('mg:' + name, current, ctx, true);
+      });
+      return true;
+    }
     if (name === 'server-save') {
       const existing = d.id ? state.servers.find((s) => s.id === d.id) : null;
       if (d.id && !sameRevision(existing, d, formElement)) return true;
@@ -838,7 +932,7 @@
       Object.assign(item, { name: d.name.trim(), address: d.address.trim(), host: d.address.trim(), user: d.user.trim(), sshUser: d.user.trim(), port: Number(d.port), sshPort: Number(d.port), credentialId: d.credentialId, region: (d.region || '').trim(), location: (d.region || '').trim(), tags: (d.tags || '').split(',').map((v) => v.trim()).filter(Boolean) });
       if (changedConnection) { item.fingerprint = ''; item.fingerprintConfirmed = false; item.preflight = null; item.status = 'unverified'; }
       bump(item); if (!existing) state.servers.unshift(item);
-      finishForm(name, d.id, `#/server/${item.id}${existing ? '?tab=settings' : '?tab=preflight'}`, existing ? '服务器资料已保存。' : '登记已保存，继续核对主机指纹。'); return true;
+      finishForm(name, d.id, existing ? detailHref('server', item.id, ctx, { tab: 'settings' }) : `#/server/${item.id}?tab=preflight`, existing ? '服务器资料已保存。' : '登记已保存，继续核对主机指纹。'); return true;
     }
     if (name === 'cluster-save') {
       const existing = d.id ? state.clusters.find((c) => c.id === d.id) : null;
@@ -848,7 +942,7 @@
       const c = existing || { id: api.uid('cluster'), revision: 0, status: 'unverified', connectionStatus: 'unverified', capabilities: {}, nodes: [], nodeCount: 0, suffix: '', entryAddress: '' };
       Object.assign(c, { name: d.name.trim(), location: (d.location || '').trim(), region: (d.location || '').trim(), description: (d.description || '').trim() }); bump(c);
       if (!existing) state.clusters.unshift(c);
-      finishForm(name, d.id, `#/cluster/${c.id}?tab=${existing ? 'settings' : 'connection'}`, '集群资料已保存，固定身份保持不变。'); return true;
+      finishForm(name, d.id, existing ? detailHref('cluster', c.id, ctx, { tab: 'settings' }) : `#/cluster/${c.id}?tab=connection`, '集群资料已保存，固定身份保持不变。'); return true;
     }
     if (name === 'platform-entry' || name === 'cluster-entry') {
       const c = name === 'cluster-entry' ? state.clusters.find((item) => item.id === d.id) : state.platform;
@@ -909,10 +1003,11 @@
       if (d.replaceId && (!original || original.kind !== kind)) return error(formElement, '替换凭证必须与原引用类型相同。');
       const requiredSecrets = kind === 'ssh' ? ['privateKey'] : kind === 'kubeconfig' ? ['kubeconfig'] : kind === 'builder' ? ['ca', 'certificate', 'privateKey'] : ['secret'];
       if (requiredSecrets.some((key) => !d[key]?.trim())) return error(formElement, '请填写全部必要的示例秘密字段。原型不会保存这些值。');
-      const credential = { id: api.uid('cred'), name: d.name.trim(), kind, status: 'active', revision: 1, expiresAt: d.expiresAt || '', description: (d.description || '').trim(), username: kind === 'registry' ? d.username.trim() : undefined, createdAt: api.now() };
+      const credential = { id: api.uid('cred'), name: d.name.trim(), kind, status: 'active', revision: 1, expiresAt: d.expiresAt || '', description: (d.description || '').trim(), username: ['registry', 'database'].includes(kind) ? d.username.trim() : undefined, createdAt: api.now() };
       state.credentials.unshift(credential);
       formElement.querySelectorAll('[data-mg-secret]').forEach((input) => { input.value = ''; });
       requiredSecrets.forEach((key) => { delete d[key]; });
+      delete d.passphrase;
       finishForm(name, '', undefined, '凭证引用已创建，秘密内容已清空。');
       if (original) openDialog('credential-rebind', { oldId: original.id, newId: credential.id }, origin, rebindForm, '选择要切换的引用'); else api.goto('#/settings?tab=credentials'); return true;
     }
@@ -1138,7 +1233,10 @@
       params.delete('page');
       if (key === 'project') { params.delete('env'); params.delete('service'); }
       if (key === 'env') params.delete('service');
-      api.goto(path + (params.size ? '?' + params : '')); return true;
+      const href = path + (params.size ? '?' + params : '');
+      if (key === 'q') { history.replaceState(history.state, '', href); api.render(); }
+      else api.goto(href);
+      return true;
     }
     if (el.dataset.mgGuide) {
       if (event.type === 'change') { ui.drafts[`guide:${el.dataset.mgGuide}`] = { engine: el.value }; redraw(); }
@@ -1154,6 +1252,27 @@
     const recordId = formElement?.querySelector('[name="id"]')?.value || '';
     const key = draftKey(name, recordId);
     const current = inDialog ? ui.dialog.draft : ui.drafts[key] || {};
+    if (fieldName === 'kind' && name === 'credential-save') {
+      const dialog = ui.dialog, parent = state.modal;
+      const nextKind = el.value, previous = dialog?.draft.kind || 'ssh';
+      el.value = previous;
+      if (!inDialog || parent.management !== dialog || dialog.kindConfirmation || nextKind === previous || !credentialKinds.some(([kind]) => kind === nextKind)) return true;
+      const secrets = secretSnapshot(formElement, dialog, parent);
+      const hasInput = [...formElement.querySelectorAll('[data-mg-secret], [name="username"]')].some((input) => input.value.length > 0);
+      const apply = () => {
+        secrets.clear(); dialog.kindConfirmation = false;
+        if (ui.dialog !== dialog || parent.route !== location.hash) return;
+        dialog.draft = { ...current, kind: nextKind, username: '' }; dialog.revealSecret = false;
+        ui.drafts[key] = { ...dialog.draft }; delete ui.formErrors[name];
+        state.modal = parent; api.render();
+        requestAnimationFrame(() => { if (state.modal === parent) document.getElementById('mg-credential-save-kind')?.focus({ preventScroll: true }); });
+      };
+      if (hasInput) {
+        dialog.kindConfirmation = true;
+        api.confirm({ title: '切换凭证类型？', description: `切换到「${kindName(nextKind)}」会清空当前类型的输入。名称和到期日期会保留。`, confirmText: '清空并切换', pendingLabel: '正在切换类型…', onCancel: () => { dialog.kindConfirmation = false; secrets.restore(); }, onConfirm: apply });
+      } else apply();
+      return true;
+    }
     const draft = { ...current };
     if (formElement) formElement.querySelectorAll('[data-mg-field],input[type="hidden"]').forEach((input) => {
       if (input.hasAttribute('data-mg-secret') || !input.name) return;
@@ -1171,7 +1290,6 @@
       if (name === 'domain-create') draft.portName = publishedHttpPorts(s)[0]?.name || '';
     }
     if (fieldName === 'repository' && ui.dialog?.name === 'github-browse') draft.branch = 'main';
-    if (fieldName === 'kind' && name === 'credential-save') formElement.querySelectorAll('[data-mg-secret]').forEach((input) => { input.value = ''; });
     if (inDialog) ui.dialog.draft = draft;
     if (name) { ui.drafts[key] = draft; delete ui.formErrors[name]; }
     if (['kind', 'projectId', 'environmentId', 'serviceId', 'repository', 'branch', 'entryType', 'portName'].includes(fieldName) && !event.isComposing && !state.composing) redraw();
@@ -1223,5 +1341,5 @@
     }
     return `<main class="content mg-page">${message(ctx)}${state.scenario === 'page-error' ? notice('刷新失败，保留上次已加载内容与观察时间。可切回正常演示场景后重新查看。', 'error') : ''}${handler(ctx)}</main>`;
   }
-  window.OzzManagement = { init, render, action, submit, change };
+  window.OzzManagement = { init, render, action, submit, change, preserveInputs };
 })();

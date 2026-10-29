@@ -165,5 +165,21 @@
     "No new real workload deployment, cloud acceptance or S7/G-MVP completion claimed.",
     "Existing CI results are historical and do not certify this revision.",
     "No VoiceOver or accessibility-specialist acceptance was performed."
-  ]
+  ],
+  "remoteCi": {
+    "verifiedAt": "2026-10-29T14:51:45.094466+00:00",
+    "result": "passed",
+    "commit": "095fc261faa508941ad8a69fc208ae29209a7980",
+    "runId": 40892518506,
+    "url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40892518506",
+    "report": "docs/acceptance/console-v3-ci-results.json",
+    "controlledBrowserPassed": 51,
+    "defaultE2ePassed": 16,
+    "prototypeGroupsPassed": 18,
+    "responsiveCombinations": 76,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "note": "Additional CI execution; original local-run evidence above remains bound to its original scope."
+  }
 }

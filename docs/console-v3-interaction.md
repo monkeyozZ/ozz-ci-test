@@ -1,5 +1,7 @@
 # Console v3 交互调整
 
+本文是提交 `095fc261faa508941ad8a69fc208ae29209a7980` 对应的 v3 改版基线记录。后续交互精修、当前页面与新增验证见 [Interaction Polish](console-interaction-polish.md)，下面的历史通过项不代替后续版本验收。
+
 本轮根据用户“直接按 Zeabur 的交互来，不要遗漏功能点”的要求，完善[完整原型](../designs/console-v3/index.html)并调整真实 Console。保留 Ozz 的紫色、明暗主题、已有 API 与资源归属。Chrome 实际观察范围见[参考记录](../designs/console-v3/reference-notes.md)，没有提交 Zeabur 创建或部署；研究标签和临时控件读取状态已恢复。
 
 ## 操作入口
@@ -56,4 +58,4 @@ Environment 组织同一项目中的服务、配置、网络和数据，并非�
 
 本地原型为 <http://127.0.0.1:5198/>，实际 Console 为 <https://127.0.0.1:51448/>；两者已在独立 Chrome 体验窗口打开，Console 已登录并成功读取项目。API、Worker 和 HTTPS 入口已恢复，未启动 Builder 或集群虚拟机，实际部署仍需要对应目标运行。测试 Vite 与所有隔离测试实例在收尾后关闭，体验服务继续保留。
 
-历史 S6/CI 结果不作为本轮通过证据。本轮不宣称云端部署、S7 或 G-MVP 总验收完成。
+本轮新增的[远端 CI](acceptance/console-v3-ci.md)已绑定提交 `095fc261faa508941ad8a69fc208ae29209a7980` 通过：25 个步骤、51 项受控页面用例、16 项原有端到端用例和 18 组完整原型检查全部成功；实际报告已下载，76 个响应式组合和五个原型运行文件摘要均已核对。首次 API 合约排版差异及修复保留在报告中。历史 S6/旧 CI 结果没有代替本轮执行；云端部署、S7 或 G-MVP 总验收仍未完成。

@@ -521,6 +521,31 @@
   margin-top: 6px;
 }
 
+.mg-copy-value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  min-width: 0;
+}
+
+.mg-copy-value > code {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.mg-copy-value > button {
+  flex: 0 0 auto;
+}
+
+.mg-copy-value > .copy-feedback {
+  flex-basis: 100%;
+}
+
+.mg-secret-mask {
+  -webkit-text-security: disc;
+}
+
 .mg-page code,
 .mg-section code,
 .mg-form-fields code,

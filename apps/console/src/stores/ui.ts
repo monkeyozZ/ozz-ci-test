@@ -6,6 +6,7 @@ interface Confirmation {
   title: string;
   description: string;
   confirmText?: string;
+  cancelText?: string;
   destructive?: boolean;
 }
 export const useUiStore = defineStore('ui', () => {
@@ -64,19 +65,31 @@ export const useUiStore = defineStore('ui', () => {
   }
   const notices = ref<{ id: number; message: string; tone: 'success' | 'error' }[]>([]);
   let noticeId = 0;
+  const noticeTimers = new Map<number, ReturnType<typeof window.setTimeout>>();
   function toast(message: string, tone: 'success' | 'error' = 'success') {
+    const existing = notices.value.find(
+      (notice) => notice.message === message && notice.tone === tone,
+    );
+    if (existing) dismiss(existing.id);
+    while (notices.value.length >= 3) dismiss(notices.value[0]!.id);
     const id = ++noticeId;
     notices.value.push({ id, message, tone });
-    window.setTimeout(() => dismiss(id), 6500);
+    noticeTimers.set(
+      id,
+      window.setTimeout(() => dismiss(id), 6500),
+    );
   }
   function dismiss(id: number) {
+    const timer = noticeTimers.get(id);
+    if (timer !== undefined) window.clearTimeout(timer);
+    noticeTimers.delete(id);
     notices.value = notices.value.filter((item) => item.id !== id);
   }
   function resetSession() {
     settleConfirmation(false);
     navigationOpen.value = false;
     commandOpen.value = false;
-    notices.value = [];
+    for (const notice of [...notices.value]) dismiss(notice.id);
   }
   return {
     theme,

@@ -10,9 +10,11 @@ import {
   DropdownMenuLabel,
 } from 'reka-ui';
 import { Sun, Moon, Monitor, Check } from '@lucide/vue';
+import { ref } from 'vue';
 import { Button } from '@/components/ui/button';
 import { useUiStore } from '@/stores/ui';
 const ui = useUiStore();
+const open = ref(false);
 const choices = [
   { value: 'light', label: '浅色', icon: Sun },
   { value: 'dark', label: '深色', icon: Moon },
@@ -20,14 +22,14 @@ const choices = [
 ] as const;
 </script>
 <template>
-  <DropdownMenuRoot>
+  <DropdownMenuRoot v-model:open="open">
     <DropdownMenuTrigger as-child
       ><Button variant="ghost" size="icon" aria-label="选择外观主题"
         ><component
           :is="ui.theme === 'dark' ? Moon : ui.theme === 'system' ? Monitor : Sun" /></Button
     ></DropdownMenuTrigger>
     <DropdownMenuPortal
-      ><DropdownMenuContent class="theme-menu" :side-offset="8" align="end">
+      ><DropdownMenuContent class="theme-menu" :side-offset="8" align="end" :inert="!open">
         <DropdownMenuLabel class="meta px-2 py-1.5">外观</DropdownMenuLabel>
         <DropdownMenuRadioGroup v-model="ui.theme"
           ><DropdownMenuRadioItem
@@ -55,6 +57,13 @@ const choices = [
   border-radius: 0.625rem;
   padding: 0.375rem;
 }
+.theme-menu[data-state='open'] {
+  animation: menu-enter var(--motion-menu) var(--ease-out);
+}
+.theme-menu[data-state='closed'] {
+  animation: menu-exit var(--motion-fast) var(--ease-in);
+  pointer-events: none;
+}
 .theme-choice {
   display: flex;
   align-items: center;
@@ -63,8 +72,21 @@ const choices = [
   border-radius: 0.375rem;
   cursor: pointer;
   outline-offset: -2px;
+  transition: background-color var(--motion-fast) var(--ease-out);
 }
 .theme-choice[data-highlighted] {
   background: var(--accent);
+}
+@keyframes menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+}
+@keyframes menu-exit {
+  to {
+    opacity: 0;
+    transform: translateY(-0.125rem);
+  }
 }
 </style>

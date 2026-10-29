@@ -3,6 +3,7 @@ import { computed, reactive, toRefs, useId, watch } from 'vue';
 import { useMutation } from '@tanstack/vue-query';
 import { Info, LoaderCircle, ArrowRight, Settings2 } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
+import CopyButton from '@/components/CopyButton.vue';
 import ServiceMutationError from '@/components/services/ServiceMutationError.vue';
 import NetworkTarget from './NetworkTarget.vue';
 import { api } from '@/lib/api';
@@ -154,15 +155,31 @@ function submit() {
           <div>
             <dt>A / AAAA 地址</dt>
             <dd class="mono">
-              <p v-for="address in context.clusterNetworking.entryAddresses" :key="address">
-                {{ address }}
+              <p
+                v-for="address in context.clusterNetworking.entryAddresses"
+                :key="address"
+                class="dns-value"
+              >
+                <span>{{ address }}</span
+                ><CopyButton
+                  :text="address"
+                  :label="`复制 ${address.includes(':') ? 'AAAA' : 'A'} 记录值 ${address}`"
+                  compact
+                />
               </p>
               <span v-if="!context.clusterNetworking.entryAddresses.length">未设置</span>
             </dd>
           </div>
           <div v-if="context.clusterNetworking.cnameTarget">
             <dt>CNAME 目标</dt>
-            <dd class="mono">{{ context.clusterNetworking.cnameTarget }}</dd>
+            <dd class="mono dns-value">
+              <span>{{ context.clusterNetworking.cnameTarget }}</span
+              ><CopyButton
+                :text="context.clusterNetworking.cnameTarget"
+                label="复制 CNAME 目标"
+                compact
+              />
+            </dd>
           </div>
         </dl>
       </section>
@@ -193,6 +210,16 @@ function submit() {
 .dns-instructions {
   border-top: 1px solid var(--border);
   padding-top: 1.25rem;
+}
+.dns-value {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+}
+.dns-value > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .binding-confirm {
   display: flex;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { Plus, Search, ArrowUpRight, Layers3, RefreshCw, FolderKanban, Package } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,12 +8,14 @@ import EmptyState from '@/components/EmptyState.vue';
 import StatusBadge from '@/components/StatusBadge.vue';
 import { useCollection } from '@/lib/query';
 import { useAuthStore } from '@/stores/auth';
+import { useProjectListContext } from '@/composables/useProjectListContext';
 import { dateTime } from '@/lib/utils';
 import type { Project } from '@/lib/types';
 const auth = useAuthStore();
 const projects = useCollection<Project>('/projects');
-const search = ref('');
-const target = ref('');
+const { search, target, clearFilters } = useProjectListContext(
+  () => !projects.isPending.value && !projects.error.value,
+);
 const targets = computed(() => [
   ...new Map(
     projects.items.value.map((p) => [
@@ -111,14 +113,7 @@ const filtered = computed(() =>
         </RouterLink>
       </div>
       <EmptyState v-else title="没有匹配的项目" description="调整关键词或承载目标筛选。"
-        ><Button
-          variant="outline"
-          @click="
-            search = '';
-            target = '';
-          "
-          >清空筛选</Button
-        ></EmptyState
+        ><Button variant="outline" @click="clearFilters">清空筛选</Button></EmptyState
       >
     </template>
     <div v-else-if="!projects.error.value" class="panel">

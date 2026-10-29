@@ -53,11 +53,12 @@ const filtered = computed(() => Object.keys(filters.value).length > 0);
     <QueryState
       :pending="domains.isPending.value"
       :error="domains.error.value"
+      :refreshing="domains.isFetching.value"
       @retry="domains.refetch()"
     >
       <DomainList v-if="domains.items.value.length" :domains="domains.items.value" />
       <EmptyState
-        v-else
+        v-else-if="!domains.error.value"
         :icon="Globe"
         :title="filtered ? '没有匹配的域名' : '还没有应用域名'"
         :description="

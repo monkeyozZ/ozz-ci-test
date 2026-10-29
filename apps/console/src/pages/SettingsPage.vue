@@ -104,7 +104,13 @@ const auth = useAuthStore();
 const ui = useUiStore();
 const secrets = useCollection<SecretReference>('/secrets');
 const editorOpen = ref(false);
+const editorConfirmationPending = ref(false);
+const removalConfirmationPending = ref(false);
 const visible = ref(false);
+let editorSession = 0;
+let editorRoute = '';
+let editorTriggerId = 'open-secret-editor';
+let pendingEditorFocus: { session: number; ownerRoute: string } | null = null;
 const form = reactive({
   name: '',
   kind: 'ssh' as SecretKind,
@@ -162,14 +168,26 @@ const save = useMutation({
     );
   },
   onSuccess: async () => {
+    const session = editorSession;
+    const ownerRoute = editorRoute;
     clearForm();
     editorOpen.value = false;
     guard.markClean();
     await invalidateCollection('/secrets');
-    if (!isViewActive()) return;
+    if (!ownsEditor(session, ownerRoute)) return;
     ui.toast('凭证已加密保存，普通查询仅返回引用资料。');
+    pendingEditorFocus = { session, ownerRoute };
   },
 });
+watch(
+  () => save.isPending.value,
+  async (pending) => {
+    if (pending || !pendingEditorFocus) return;
+    const owner = pendingEditorFocus;
+    pendingEditorFocus = null;
+    await restoreEditorTrigger(owner.session, owner.ownerRoute);
+  },
+);
 const remove = useMutation({
   mutationFn: (secret: SecretReference) => api.delete(`/secrets/${secret.id}`, secret.revision),
   onSuccess: async () => {
@@ -178,52 +196,159 @@ const remove = useMutation({
     ui.toast('凭证引用已删除。');
   },
 });
-function clearForm() {
-  form.name = '';
+const removingId = computed(() => (remove.isPending.value ? remove.variables.value?.id : null));
+function clearKindFields() {
   form.value = '';
   form.username = '';
   form.passphrase = '';
   form.caCertificate = '';
   form.clientCertificate = '';
   form.clientPrivateKey = '';
-  form.expiresAt = '';
   visible.value = false;
 }
-onBeforeUnmount(clearForm);
-async function openEditor() {
-  if (save.isPending.value) return;
+function clearForm() {
+  form.name = '';
+  form.expiresAt = '';
+  clearKindFields();
+}
+function ownsEditor(session: number, ownerRoute: string) {
+  return isViewActive() && editorSession === session && route.fullPath === ownerRoute;
+}
+async function restoreEditorTrigger(session: number, ownerRoute: string) {
+  await nextTick();
+  if (!ownsEditor(session, ownerRoute) || editorOpen.value || ui.confirmation) return;
+  const trigger =
+    document.getElementById(editorTriggerId) ?? document.getElementById('open-secret-editor');
+  trigger?.focus();
+}
+onBeforeUnmount(() => {
+  editorSession += 1;
+  pendingEditorFocus = null;
+  clearForm();
+});
+async function openEditor(event?: Event) {
+  if (save.isPending.value || editorOpen.value || auth.restoreMode || !isViewActive()) return;
+  editorTriggerId =
+    event?.currentTarget instanceof HTMLElement
+      ? event.currentTarget.id || 'open-secret-editor'
+      : 'open-secret-editor';
+  const session = ++editorSession;
+  editorRoute = route.fullPath;
+  pendingEditorFocus = null;
   editorOpen.value = true;
   key = idempotencyKey();
   save.reset();
   guard.markClean();
   await nextTick();
+  if (!ownsEditor(session, editorRoute) || !editorOpen.value) return;
   document.getElementById('secret-name')?.focus();
 }
 async function closeEditor() {
-  if (save.isPending.value) return;
+  if (save.isPending.value || editorConfirmationPending.value || !editorOpen.value) return;
+  const session = editorSession;
+  const ownerRoute = editorRoute;
+  editorConfirmationPending.value = true;
+  try {
+    if (
+      guard.dirty.value &&
+      !(await ui.confirm({
+        title: '放弃凭证输入？',
+        description: '关闭后会清空尚未保存的凭证内容。',
+        confirmText: '清空并关闭',
+      }))
+    )
+      return;
+    if (!ownsEditor(session, ownerRoute) || !editorOpen.value || save.isPending.value) return;
+    clearForm();
+    editorOpen.value = false;
+    guard.markClean();
+    await restoreEditorTrigger(session, ownerRoute);
+  } finally {
+    editorConfirmationPending.value = false;
+  }
+}
+async function changeKind(event: Event) {
+  const select = event.currentTarget as HTMLSelectElement;
+  const choice = kinds.find((kind) => kind.value === select.value);
+  const previous = form.kind;
+  select.value = previous;
   if (
-    guard.dirty.value &&
-    !(await ui.confirm({
-      title: '放弃凭证输入？',
-      description: '关闭后会清空尚未保存的凭证内容。',
-      confirmText: '清空并关闭',
-    }))
+    !choice ||
+    choice.value === previous ||
+    !editorOpen.value ||
+    editorConfirmationPending.value ||
+    save.isPending.value ||
+    auth.restoreMode
   )
     return;
-  clearForm();
-  editorOpen.value = false;
-  guard.markClean();
+  const session = editorSession;
+  const ownerRoute = editorRoute;
+  const hasKindInput = [
+    form.value,
+    form.username,
+    form.passphrase,
+    form.caCertificate,
+    form.clientCertificate,
+    form.clientPrivateKey,
+  ].some((value) => value.length > 0);
+  editorConfirmationPending.value = true;
+  try {
+    if (
+      hasKindInput &&
+      !(await ui.confirm({
+        title: '切换凭证类型？',
+        description: `切换到「${choice.label}」会清空当前类型的输入。凭证名称和到期时间会保留。`,
+        confirmText: '清空并切换',
+      }))
+    )
+      return;
+    if (
+      !ownsEditor(session, ownerRoute) ||
+      !editorOpen.value ||
+      form.kind !== previous ||
+      save.isPending.value ||
+      auth.restoreMode
+    )
+      return;
+    clearKindFields();
+    form.kind = choice.value;
+    save.reset();
+  } finally {
+    editorConfirmationPending.value = false;
+  }
+}
+function saveSecret() {
+  if (
+    !editorOpen.value ||
+    !ownsEditor(editorSession, editorRoute) ||
+    save.isPending.value ||
+    editorConfirmationPending.value ||
+    auth.restoreMode
+  )
+    return;
+  save.mutate();
 }
 async function deleteSecret(secret: SecretReference) {
-  if (
-    await ui.confirm({
-      title: `删除凭证「${secret.name}」？`,
-      description: '正在被服务器、集群或其他资源引用的凭证无法删除。',
-      confirmText: '删除凭证',
-      destructive: true,
-    })
-  )
-    if (isViewActive()) remove.mutate(secret);
+  if (remove.isPending.value || removalConfirmationPending.value || auth.restoreMode) return;
+  const ownerRoute = route.fullPath;
+  removalConfirmationPending.value = true;
+  try {
+    if (
+      (await ui.confirm({
+        title: `删除凭证「${secret.name}」？`,
+        description: '正在被服务器、集群或其他资源引用的凭证无法删除。',
+        confirmText: '删除凭证',
+        destructive: true,
+      })) &&
+      isViewActive() &&
+      route.fullPath === ownerRoute &&
+      !remove.isPending.value &&
+      !auth.restoreMode
+    )
+      remove.mutate(secret);
+  } finally {
+    removalConfirmationPending.value = false;
+  }
 }
 function kindLabel(kind: SecretKind) {
   return kinds.find((item) => item.value === kind)?.label ?? kind;
@@ -340,14 +465,29 @@ watch(
             :disabled="secrets.isFetching.value"
             @click="secrets.refetch()"
             ><RefreshCw /></Button
-          ><Button v-if="!auth.restoreMode && !editorOpen" @click="openEditor"
-            ><Plus />新增凭证</Button
+          ><Button
+            v-if="!auth.restoreMode && !editorOpen"
+            id="open-secret-editor"
+            :disabled="save.isPending.value"
+            :aria-busy="save.isPending.value || undefined"
+            @click="openEditor"
+            ><LoaderCircle v-if="save.isPending.value" class="animate-spin" /><Plus v-else />{{
+              save.isPending.value ? '正在刷新凭证…' : '新增凭证'
+            }}</Button
           >
         </div>
       </div>
-      <form v-if="editorOpen" class="panel mb-6" @submit.prevent="save.mutate()">
+      <form
+        v-if="editorOpen"
+        class="panel mb-6"
+        :aria-busy="save.isPending.value || undefined"
+        @submit.prevent="saveSecret"
+      >
         <h2 class="mb-5">新增凭证</h2>
-        <fieldset class="stack" :disabled="save.isPending.value || auth.restoreMode">
+        <fieldset
+          class="stack"
+          :disabled="save.isPending.value || editorConfirmationPending || auth.restoreMode"
+        >
           <div class="form-grid">
             <div class="field">
               <label for="secret-name">凭证名称</label
@@ -362,19 +502,7 @@ watch(
             </div>
             <div class="field">
               <label for="secret-kind">类型</label
-              ><select
-                id="secret-kind"
-                v-model="form.kind"
-                class="input"
-                @change="
-                  form.value = '';
-                  form.passphrase = '';
-                  form.username = '';
-                  form.caCertificate = '';
-                  form.clientCertificate = '';
-                  form.clientPrivateKey = '';
-                "
-              >
+              ><select id="secret-kind" :value="form.kind" class="input" @change="changeKind">
                 <option v-for="kind in kinds" :key="kind.value" :value="kind.value">
                   {{ kind.label }}
                 </option>
@@ -492,10 +620,13 @@ watch(
           <Button
             type="button"
             variant="outline"
-            :disabled="save.isPending.value"
+            :disabled="save.isPending.value || editorConfirmationPending"
             @click="closeEditor"
             >取消并清空</Button
-          ><Button type="submit" :disabled="save.isPending.value || auth.restoreMode"
+          ><Button
+            type="submit"
+            :disabled="save.isPending.value || editorConfirmationPending || auth.restoreMode"
+            :aria-busy="save.isPending.value || undefined"
             ><LoaderCircle v-if="save.isPending.value" class="animate-spin" />{{
               save.isPending.value ? '正在保存…' : '加密保存凭证'
             }}</Button
@@ -539,12 +670,18 @@ watch(
                   <Button
                     v-if="!auth.restoreMode"
                     variant="ghost"
-                    size="icon"
-                    :aria-label="`删除凭证 ${secret.name}`"
-                    :disabled="remove.isPending.value"
+                    size="sm"
+                    :aria-label="
+                      removingId === secret.id
+                        ? `正在删除凭证 ${secret.name}`
+                        : `删除凭证 ${secret.name}`
+                    "
+                    :aria-busy="removingId === secret.id || undefined"
+                    :disabled="remove.isPending.value || removalConfirmationPending"
                     @click="deleteSecret(secret)"
-                    ><Trash2
-                  /></Button>
+                    ><LoaderCircle v-if="removingId === secret.id" class="animate-spin" />
+                    <Trash2 v-else />{{ removingId === secret.id ? '正在删除…' : '删除' }}</Button
+                  >
                 </td>
               </tr>
             </tbody>
@@ -555,8 +692,15 @@ watch(
             :icon="KeyRound"
             title="添加第一个连接凭证"
             description="先保存 SSH 私钥或 kubeconfig，再在服务器与集群中选择对应引用。"
-            ><Button v-if="!auth.restoreMode" @click="openEditor"
-              ><Plus />新增凭证</Button
+            ><Button
+              v-if="!auth.restoreMode"
+              id="open-secret-empty-editor"
+              :disabled="save.isPending.value"
+              :aria-busy="save.isPending.value || undefined"
+              @click="openEditor"
+              ><LoaderCircle v-if="save.isPending.value" class="animate-spin" /><Plus v-else />{{
+                save.isPending.value ? '正在刷新凭证…' : '新增凭证'
+              }}</Button
             ></EmptyState
           >
         </div>

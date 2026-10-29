@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 import {
   DialogRoot,
   DialogPortal,
@@ -17,25 +17,53 @@ const props = defineProps<{
   description: string;
   busy?: boolean;
 }>();
-const emit = defineEmits<{ 'update:open': [open: boolean] }>();
+const emit = defineEmits<{ 'update:open': [open: boolean]; 'after-close': [] }>();
 const composing = ref(false);
+const panelBody = ref<HTMLElement>();
+const displayedTitle = ref(props.title);
+const displayedDescription = ref(props.description);
 let previousFocus: HTMLElement | null = null;
 watch(
-  () => props.open,
-  (open) => {
-    if (open && document.activeElement instanceof HTMLElement)
-      previousFocus = document.activeElement;
+  () => [props.open, props.title, props.description] as const,
+  ([open, title, description], previous) => {
+    const trigger = document.activeElement;
+    if (
+      open &&
+      !previous?.[0] &&
+      trigger instanceof HTMLElement &&
+      trigger !== document.body &&
+      !panelBody.value?.closest('.service-workspace-panel')?.contains(trigger)
+    )
+      previousFocus = trigger;
+    if (open) {
+      displayedTitle.value = title;
+      displayedDescription.value = description;
+    }
     if (!open) composing.value = false;
   },
+  { immediate: true, flush: 'sync' },
 );
 function requestOpen(open: boolean) {
   if (!open && props.busy) return;
   emit('update:open', open);
 }
-function restoreFocus(event: Event) {
+async function restoreFocus(event: Event) {
   event.preventDefault();
-  if (previousFocus?.isConnected) previousFocus.focus();
-  else document.getElementById('main-content')?.focus();
+  await nextTick();
+  if (props.open) return;
+  const currentDialog = [
+    ...document.querySelectorAll<HTMLElement>('[role="dialog"][data-state="open"]'),
+  ].at(-1);
+  if (!currentDialog || (previousFocus && currentDialog.contains(previousFocus))) {
+    if (previousFocus?.isConnected && !previousFocus.closest('[inert]'))
+      previousFocus.focus({ preventScroll: true });
+    else if (document.activeElement === document.body || document.activeElement?.closest('[inert]'))
+      document.getElementById('main-content')?.focus({ preventScroll: true });
+  }
+  emit('after-close');
+}
+function clickOverlay(event: MouseEvent) {
+  if (props.open && event.button === 0 && !event.ctrlKey) requestOpen(false);
 }
 function preserveComposition(event: KeyboardEvent) {
   if (props.busy || event.isComposing || composing.value || event.keyCode === 229)
@@ -45,9 +73,11 @@ function preserveComposition(event: KeyboardEvent) {
 <template>
   <DialogRoot :open="open" @update:open="requestOpen">
     <DialogPortal>
-      <DialogOverlay class="dialog-overlay" />
+      <DialogOverlay class="dialog-overlay" @click.self="clickOverlay" />
       <DialogContent
         class="service-workspace-panel"
+        :inert="!open"
+        :aria-busy="busy || undefined"
         @close-auto-focus="restoreFocus"
         @compositionstart.capture="composing = true"
         @compositionend.capture="composing = false"
@@ -65,14 +95,14 @@ function preserveComposition(event: KeyboardEvent) {
             ><ArrowLeft
           /></Button>
           <div class="min-w-0">
-            <DialogTitle class="text-lg font-semibold">{{ title }}</DialogTitle>
-            <DialogDescription class="meta mt-1">{{ description }}</DialogDescription>
+            <DialogTitle class="text-lg font-semibold">{{ displayedTitle }}</DialogTitle>
+            <DialogDescription class="meta mt-1">{{ displayedDescription }}</DialogDescription>
           </div>
           <span v-if="busy" class="workspace-panel-busy meta" role="status">
             <LoaderCircle class="size-4 animate-spin" />正在处理…
           </span>
         </header>
-        <div class="workspace-panel-body"><slot /></div>
+        <div ref="panelBody" class="workspace-panel-body"><slot /></div>
       </DialogContent>
     </DialogPortal>
   </DialogRoot>
@@ -91,7 +121,13 @@ function preserveComposition(event: KeyboardEvent) {
   background: var(--background);
   box-shadow: var(--shadow);
   overflow: hidden;
-  animation: workspace-panel-enter 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.service-workspace-panel[data-state='open'] {
+  animation: workspace-panel-enter var(--motion-dialog) var(--ease-out);
+}
+.service-workspace-panel[data-state='closed'] {
+  animation: workspace-panel-exit var(--motion-fast) var(--ease-in);
+  pointer-events: none;
 }
 .workspace-panel-head {
   display: flex;
@@ -122,6 +158,12 @@ function preserveComposition(event: KeyboardEvent) {
 @keyframes workspace-panel-enter {
   from {
     transform: translateX(1rem);
+    opacity: 0;
+  }
+}
+@keyframes workspace-panel-exit {
+  to {
+    transform: translateX(0.75rem);
     opacity: 0;
   }
 }

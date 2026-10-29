@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Database as DatabaseIcon, Plus, Search, RefreshCw } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
@@ -10,11 +10,12 @@ import DatabaseList from '@/components/storage/DatabaseList.vue';
 import StorageScopeFilters from '@/components/storage/StorageScopeFilters.vue';
 import type { Database } from '@/components/storage/types';
 import { useCollection } from '@/lib/query';
+import { useRouteFilter } from '@/composables/useRouteFilter';
 const route = useRoute();
 const router = useRouter();
 const value = (key: string) =>
   typeof route.query[key] === 'string' ? String(route.query[key]) : '';
-const search = ref('');
+const search = useRouteFilter('search');
 const params = computed<Record<string, string>>(() => ({
   ...Object.fromEntries(
     ['projectId', 'environmentId', 'clusterId', 'serviceId'].flatMap((key) =>
@@ -86,12 +87,14 @@ function filter(key: string, next: string) {
   <QueryState
     :pending="databases.isPending.value"
     :error="databases.error.value"
+    :refreshing="databases.isFetching.value"
     @retry="databases.refetch()"
     ><DatabaseList
       v-if="databases.items.value.length"
       :databases="databases.items.value"
+      :list-path="route.fullPath"
     /><EmptyState
-      v-else
+      v-else-if="!databases.error.value"
       :icon="DatabaseIcon"
       :title="Object.keys(params).length ? '没有匹配的数据库' : '还没有数据库'"
       :description="

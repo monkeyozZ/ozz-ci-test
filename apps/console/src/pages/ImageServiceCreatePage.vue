@@ -131,6 +131,7 @@ onScopeDispose(() => {
 <template>
   <ServiceCreationFrame
     :title="review ? '核对部署配置' : '部署 Docker 镜像'"
+    :step="review ? 'review' : 'configure'"
     :context="place.context.value"
     :show-environment="place.showEnvironment.value"
     :back-to="!flow.hasSavedService.value ? sourceLocation : undefined"

@@ -43,7 +43,9 @@ export async function installCreationFixture(page: Page) {
     imageReplyLoss: false,
     imageReplyDamage: '' as '' | 'json' | 'envelope' | 'service',
     projectReplyLoss: false,
+    projectReplyDamage: false,
     beforeImageReply: undefined as undefined | (() => Promise<void>),
+    beforeProjectReply: undefined as undefined | (() => Promise<void>),
     projects: [project],
     environments: [environment],
     environmentPageSize: 50,
@@ -120,9 +122,14 @@ export async function installCreationFixture(page: Page) {
           isDefault: true,
         });
       }
+      await state.beforeProjectReply?.();
       if (state.projectReplyLoss) {
         state.projectReplyLoss = false;
         return route.abort('failed');
+      }
+      if (state.projectReplyDamage) {
+        state.projectReplyDamage = false;
+        return json(route, { data: {} }, 201);
       }
       return json(route, { data: created }, 201);
     }

@@ -169,6 +169,7 @@ const snapshotText = computed(() => {
   <QueryState
     :pending="deployment.isPending.value"
     :error="deployment.error.value"
+    :refreshing="deployment.isFetching.value"
     @retry="deployment.refetch()"
   >
     <template v-if="deployment.data.value">
@@ -288,6 +289,7 @@ const snapshotText = computed(() => {
         <QueryState
           :pending="service.isPending.value"
           :error="service.error.value"
+          :refreshing="service.isFetching.value"
           @retry="service.refetch()"
           ><ConfigurationReview
             v-if="service.data.value"

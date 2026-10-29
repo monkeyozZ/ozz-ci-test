@@ -12,6 +12,15 @@ import {
   creationNavigationLocked,
   creationUncertain,
 } from '@/composables/useCreationDialogState';
+import {
+  projectCreationLockMessage,
+  projectCreationNavigationLocked,
+} from '@/composables/useProjectCreationState';
+import {
+  projectListReturnQuery,
+  rememberProjectListContext,
+  requestProjectListScroll,
+} from '@/composables/useProjectListContext';
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -173,6 +182,10 @@ export const router = createRouter({
     },
   ],
   scrollBehavior(to, from, saved) {
+    if (to.path === '/projects' && (from.path !== to.path || saved)) {
+      requestProjectListScroll(to.fullPath, to.query, useAuthStore().user?.id ?? '', saved);
+      return;
+    }
     if (saved) return saved;
     return to.path === from.path ? undefined : { top: 0 };
   },
@@ -183,6 +196,14 @@ router.beforeEach(async (to, from) => {
   if (!auth.ready) await auth.refresh();
   if (!to.meta.public && !auth.user) return { name: 'login', query: { returnTo: to.fullPath } };
   if (to.name === 'login' && auth.user) return safeReturnPath(to.query.returnTo);
+  if (auth.user && from.path === '/projects/new' && projectCreationNavigationLocked.value) {
+    useUiStore().toast(projectCreationLockMessage.value, 'error');
+    return false;
+  }
+  if (auth.user && to.path === '/projects' && from.path !== to.path) {
+    const query = projectListReturnQuery(to.query, auth.user.id);
+    if (query) return { path: to.path, query, hash: to.hash };
+  }
   const fromCreation = from.query.createService === '1' && !!from.params.projectId;
   const toCreation = to.query.createService === '1' && !!to.params.projectId;
   if (auth.user && fromCreation && creationNavigationLocked.value) {
@@ -215,8 +236,12 @@ router.beforeEach(async (to, from) => {
     discardUnsavedChanges(dirtyScope);
   }
 });
-router.afterEach((to, _from, failure) => {
+router.afterEach((to, from, failure) => {
   if (failure) return;
+  if (from.path === '/projects' && from.path !== to.path) {
+    const owner = useAuthStore().user?.id;
+    if (owner) rememberProjectListContext(from.query, owner);
+  }
   document.title = `${String(to.meta.title ?? '工作台')} · Ozz`;
   const ui = useUiStore();
   ui.navigationOpen = false;

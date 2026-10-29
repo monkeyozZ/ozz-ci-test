@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onScopeDispose, reactive, ref, shallowRef, watch } from 'vue';
 import { useMutation } from '@tanstack/vue-query';
+import { useRoute } from 'vue-router';
 import {
   AlertCircle,
   Check,
@@ -38,6 +39,7 @@ const props = withDefaults(
 );
 const emit = defineEmits<{ changed: []; busy: [busy: boolean]; editing: [editing: boolean] }>();
 const ui = useUiStore();
+const route = useRoute();
 const auth = useAuthStore();
 const isViewActive = useViewScope();
 const secrets = useCollection<SecretReference>('/secrets', { kind: 'kubeconfig' });
@@ -57,6 +59,19 @@ const taskBusy = computed(
       ['queued', 'running'].includes(observedOperation.value.status)),
 );
 const editorOpen = ref(false);
+const closeConfirmationPending = ref(false);
+type EditorOwner = { session: number; clusterId: string; route: string };
+let editorSession = 0;
+let editorOwner: EditorOwner | null = null;
+function ownsEditor(owner: EditorOwner | null) {
+  return (
+    owner !== null &&
+    isViewActive() &&
+    owner.session === editorSession &&
+    owner.clusterId === props.cluster.id &&
+    owner.route === route.fullPath
+  );
+}
 watch(editorOpen, (value) => emit('editing', value), { immediate: true });
 const form = reactive({
   source: 'saved' as 'saved' | 'new',
@@ -111,6 +126,7 @@ const now = useObservationClock();
 onScopeDispose(clearRaw);
 const preview = useMutation({
   mutationFn: async () => {
+    const owner = editorOwner;
     const clusterId = props.cluster.id;
     const revision = props.cluster.revision;
     const apiEndpoint = form.apiEndpoint.trim();
@@ -129,7 +145,7 @@ const preview = useMutation({
         );
         credentialRefId = saved.id;
         clearRaw();
-        if (isViewActive()) candidateSecret.value = saved;
+        if (ownsEditor(owner) && editorOpen.value) candidateSecret.value = saved;
         await invalidateCollection('/secrets');
       }
     }
@@ -137,14 +153,15 @@ const preview = useMutation({
       `/clusters/${clusterId}/connection-preview`,
       { revision, credentialRefId, ...(apiEndpoint ? { apiEndpoint } : {}) },
     );
-    return { clusterId, revision, credentialRefId, preview: result };
+    return { clusterId, revision, credentialRefId, preview: result, owner };
   },
   onSuccess: async (value) => {
-    if (!isViewActive() || value.clusterId !== props.cluster.id) return;
+    if (!ownsEditor(value.owner) || !editorOpen.value) return;
     candidate.value = value;
     form.confirmCa = false;
     connectKey = idempotencyKey();
     await nextTick();
+    if (!ownsEditor(value.owner) || !editorOpen.value || ui.confirmation) return;
     document.getElementById('connection-preview')?.focus();
   },
 });
@@ -213,7 +230,13 @@ const current = computed(
 );
 const candidateCurrent = computed(() => candidate.value?.revision === props.cluster.revision);
 async function openEditor() {
-  if (locked.value) return;
+  if (locked.value || editorOpen.value || !isViewActive()) return;
+  const owner = {
+    session: ++editorSession,
+    clusterId: props.cluster.id,
+    route: route.fullPath,
+  };
+  editorOwner = owner;
   form.source = props.cluster.credentialRefId ? 'saved' : 'new';
   form.credentialRefId = props.cluster.credentialRefId || '';
   form.credentialName = `${props.cluster.name} · Kubernetes`;
@@ -228,7 +251,22 @@ async function openEditor() {
   editorOpen.value = true;
   guard.markClean();
   await nextTick();
+  if (!ownsEditor(owner) || !editorOpen.value || ui.confirmation) return;
   document.getElementById('connection-source')?.focus();
+}
+function previewCandidate() {
+  if (
+    !ownsEditor(editorOwner) ||
+    !editorOpen.value ||
+    locked.value ||
+    closeConfirmationPending.value
+  )
+    return;
+  preview.mutate();
+}
+function syncCluster() {
+  if (!isViewActive() || locked.value || editorOpen.value) return;
+  sync.mutate({ clusterId: props.cluster.id, revision: props.cluster.revision });
 }
 function clearEditor() {
   editorOpen.value = false;
@@ -239,27 +277,36 @@ function clearEditor() {
   guard.markClean();
 }
 async function closeEditor() {
-  if (busy.value) return;
-  if (
-    guard.dirty.value &&
-    !(await ui.confirm({
-      title: '关闭候选连接配置？',
-      description: '尚未提交的连接设置会被清空。已单独加密保存的凭证仍可在设置中管理。',
-      confirmText: '清空输入并关闭',
-    }))
-  )
-    return;
-  if (!isViewActive()) return;
-  clearEditor();
-  await nextTick();
-  document.getElementById('open-connection-editor')?.focus();
+  if (busy.value || closeConfirmationPending.value || !editorOpen.value) return;
+  const owner = editorOwner;
+  closeConfirmationPending.value = true;
+  try {
+    if (
+      guard.dirty.value &&
+      !(await ui.confirm({
+        title: '关闭候选连接配置？',
+        description: '尚未提交的连接设置会被清空。已单独加密保存的凭证仍可在设置中管理。',
+        confirmText: '清空输入并关闭',
+      }))
+    )
+      return;
+    if (!ownsEditor(owner) || !editorOpen.value || busy.value) return;
+    clearEditor();
+    await nextTick();
+    if (!ownsEditor(owner) || editorOpen.value || locked.value || ui.confirmation) return;
+    document.getElementById('open-connection-editor')?.focus();
+  } finally {
+    closeConfirmationPending.value = false;
+  }
 }
 function connectCandidate() {
   const reviewed = candidate.value;
   if (
     !reviewed ||
+    !ownsEditor(editorOwner) ||
     !candidateCurrent.value ||
     locked.value ||
+    closeConfirmationPending.value ||
     (reviewed.preview.requiresCaConfirmation && !form.confirmCa)
   )
     return;
@@ -332,8 +379,12 @@ function retried(value: Operation) {
             v-if="cluster.identity && cluster.credentialRefId"
             variant="outline"
             :disabled="locked || editorOpen"
-            @click="sync.mutate({ clusterId: cluster.id, revision: cluster.revision })"
-            ><RefreshCw />重新检查与同步</Button
+            :aria-busy="sync.isPending.value || undefined"
+            @click="syncCluster"
+            ><LoaderCircle v-if="sync.isPending.value" class="animate-spin" />
+            <RefreshCw v-else />{{
+              sync.isPending.value ? '正在受理同步…' : '重新检查与同步'
+            }}</Button
           ><Button
             v-if="!editorOpen"
             id="open-connection-editor"
@@ -402,12 +453,17 @@ function retried(value: Operation) {
         </dl>
       </details>
       <MutationError class="mt-4" :error="sync.error.value" />
-      <form v-if="editorOpen" class="connection-editor mt-6" @submit.prevent="preview.mutate()">
+      <form
+        v-if="editorOpen"
+        class="connection-editor mt-6"
+        :aria-busy="preview.isPending.value || connect.isPending.value || undefined"
+        @submit.prevent="previewCandidate"
+      >
         <h3 class="font-medium mb-4">{{ cluster.identity ? '候选连接配置' : '已有集群接入' }}</h3>
         <p v-if="cluster.identity" class="muted mb-5">
           新连接必须仍指向这个集群。验证成功前，当前地址与凭证引用保持有效。
         </p>
-        <fieldset class="stack" :disabled="locked">
+        <fieldset class="stack" :disabled="locked || closeConfirmationPending">
           <div class="form-grid">
             <div class="field">
               <label for="connection-source">凭证来源</label
@@ -504,7 +560,10 @@ function retried(value: Operation) {
             </div>
           </div>
           <div class="actions">
-            <Button type="submit" variant="outline"
+            <Button
+              type="submit"
+              variant="outline"
+              :aria-busy="preview.isPending.value || undefined"
               ><LoaderCircle v-if="preview.isPending.value" class="animate-spin" />{{
                 preview.isPending.value ? '正在解析配置…' : '预览候选连接'
               }}</Button
@@ -579,11 +638,16 @@ function retried(value: Operation) {
               type="button"
               :disabled="
                 locked ||
+                closeConfirmationPending ||
                 !candidateCurrent ||
                 (candidate.preview.requiresCaConfirmation && !form.confirmCa)
               "
+              :aria-busy="connect.isPending.value || undefined"
               @click="connectCandidate"
-              ><PlugZap />{{ connect.isPending.value ? '正在受理…' : '开始验证并连接' }}</Button
+              ><LoaderCircle v-if="connect.isPending.value" class="animate-spin" />
+              <PlugZap v-else />{{
+                connect.isPending.value ? '正在受理…' : '开始验证并连接'
+              }}</Button
             >
           </div>
         </div>

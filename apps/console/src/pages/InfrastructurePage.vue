@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { Server as ServerIcon, Layers3, Plus, Search, ChevronRight, RefreshCw } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,9 @@ import EmptyState from '@/components/EmptyState.vue';
 import StatusBadge from '@/components/StatusBadge.vue';
 import { useCollection } from '@/lib/query';
 import { useAuthStore } from '@/stores/auth';
+import { useRouteFilter } from '@/composables/useRouteFilter';
 import { dateTime } from '@/lib/utils';
+import { resourceDetailLocation } from '@/lib/resource-list-navigation';
 import type { Server, Cluster } from '@/lib/types';
 const route = useRoute();
 const auth = useAuthStore();
@@ -17,7 +19,13 @@ const tab = computed(() => (route.query.tab === 'servers' ? 'servers' : 'cluster
 const clusters = useCollection<Cluster>('/clusters');
 const servers = useCollection<Server>('/servers');
 const query = computed(() => (tab.value === 'clusters' ? clusters : servers));
-const search = ref('');
+const search = useRouteFilter('search');
+function tabLocation(value: 'clusters' | 'servers') {
+  return {
+    path: '/infrastructure',
+    query: { ...route.query, tab: value === 'servers' ? value : undefined },
+  };
+}
 const visibleClusters = computed(() =>
   clusters.items.value.filter((item) =>
     `${item.name} ${item.slug} ${item.region ?? ''}`
@@ -49,12 +57,12 @@ const visibleServers = computed(() =>
   </div>
   <nav class="page-tabs" aria-label="基础设施类型">
     <RouterLink
-      to="/infrastructure"
+      :to="tabLocation('clusters')"
       class="page-tab"
       :aria-current="tab === 'clusters' ? 'page' : undefined"
       >集群 <span class="badge ml-1">{{ clusters.items.value.length }}</span></RouterLink
     ><RouterLink
-      to="/infrastructure?tab=servers"
+      :to="tabLocation('servers')"
       class="page-tab"
       :aria-current="tab === 'servers' ? 'page' : undefined"
       >服务器 <span class="badge ml-1">{{ servers.items.value.length }}</span></RouterLink
@@ -66,7 +74,11 @@ const visibleServers = computed(() =>
         v-model="search"
         class="pl-10"
         :aria-label="tab === 'clusters' ? '搜索已载入集群' : '搜索已载入服务器'"
-        placeholder="搜索已载入的名称、地区或地址"
+        :placeholder="
+          tab === 'clusters'
+            ? '筛选已载入集群的名称、标识或地区'
+            : '筛选已载入服务器的名称、地区或地址'
+        "
       />
     </div>
     <Button
@@ -100,9 +112,17 @@ const visibleServers = computed(() =>
           <tbody>
             <tr v-for="cluster in visibleClusters" :key="cluster.id">
               <td>
-                <RouterLink :to="`/clusters/${cluster.id}`" class="font-medium text-link">{{
-                  cluster.name
-                }}</RouterLink>
+                <RouterLink
+                  :to="
+                    resourceDetailLocation(
+                      `/clusters/${cluster.id}`,
+                      route.fullPath,
+                      'infrastructure',
+                    )
+                  "
+                  class="font-medium text-link"
+                  >{{ cluster.name }}</RouterLink
+                >
                 <p class="mono muted mt-1">{{ cluster.slug }}</p>
               </td>
               <td class="mobile-hide">{{ cluster.region || '尚未填写' }}</td>
@@ -117,7 +137,13 @@ const visibleServers = computed(() =>
               <td>
                 <Button as-child variant="ghost" size="icon"
                   ><RouterLink
-                    :to="`/clusters/${cluster.id}`"
+                    :to="
+                      resourceDetailLocation(
+                        `/clusters/${cluster.id}`,
+                        route.fullPath,
+                        'infrastructure',
+                      )
+                    "
                     :aria-label="`查看集群 ${cluster.name}`"
                     ><ChevronRight /></RouterLink
                 ></Button>
@@ -158,9 +184,17 @@ const visibleServers = computed(() =>
           <tbody>
             <tr v-for="server in visibleServers" :key="server.id">
               <td>
-                <RouterLink :to="`/servers/${server.id}`" class="font-medium text-link">{{
-                  server.name
-                }}</RouterLink>
+                <RouterLink
+                  :to="
+                    resourceDetailLocation(
+                      `/servers/${server.id}`,
+                      route.fullPath,
+                      'infrastructure',
+                    )
+                  "
+                  class="font-medium text-link"
+                  >{{ server.name }}</RouterLink
+                >
                 <p class="meta mt-1">{{ server.region || '尚未填写地区' }}</p>
               </td>
               <td>
@@ -176,7 +210,13 @@ const visibleServers = computed(() =>
               <td>
                 <Button as-child variant="ghost" size="icon"
                   ><RouterLink
-                    :to="`/servers/${server.id}`"
+                    :to="
+                      resourceDetailLocation(
+                        `/servers/${server.id}`,
+                        route.fullPath,
+                        'infrastructure',
+                      )
+                    "
                     :aria-label="`查看服务器 ${server.name}`"
                     ><ChevronRight /></RouterLink
                 ></Button>

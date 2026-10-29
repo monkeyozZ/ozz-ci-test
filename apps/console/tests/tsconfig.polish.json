@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": { "types": ["vite/client", "node"] },
+  "include": [
+    "local-lab/*polish*.ts",
+    "local-lab/creation-v3*.ts",
+    "local-lab/service-workspace-v3*.ts"
+  ],
+  "exclude": []
+}

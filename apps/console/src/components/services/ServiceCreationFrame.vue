@@ -7,6 +7,7 @@ import { CREATION_DIALOG } from '@/composables/useCreationDialogState';
 const inDialog = inject(CREATION_DIALOG, false);
 defineProps<{
   title: string;
+  step: 'source' | 'templates' | 'configure' | 'review';
   context?: CreationContext | null;
   showEnvironment?: boolean;
   backTo?: RouteLocationRaw;
@@ -16,18 +17,20 @@ defineProps<{
 defineEmits<{ back: [] }>();
 </script>
 <template>
-  <div :class="['service-creation', { 'in-dialog': inDialog }]">
+  <div :class="['service-creation', { 'in-dialog': inDialog }]" :data-creation-step="step">
     <RouterLink
       v-if="backTo"
       :to="backTo"
       class="creation-back"
       data-creation-back
       :aria-disabled="backDisabled || undefined"
+      :tabindex="backDisabled ? -1 : undefined"
       @click="
         (event) => {
           if (backDisabled) event.preventDefault();
         }
       "
+      @auxclick="backDisabled && $event.preventDefault()"
     >
       <ArrowLeft />{{ backLabel || '选择来源' }}
     </RouterLink>
@@ -43,7 +46,7 @@ defineEmits<{ back: [] }>();
     </button>
     <div class="page-head creation-heading">
       <div>
-        <h1>{{ title }}</h1>
+        <h1 data-creation-heading tabindex="-1">{{ title }}</h1>
         <p v-if="context" class="creation-context">
           <Server />{{ context.project.cluster.name }}
           <template v-if="showEnvironment"> · {{ context.environment.name }}</template>

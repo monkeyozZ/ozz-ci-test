@@ -138,7 +138,7 @@
     platform: { suffix: 'ozz.test', email: 'admin@example.test', theme: storedTheme },
     theme: storedTheme, readOnly: false, signedIn: true, modal: null, search: '', targetSearch: '',
     projectDraft: { id: uid('project'), name: '', slug: '', description: '', targetId: 'cluster-tokyo', dirty: false, createdId: null },
-    creationDrafts: {}, serviceEdits: {}, logViews: {}, mobileOpen: false, scenario: 'normal', taskTimers: new Map(),
+    creationDrafts: {}, serviceEdits: {}, logViews: {}, taskLogViews: {}, mobileOpen: false, scenario: 'normal', taskTimers: new Map(), pendingAction: null,
     errors: {}, composing: false, compositionEndedAt: 0, commandIndex: 0, lastFocus: null,
   };
   function taskSeed(idValue, service, status, revision, name) {
@@ -160,6 +160,84 @@
   const hasChanges = (s) => !s.publishedSnapshot || JSON.stringify(s.draft) !== JSON.stringify(s.publishedSnapshot);
   const dirtyEdit = (s) => state.serviceEdits[s.id] && JSON.stringify(state.serviceEdits[s.id]) !== JSON.stringify(s.draft);
   const serviceEdit = (s) => state.serviceEdits[s.id] || (state.serviceEdits[s.id] = clone(s.draft));
+  const projectListKey = 'ozzV3ProjectList';
+  const storedList = history.state?.[projectListKey];
+  let projectList = { query: typeof storedList?.query === 'string' ? storedList.query : '', scroll: Number.isFinite(storedList?.scroll) ? Math.max(0, storedList.scroll) : 0 };
+  let renderedHash = location.hash || '#/projects';
+  let renderedModal = null;
+  const copyStates = new Map();
+  const isProjectList = (hash) => /^#\/projects(?:\?|$)/.test(hash || '#/projects');
+  function rememberProjectList() {
+    if (isProjectList(location.hash)) projectList = { query: new URLSearchParams(location.hash.split('?')[1] || '').get('q') || '', scroll: window.scrollY };
+    history.replaceState({ ...(history.state || {}), [projectListKey]: projectList }, '', location.href);
+  }
+  function projectListUrl() {
+    return '#/projects' + (projectList.query ? '?q=' + encodeURIComponent(projectList.query) : '');
+  }
+  function updateProjectSearch(value) {
+    state.search = value;
+    projectList = { query: value, scroll: 0 };
+    history.replaceState({ ...(history.state || {}), [projectListKey]: projectList }, '', projectListUrl());
+    renderedHash = location.hash;
+    render();
+  }
+  function captureFocus() {
+    const element = document.activeElement;
+    if (!(element instanceof HTMLElement) || element === document.body) return null;
+    if (element.id) return { selector: '#' + CSS.escape(element.id), index: 0 };
+    const attribute = element.hasAttribute('data-action') ? 'data-action' : element.hasAttribute('href') ? 'href' : null;
+    if (!attribute) return null;
+    let selector = element.tagName.toLowerCase() + '[' + attribute + '="' + CSS.escape(element.getAttribute(attribute)) + '"]';
+    for (const name of ['data-id', 'data-source', 'data-prefix']) if (element.hasAttribute(name)) selector += '[' + name + '="' + CSS.escape(element.getAttribute(name)) + '"]';
+    return { selector, index: [...document.querySelectorAll(selector)].indexOf(element) };
+  }
+  function restoreFocus(descriptor, owner = null) {
+    requestAnimationFrame(() => {
+      if (state.modal !== owner) return;
+      const target = descriptor && [...document.querySelectorAll(descriptor.selector)].filter((node) => node.getClientRects().length)[Math.max(0, descriptor.index)];
+      const fallback = owner ? document.querySelector('.dialog') : document.querySelector('main h1');
+      if (target instanceof HTMLElement && !target.matches(':disabled')) target.focus({ preventScroll: true });
+      else if (fallback instanceof HTMLElement) { fallback.tabIndex = -1; fallback.focus({ preventScroll: true }); }
+    });
+  }
+  function focusModal(modal = state.modal) {
+    const step = modal?.step;
+    requestAnimationFrame(() => {
+      if (state.modal !== modal || modal?.step !== step) return;
+      const dialog = document.querySelector('.dialog');
+      // An explicit field selection made before this frame owns the focus.
+      // Do not redirect its next keystroke to the initial field.
+      if (dialog?.contains(document.activeElement)) return;
+      const selectors = modal?.type === 'source' && ['review', 'save-unknown'].includes(modal.step)
+        ? '#creation-step-title'
+        : '[autofocus], .modal-body input:not([type="hidden"]):not([readonly]):not(:disabled), .modal-body textarea:not(:disabled), #repo-search, [data-command-item], .modal-actions button:not(:disabled), .dialog-close:not(:disabled)';
+      const target = selectors.split(',').flatMap((selector) => [...(dialog?.querySelectorAll(selector.trim()) || [])]).find((node) => node.getClientRects().length);
+      if (target) target.focus({ preventScroll: true });
+      else if (dialog) { dialog.tabIndex = -1; dialog.focus({ preventScroll: true }); }
+    });
+  }
+  function interactionLock() {
+    if (!state.signedIn) return '';
+    if (state.pendingAction) return state.pendingAction.label + '，请稍候。';
+    if (state.projectDraft.uncertain) return '请先确认原项目创建结果，再继续。';
+    if (state.modal?.type === 'source' && state.modal.draft.saveUnknown) return '请先确认原服务保存结果，再继续。';
+    return '';
+  }
+  function demoRequest(action, label, callback) {
+    if (state.pendingAction) return;
+    const owner = state.modal;
+    const request = { action, label, hash: location.hash };
+    state.pendingAction = request;
+    const finish = () => {
+      if (state.pendingAction !== request) return;
+      state.pendingAction = null;
+      if (!state.signedIn || state.modal !== owner || location.hash !== request.hash) return render();
+      callback();
+      render();
+    };
+    if (state.scenario === 'slow-response') { render(); setTimeout(finish, 700); }
+    else finish();
+  }
 
   function context() {
     const raw = location.hash.slice(1) || '/projects';
@@ -200,15 +278,27 @@
     const ctx = context();
     return Boolean(ctx.service && dirtyEdit(ctx.service)) || Boolean(ctx.kind === 'new-project' && state.projectDraft.dirty);
   }
+  function creationChanged(modal = state.modal) {
+    if (modal?.type !== 'source') return false;
+    if (modal.draft.createdServiceId) return JSON.stringify(normalizedConfig(modal.draft)) !== modal.draft.savedSignature;
+    return [modal.draft, ...Object.values(modal.draft.sourceDrafts || {})].some((draft) => draft.dirty);
+  }
   function goto(hash, force = false) {
-    if (!force && unsaved()) {
+    const lock = interactionLock();
+    if (lock) { notify(lock); return; }
+    const requested = hash.startsWith('#') ? hash : '#' + (hash.startsWith('/') ? hash : '/' + hash);
+    const sameContext = requested.split('?')[0] === location.hash.split('?')[0] && new URLSearchParams(requested.split('?')[1] || '').get('env') === context().params.get('env');
+    if (!force && (creationChanged() || (!sameContext && unsaved()))) {
+      const creation = state.modal?.type === 'source' ? state.modal : null;
       confirm({ title: '离开当前编辑？', description: '尚未保存的修改会丢失。', confirmText: '放弃修改并离开', onConfirm() {
-        const ctx = context(); if (ctx.service) delete state.serviceEdits[ctx.service.id]; state.projectDraft.dirty = false; goto(hash, true);
+        const ctx = context(); if (ctx.service && !sameContext) delete state.serviceEdits[ctx.service.id]; state.projectDraft.dirty = false; if (creation) delete state.creationDrafts[creation.draft.key]; goto(hash, true);
       } });
       return;
     }
+    rememberProjectList();
     closeModal(false); state.mobileOpen = false; state.errors = {};
-    const value = hash.startsWith('#') ? hash : '#' + (hash.startsWith('/') ? hash : '/' + hash);
+    let value = requested;
+    if (value === '#/projects' && !force && !isProjectList(location.hash)) value = projectListUrl();
     if (location.hash === value) render(); else location.hash = value;
   }
   function notify(message) {
@@ -216,18 +306,39 @@
     clearTimeout(notify.timer); notify.timer = setTimeout(() => { node.hidden = true; }, 2800);
   }
   function openModal(options) {
-    state.lastFocus = document.activeElement?.id || null;
-    state.modal = { type: 'custom', ...options }; state.errors = {}; state.commandIndex = 0; render();
-    requestAnimationFrame(() => document.querySelector('.dialog [autofocus], .dialog input:not([type="hidden"]), .dialog [data-command-item], .dialog .dialog-close')?.focus({ preventScroll: true }));
+    const lock = interactionLock();
+    if (lock) { notify(lock); return; }
+    const triggerFocus = captureFocus();
+    const rootFocus = state.modal?.rootFocus || triggerFocus;
+    if (state.modal?.type === 'logs') cancelLogRead(state.logViews[state.modal.serviceId]);
+    clearCopyFeedback();
+    state.lastFocus = rootFocus;
+    state.modal = { type: 'custom', triggerFocus, rootFocus, route: location.hash, ...options }; state.errors = {}; state.commandIndex = 0;
+    if (state.modal.type === 'logs') readLogs(findService(state.modal.serviceId)?.service, false, false);
+    render(); focusModal();
   }
   function closeModal(redraw = true) {
-    const focus = state.lastFocus;
-    if (state.modal?.type === 'source' && state.modal.draft.createdServiceId && !state.modal.draft.saveUnknown) delete state.creationDrafts[state.modal.draft.key];
+    const lock = interactionLock();
+    if (lock) { notify(lock); return; }
+    const modal = state.modal;
+    const focus = modal?.rootFocus || state.lastFocus;
+    if (redraw && modal?.type === 'confirm' && modal.parent) {
+      state.modal = modal.parent; state.errors = {}; render(); modal.onCancel?.(); restoreFocus(modal.triggerFocus, modal.parent); return;
+    }
+    if (redraw && modal?.beforeClose?.() === false) return;
+    if (redraw && creationChanged(modal)) {
+      confirm({ title: '放弃未保存的输入？', description: modal.draft.createdServiceId ? '已保存的服务仍保留在项目列表中。本次未保存的输入会清空，再次添加服务会开始新的会话。' : '本次各来源中尚未保存的输入会清空。再次添加服务会从选择来源开始。', confirmText: '放弃输入并关闭', onConfirm() { delete state.creationDrafts[modal.draft.key]; } });
+      return;
+    }
+    if (modal?.type === 'logs') cancelLogRead(state.logViews[modal.serviceId]);
+    if (modal?.type === 'source') delete state.creationDrafts[modal.draft.key];
+    clearCopyFeedback();
     state.modal = null; state.errors = {};
-    if (redraw) { render(); if (focus) document.getElementById(focus)?.focus({ preventScroll: true }); }
+    modal?.onClosed?.();
+    if (redraw) { render(); restoreFocus(focus); }
   }
   function confirm(options) {
-    openModal({ type: 'confirm', input: '', ...options });
+    openModal({ type: 'confirm', input: '', parent: state.modal, ...options });
   }
   function finishTask(task, onSuccess) {
     if (task.status === 'cancelled' || task.status === 'cancelling') {
@@ -279,31 +390,58 @@
   }
   function render(opts = {}) {
     const ctx = context();
+    if (ctx.kind === 'projects') {
+      state.search = ctx.params.get('q') || '';
+      if (projectList.query !== state.search) projectList = { query: state.search, scroll: 0 };
+    }
     if (ctx.project && ctx.environment) ctx.project.lastEnvironmentId = ctx.environment.id;
     if (ctx.kind === 'project' && currentServices(ctx).length) {
       const first = currentServices(ctx).find((s) => s.id === ctx.project.lastServiceId) || currentServices(ctx)[0];
-      history.replaceState(null, '', serviceUrl(ctx.project, first)); return render(opts);
+      history.replaceState({ ...(history.state || {}), [projectListKey]: projectList }, '', serviceUrl(ctx.project, first)); return render(opts);
     }
     if (ctx.service) ctx.project.lastServiceId = ctx.service.id;
+    const restoreManagedInputs = window.OzzManagement?.preserveInputs?.();
     const active = document.activeElement;
     const keep = { id: active?.id, name: active?.getAttribute('data-mg-field'), start: active?.selectionStart, end: active?.selectionEnd };
     const scrollTop = document.querySelector('.modal-body')?.scrollTop || 0;
-    const logScroll = document.querySelector('.log-output')?.scrollTop;
+    const logScroll = document.querySelector('.log-modal-body .log-output')?.scrollTop;
+    const taskLogScroll = document.querySelector('.task-log-output')?.scrollTop;
+    const taskLogId = document.querySelector('.task-log-output')?.dataset.taskId;
     const openDetails = new Set([...document.querySelectorAll('.config-group[open]')].map((node) => node.querySelector('summary > span')?.firstChild?.textContent));
     app.className = (state.mobileOpen ? 'drawer-open ' : '') + (ctx.project && ctx.environment ? 'project-shell' : '');
     const managed = window.OzzManagement?.render(ctx);
     app.innerHTML = (!state.signedIn ? '' : sidebar(ctx)) + (state.mobileOpen ? '<button class="drawer-backdrop" data-action="toggle-menu" aria-label="关闭导航"></button>' : '') + '<div class="workspace' + (!state.signedIn ? ' logged-out' : '') + '">' + topbar(ctx) + (state.readOnly ? notice('平台正在恢复核验，当前只读。可以查看资源、日志与原任务。<a href="#/activity">查看平台状态</a>', 'warning') : '') + (!state.signedIn ? loginPage() : managed || renderPage(ctx)) + '</div>' + (state.modal ? modalHTML(ctx) : '');
     document.title = (ctx.service?.draft.name || ctx.project?.name || '项目') + ' · Ozz 交互原型';
     document.body.classList.toggle('modal-open', Boolean(state.modal));
+    if (state.modal && state.modal !== renderedModal) document.querySelector('.modal-layer')?.setAttribute('data-enter', '');
+    renderedModal = state.modal;
+    renderedHash = location.hash || '#/projects';
+    restoreManagedInputs?.();
+    decorateCopies();
+    if (ctx.kind === 'new-project' && state.projectDraft.uncertain) document.querySelectorAll('main form input, main form select, main form textarea').forEach((node) => { node.disabled = true; });
+    if (state.pendingAction) {
+      const scope = document.querySelector(state.modal ? '.dialog' : 'main');
+      scope?.setAttribute('aria-busy', 'true');
+      const action = { 'create-project': 'submit-project', 'source-review': 'source-review-submit', 'deploy-review': 'confirm-deploy', confirm: 'confirm-submit', 'service-config': 'save-config-submit' }[state.pendingAction.action] || state.pendingAction.action;
+      const trigger = scope?.querySelector('[data-action="' + action + '"]') || scope?.querySelector('[data-form="' + state.pendingAction.action + '"] button[type="submit"]') || (state.pendingAction.action === 'service-config' ? scope?.querySelector('[data-action="save-config"]') : null);
+      const width = trigger?.getBoundingClientRect().width;
+      scope?.querySelectorAll('button, input, select, textarea').forEach((node) => { node.disabled = true; });
+      scope?.querySelectorAll('a[href]').forEach((node) => { node.setAttribute('aria-disabled', 'true'); node.tabIndex = -1; });
+      if (trigger) { trigger.style.minWidth = width + 'px'; trigger.innerHTML = icon('refresh', 'pending-icon') + esc(state.pendingAction.label); trigger.setAttribute('aria-busy', 'true'); }
+    }
     document.querySelectorAll('.config-group').forEach((node) => { if (openDetails.has(node.querySelector('summary > span')?.firstChild?.textContent)) node.open = true; });
     if (keep.id) {
       const el = document.getElementById(keep.id);
       if (el) { el.focus({ preventScroll: true }); try { if (keep.start !== null) el.setSelectionRange(keep.start, keep.end); } catch {} }
     }
     if (document.querySelector('.modal-body')) document.querySelector('.modal-body').scrollTop = scrollTop;
-    if (logScroll !== undefined && document.querySelector('.log-output')) {
-      const log = document.querySelector('.log-output'); const settings = state.logViews[state.modal?.serviceId];
+    if (logScroll !== undefined && document.querySelector('.log-modal-body .log-output')) {
+      const log = document.querySelector('.log-modal-body .log-output'); const settings = state.logViews[state.modal?.serviceId];
       log.scrollTop = settings?.follow && !settings?.paused ? log.scrollHeight : logScroll;
+    }
+    if (document.querySelector('.task-log-output')) {
+      const log = document.querySelector('.task-log-output'); const settings = state.taskLogViews[log.dataset.taskId];
+      log.scrollTop = settings?.follow && !settings?.paused ? log.scrollHeight : (taskLogId === log.dataset.taskId ? taskLogScroll : settings?.scrollTop) || 0;
     }
     if (opts.focusHeading) document.querySelector('h1')?.focus({ preventScroll: true });
   }
@@ -337,7 +475,7 @@
   function openSource(ctx) {
     if (!ctx.project || !ctx.environment) return;
     const draft = creationDraft(ctx);
-    openModal({ type: 'source', step: draft.saveUnknown ? 'save-unknown' : 'sources', title: '新建服务', projectId: ctx.project.id, environmentId: ctx.environment.id, draft });
+    openModal({ type: 'source', step: draft.saveUnknown ? 'save-unknown' : draft.createdServiceId ? 'config' : 'sources', title: '新建服务', projectId: ctx.project.id, environmentId: ctx.environment.id, draft });
   }
   function sourceContext(modal = state.modal) {
     const project = state.projects.find((p) => p.id === modal.projectId);
@@ -356,7 +494,8 @@
   }
   function sourceStep(step) {
     state.modal.step = step; state.errors = {}; state.commandIndex = 0; render();
-    requestAnimationFrame(() => document.querySelector('.dialog [data-command-item], .dialog input:not([type="hidden"]):not([readonly]), .dialog .command-back')?.focus({ preventScroll: true }));
+    const body = document.querySelector('.modal-body'); if (body) body.scrollTop = 0;
+    focusModal();
   }
   function chooseSource(source) {
     if (source === 'application' || source === 'database-menu') return sourceStep(source);
@@ -396,7 +535,7 @@
       const integration = state.integrations.find((i) => i.kind === 'github' && i.status === 'ready');
       return commandTitle('GitHub 仓库') + (!integration || state.scenario === 'integration-missing' ? '<div class="modal-body">' + empty('先连接 GitHub', '使用已保存的授权读取仓库和分支。', linkButton('管理 GitHub 连接', '#/settings?tab=integrations')) + '</div>' : '<div class="command-search">' + icon('search') + '<input id="repo-search" data-bind="create.repoSearch" value="' + esc(draft.repoSearch || '') + '" placeholder="搜索授权仓库" /></div><div class="command-list">' + ['demo/personal-blog', 'demo/notes', 'demo/api-worker'].filter((name) => name.includes(draft.repoSearch || '')).map((name, i) => '<button class="command-item" data-command-item data-index="' + i + '" data-action="choose-repository" data-id="' + name + '">' + icon('git') + '<span><strong>' + name + '</strong><small>main · Dockerfile · 已授权</small></span>' + icon('chevron') + '</button>').join('') + '</div><div class="command-context"><a class="text-link" href="#/settings?tab=integrations">管理授权与构建连接</a></div>') + commandFooter();
     }
-    if (modal.step === 'save-unknown') return commandTitle('确认服务保存结果') + '<div class="modal-body">' + notice('保存请求已受理，但响应未能确认。原请求与输入已固定；先核对是否已保存，不会再次创建服务。', 'warning') + keyValues([['请求中的服务', esc(draft.name)], ['固定请求 / 服务 ID', '<code>' + esc(draft.fallback) + '</code>'], ['部署', '尚未创建部署任务']]) + formError(state.errors.form) + '</div><div class="modal-actions">' + button('稍后核对', 'close-modal') + button('确认已保存服务', 'source-confirm-saved', { primary: true }) + '</div>';
+    if (modal.step === 'save-unknown') return commandTitle('确认服务保存结果') + '<div class="modal-body">' + notice('保存请求已受理，但响应未能确认。原请求与输入已固定；先核对是否已保存，不会再次创建服务。', 'warning') + keyValues([['请求中的服务', esc(draft.name)], ['固定请求 / 服务 ID', '<code>' + esc(draft.fallback) + '</code>'], ['部署', '尚未创建部署任务']]) + formError(state.errors.form) + '</div><div class="modal-actions"><span class="hint">确认保存结果后可继续或稍后部署。</span>' + button('确认已保存服务', 'source-confirm-saved', { primary: true }) + '</div>';
     if (modal.step === 'review') return commandTitle('核对部署配置') + '<div class="modal-body">' + formError(state.errors.form) + notice('服务草稿已保存 · r' + draft.savedRevision + '。确认后才会创建部署任务；也可以稍后部署。') + configurationSummary(draft, ctx.project) + '<p class="hint">此演示只更新原型中的服务与任务，不连接真实仓库或服务器。</p></div><div class="modal-actions">' + button('返回修改', 'source-config') + button('稍后部署', 'create-draft') + button('确认发布', 'create-deploy', { primary: true, disabled: state.readOnly || targetFor(ctx.project).status !== 'ready' }) + '</div>';
     const database = draft.source === 'database';
     const template = templates.find((t) => t.id === draft.templateId);
@@ -409,7 +548,8 @@
       '</div><div class="modal-actions"><span class="modal-target">' + icon('server') + esc(targetFor(ctx.project).name) + '</span>' + button(draft.createdServiceId ? '取消修改' : '取消', 'source-cancel') + button('核对部署配置', 'source-review-submit', { type: 'submit', primary: true, disabled: state.readOnly }) + '</div></form>';
   }
   function commandTitle(title) {
-    return '<div class="command-heading"><button class="command-back" data-action="source-back" aria-label="返回上一层">' + icon('back') + '</button><strong>' + title + '</strong><button class="dialog-close icon-btn" data-action="close-modal" aria-label="关闭">' + icon('close') + '</button></div>';
+    const locked = Boolean(interactionLock());
+    return '<div class="command-heading"><button class="command-back" data-action="source-back" aria-label="返回上一层"' + disabled(locked) + '>' + icon('back') + '</button><strong id="creation-step-title" tabindex="-1">' + title + '</strong><button class="dialog-close icon-btn" data-action="close-modal" aria-label="关闭"' + disabled(locked) + '>' + icon('close') + '</button></div>';
   }
   function commandFooter() {
     return '<div class="command-footer"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>↵</kbd> 确认</span><span><kbd>Esc</kbd> 返回</span></div>';
@@ -515,10 +655,8 @@
       '<div class="source-settings"><div class="section-heading"><h3>' + sourceLabel(edit.source) + '</h3><span class="pill">来源</span></div>' + (edit.source === 'git' ? '<div class="two-fields">' + field('GitHub 仓库', 'config.repository', edit.repository) + field('分支', 'config.branch', edit.branch) + field('Dockerfile', 'config.dockerfile', edit.dockerfile) + '</div><div class="row-actions">' + button('检查最新提交', 'check-commits', { small: true, icon: 'git' }) + button('Git 事件', 'git-events', { small: true, icon: 'clock' }) + '</div>' : field('容器镜像', 'config.image', edit.image, { readonly: edit.type === 'database', hint: edit.type === 'database' ? '已初始化的数据库镜像和身份受保护，主版本升级使用独立维护流程。' : '更新镜像后保存为草稿，部署时固定 digest。' }) + (edit.type !== 'database' ? selectField('拉取凭证', 'config.credentialId', edit.credentialId, [['', '公共镜像'], ...state.credentials.filter((c) => c.kind === 'registry').map((c) => [c.id, c.name])]) : '')) + '</div>' +
       configurationGroups(edit, 'config', ctx, false) + '<div class="form-footer">' + button('放弃修改', 'discard-config') + button('保存草稿', 'save-config-submit', { type: 'submit', primary: true, disabled: state.readOnly || !dirtyEdit(s) }) + '</div></form><section class="section danger-zone"><div><h2>运行与删除</h2><p>停止服务保留配置与数据。删除服务时，数据卷也会独立保留。</p></div><div class="danger-action-row"><div><strong>' + (s.status === 'stopped' ? '恢复服务' : '停止服务') + '</strong><p>' + (s.status === 'stopped' ? '恢复原已发布配置，不采用当前草稿和新提交。' : '将运行副本缩减为零。') + '</p></div>' + button(s.status === 'stopped' ? '恢复原版本' : '停止服务', s.status === 'stopped' ? 'service-resume' : 'service-stop', { disabled: state.readOnly || !s.publishedSnapshot }) + '</div><div class="danger-action-row"><div><strong>删除服务</strong><p>先核对依赖与保留的数据卷，再执行清理。</p></div>' + button('删除服务', 'service-delete', { danger: true, disabled: state.readOnly }) + '</div></section></section>';
   }
-  function logsFor(s) {
-    const settings = state.logViews[s.id] || (state.logViews[s.id] = { pod: s.podId, container: 'main', previous: false, tail: '200', follow: true, paused: false, wrap: false, query: '', buffer: [], unread: 0 });
-    if (!settings.buffer.length) {
-      settings.buffer = [
+  function seedLogLines(s) {
+    return [
         '2026-10-29T15:32:00.102Z INFO  [演示] starting ' + s.draft.name + ' with published configuration r' + s.publishedRevision,
         '2026-10-29T15:32:00.128Z INFO  [演示] environment loaded; sensitive values omitted',
         '2026-10-29T15:32:00.245Z INFO  [演示] listening on 0.0.0.0:' + (s.publishedSnapshot?.port || 'internal'),
@@ -528,22 +666,80 @@
         '2026-10-29T15:32:13.344Z WARN  [演示] cache miss; request completed using the database',
         '2026-10-29T15:32:13.356Z INFO  [演示] database connection reused, query completed in 8ms',
         '2026-10-29T15:32:15.101Z INFO  [演示] GET /health 200 2ms',
-      ];
-    }
-    return settings;
+    ];
+  }
+  function logsFor(s) {
+    return state.logViews[s.id] || (state.logViews[s.id] = { pod: s.podId, container: 'main', previous: false, tail: '200', follow: true, paused: false, wrap: false, query: '', buffer: [], unread: 0, connection: 'idle', message: '', generation: 0, timer: null });
+  }
+  function cancelLogRead(view) {
+    if (!view) return;
+    clearTimeout(view.timer); view.timer = null; view.generation += 1;
+  }
+  function readLogs(service, refresh = false, redraw = true) {
+    if (!service) return;
+    const view = logsFor(service);
+    cancelLogRead(view);
+    const request = view.generation;
+    const deferred = state.scenario === 'slow-response';
+    view.connection = 'connecting'; view.message = '';
+    const finish = () => {
+      if (view.generation !== request || state.modal?.type !== 'logs' || state.modal.serviceId !== service.id) return;
+      view.timer = null;
+      if (state.scenario === 'offline') {
+        view.connection = 'disconnected'; view.message = '日志连接中断。已载入的输出仍保留，恢复连接后可重新读取。';
+      } else if (view.pod !== service.podId) {
+        view.connection = 'unavailable'; view.message = '所选实例已不可用。请选择当前实例，再重新读取日志。';
+      } else if (!service.observedAt || ['unknown', 'stale', 'offline'].includes(service.status)) {
+        view.connection = 'unavailable'; view.message = '尚未确认当前运行实例。请先检查运行观察，期望停止不代表实例已停止。';
+      } else if (service.status === 'stopped' && !view.previous) {
+        view.connection = 'unavailable'; view.message = '最近观察为已停止，没有当前运行日志。可查看保留的 previous 演示输出。';
+      } else {
+        const lines = view.buffer.length ? view.buffer : seedLogLines(service);
+        view.buffer = state.scenario === 'empty' ? [] : lines.slice(-Number(view.tail));
+        if (refresh && state.scenario !== 'empty') view.buffer.push(now() + ' INFO  [演示] 已重新读取所选实例的日志尾部');
+        if (view.buffer.length > 1000) view.buffer = view.buffer.slice(-1000);
+        view.connection = view.follow && !view.previous ? 'receiving' : 'ended';
+        view.message = ''; view.unread = 0;
+      }
+      if (redraw || deferred) render();
+    };
+    if (deferred) { view.timer = setTimeout(finish, 700); if (redraw) render(); }
+    else finish();
+  }
+  function visibleLogLines(service) {
+    const view = logsFor(service);
+    return view.buffer.map((line) => (view.previous ? '[previous] ' : '') + (view.container === 'init' ? '[init] ' : '') + line).filter((line) => line.toLowerCase().includes(view.query.toLowerCase()));
+  }
+  function taskLogsFor(task) {
+    const count = (task.logs || []).length;
+    const view = state.taskLogViews[task.id] || (state.taskLogViews[task.id] = { query: '', group: 'all', follow: true, paused: false, unread: 0, length: count, scrollTop: 0 });
+    if ((view.paused || !view.follow) && count > view.length) view.unread += count - view.length;
+    view.length = count;
+    return view;
+  }
+  function visibleTaskLogLines(task) {
+    const view = taskLogsFor(task);
+    return (task.logs || []).filter((line) => (view.group === 'build' ? /构建|build|推送/i.test(line) : view.group === 'runtime' ? !/构建|build|推送/i.test(line) : true) && line.toLowerCase().includes(view.query.toLowerCase()));
   }
   function logsPanel(s) {
     const view = logsFor(s);
-    const lines = state.scenario === 'empty' ? [] : view.buffer.filter((line) => line.toLowerCase().includes(view.query.toLowerCase()));
-    return '<div class="log-dialog-header"><div><h2>' + esc(s.draft.name) + ' 的运行日志</h2><p class="hint">仅本次浏览器中的演示输出，最多保留 1000 行</p></div>' + badge(view.follow && !view.paused ? 'running' : 'paused', view.follow && !view.paused ? '跟随中' : '已暂停') + '</div><div class="log-controls"><label>实例<select id="log-pod" data-log="pod"><option value="' + s.podId + '">' + esc(s.podId) + '</option><option value="gone-pod"' + selected(view.pod === 'gone-pod') + '>旧实例 · 已删除</option></select></label><label>容器<select id="log-container" data-log="container"><option value="main">main</option><option value="init"' + selected(view.container === 'init') + '>init</option></select></label><label>尾部行数<select id="log-tail" data-log="tail">' + ['100', '200', '500', '1000'].map((v) => '<option value="' + v + '"' + selected(view.tail === v) + '>' + v + '</option>').join('') + '</select></label><label class="checkbox-label"><input type="checkbox" data-log="previous"' + checked(view.previous) + '> previous</label></div><div class="log-toolbar"><label class="search-field">' + icon('search') + '<input id="log-search" data-log="query" value="' + esc(view.query) + '" placeholder="筛选当前缓冲" /></label><div class="row-actions">' + button(view.follow ? '停止跟随' : '持续跟随', 'log-follow', { small: true, icon: view.follow ? 'stop' : 'play' }) + button('读取尾部', 'log-refresh', { small: true, icon: 'refresh' }) + button('换行', 'log-wrap', { small: true, attrs: ' aria-pressed="' + view.wrap + '"' }) + button('复制', 'log-copy', { small: true, icon: 'copy' }) + '</div></div>' +
-      (view.pod === 'gone-pod' ? notice('这个实例已经删除，无法读取当前日志。请选择运行实例，或预览历史日志功能。', 'warning') : s.status === 'stopped' && !view.previous ? notice('服务已停止，没有运行实例。可以查看 previous 演示输出或恢复原已发布版本。', 'warning') : state.scenario === 'offline' ? notice('读取连接中断。已载入的输出仍保留，可重新读取尾部。', 'warning') : '') +
-      '<div class="log-output' + (view.wrap ? ' wrap' : '') + '" tabindex="0" aria-label="容器日志">' + (lines.length ? lines.slice(-Number(view.tail)).map((line, index) => '<div class="log-line' + (line.includes('WARN') ? ' warn' : '') + '"><span class="line-number">' + (index + 1) + '</span><code>' + esc((view.previous ? '[previous] ' : '') + (view.container === 'init' ? '[init] ' : '') + line) + '</code></div>').join('') : '<div class="log-empty">' + (view.query ? '当前缓冲没有匹配的行。调整筛选或清空关键字。' : '当前缓冲还没有输出。读取尾部或继续跟随。') + '</div>') + '</div><div class="log-bottom"><span>' + lines.length + ' 行 · ' + (view.query ? '仅筛选当前缓冲' : '有界输出') + '</span>' + (view.paused || view.unread ? button('回到底部' + (view.unread ? ' · ' + view.unread + ' 条新输出' : ''), 'log-bottom', { small: true, primary: true }) : '<span>自动滚动至新输出</span>') + button('历史检索与下载', 'plan', { small: true, subtle: true, id: 'F37' }) + '</div>';
+    const lines = visibleLogLines(s);
+    const connection = { idle: ['pending', '尚未读取'], connecting: ['pending', '连接中'], receiving: ['running', '接收中'], ended: ['paused', '读取结束'], disconnected: ['offline', '连接中断'], unavailable: ['unknown', '实例未确认'] }[view.connection];
+    const unavailablePod = view.pod !== s.podId ? view.pod : 'gone-pod';
+    return '<div class="log-dialog-header"><div><h2>' + esc(s.draft.name) + ' 的运行日志</h2><p class="hint">仅本次浏览器中的演示输出，最多保留 1000 行</p></div>' + badge(connection[0], connection[1]) + '</div><div class="log-controls"><label>实例<select id="log-pod" data-log="pod"><option value="' + esc(s.podId) + '"' + selected(view.pod === s.podId) + '>' + esc(s.podId) + '</option><option value="' + esc(unavailablePod) + '"' + selected(view.pod === unavailablePod) + '>旧实例 · 已删除</option></select></label><label>容器<select id="log-container" data-log="container"><option value="main">main</option><option value="init"' + selected(view.container === 'init') + '>init</option></select></label><label>尾部行数<select id="log-tail" data-log="tail">' + ['100', '200', '500', '1000'].map((v) => '<option value="' + v + '"' + selected(view.tail === v) + '>' + v + '</option>').join('') + '</select></label><label class="checkbox-label"><input type="checkbox" data-log="previous"' + checked(view.previous) + '> previous</label></div><div class="log-toolbar"><label class="search-field">' + icon('search') + '<input id="log-search" data-log="query" value="' + esc(view.query) + '" placeholder="筛选当前缓冲" /></label><div class="row-actions">' + button(view.follow ? '停止跟随' : '持续跟随', 'log-follow', { small: true, icon: view.follow ? 'stop' : 'play' }) + button(view.connection === 'connecting' ? '正在连接…' : '读取尾部', 'log-refresh', { small: true, icon: 'refresh', disabled: view.connection === 'connecting' }) + button('换行', 'log-wrap', { small: true, attrs: ' aria-pressed="' + view.wrap + '"' }) + button(view.query ? '复制筛选结果' : '复制缓冲', 'log-copy', { small: true, icon: 'copy', disabled: !lines.length }) + '</div></div>' +
+      (view.message ? notice(esc(view.message), 'warning') : view.connection === 'connecting' ? notice('正在连接所选日志来源，已载入的输出暂时保留。') : '') +
+      '<div class="log-output' + (view.wrap ? ' wrap' : '') + '" tabindex="0" aria-label="容器日志">' + (lines.length ? lines.map((line, index) => '<div class="log-line' + (line.includes('WARN') ? ' warn' : '') + '"><span class="line-number">' + (index + 1) + '</span><code>' + esc(line) + '</code></div>').join('') : '<div class="log-empty">' + (view.query ? '当前缓冲没有匹配的行。调整筛选或清空关键字。' : '当前缓冲还没有输出。读取尾部或继续跟随。') + '</div>') + '</div><div class="log-bottom"><span>' + lines.length + ' 行 · ' + (view.query ? '仅筛选当前缓冲' : '有界输出') + '</span>' + (view.paused || !view.follow || view.unread ? button('回到底部' + (view.unread ? ' · ' + view.unread + ' 条新输出' : ''), 'log-bottom', { small: true, primary: true }) : '<span>自动滚动至新输出</span>') + button('历史检索与下载', 'plan', { small: true, subtle: true, id: 'F37' }) + '</div>';
+  }
+  function taskLogPanel(task, group = 'all') {
+    const view = taskLogsFor(task); view.group = group; const lines = visibleTaskLogLines(task);
+    return '<div class="task-log"><div class="log-section-title">执行输出 <span>仅演示数据</span></div><div class="log-toolbar task-log-toolbar"><label class="search-field">' + icon('search') + '<input id="task-log-query" data-task-log="query" data-task-id="' + esc(task.id) + '" value="' + esc(view.query) + '" placeholder="筛选已载入输出" aria-label="筛选已载入任务输出" /></label><div class="row-actions">' + button(view.follow ? '暂停自动滚动' : '跟随新输出', 'task-log-follow', { small: true, id: task.id }) + button(view.query ? '复制筛选结果' : '复制输出', 'task-log-copy', { small: true, icon: 'copy', id: task.id, disabled: !lines.length }) + '</div></div>' +
+      '<div class="log-output task-log-output" id="task-log-output-' + esc(task.id) + '" data-task-id="' + esc(task.id) + '" tabindex="0" aria-label="已载入任务输出">' + (lines.length ? lines.map((line, index) => '<div class="log-line' + (line.includes('WARN') ? ' warn' : line.includes('ERROR') ? ' error' : '') + '"><span class="line-number">' + (index + 1) + '</span><code>' + esc(line) + '</code></div>').join('') : '<p class="log-empty">' + (view.query ? '已载入输出中没有匹配结果。' : '任务尚未记录输出。') + '</p>') + '</div><div class="log-bottom"><span>' + lines.length + ' 行 · 仅已载入输出</span>' + (view.paused || !view.follow || view.unread ? button('回到底部' + (view.unread ? ' · ' + view.unread + ' 条新输出' : ''), 'task-log-bottom', { small: true, id: task.id }) : '<span>自动滚动至新输出</span>') + '</div></div>';
   }
   function taskPanel(task) {
     const related = findService(task.serviceId);
     return '<div class="task-summary"><div><span class="eyebrow">' + (task.kind === 'deployment' ? '部署记录' : '资源操作') + '</span><h2>' + esc(task.name) + '</h2><p class="mono muted">' + esc(task.id) + '</p></div>' + badge(task.status) + '</div>' + (task.error ? notice(esc(task.error), 'error') : '') + (task.status === 'unknown' ? notice('当前结果无法确认。原任务仍保留，请先确认结果，不要重复创建服务。', 'warning') : '') +
       '<div class="task-timeline">' + task.stages.map((stage, index) => '<div class="task-stage ' + stage.status + '"><span>' + (stage.status === 'succeeded' ? icon('check') : stage.status === 'failed' ? icon('close') : index + 1) + '</span><div><strong>' + esc(stage.name) + '</strong><small>' + esc(statusNames[stage.status] || stage.status) + '</small></div></div>').join('') + '</div>' +
-      '<div class="task-log"><div class="log-section-title">执行输出 <span>仅演示数据</span></div><pre>' + esc(task.logs.join('\n')) + '</pre></div>' +
+      taskLogPanel(task) +
       disclosure('固定发布快照', task.snapshot ? keyValues([['服务', esc(related?.service.draft.name || task.serviceId || '资源操作')], ['环境', esc(task.environmentId || '全局')], ['配置', 'r' + (task.revision || '1')], ['镜像', '<span class="mono">' + esc(task.image || task.snapshot.image || '不适用') + '</span>'], ['Digest', '<span class="mono">' + esc(task.digest || '未解析') + '</span>'], ['Commit', '<code>' + esc(task.commit || '镜像来源不适用') + '</code>'], ['持久卷快照', esc((task.snapshot.mounts || []).map((m) => m.volumeId + ' → ' + m.path).join('；') || '无挂载')]]) : keyValues([['目标', esc(task.targetId || task.serviceId || '平台')], ['创建时间', date(task.createdAt)], ['重试来源', esc(task.attemptOf || '首次执行')]])) +
       (task.result ? '<p class="task-result">' + esc(task.result) + '</p>' : '') +
       '<div class="modal-actions"><a class="text-link" href="#/task/' + task.id + '">完整任务详情' + icon('external') + '</a>' +
@@ -708,7 +904,7 @@
     return '<div class="command-search">' + icon('search') + '<input id="command-query" data-bind="modal.query" value="' + esc(state.modal.query || '') + '" placeholder="搜索项目、服务或功能…" autofocus /></div><div class="command-list">' + results.map((r, i) => '<a class="command-item" href="' + esc(r.url) + '" data-command-item data-index="' + i + '">' + icon(r.icon) + '<span><strong>' + esc(r.title) + '</strong><small>' + esc(r.detail) + '</small></span>' + icon('arrow') + '</a>').join('') + (results.length ? '' : '<p class="inline-empty">没有匹配结果，试试其他名称。</p>') + '</div>' + commandFooter();
   }
   function demoPanel(ctx) {
-    return '<div class="modal-body"><p>这些选项只改变本地演示状态，不访问 API 或外部资源。</p><div class="scenario-list">' + [['normal', '正常流程', '正常保存与任务结果'], ['task-failure', '下一次任务失败', '原记录保留，可以重试'], ['offline', '目标失联 / 结果未知', '保留上次观察和原请求'], ['conflict', '保存时版本冲突', '保留本地编辑，载入最新'], ['page-error', '页面刷新失败', '保留上次数据'], ['empty', '当前列表 / 日志为空', '体验引导与恢复入口'], ['integration-missing', 'Git 连接未配置', '查看授权前置流程']].map(([value, label, detail]) => '<label class="scenario-option"><input type="radio" name="scenario" data-action="demo-scenario" value="' + value + '"' + checked(state.scenario === value) + '><span><strong>' + label + '</strong><small>' + detail + '</small></span></label>').join('') + '</div><label class="checkbox-label"><input type="checkbox" data-action="readonly-toggle"' + checked(state.readOnly) + '> 平台恢复只读模式</label>' + (ctx.service?.draft.source === 'git' ? '<div class="section-actions">' + button('模拟 main 新提交', 'demo-git-push') + button('模拟无效签名', 'demo-git-reject') + '</div>' : '') + '<div class="section-actions">' + button('模拟会话到期', 'demo-expired') + button('恢复正常场景', 'clear-scenario') + '</div><div class="theme-options">' + selectField('界面外观', 'theme', state.theme, [['light', '浅色'], ['dark', '深色'], ['system', '跟随系统']]) + '</div><a class="text-link" href="#/planning">查看 P1 / P2 规划与能力边界</a></div>';
+    return '<div class="modal-body"><p>这些选项只改变本地演示状态，不访问 API 或外部资源。</p><div class="scenario-list">' + [['normal', '正常流程', '正常保存与任务结果'], ['slow-response', '慢响应演示', '本地模拟受理与连接等待，不访问 API'], ['task-failure', '下一次任务失败', '原记录保留，可以重试'], ['offline', '目标失联 / 结果未知', '保留上次观察和原请求'], ['conflict', '保存时版本冲突', '保留本地编辑，载入最新'], ['page-error', '页面刷新失败', '保留上次数据'], ['empty', '当前列表 / 日志为空', '体验引导与恢复入口'], ['integration-missing', 'Git 连接未配置', '查看授权前置流程']].map(([value, label, detail]) => '<label class="scenario-option"><input type="radio" name="scenario" data-action="demo-scenario" value="' + value + '"' + checked(state.scenario === value) + '><span><strong>' + label + '</strong><small>' + detail + '</small></span></label>').join('') + '</div><label class="checkbox-label"><input type="checkbox" data-action="readonly-toggle"' + checked(state.readOnly) + '> 平台恢复只读模式</label>' + (ctx.service?.draft.source === 'git' ? '<div class="section-actions">' + button('模拟 main 新提交', 'demo-git-push') + button('模拟无效签名', 'demo-git-reject') + '</div>' : '') + '<div class="section-actions">' + button('模拟会话到期', 'demo-expired') + button('恢复正常场景', 'clear-scenario') + '</div><div class="theme-options">' + selectField('界面外观', 'theme', state.theme, [['light', '浅色'], ['dark', '深色'], ['system', '跟随系统']]) + '</div><a class="text-link" href="#/planning">查看 P1 / P2 规划与能力边界</a></div>';
   }
 
   function setPath(object, path, value) {
@@ -787,7 +983,7 @@
   function createProject() {
     if (state.readOnly) return showError('平台处于只读恢复模式，当前不能创建项目。');
     const draft = state.projectDraft;
-    if (draft.createdId) { const existing = state.projects.find((p) => p.id === draft.createdId); if (existing) { draft.dirty = false; goto(projectUrl(existing), true); openSource({ project: existing, environment: existing.environments[0] }); return; } }
+    if (draft.createdId) { const existing = state.projects.find((p) => p.id === draft.createdId); if (existing) return demoRequest('create-project', '正在确认项目…', () => enterCreatedProject(existing)); }
     const target = state.clusters.find((t) => t.id === draft.targetId);
     if (!target) return showError('请选择一个已登记的部署位置。', 'project.targetId');
     const name = draft.name.trim() || '新项目 ' + draft.id.slice(-4);
@@ -798,9 +994,15 @@
     if (state.scenario === 'conflict') return showError('目标登记在另一处发生变化。已保留输入，请恢复正常场景后重试。');
     const environment = { id: draft.id + '-production', name: '生产', slug: 'production', description: '默认环境' };
     const project = { id: draft.id, name, slug: resourceSlug, description: draft.description, targetId: target.id, clusterId: target.id, revision: 1, environments: [environment], lastEnvironmentId: environment.id, services: [] };
-    state.projects.unshift(project); draft.createdId = project.id; draft.dirty = false;
-    if (state.scenario === 'offline') return showError('创建请求已受理，但响应未能确认。点击“确认已创建项目”继续，不会重复创建。');
-    goto(projectUrl(project), true); openSource({ project, environment });
+    demoRequest('create-project', '正在创建项目…', () => {
+      state.projects.unshift(project); draft.createdId = project.id; draft.dirty = false;
+      if (state.scenario === 'offline') { draft.uncertain = true; return showError('创建请求已受理，但响应未能确认。点击“确认已创建项目”继续，不会重复创建。'); }
+      enterCreatedProject(project);
+    });
+  }
+  function enterCreatedProject(project) {
+    state.projectDraft.uncertain = false; state.projectDraft.dirty = false;
+    goto(projectUrl(project), true); openSource({ project, environment: project.environments[0] });
     state.projectDraft = { id: uid('project'), name: '', slug: '', description: '', targetId: state.clusters[0]?.id, dirty: false, createdId: null };
   }
   function saveServiceConfig() {
@@ -809,8 +1011,11 @@
     const edit = serviceEdit(ctx.service); const problem = validateConfig(edit, ctx, 'config');
     if (problem) return showError(problem.message, problem.key);
     if (state.scenario === 'conflict') return showError('服务已被另一处修改。已保留本地编辑，选择“载入最新”后重新核对。');
-    ctx.service.draft = normalizedConfig(edit); ctx.service.revision += 1; state.serviceEdits[ctx.service.id] = clone(ctx.service.draft);
-    syncReferences(); state.errors = {}; render(); notify('草稿已保存，部署后生效。');
+    const next = normalizedConfig(edit);
+    demoRequest('service-config', '正在保存草稿…', () => {
+      ctx.service.draft = next; ctx.service.revision += 1; state.serviceEdits[ctx.service.id] = clone(next);
+      syncReferences(); state.errors = {}; render(); notify('草稿已保存，部署后生效。');
+    });
   }
   function syncReferences() {
     for (const db of state.databases) {
@@ -856,7 +1061,8 @@
       }
     }
     Object.assign(draft, clone(service.draft), { savedRevision: service.revision, savedSignature: JSON.stringify(service.draft), newVolumeEnabled: false });
-    syncReferences(); history.replaceState(null, '', serviceUrl(ctx.project, service));
+    syncReferences(); history.replaceState({ ...(history.state || {}), [projectListKey]: projectList }, '', serviceUrl(ctx.project, service));
+    modal.route = location.hash;
     return service;
   }
   function createService(deploy) {
@@ -975,13 +1181,15 @@
 
   function handleAction(name, el) {
     const ctx = context(); const modal = state.modal; const s = ctx.service;
+    const lock = interactionLock();
+    if (name !== 'demo-expired' && (state.pendingAction || (lock && !['source-confirm-saved', 'submit-project'].includes(name)))) { notify(lock); if (state.modal) focusModal(); return; }
     if (name.startsWith('mg:')) return window.OzzManagement?.action(name, el, ctx);
     if (name === 'toggle-menu') { state.mobileOpen = !state.mobileOpen; render(); }
     else if (name === 'toggle-theme') { theme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); render(); }
     else if (name === 'command-search') openModal({ type: 'search', title: '快速导航', query: '' });
     else if (name === 'demo-options') openModal({ type: 'demo', title: '演示场景' });
     else if (name === 'clear-scenario') { state.scenario = 'normal'; state.readOnly = false; state.errors = {}; closeModal(); }
-    else if (name === 'clear-search') { state.search = ''; render(); }
+    else if (name === 'clear-search') updateProjectSearch('');
     else if (name === 'close-modal') closeModal();
     else if (name === 'add-service') openSource(ctx);
     else if (name === 'choose-source') chooseSource(el.dataset.source);
@@ -998,10 +1206,13 @@
     else if (name === 'source-confirm-saved') {
       const saved = sourceContext().project.services.find((item) => item.id === modal.draft.createdServiceId);
       if (!saved) return showError('尚未找到原保存请求的结果，请保留此请求稍后核对。');
-      Object.assign(modal.draft, clone(saved.draft), { savedRevision: saved.revision, savedSignature: JSON.stringify(saved.draft), saveUnknown: false });
-      sourceStep('review');
+      demoRequest('source-confirm-saved', '正在确认保存结果…', () => {
+        Object.assign(modal.draft, clone(saved.draft), { savedRevision: saved.revision, savedSignature: JSON.stringify(saved.draft), saveUnknown: false });
+        sourceStep('review');
+      });
     }
-    else if (name === 'create-draft' || name === 'create-deploy') createService(name === 'create-deploy');
+    else if (name === 'create-draft') createService(false);
+    else if (name === 'create-deploy') demoRequest(name, '正在受理发布…', () => createService(true));
     else if (name === 'variable-add') { const config = configForPrefix(el.dataset.prefix || 'config'); config.variables.push({ key: '', value: '', mode: 'plain' }); render(); const index = config.variables.length - 1; document.getElementById((el.dataset.prefix || 'config') + '.variables.' + index + '.key')?.focus(); }
     else if (name === 'variable-remove') { configForPrefix(el.dataset.prefix || 'config').variables.splice(Number(el.dataset.index), 1); render(); }
     else if (name === 'port-add') { configForPrefix(el.dataset.prefix || 'config').ports.push({ name: '', port: '8080', expose: 'private' }); render(); }
@@ -1009,7 +1220,7 @@
     else if (name === 'mount-add') { configForPrefix(el.dataset.prefix || 'config').mounts.push({ volumeId: '', path: '/data', readOnly: false }); render(); }
     else if (name === 'mount-remove') { configForPrefix(el.dataset.prefix || 'config').mounts.splice(Number(el.dataset.index), 1); render(); }
     else if (name === 'import-env') openModal({ type: 'import-env', title: '批量导入 .env', prefix: el.dataset.prefix || 'config', parent: modal?.type === 'source' ? modal : null, text: '', protect: false, parsed: null });
-    else if (name === 'import-cancel') { if (modal.parent) { state.modal = modal.parent; state.errors = {}; render(); } else closeModal(); }
+    else if (name === 'import-cancel') { modal.text = ''; modal.parsed = null; if (modal.parent) { state.modal = modal.parent; state.errors = {}; render(); restoreFocus(modal.triggerFocus, modal.parent); } else closeModal(); }
     else if (name === 'env-apply') {
       if (!modal.parsed?.length) return;
       const config = configForPrefix(modal.prefix);
@@ -1038,11 +1249,22 @@
       else { task.outcome = 'succeeded'; finishTask(task, task._onSuccess); }
     } else if (name === 'instances') openModal({ title: s.draft.name + ' 的实例', wide: true, body: (s.status === 'stopped' || s.status === 'draft' ? empty('没有运行实例', s.status === 'stopped' ? '服务按用户意图停止，恢复时使用原已发布配置。' : '先发布当前服务。') : '<div class="table-scroll"><table class="data-table"><thead><tr><th>Pod / 容器</th><th>状态</th><th>重启</th><th>节点</th></tr></thead><tbody><tr><td><code>' + esc(s.podId) + '</code><small class="block">main · imageID sha256:8a35c4d…</small></td><td>' + badge(state.scenario === 'offline' ? 'unknown' : s.status) + '</td><td>' + s.restarts + '</td><td>' + esc(targetFor(ctx.project).name) + '</td></tr></tbody></table></div>') + keyValues([['已发布配置', 'r' + (s.publishedRevision || '未发布')], ['最近观察', date(s.observedAt)], ['期望副本', s.desiredState === 'stopped' ? '0' : s.draft.replicas]]), footer: button('查看日志', 'open-logs', { primary: true, icon: 'log' }) });
     else if (name === 'open-logs') openModal({ type: 'logs', title: '容器日志', serviceId: s.id, wide: true });
-    else if (name === 'log-follow') { const v = logsFor(findService(modal.serviceId).service); v.follow = !v.follow; v.paused = false; render(); }
+    else if (name === 'log-follow') {
+      const service = findService(modal.serviceId)?.service; if (!service) return;
+      const view = logsFor(service); view.follow = !view.follow; view.paused = false;
+      if (view.follow) readLogs(service);
+      else { cancelLogRead(view); view.connection = 'ended'; render(); }
+    }
     else if (name === 'log-wrap') { const v = logsFor(findService(modal.serviceId).service); v.wrap = !v.wrap; render(); }
-    else if (name === 'log-refresh') { const v = logsFor(findService(modal.serviceId).service); v.buffer.push(new Date().toISOString() + ' INFO  [演示] GET /health 200 3ms · 重新读取尾部'); if (v.buffer.length > 1000) v.buffer.shift(); render(); }
+    else if (name === 'log-refresh') readLogs(findService(modal.serviceId)?.service, true);
     else if (name === 'log-bottom') { const v = logsFor(findService(modal.serviceId).service); v.paused = false; v.unread = 0; render(); const log = document.querySelector('.log-output'); if (log) log.scrollTop = log.scrollHeight; }
-    else if (name === 'log-copy') copyText(logsFor(findService(modal.serviceId).service).buffer.join('\n'));
+    else if (name === 'log-copy' || name === 'task-log-copy') copyText(copyValue(el), el);
+    else if (name === 'task-log-follow' || name === 'task-log-bottom') {
+      const task = state.tasks.find((item) => item.id === el.dataset.id); if (!task) return;
+      const view = taskLogsFor(task);
+      view.follow = name === 'task-log-bottom' ? true : !view.follow; view.paused = false; view.unread = 0; render();
+      if (name === 'task-log-bottom') { const log = document.querySelector('.task-log-output'); if (log) log.scrollTop = log.scrollHeight; }
+    }
     else if (name === 'refresh-runtime') {
       addTask({ type: 'observe', name: s.draft.name + ' · 重新观察', serviceId: s.id, projectId: ctx.project.id, environmentId: s.environmentId, targetId: ctx.project.targetId }, (task) => { s.observedAt = now(); task.result = '已重新读取当前实例、事件和即时指标。'; });
     } else if (name === 'check-commits') {
@@ -1094,19 +1316,84 @@
       const run = state.planningRuns.find((r) => r.id === modal.runId);
       if (run.status !== 'succeeded' || !modal.parameters.verifySchema || !modal.parameters.verifyData || !modal.parameters.verifyApp) return;
       run.validated = true; run.validationAt = now(); render();
-    } else if (name === 'copy') copyText(el.dataset.copy || '');
+    } else if (name === 'copy') copyText(el.dataset.copy || '', el);
     else if (name === 'account') openModal({ title: '个人工作区', body: '<div class="account-dialog"><span class="avatar">M</span><div><strong>演示管理员</strong><small>原型中的本地会话</small></div></div><div class="section-actions">' + button('外观与演示场景', 'demo-options', { icon: 'sun' }) + button('退出当前会话', 'logout', { icon: 'logout' }) + '</div>' });
     else if (name === 'logout' || name === 'demo-expired') {
-      const exitSession = () => { state.returnTo = location.hash; state.signedIn = false; state.login = { username: '', password: '', show: false }; state.errors = name === 'demo-expired' ? { form: '会话已过期。重新登录后返回原页面，不会重放写操作。' } : {}; state.modal = null; render(); };
-      if (unsaved()) confirm({ title: '退出并放弃未保存修改？', description: '当前本地草稿尚未保存。', confirmText: '退出当前会话', onConfirm() { if (s) delete state.serviceEdits[s.id]; exitSession(); } }); else exitSession();
+      const exitSession = () => { state.returnTo = location.hash; state.signedIn = false; state.pendingAction = null; clearCopyFeedback(); if (modal?.type === 'logs') cancelLogRead(state.logViews[modal.serviceId]); state.login = { username: '', password: '', show: false }; state.errors = name === 'demo-expired' ? { form: '会话已过期。重新登录后返回原页面，不会重放写操作。' } : {}; state.modal = null; render(); };
+      if (name !== 'demo-expired' && unsaved()) confirm({ title: '退出并放弃未保存修改？', description: '当前本地草稿尚未保存。', confirmText: '退出当前会话', onConfirm() { if (s) delete state.serviceEdits[s.id]; exitSession(); } }); else exitSession();
     } else if (name === 'initialization-guide') openModal({ title: '首次初始化', body: '<p>真实 Ozz 使用运维 CLI 初始化唯一管理员与主密钥，不提供公开注册或默认密码。</p>' + notice('缺少主密钥时应恢复原密钥，不能重新生成并冒充恢复。', 'warning') + '<pre class="inline-code">查看项目安装文档中的管理员初始化步骤\n此原型不执行初始化命令。</pre>', footer: button('返回演示登录', 'close-modal') });
   }
-  function copyText(text) {
-    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(() => notify('已复制。')).catch(() => openModal({ title: '复制内容', body: '<textarea class="copy-area" readonly autofocus>' + esc(text) + '</textarea><p class="hint">浏览器未允许自动复制，请选中内容后复制。</p>' }));
-    else openModal({ title: '复制内容', body: '<textarea class="copy-area" readonly autofocus>' + esc(text) + '</textarea>' });
+  function copyValue(element) {
+    if (element.dataset.action === 'log-copy') {
+      const service = findService(state.modal?.serviceId)?.service;
+      return service ? visibleLogLines(service).join('\n') : '';
+    }
+    if (element.dataset.action === 'task-log-copy') {
+      const task = state.tasks.find((item) => item.id === element.dataset.id);
+      return task ? visibleTaskLogLines(task).join('\n') : '';
+    }
+    return element.dataset.copy || '';
+  }
+  function copyKey(element) {
+    const action = element.dataset.action;
+    const index = [...document.querySelectorAll('[data-action="' + action + '"]')].indexOf(element);
+    return [location.hash, state.modal?.type, state.modal?.serviceId, state.modal?.taskId, action, index].join('|');
+  }
+  function copyScope(element) {
+    if (element.dataset.action === 'log-copy') {
+      const view = state.logViews[state.modal?.serviceId];
+      return JSON.stringify([view?.pod, view?.container, view?.previous, view?.tail, view?.query]);
+    }
+    if (element.dataset.action === 'task-log-copy') { const view = state.taskLogViews[element.dataset.id]; return JSON.stringify([view?.group, view?.query]); }
+    return copyValue(element);
+  }
+  function clearCopyFeedback() {
+    for (const value of copyStates.values()) clearTimeout(value.timer);
+    copyStates.clear();
+  }
+  function decorateCopies() {
+    document.querySelectorAll('[data-action="copy"], [data-action="log-copy"], [data-action="task-log-copy"]').forEach((element) => {
+      const key = copyKey(element); const text = copyValue(element);
+      let record = copyStates.get(key);
+      if (record && record.scope !== copyScope(element)) {
+        if (record.status === 'pending') record.stale = true;
+        else { clearTimeout(record.timer); copyStates.delete(key); record = null; }
+      }
+      if (!element.dataset.copyOriginal) { element.dataset.copyOriginal = element.innerHTML; element.dataset.copyDisabled = String(element.disabled); }
+      element.disabled = element.dataset.copyDisabled === 'true' || !text || record?.status === 'pending' || Boolean(state.pendingAction);
+      element.setAttribute('aria-busy', String(record?.status === 'pending'));
+      element.innerHTML = record?.status === 'pending' ? icon('refresh', 'pending-icon') + '正在复制' : record?.status === 'copied' ? icon('check') + '已复制' : element.dataset.copyOriginal;
+      const feedback = element.nextElementSibling?.classList.contains('copy-feedback') ? element.nextElementSibling : null;
+      if (record?.status === 'error') {
+        if (!feedback) element.insertAdjacentHTML('afterend', '<span class="copy-feedback" role="status">复制失败，请选中文本后复制。</span>');
+      } else feedback?.remove();
+    });
+  }
+  async function copyText(text, element) {
+    if (!(element instanceof HTMLElement) || !text) return;
+    const key = copyKey(element);
+    if (copyStates.get(key)?.status === 'pending') return;
+    clearTimeout(copyStates.get(key)?.timer);
+    const record = { scope: copyScope(element), status: 'pending', timer: null };
+    copyStates.set(key, record); decorateCopies();
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(text);
+      if (copyStates.get(key) !== record) return;
+      if (record.stale) { copyStates.delete(key); decorateCopies(); return; }
+      record.status = 'copied';
+      record.timer = setTimeout(() => { if (copyStates.get(key) === record) { copyStates.delete(key); decorateCopies(); } }, 1600);
+    } catch {
+      if (copyStates.get(key) !== record) return;
+      if (record.stale) { copyStates.delete(key); decorateCopies(); return; }
+      record.status = 'error';
+    }
+    decorateCopies();
   }
   function handleSubmit(name, form) {
     const ctx = context(), modal = state.modal, s = ctx.service;
+    const lock = interactionLock();
+    if (state.pendingAction || (lock && name !== 'create-project')) { notify(lock); return; }
     if (name.startsWith('mg:')) return window.OzzManagement?.submit(name, form, ctx);
     if (state.composing || Date.now() - state.compositionEndedAt < 160) return;
     if (name === 'create-project') return createProject();
@@ -1118,19 +1405,27 @@
       const problem = validateConfig(draft, scope, 'create'); if (problem) return showError(problem.message, problem.key);
       if (draft.type === 'database' && (Number(draft.storage) < 1 || Number(draft.storage) > 1024)) return showError('数据卷容量需要在 1 到 1024 GiB 之间。', 'create.storage');
       if (draft.newVolumeEnabled && (Number(draft.newVolumeSize) < 1 || !draft.newVolumePath.startsWith('/') || draft.newVolumePath === '/')) return showError('请核对新数据卷容量与绝对挂载目录。', 'create.newVolumePath');
-      const saved = saveCreationDraft(); if (!saved) return;
-      draft.saveUnknown = state.scenario === 'offline';
-      sourceStep(draft.saveUnknown ? 'save-unknown' : 'review');
+      demoRequest('source-review', '正在保存服务…', () => {
+        const saved = saveCreationDraft(); if (!saved) return;
+        draft.saveUnknown = state.scenario === 'offline';
+        sourceStep(draft.saveUnknown ? 'save-unknown' : 'review');
+      });
     } else if (name === 'deploy-review') {
       if (state.readOnly) return showError('平台当前只读。');
       if (s.revision !== modal.revision || JSON.stringify(s.draft) !== modal.signature || state.scenario === 'conflict') return showError('配置或来源已变化，当前预览已失效。返回配置并重新核对。');
       if (s.status === 'stopped' && !modal.start) return showError('请明确确认部署并启动已停止的服务。');
       if (s.configurationState === 'partial' && !modal.repair) return showError('请明确确认按本次快照修复部分应用状态。');
       if (targetFor(ctx.project).status !== 'ready') return showError('部署位置尚未就绪，请先验证集群连接。');
-      const snapshot = clone(modal.snapshot); const revision = modal.revision; closeModal(false); publishService(ctx.project, s, snapshot, revision);
+      const snapshot = clone(modal.snapshot); const revision = modal.revision;
+      demoRequest('deploy-review', '正在受理部署…', () => { closeModal(false); publishService(ctx.project, s, snapshot, revision); restoreFocus(modal.rootFocus); });
     } else if (name === 'confirm') {
       if (modal.requireName && modal.input !== modal.requireName) return showError('请输入完整名称 ' + modal.requireName + '。', 'modal.input');
-      const callback = modal.onConfirm; closeModal(false); callback?.(); render();
+      const callback = modal.onConfirm;
+      demoRequest('confirm', modal.pendingLabel || '正在处理…', () => {
+        closeModal(false); callback?.();
+        if (state.modal) state.modal.rootFocus = modal.rootFocus;
+        else restoreFocus(modal.rootFocus);
+      });
     } else if (name === 'env-parse') {
       const parsed = []; const keys = new Set();
       for (const [index, raw] of (modal.text || '').split(/\r?\n/).entries()) {
@@ -1209,13 +1504,22 @@
   }
   function inputEvent(event) {
     const el = event.target; const ctx = context();
+    if (interactionLock()) return;
     if (window.OzzManagement?.change(event, ctx)) return;
     if (el.dataset.bind) return updateBinding(el);
     if (el.dataset.log && state.modal?.type === 'logs') {
-      const view = logsFor(findService(state.modal.serviceId).service); view[el.dataset.log] = el.type === 'checkbox' ? el.checked : el.value; render(); return;
+      const service = findService(state.modal.serviceId)?.service; if (!service) return;
+      const view = logsFor(service); const key = el.dataset.log; const value = el.type === 'checkbox' ? el.checked : el.value;
+      if (view[key] === value) return;
+      view[key] = value;
+      if (['pod', 'container', 'previous'].includes(key)) { view.buffer = []; view.unread = 0; view.paused = false; readLogs(service); }
+      else if (key === 'tail') readLogs(service);
+      else render();
+      return;
     }
+    if (el.dataset.taskLog) { const task = state.tasks.find((item) => item.id === el.dataset.taskId); if (task) { taskLogsFor(task).query = el.value; render(); } return; }
     const name = el.dataset.action;
-    if (name === 'project-search') { state.search = el.value; if (!state.composing) render(); }
+    if (name === 'project-search') { state.search = el.value; if (!state.composing) updateProjectSearch(el.value); }
     else if (name === 'environment-switch') {
       const env = ctx.project.environments.find((e) => e.id === el.value); if (env) goto(projectUrl(ctx.project, '', env.id));
     } else if (name === 'history-filter') { state.modal.filter = el.value; state.modal.page = 0; render(); }
@@ -1233,14 +1537,20 @@
     const anchor = event.target.closest('a[href^="#/"]');
     if (anchor) { event.preventDefault(); goto(anchor.getAttribute('href')); }
   });
+  document.addEventListener('auxclick', (event) => { if (event.target.closest('a[href]') && interactionLock()) { event.preventDefault(); notify(interactionLock()); } });
   document.addEventListener('submit', (event) => { event.preventDefault(); if (event.target.dataset.form) handleSubmit(event.target.dataset.form, event.target); });
   document.addEventListener('input', inputEvent);
   document.addEventListener('change', inputEvent);
   document.addEventListener('compositionstart', () => { state.composing = true; });
-  document.addEventListener('compositionend', () => { state.composing = false; state.compositionEndedAt = Date.now(); requestAnimationFrame(() => render()); });
+  document.addEventListener('compositionend', (event) => { state.composing = false; state.compositionEndedAt = Date.now(); if (event.target.dataset.action === 'project-search') updateProjectSearch(event.target.value); else requestAnimationFrame(() => render()); });
   document.addEventListener('keydown', (event) => {
     if (event.isComposing || state.composing || Date.now() - state.compositionEndedAt < 160) return;
+    if (interactionLock() && (event.key === 'Escape' || ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k'))) { event.preventDefault(); notify(interactionLock()); return; }
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openModal({ type: 'search', title: '快速导航', query: '' }); return; }
+    if (event.key === 'Home' && event.target.classList?.contains('task-log-output')) {
+      const task = state.tasks.find((item) => item.id === event.target.dataset.taskId);
+      if (task) { event.preventDefault(); const view = taskLogsFor(task); view.paused = true; view.scrollTop = 0; event.target.scrollTop = 0; render(); return; }
+    }
     if (!state.modal) return;
     if (event.key === 'Escape') { event.preventDefault(); if (state.modal.type === 'source') handleAction('source-back', document.createElement('button')); else if (state.modal.type === 'import-env') handleAction('import-cancel', document.createElement('button')); else closeModal(); return; }
     const items = [...document.querySelectorAll('.dialog [data-command-item]')];
@@ -1250,31 +1560,58 @@
     } else if (items.length && event.key === 'Enter' && ['command-query', 'repo-search'].includes(document.activeElement?.id)) { event.preventDefault(); items[state.commandIndex || 0]?.click(); }
     if (event.key === 'Tab') {
       const focusable = [...document.querySelectorAll('.dialog a[href],.dialog button:not([disabled]),.dialog input:not([disabled]),.dialog select:not([disabled]),.dialog textarea:not([disabled]),.dialog summary')].filter((node) => node.getClientRects().length);
+      if (!focusable.length) { event.preventDefault(); document.querySelector('.dialog')?.focus(); return; }
+      if (!document.querySelector('.dialog')?.contains(document.activeElement)) { event.preventDefault(); (event.shiftKey ? focusable.at(-1) : focusable[0])?.focus(); return; }
       if (event.shiftKey && document.activeElement === focusable[0]) { event.preventDefault(); focusable.at(-1)?.focus(); }
       else if (!event.shiftKey && document.activeElement === focusable.at(-1)) { event.preventDefault(); focusable[0]?.focus(); }
     }
   });
   document.addEventListener('scroll', (event) => {
+    if (event.target.classList?.contains('task-log-output')) {
+      const task = state.tasks.find((item) => item.id === event.target.dataset.taskId); if (!task) return;
+      const view = taskLogsFor(task); const element = event.target;
+      view.scrollTop = element.scrollTop;
+      if (view.follow && element.scrollHeight - element.scrollTop - element.clientHeight > 24 && !view.paused) { view.paused = true; render(); }
+      return;
+    }
     if (!event.target.classList?.contains('log-output') || state.modal?.type !== 'logs') return;
     const element = event.target; const view = logsFor(findService(state.modal.serviceId).service);
     if (view.follow && element.scrollHeight - element.scrollTop - element.clientHeight > 24 && !view.paused) { view.paused = true; render(); }
   }, true);
-  window.addEventListener('hashchange', () => { state.mobileOpen = false; state.errors = {}; render(); window.scrollTo({ top: 0 }); });
-  window.addEventListener('beforeunload', (event) => { if (unsaved()) { event.preventDefault(); event.returnValue = ''; } });
+  window.addEventListener('hashchange', () => {
+    const lock = interactionLock();
+    if (lock) { history.replaceState({ ...(history.state || {}), [projectListKey]: projectList }, '', renderedHash); notify(lock); return; }
+    const previous = renderedHash;
+    const saved = history.state?.[projectListKey];
+    if (isProjectList(location.hash) && typeof saved?.query === 'string' && Number.isFinite(saved?.scroll)) projectList = { query: saved.query, scroll: Math.max(0, saved.scroll) };
+    if (state.modal && state.modal.route !== location.hash) closeModal(false);
+    clearCopyFeedback(); state.mobileOpen = false; state.errors = {}; render();
+    history.replaceState({ ...(history.state || {}), [projectListKey]: projectList }, '', location.href);
+    if (isProjectList(location.hash)) { const top = projectList.scroll; requestAnimationFrame(() => window.scrollTo({ top })); }
+    else if (previous.split('?')[0] !== location.hash.split('?')[0]) window.scrollTo({ top: 0 });
+  });
+  let listScrollTimer;
+  window.addEventListener('scroll', () => {
+    if (!isProjectList(location.hash) || renderedHash !== location.hash) return;
+    projectList.scroll = window.scrollY;
+    clearTimeout(listScrollTimer); listScrollTimer = setTimeout(rememberProjectList, 120);
+  });
+  window.addEventListener('beforeunload', (event) => { if (unsaved() || interactionLock()) { event.preventDefault(); event.returnValue = ''; } });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (state.theme === 'system') theme('system'); });
   setInterval(() => {
     if (state.modal?.type !== 'logs') return;
     const found = findService(state.modal.serviceId); if (!found) return;
     const view = logsFor(found.service);
-    if (!view.follow || view.previous || view.pod === 'gone-pod' || found.service.status !== 'running' || state.scenario === 'offline' || state.scenario === 'empty') return;
+    if (!view.follow || view.previous || view.connection !== 'receiving' || view.pod !== found.service.podId || found.service.status !== 'running' || state.scenario === 'offline' || state.scenario === 'empty') return;
     view.buffer.push(new Date().toISOString() + ' INFO  [演示] GET /health 200 ' + (2 + view.buffer.length % 5) + 'ms');
     if (view.buffer.length > 1000) view.buffer.shift();
     if (view.paused) view.unread += 1;
     render();
   }, 1800);
-  const api = { state, esc, icon, badge, uid, now, goto, projectUrl, serviceUrl, targetFor, allServices, findService, render, notify, openModal, closeModal, confirm, addTask, cancelTask, retryTask, openPlan, templates, field, selectField, button, notice, empty, keyValues, syncReferences, date, serviceEdit };
+  const api = { state, esc, icon, badge, uid, now, goto, projectUrl, serviceUrl, targetFor, allServices, findService, render, notify, openModal, closeModal, confirm, demoRequest, taskLogPanel, addTask, cancelTask, retryTask, openPlan, templates, field, selectField, button, notice, empty, keyValues, syncReferences, date, serviceEdit };
   window.OzzManagement?.init(api);
   window.OzzPrototype = { state, api, context, render, openSource, openPlan, templates };
   theme(state.theme);
   render();
+  if (isProjectList(location.hash)) { const top = projectList.scroll; requestAnimationFrame(() => window.scrollTo({ top })); }
 })();

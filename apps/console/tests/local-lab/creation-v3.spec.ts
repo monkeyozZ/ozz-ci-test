@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { errors, expect, test, type Page } from '@playwright/test';
 import { installCreationFixture } from './creation-v3-fixture';
 import { s5Ids } from '../fixtures/s5-data';
 
@@ -124,6 +124,16 @@ test('请求进行中与响应丢失都不能返回来源；重试保持原请�
   await enterImage(page);
   await dialog(page).getByRole('button', { name: '核对部署配置', exact: true }).click();
   await expect(dialog(page).getByRole('button', { name: '关闭添加服务' })).toBeDisabled();
+  const back = dialog(page).getByRole('link', { name: '选择来源', exact: true });
+  await expect(back).toHaveAttribute('tabindex', '-1');
+  const popupAttempt = page.waitForEvent('popup', { timeout: 500 }).catch((error: unknown) => {
+    if (error instanceof errors.TimeoutError) return null;
+    throw error;
+  });
+  await back.click({ button: 'middle', force: true });
+  const popup = await popupAttempt;
+  if (popup) await popup.close();
+  expect(popup, '请求处理中禁用的返回链接不应打开新页').toBeNull();
   await dialog(page).getByRole('link', { name: '管理凭证', exact: true }).click();
   await expect(page).toHaveURL(/createService=1&source=image/);
   await page.keyboard.press('Escape');
@@ -133,6 +143,7 @@ test('请求进行中与响应丢失都不能返回来源；重试保持原请�
   release();
   await expect(dialog(page).getByRole('button', { name: '重试确认保存结果' })).toBeEnabled();
   await expect(dialog(page).getByLabel('服务名称', { exact: true })).toBeDisabled();
+  await expect(back).toHaveAttribute('tabindex', '-1');
   await dialog(page).getByRole('link', { name: '管理凭证', exact: true }).click();
   await expect(page).toHaveURL(/createService=1&source=image/);
   await page.keyboard.press('Meta+k');
@@ -221,8 +232,8 @@ test('390px 添加服务全屏、源选择和配置无横向溢出', async ({ pa
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(createPath);
   await expect(dialog(page).locator('.source-option')).toHaveCount(4);
-  const sourceBox = await dialog(page).boundingBox();
-  expect(sourceBox?.width).toBe(390);
+  // Measure the final full-screen layout after the entry animation settles.
+  await expect.poll(async () => (await dialog(page).boundingBox())?.width).toBe(390);
   await enterImage(page);
   await expect(dialog(page).getByLabel('容器端口', { exact: true })).toBeVisible();
   expect(

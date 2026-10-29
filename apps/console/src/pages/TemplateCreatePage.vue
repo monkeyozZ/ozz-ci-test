@@ -272,6 +272,7 @@ onScopeDispose(() => {
 </script>
 <template>
   <ServiceCreationFrame
+    :step="review ? 'review' : 'configure'"
     :title="
       review
         ? '核对部署配置'

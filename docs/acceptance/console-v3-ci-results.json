@@ -1,0 +1,337 @@
+{
+  "recordedAt": "2026-10-29T14:50:18.762667+00:00",
+  "status": "passed",
+  "scope": "Console v3 source, complete interactive prototype and control-plane CI; no cloud deployment acceptance",
+  "repository": "monkeyozZ/ozz-ci-test",
+  "branch": "ci/console-v3-interactions-20261029",
+  "commit": "095fc261faa508941ad8a69fc208ae29209a7980",
+  "run": {
+    "id": 40892518506,
+    "url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40892518506",
+    "workflow": "Control plane and Console",
+    "event": "push",
+    "attempt": 1,
+    "conclusion": "success",
+    "jobId": 123512833353,
+    "runner": "ubuntu-24.04-arm",
+    "startedAt": "2026-10-29T14:32:43Z",
+    "completedAt": "2026-10-29T14:41:20Z",
+    "durationSeconds": 517.0,
+    "stepsPassed": 25,
+    "stepsSkipped": 0,
+    "stepsFailed": 0
+  },
+  "engineering": {
+    "build": "passed",
+    "typecheck": "passed",
+    "lint": "passed",
+    "format": "passed",
+    "emptyDatabaseMigration": "passed",
+    "apiContractRegeneration": "passed",
+    "productionDependencyAudit": "passed",
+    "unit": {
+      "root": {
+        "files": 31,
+        "passed": 422
+      },
+      "console": {
+        "files": 9,
+        "passed": 66
+      },
+      "manualDataNode": {
+        "passed": 70,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "integration": {
+      "files": 16,
+      "passed": 283
+    }
+  },
+  "browser": {
+    "controlled": {
+      "expectedTotal": 51,
+      "total": 51,
+      "executed": 51,
+      "passed": 51,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "unexecuted": 0,
+      "expectedFailures": 0,
+      "unknown": 0,
+      "attempts": {
+        "passed": 51
+      },
+      "files": {
+        "creation-v3.spec.ts": 14,
+        "s5-interface.spec.ts": 15,
+        "s6-interface.spec.ts": 12,
+        "service-workspace-v3.spec.ts": 10
+      },
+      "fileCountsMatch": true,
+      "statsMatch": true,
+      "startedWithinRun": true,
+      "durationMs": 87925.367,
+      "startTime": "2026-10-29T14:39:15.670Z",
+      "globalErrors": 0,
+      "failures": [],
+      "passedAllExpected": true
+    },
+    "defaultE2e": {
+      "expectedTotal": 16,
+      "total": 16,
+      "executed": 16,
+      "passed": 16,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "unexecuted": 0,
+      "expectedFailures": 0,
+      "unknown": 0,
+      "attempts": {
+        "passed": 16
+      },
+      "files": {
+        "infrastructure.spec.ts": 4,
+        "interaction.spec.ts": 4,
+        "metadata.spec.ts": 2,
+        "operations.spec.ts": 2,
+        "races.spec.ts": 4
+      },
+      "fileCountsMatch": true,
+      "statsMatch": true,
+      "startedWithinRun": true,
+      "durationMs": 29256.038,
+      "startTime": "2026-10-29T14:40:47.348Z",
+      "globalErrors": 0,
+      "failures": [],
+      "passedAllExpected": true
+    },
+    "prototype": {
+      "expectedGroups": 18,
+      "groups": 18,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "startedWithinRun": true,
+      "reportedPassed": true,
+      "runtimeHashes": {
+        "index.html": {
+          "reported": "d23af9e8c997fb9fc67f379caa448d7a8567f23837c5d1affc003b14ac0f3db1",
+          "commitSha256": "d23af9e8c997fb9fc67f379caa448d7a8567f23837c5d1affc003b14ac0f3db1",
+          "matches": true
+        },
+        "app.js": {
+          "reported": "5a9f2d7f7d571db24d2a3142feaf77973d7dd98cfc9d45b939a98b5915b77c46",
+          "commitSha256": "5a9f2d7f7d571db24d2a3142feaf77973d7dd98cfc9d45b939a98b5915b77c46",
+          "matches": true
+        },
+        "styles.css": {
+          "reported": "d25bd1c643439f636e6326b455e96c73d1c5f31c2b64a76bee1b230a7937e6b6",
+          "commitSha256": "d25bd1c643439f636e6326b455e96c73d1c5f31c2b64a76bee1b230a7937e6b6",
+          "matches": true
+        },
+        "management.js": {
+          "reported": "cfb065965b0964278089c0b433ed983cf6bd2d6ededaba20d4bfadcbc76ae560",
+          "commitSha256": "cfb065965b0964278089c0b433ed983cf6bd2d6ededaba20d4bfadcbc76ae560",
+          "matches": true
+        },
+        "management.css": {
+          "reported": "73b330235658a142625d03cdcc60f6de8a1da40239245ec6dfcae9cc42ec4641",
+          "commitSha256": "73b330235658a142625d03cdcc60f6de8a1da40239245ec6dfcae9cc42ec4641",
+          "matches": true
+        }
+      },
+      "runtimeHashKeysMatch": true,
+      "errors": 0,
+      "networkRequests": 0,
+      "hasTopLevelFailure": false,
+      "failures": [],
+      "passedAllExpected": true
+    },
+    "responsive": {
+      "totalUniqueCombinations": 76,
+      "maxOverflowPx": 0,
+      "storage": {
+        "expected": 66,
+        "observed": 66,
+        "unique": 66,
+        "variants": [
+          {
+            "width": 390,
+            "dark": false,
+            "count": 11
+          },
+          {
+            "width": 390,
+            "dark": true,
+            "count": 11
+          },
+          {
+            "width": 1024,
+            "dark": false,
+            "count": 11
+          },
+          {
+            "width": 1024,
+            "dark": true,
+            "count": 11
+          },
+          {
+            "width": 1440,
+            "dark": false,
+            "count": 11
+          },
+          {
+            "width": 1440,
+            "dark": true,
+            "count": 11
+          }
+        ],
+        "variantCountsMatch": true,
+        "maxOverflow": 0,
+        "failures": [],
+        "passedAllExpected": true
+      },
+      "git": {
+        "expected": 10,
+        "observed": 10,
+        "unique": 10,
+        "variants": [
+          {
+            "width": 390,
+            "dark": true,
+            "count": 5
+          },
+          {
+            "width": 1440,
+            "dark": false,
+            "count": 5
+          }
+        ],
+        "variantCountsMatch": true,
+        "maxOverflow": 0,
+        "failures": [],
+        "passedAllExpected": true
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "id": 12904983528,
+      "name": "console-v3-browser-evidence",
+      "bytes": 1404114,
+      "sha256": "71ebe2c282f97dc3d087eda6dea0f3d2d013d7f447ad758912a42eb4831942bb",
+      "matchesGitHubDigest": true,
+      "url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40892518506/artifacts/12904983528",
+      "localArchive": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/artifact-reader/run-40892518506-93738d2a-4a54-4dd1-a5b0-d91b99b73a34/console-v3-browser-evidence.zip"
+    },
+    {
+      "id": 12905677799,
+      "name": "console-browser-evidence",
+      "bytes": 741494,
+      "sha256": "030c2a4a2656849b62282e21dcb33cf50c07c1b9ef8b1f84e05b29c6d62a6071",
+      "matchesGitHubDigest": true,
+      "url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40892518506/artifacts/12905677799",
+      "localArchive": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/artifact-reader/run-40892518506-93738d2a-4a54-4dd1-a5b0-d91b99b73a34/console-browser-evidence.zip"
+    }
+  ],
+  "snapshotBeforeEvidenceUpdate": {
+    "verifiedAt": "2026-10-29T14:50:18.762667+00:00",
+    "files": 893,
+    "allWorkspaceFilesMatch": true,
+    "checkoutClean": true,
+    "rootGitUntouched": true,
+    "note": "This report and Markdown index updates are recorded after the successful run; no runtime, test or workflow source changed afterward."
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "commit": "f175284450c1531fb44e12e5b9e425e9cac66ade",
+      "runId": 40891129157,
+      "url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40891129157",
+      "result": "failure",
+      "failedStep": "Generate and verify API contract",
+      "cause": "Prettier changed generated JSON layout; parsed API contract was identical.",
+      "fixCommit": "095fc261faa508941ad8a69fc208ae29209a7980",
+      "fixFiles": [".prettierignore", "docs/openapi.json"],
+      "browserExecution": "not run",
+      "artifacts": 0,
+      "passedBeforeFailure": {
+        "rootUnit": 422,
+        "consoleUnit": 66,
+        "manualDataNode": 70
+      }
+    }
+  ],
+  "reproduction": {
+    "controlledUi": "pnpm test:console-fixtures",
+    "prototype": "pnpm test:prototype",
+    "defaultE2e": "pnpm test:e2e",
+    "conditions": "Pinned dependencies and production assets built; Playwright Chromium installed on Linux; real E2E uses an isolated API, Worker, PostgreSQL and Redis as defined in the workflow."
+  },
+  "limits": [
+    "Controlled UI cases intercept APIs and do not verify deployments on K3s or Builder.",
+    "Prototype checks execute in-memory demonstrations; the 78-scenario coverage plan is not a claim that all 78 scenarios were individually tested.",
+    "Default E2E and integration run against disposable CI infrastructure, not the user's database.",
+    "X01–X05, real cloud deployment and overall S6/G-MVP/S7 acceptance remain pending.",
+    "VoiceOver and accessibility specialist acceptance remain outside the user-approved scope."
+  ],
+  "privateEvidence": {
+    "run": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/api/20261029T144256512520Z/run.json",
+      "sha256": "b71524d1bb0cdb60103541117a863108da1b265831e17f75302b676a79028eec"
+    },
+    "jobs": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/api/20261029T144256512520Z/jobs.json",
+      "sha256": "adfae707d2bace679fecd8a0cd58868f4a31e825b8476b58e4a8ee0b386d2a32"
+    },
+    "artifacts": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/api/20261029T144256512520Z/artifacts.json",
+      "sha256": "2a23f4b0377607e000a2d2f0ab85764a444f5eb5a9343495191308d4cc91c4e7"
+    },
+    "jobLogReceipt": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/selected-job-log-5d5d9a82-7d65-4179-9a1c-93e982434850/receipt.json",
+      "sha256": "693f13d709e0d0a1bf9748e9d48e90acf867ec4e97dc49c85638e12e3dea6670"
+    },
+    "jobLog": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/selected-job-log-5d5d9a82-7d65-4179-9a1c-93e982434850/job.log",
+      "sha256": "514930573fa453c5b7a125b5bdfa194ab2c870deeece00ec2cad2c6b3af8ffb9"
+    },
+    "sourceManifest": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/source-manifest.json",
+      "sha256": "bb71bf46665d6479cb4b86b147d56699308e53182394a5051083bf4eda324f02"
+    },
+    "knownValuesScan": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/known-secret-scan-02.json",
+      "sha256": "0e389a4a923ccdd788be5e2a798f372cecf8ef3b3b053d3a0d066f1cbec2124d"
+    },
+    "pushVerification": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/push-verification-02.json",
+      "sha256": "9e2c50f318b46be5db0cfff70d76d7960c794a49940c12a5ba2b10f79294701b"
+    },
+    "browserSummary": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/artifact-reader/run-40892518506-93738d2a-4a54-4dd1-a5b0-d91b99b73a34/summary.json",
+      "sha256": "b6f801c9588f80319a6312d9bef38268e0d4d16cf7924c4f162275e12ec9aa61"
+    },
+    "browserDownloadReceipt": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/artifact-reader/run-40892518506-93738d2a-4a54-4dd1-a5b0-d91b99b73a34/receipt.json",
+      "sha256": "cbb0a564aee8086ff542255cc0c275b032de0e411f54f3048d7e265e09c60033"
+    },
+    "experienceHealth": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/experience-health.json",
+      "sha256": "5126b6b593815bd6fb58820b1c4520e3bd5b2f112b4d09facfdd3ce26d6a46ec"
+    },
+    "firstRun": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/completed-run-40891129157.json",
+      "sha256": "77bbb4cf0f14036451b08e1848be3d8f98c9da33c3d1db6cc7767efadab6ab92"
+    },
+    "formatFix": {
+      "path": ".local/console-v3-ci-20261029-c7929c2c-8a68-4926-a6f8-cbcf47ad3943/contract-format-fix.json",
+      "sha256": "068eb77d2168756f7c13c359340d74003cbb6ba44802988403d7e4ce63abe686"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, reactive, ref, watch } from 'vue';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 import { ChevronRight, Info, Trash2, LoaderCircle, Server as ServerIcon } from '@lucide/vue';
@@ -18,9 +18,13 @@ import { useAuthStore } from '@/stores/auth';
 import { useUiStore } from '@/stores/ui';
 import { useViewScope } from '@/composables/useViewScope';
 import { dateTime, idempotencyKey } from '@/lib/utils';
+import { resourceListPath } from '@/lib/resource-list-navigation';
 import type { Server, SecretReference } from '@/lib/types';
 const isViewActive = useViewScope();
 const route = useRoute();
+const listLocation = computed(
+  () => resourceListPath(route.query.list, 'infrastructure') ?? '/infrastructure?tab=servers',
+);
 const router = useRouter();
 const auth = useAuthStore();
 const ui = useUiStore();
@@ -161,8 +165,9 @@ async function reload() {
 </script>
 <template>
   <nav class="breadcrumbs" aria-label="面包屑">
-    <RouterLink to="/infrastructure?tab=servers" class="text-link">服务器</RouterLink
-    ><ChevronRight /><span>{{ editing ? '服务器登记' : '登记服务器' }}</span>
+    <RouterLink :to="listLocation" class="text-link">服务器</RouterLink><ChevronRight /><span>{{
+      editing ? '服务器登记' : '登记服务器'
+    }}</span>
   </nav>
   <div class="page-head">
     <div>
@@ -342,7 +347,7 @@ async function reload() {
               @click="reload"
               >载入最新资料</Button
             ><Button v-else as-child variant="outline"
-              ><RouterLink to="/infrastructure?tab=servers">取消</RouterLink></Button
+              ><RouterLink :to="listLocation">取消</RouterLink></Button
             ><Button
               type="submit"
               :disabled="

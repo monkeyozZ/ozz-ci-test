@@ -47,12 +47,13 @@ function saved() {
     <QueryState
       :pending="records.isPending.value"
       :error="records.error.value"
+      :refreshing="records.isFetching.value"
       @retry="records.refetch()"
       ><ManualDataRecordList
         v-if="records.items.value.length"
         :records="records.items.value"
       /><EmptyState
-        v-else
+        v-else-if="!records.error.value"
         :icon="FileCheck2"
         title="还没有手工数据记录"
         description="完成手工备份或恢复验证后，登记清单、数据时间点与证据。"

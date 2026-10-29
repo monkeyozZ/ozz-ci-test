@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { Menu, Search, LogOut, ShieldCheck, LockKeyhole, X, Activity } from '@lucide/vue';
+import { Menu, Search, LogOut, ShieldCheck, LockKeyhole, X, Activity, WifiOff } from '@lucide/vue';
 import {
   DialogRoot,
   DialogPortal,
@@ -19,11 +19,18 @@ import { useAuthStore } from '@/stores/auth';
 import { useUiStore } from '@/stores/ui';
 import { hasUnsavedChanges } from '@/composables/useDirtyForm';
 import { errorMessage } from '@/lib/api';
+import { useNetworkStatus } from '@/composables/useNetworkStatus';
+import {
+  projectCreationNavigationLocked,
+  projectCreationLockMessage,
+} from '@/composables/useProjectCreationState';
+import { creationNavigationLocked, creationUncertain } from '@/composables/useCreationDialogState';
 const route = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
 const ui = useUiStore();
 const loggingOut = ref(false);
+const online = useNetworkStatus();
 function shortcuts(event: KeyboardEvent) {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k' && !event.isComposing) {
     event.preventDefault();
@@ -32,11 +39,24 @@ function shortcuts(event: KeyboardEvent) {
 }
 function restoreNavigationFocus(event: Event) {
   event.preventDefault();
-  document.getElementById('navigation-trigger')?.focus();
+  if (document.querySelector('[role="dialog"][data-state="open"]')) return;
+  document.getElementById('navigation-trigger')?.focus({ preventScroll: true });
 }
 onMounted(() => window.addEventListener('keydown', shortcuts));
 onUnmounted(() => window.removeEventListener('keydown', shortcuts));
 async function logout() {
+  if (loggingOut.value) return;
+  if (projectCreationNavigationLocked.value || creationNavigationLocked.value) {
+    ui.toast(
+      projectCreationNavigationLocked.value
+        ? projectCreationLockMessage.value
+        : creationUncertain.value
+          ? '请先重试确认保存结果，再退出。'
+          : '正在处理当前请求，请稍候。',
+      'error',
+    );
+    return;
+  }
   if (
     hasUnsavedChanges() &&
     !(await ui.confirm({
@@ -113,7 +133,11 @@ async function logout() {
     <DialogRoot v-model:open="ui.navigationOpen">
       <DialogPortal>
         <DialogOverlay class="nav-overlay" />
-        <DialogContent class="nav-drawer" @close-auto-focus="restoreNavigationFocus">
+        <DialogContent
+          class="nav-drawer"
+          :inert="!ui.navigationOpen"
+          @close-auto-focus="restoreNavigationFocus"
+        >
           <DialogTitle class="sr-only">工作台导航</DialogTitle>
           <DialogDescription class="sr-only">选择项目、服务器、服务或设置。</DialogDescription>
           <div class="flex justify-end px-3 pt-3">
@@ -130,6 +154,13 @@ async function logout() {
       </DialogPortal>
     </DialogRoot>
     <main id="main-content" class="app-main" tabindex="-1">
+      <div v-if="!online" class="notice notice-warning mb-6" role="status">
+        <WifiOff />
+        <div>
+          <strong>网络连接已断开</strong>
+          <p>已载入的内容仍可查看。连接恢复后会继续更新状态。</p>
+        </div>
+      </div>
       <div v-if="auth.restoreMode" class="notice notice-warning mb-6" role="status">
         <LockKeyhole />
         <div>
@@ -144,7 +175,7 @@ async function logout() {
   </div>
   <CommandPalette />
   <ServiceCreationDialog
-    v-if="route.params.projectId && route.query.createService === '1'"
+    v-if="route.params.projectId"
     :key="`${route.path}:${route.query.environment ?? 'production'}:${route.query.environmentId ?? ''}`"
   />
 </template>
@@ -160,6 +191,9 @@ async function logout() {
   color: var(--muted-foreground);
   font-size: 0.8125rem;
   border-radius: 0.5rem;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
 }
 .activity-trigger:hover {
   background: var(--secondary);
@@ -232,6 +266,17 @@ async function logout() {
   color: var(--muted-foreground);
   min-height: 2.5rem;
   text-align: left;
+  border-radius: 0.5rem;
+  transition:
+    color var(--motion-fast) var(--ease-out),
+    background-color var(--motion-fast) var(--ease-out);
+}
+.search-trigger:hover {
+  color: var(--foreground);
+  background: var(--secondary);
+}
+.search-trigger:active {
+  background: var(--accent);
 }
 .search-trigger kbd {
   padding: 0.0625rem 0.3125rem;
@@ -307,6 +352,13 @@ async function logout() {
   z-index: 300;
   background: oklch(18% 0.024 284 / 0.42);
 }
+.nav-overlay[data-state='open'] {
+  animation: nav-fade-in var(--motion-menu) var(--ease-out);
+}
+.nav-overlay[data-state='closed'] {
+  animation: nav-fade-out var(--motion-fast) var(--ease-in);
+  pointer-events: none;
+}
 .nav-drawer {
   position: fixed;
   z-index: 400;
@@ -317,6 +369,36 @@ async function logout() {
   background: var(--sidebar);
   overflow-y: auto;
   border-right: 1px solid var(--border);
+  overscroll-behavior: contain;
+}
+.nav-drawer[data-state='open'] {
+  animation: nav-enter var(--motion-dialog) var(--ease-out);
+}
+.nav-drawer[data-state='closed'] {
+  animation: nav-exit var(--motion-fast) var(--ease-in);
+  pointer-events: none;
+}
+@keyframes nav-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes nav-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes nav-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-1rem);
+  }
+}
+@keyframes nav-exit {
+  to {
+    opacity: 0;
+    transform: translateX(-1rem);
+  }
 }
 @media (max-width: 900px) {
   .app-sidebar {

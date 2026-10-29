@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useInfiniteQuery } from '@tanstack/vue-query';
 import { ArrowDown, Pause, RefreshCw } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import QueryState from '@/components/QueryState.vue';
+import CopyButton from '@/components/CopyButton.vue';
 import { request } from '@/lib/api';
 import { dateTime } from '@/lib/utils';
 import type { Deployment, DeploymentLogs } from './types';
+import { matchesLogSearch, useLogViewport } from './useBufferedLog';
 
 const props = defineProps<{ deploymentId: string; active: boolean; kind?: Deployment['kind'] }>();
-const output = ref<HTMLElement>();
-const following = ref(true);
-const unread = ref(0);
+const search = ref('');
+const {
+  output,
+  following,
+  unread,
+  pause,
+  jumpToLatest,
+  appended,
+  onScroll,
+  onWheel,
+  onHistoryKey,
+  reset,
+} = useLogViewport();
 const wrapLines = ref(true);
 const logs = useInfiniteQuery({
   queryKey: computed(() => ['deployment-logs', props.deploymentId]),
@@ -35,6 +47,23 @@ const rows = computed(() =>
     ).values(),
   ].sort((a, b) => a.sequence - b.sequence),
 );
+const filteredRows = computed(() =>
+  rows.value.filter((line) =>
+    matchesLogSearch(
+      `${line.timestamp} ${line.level} ${line.message} ${line.code ?? ''}`,
+      search.value,
+    ),
+  ),
+);
+const copyText = computed(() =>
+  filteredRows.value
+    .map(
+      (line) =>
+        `${line.timestamp} ${line.level} ${line.message}${line.code ? ` [${line.code}]` : ''}`,
+    )
+    .join('\n'),
+);
+const copyContext = computed(() => JSON.stringify([props.deploymentId, search.value]));
 const unavailable = computed(() => {
   switch (logs.data.value?.pages[0]?.unavailableReason) {
     case 'expired':
@@ -45,23 +74,22 @@ const unavailable = computed(() => {
       return '这次部署尚无可用的执行日志。';
   }
 });
-async function jumpToLatest() {
-  following.value = true;
-  unread.value = 0;
-  await nextTick();
-  if (output.value) output.value.scrollTop = output.value.scrollHeight;
-}
-function onScroll() {
-  if (!output.value) return;
-  if (output.value.scrollHeight - output.value.scrollTop - output.value.clientHeight >= 40)
-    following.value = false;
-}
-watch(rows, async (value, old) => {
+watch(rows, (_value, old) => {
   const previous = old.at(-1)?.sequence ?? 0;
-  const added = value.filter((line) => line.sequence > previous).length;
-  if (following.value) await jumpToLatest();
-  else unread.value = Math.min(9999, unread.value + added);
+  const added = filteredRows.value.filter((line) => line.sequence > previous).length;
+  appended(added);
 });
+watch(search, () => {
+  unread.value = 0;
+  appended(0);
+});
+watch(
+  () => props.deploymentId,
+  () => {
+    search.value = '';
+    reset();
+  },
+);
 watch(
   () => props.active,
   () => void logs.refetch(),
@@ -91,21 +119,39 @@ watch(
         ><RefreshCw
       /></Button>
     </div>
-    <QueryState :pending="logs.isPending.value" :error="logs.error.value" @retry="logs.refetch()">
+    <QueryState
+      :pending="logs.isPending.value"
+      :error="logs.error.value"
+      :refreshing="logs.isFetching.value"
+      @retry="logs.refetch()"
+    >
       <template v-if="rows.length">
         <div class="log-toolbar">
           <span role="status"
-            >{{ rows.length }} 条已载入 · {{ following ? '自动滚动' : '自动滚动已暂停' }}</span
+            >{{ search ? `${filteredRows.length} 条匹配 / ` : '' }}{{ rows.length }} 条已载入 ·
+            {{ following ? '自动滚动' : '自动滚动已暂停' }}</span
           >
+          <input
+            v-model="search"
+            type="search"
+            class="input log-search"
+            aria-label="搜索部署日志"
+            placeholder="搜索已载入的日志"
+          />
           <label class="flex items-center gap-2"
             ><input v-model="wrapLines" type="checkbox" />长行换行</label
           >
-          <Button v-if="following" variant="ghost" size="sm" @click="following = false"
+          <Button v-if="following" variant="ghost" size="sm" @click="pause"
             ><Pause />暂停滚动</Button
           >
           <Button v-else variant="ghost" size="sm" @click="jumpToLatest"
             ><ArrowDown />回到最新{{ unread ? ` · ${unread} 条新输出` : '' }}</Button
           >
+          <CopyButton
+            :text="copyText"
+            :context-key="copyContext"
+            :label="search ? '复制匹配日志' : '复制部署日志'"
+          />
         </div>
         <div
           ref="output"
@@ -115,8 +161,10 @@ watch(
           role="region"
           aria-label="部署执行日志，可滚动"
           @scroll="onScroll"
+          @wheel="onWheel"
+          @keydown="onHistoryKey"
         >
-          <div v-for="line in rows" :key="line.sequence" class="log-line">
+          <div v-for="line in filteredRows" :key="line.sequence" class="log-line">
             <time :datetime="line.timestamp">{{ dateTime(line.timestamp) }}</time>
             <span :class="['log-level', `log-${line.level}`]">{{ line.level }}</span>
             <span class="log-message"
@@ -124,6 +172,9 @@ watch(
               }}<small v-if="line.code" class="block muted">{{ line.code }}</small></span
             >
           </div>
+          <p v-if="!filteredRows.length" class="muted py-4">
+            已载入的日志中没有匹配内容。清除搜索可查看全部缓冲。
+          </p>
         </div>
       </template>
       <p v-else-if="!logs.error.value" class="muted py-5">{{ unavailable }}</p>
@@ -169,6 +220,9 @@ watch(
   background: var(--background);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
+}
+.log-search {
+  width: min(100%, 18rem);
 }
 .log-line {
   display: grid;

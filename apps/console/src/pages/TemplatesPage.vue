@@ -99,6 +99,7 @@ function moveSource(event: KeyboardEvent) {
 </script>
 <template>
   <ServiceCreationFrame
+    :step="showTemplates ? 'templates' : 'source'"
     :title="
       !showTemplates
         ? route.query.first === '1'
@@ -128,7 +129,7 @@ function moveSource(event: KeyboardEvent) {
     >
       <template v-if="!inProject || context">
         <div v-if="!showTemplates && context" class="source-options panel" @keydown="moveSource">
-          <RouterLink :to="sourceLocation('github')" class="source-option">
+          <RouterLink :to="sourceLocation('github')" class="source-option" data-creation-autofocus>
             <GitBranch class="source-icon" />
             <div>
               <strong>从 GitHub 部署</strong>
@@ -172,7 +173,13 @@ function moveSource(event: KeyboardEvent) {
                 class="absolute left-3 top-3 size-4 text-muted-foreground"
                 aria-hidden="true"
               />
-              <Input v-model="search" class="pl-10" placeholder="搜索模板" aria-label="搜索模板" />
+              <Input
+                v-model="search"
+                class="pl-10"
+                placeholder="搜索模板"
+                aria-label="搜索模板"
+                data-creation-autofocus
+              />
             </div>
             <select v-model="category" class="input w-auto" aria-label="模板类别">
               <option value="database">数据库</option>
@@ -183,6 +190,7 @@ function moveSource(event: KeyboardEvent) {
           <QueryState
             :pending="templates.isPending.value"
             :error="templates.error.value"
+            :refreshing="templates.isFetching.value"
             @retry="templates.refetch()"
           >
             <div v-if="templates.items.value.length" class="template-list" data-template-gallery>
@@ -215,7 +223,7 @@ function moveSource(event: KeyboardEvent) {
               </article>
             </div>
             <EmptyState
-              v-else
+              v-else-if="!templates.error.value"
               :icon="Package"
               title="没有匹配的模板"
               description="调整名称或类别筛选。"
