@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, useId } from 'vue';
-import { Plus, Trash2, GitBranch } from '@lucide/vue';
+import { ChevronRight, Plus, Trash2, GitBranch } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MutationError from '@/components/MutationError.vue';
@@ -9,7 +9,7 @@ import { useCollection } from '@/lib/query';
 import { useGitBranches, useGitRepositories } from './queries';
 import type { Builder, GitHubConnection, GitSourceDraft, RegistryConnection } from './types';
 const form = defineModel<GitSourceDraft>({ required: true });
-const props = defineProps<{ disabled?: boolean; creating?: boolean }>();
+const props = defineProps<{ disabled?: boolean; creating?: boolean; compact?: boolean }>();
 const uid = useId();
 const root = ref<HTMLElement>();
 const connections = useCollection<GitHubConnection>('/integrations/github');
@@ -48,12 +48,15 @@ function addSecret() {
   });
 }
 async function validate() {
-  const invalid = root.value?.querySelector<HTMLInputElement>(
-    'input:invalid, select:invalid, textarea:invalid',
-  );
+  const invalid = root.value?.querySelector<
+    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+  >('input:invalid, select:invalid, textarea:invalid');
   if (invalid) {
-    const details = invalid.closest('details');
-    if (details) details.open = true;
+    let details = invalid.closest('details');
+    while (details) {
+      details.open = true;
+      details = details.parentElement?.closest('details') ?? null;
+    }
     await nextTick();
     invalid.focus();
     invalid.reportValidity();
@@ -74,12 +77,18 @@ async function validate() {
 defineExpose({ validate });
 </script>
 <template>
-  <fieldset ref="root" class="git-source-fields" :disabled="disabled" data-git-source-editor>
+  <fieldset
+    ref="root"
+    class="git-source-fields"
+    :class="{ 'git-source-compact': compact }"
+    :disabled="disabled"
+    data-git-source-editor
+  >
     <legend class="sr-only">GitHub 来源与构建配置</legend>
     <div class="section-head">
       <div>
         <h2>GitHub 来源</h2>
-        <p class="meta mt-1">保存来源后，再审阅固定提交并发布。</p>
+        <p v-if="!compact" class="meta mt-1">保存来源后，再审阅固定提交并发布。</p>
       </div>
       <RouterLink to="/settings?tab=git" class="text-link">管理 Git 与构建集成</RouterLink>
     </div>
@@ -184,10 +193,10 @@ defineExpose({ validate });
             {{ item.name }}
           </option>
         </select>
-        <p v-if="branch" class="field-hint mono break-all">
+        <p v-if="branch && !compact" class="field-hint mono break-all">
           <GitBranch class="inline size-3.5" /> {{ branch.commitSha }}
         </p>
-        <p class="field-hint">这里显示当前观察，发布预览会固定完整 commit。</p>
+        <p v-if="!compact" class="field-hint">这里显示当前观察，发布预览会固定完整 commit。</p>
         <MutationError :error="branches.error.value" />
         <Button
           v-if="branches.error.value"
@@ -215,9 +224,15 @@ defineExpose({ validate });
           maxlength="500"
           placeholder="Dockerfile"
         />
-        <p class="field-hint">相对于仓库根目录，发布前核对所选 commit 中的实际文件。</p>
+        <p class="field-hint">
+          {{
+            compact
+              ? '仓库必须包含该 Dockerfile，路径相对于仓库根目录。'
+              : '相对于仓库根目录，发布前核对所选 commit 中的实际文件。'
+          }}
+        </p>
       </div>
-      <div class="field">
+      <div v-if="!compact" class="field">
         <label :for="uid + '-context'">构建上下文</label>
         <Input
           :id="uid + '-context'"
@@ -232,8 +247,8 @@ defineExpose({ validate });
     </div>
     <div class="section-head mt-7">
       <div>
-        <h2>构建与镜像去向</h2>
-        <p class="meta mt-1">Builder 执行构建，服务仍发布到项目继承的 Cluster。</p>
+        <h2>{{ compact ? '构建设置' : '构建与镜像去向' }}</h2>
+        <p v-if="!compact" class="meta mt-1">Builder 执行构建，服务仍发布到项目继承的 Cluster。</p>
       </div>
     </div>
     <div class="form-grid">
@@ -340,7 +355,21 @@ defineExpose({ validate });
       </fieldset>
     </div>
     <details class="git-advanced mt-6">
-      <summary>构建参数与秘密挂载</summary>
+      <summary>
+        <ChevronRight v-if="compact" />{{ compact ? '更多构建设置' : '构建参数与秘密挂载' }}
+      </summary>
+      <div v-if="compact" class="field mt-4">
+        <label :for="uid + '-context'">构建上下文</label>
+        <Input
+          :id="uid + '-context'"
+          v-model="form.contextPath"
+          class="mono"
+          required
+          maxlength="500"
+          placeholder="."
+        />
+        <p class="field-hint">使用仓库内目录；“.” 表示仓库根目录。</p>
+      </div>
       <p class="meta mt-4">
         普通构建参数只填写非敏感值。构建秘密须明确选择，运行变量不会自动传入构建。
       </p>
@@ -405,8 +434,18 @@ defineExpose({ validate });
       <p class="field-hint mt-3">
         Dockerfile 使用 RUN --mount=type=secret,id=挂载ID。保存来源时固定秘密内容版本。
       </p>
+      <label v-if="creating && compact" class="git-policy mt-6">
+        <input v-model="form.autoDeploy" type="checkbox" />
+        <span>
+          <strong>启用此分支的自动发布</strong>
+          <small
+            >还需在集成设置明确注册
+            Webhook。停止期间收到提交只记录待办，恢复原版本不会消费待办。</small
+          >
+        </span>
+      </label>
     </details>
-    <label v-if="creating" class="git-policy mt-6">
+    <label v-if="creating && !compact" class="git-policy mt-6">
       <input v-model="form.autoDeploy" type="checkbox" />
       <span
         ><strong>启用此分支的自动发布</strong
@@ -439,6 +478,31 @@ defineExpose({ validate });
   cursor: pointer;
   font-weight: 550;
   min-height: 2.75rem;
+}
+.git-source-compact .git-advanced > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+.git-source-compact .git-advanced > summary::-webkit-details-marker {
+  display: none;
+}
+.git-source-compact .git-advanced > summary > svg {
+  width: 1rem;
+  height: 1rem;
+}
+.git-source-compact .git-advanced[open] > summary > svg {
+  transform: rotate(90deg);
+}
+.git-source-compact .git-policy {
+  padding: 1rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
 }
 .git-argument {
   display: grid;

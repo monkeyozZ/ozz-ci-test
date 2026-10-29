@@ -64,9 +64,9 @@ export class ServicesController {
   @Post()
   @ApiOperation({ operationId: 'createService' })
   @ApiHeader({
-    name: 'Idempotency-Key',
+    name: 'idempotency-key',
     required: false,
-    description: '模板创建必填；重复请求返回原创建结果',
+    description: '模板创建必填；镜像和 Git 创建可使用同一键重试，重复请求返回原创建结果',
   })
   @ApiCreatedResponse({ type: ServiceEnvelopeDto })
   create(

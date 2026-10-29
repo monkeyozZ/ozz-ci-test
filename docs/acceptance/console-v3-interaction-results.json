@@ -1,0 +1,169 @@
+{
+  "recordedAt": "2026-10-29T13:58:51.913257+00:00",
+  "scope": "Zeabur-style Console v3 interaction revision; prototype and real Console",
+  "browserCasesPassed": 53,
+  "browserRuns": [
+    {
+      "name": "creation",
+      "kind": "controlled-browser",
+      "artifact": "apps/console/tests/artifacts/creation-v3/results.json",
+      "stats": {
+        "startTime": "2026-10-29T13:54:26.541Z",
+        "duration": 14543.711,
+        "expected": 14,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "name": "workspace",
+      "kind": "controlled-browser",
+      "artifact": "apps/console/tests/artifacts/service-workspace-v3/browser-results.json",
+      "stats": {
+        "startTime": "2026-10-29T13:54:32.414Z",
+        "duration": 13567.187,
+        "expected": 10,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "name": "storage",
+      "kind": "controlled-browser",
+      "artifact": "apps/console/tests/artifacts/s5-interface/browser-results.json",
+      "stats": {
+        "startTime": "2026-10-29T13:52:16.273Z",
+        "duration": 45622.592,
+        "expected": 15,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "name": "git",
+      "kind": "controlled-browser",
+      "artifact": "apps/console/tests/artifacts/s6-interface/v3-interaction-20261029/browser-results.json",
+      "stats": {
+        "startTime": "2026-10-29T13:53:47.839Z",
+        "duration": 18746.745,
+        "expected": 12,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "name": "metadata",
+      "kind": "isolated-real-api-browser",
+      "artifact": "apps/console/tests/artifacts/metadata-v3-real/browser-results.json",
+      "stats": {
+        "startTime": "2026-10-29T13:55:17.568Z",
+        "duration": 6508.687,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "prototype": {
+    "artifact": "designs/console-v3/verification/full-index-results.json",
+    "groupsPassed": 18,
+    "passed": true,
+    "currentSourceHashesVerified": true
+  },
+  "unitTests": {
+    "command": "pnpm --filter @ozz/console test:unit",
+    "passed": 66,
+    "exitCode": 0
+  },
+  "backendRetry": {
+    "httpTestsPassed": 9,
+    "hmacTestsPassed": 3,
+    "currentSourceHashesVerified": true,
+    "isolatedSchemasRemaining": 0,
+    "privateEvidence": ".local/ux-simplification-20261029/backend-retry-validation.json"
+  },
+  "engineering": {
+    "workspaceBuild": "passed",
+    "finalConsoleBuild": "passed",
+    "workspaceLint": "passed",
+    "workspaceFormat": "passed",
+    "changedFilesFinalLintAndFormat": "passed",
+    "v3BrowserTestTypes": "passed"
+  },
+  "metadataIsolation": {
+    "schema": "metadata_v3_881b7b204bb3468d9596ea7a1f579acb",
+    "apiPort": 5301,
+    "vitePort": 5201,
+    "databaseIsolationVerified": true,
+    "testExitCode": 0,
+    "schemaRemoved": true,
+    "privateFilesRemoved": true,
+    "startedAt": "2026-10-29T13:55:14.922Z",
+    "finishedAt": "2026-10-29T13:55:24.326Z"
+  },
+  "localExperience": {
+    "console": "https://127.0.0.1:51448",
+    "prototype": "http://127.0.0.1:5198/",
+    "loginStatus": 200,
+    "projectsStatus": 200,
+    "readyAt": "2026-10-29T13:55:54.810Z",
+    "systemTrustChanged": false,
+    "builderAndClusterVmsStarted": false
+  },
+  "changedConsoleAndBaselineSourcesSha256": {
+    "apps/console/src/components/AppShell.vue": "8ab02f1b7f1ff0d1869dd520c3fb8fa670140bc4d3341934cabeab405e76b614",
+    "apps/console/src/components/NavigationContent.vue": "09287146f6c1b18164277f6fc0952ec107ab819551cca6fbee30cc976c602a18",
+    "apps/console/src/pages/ServicePage.vue": "b7d4a01020e8ff0bc1450dedcb25445da7e7a52cc0a0bf6701e3b1a5ff034552",
+    "apps/console/src/pages/GitServiceCreatePage.vue": "15017af3e3d27b5eef5cf0d582c17496d5759e7be929a59b732178fad5a1d520",
+    "apps/console/src/pages/TemplatesPage.vue": "dba79ace50ea151a0d84bbdcafc724e4d6cd5565460624ad111eae0d0cda2a2a",
+    "apps/console/src/pages/ProjectCreatePage.vue": "abff441c8bc7ef5bac177fdd75339834c1d90ebae124d0c05edcdff701baed83",
+    "apps/console/src/pages/ProjectsPage.vue": "dbf9227de39549aabe1b6c03cee9e526b8a51c113ec8d415f3498a0b659a44d2",
+    "apps/console/src/pages/ServiceCreatePage.vue": "822231aa5e870c736af15d767eb04b05dbaaa565accc0adab152cf6749ea75aa",
+    "apps/console/src/pages/SettingsPage.vue": "ab3408a97ab817362c0f18b15834a59a08447c3fd76c9c6f83aeb8e6ed52d756",
+    "apps/console/src/pages/ImageServiceCreatePage.vue": "38438b2d12644c11e0e764761e0e75b90a97c8421e234e64d749d0fb912184f7",
+    "apps/console/src/pages/ProjectPage.vue": "f0c60fcf57bb19f3c3986e55fd03570e76f77296a73714a836bcb36cfe2944a8",
+    "apps/console/src/pages/TemplateCreatePage.vue": "444024e9cb7ee6e7bdac744697c06409daa55b7cc41c9c9858d155ab17fcf784",
+    "apps/console/src/components/services/ServiceRuntimeBadge.vue": "6c4e73e7dca8a04e84e84376e0cab6437bb4f501e84f61fbe54d09d7a36327ab",
+    "apps/console/src/components/services/ServiceConfigurationEditor.vue": "2c5a6e2bad095e812d3f7ed40dbbba94f8c327c4d7e4bc642c4c5c8fc6bb5139",
+    "apps/console/src/components/services/ConfigurationReview.vue": "fcf4f3d96df17c2b6d15ef5e1eebb4e67488c1339b21ca621924ff5b9bea1dbb",
+    "apps/console/src/components/services/ServiceCollection.vue": "02a11869e57441b1de376d90026fd08856e84f6ccd9d4099335606b2d8fdcd29",
+    "apps/console/src/components/git/GitSourceEditor.vue": "e44fffaf42e8ece97d0e3e402d7731819622d9b4cb05a73aedd1dd5a8dbf429c",
+    "apps/console/src/main.ts": "e33ec4eca047940c781b8e0b24d53922dac88a12871e74f6d167dbc30f03252b",
+    "apps/console/src/router.ts": "0e4f69d87905abc57ae13e3c20ac48283340fbc4c8d336411e713eb2755fadb0",
+    "apps/console/src/composables/useDirtyForm.ts": "ee064052a3ae309850c9d7fe588a6da2c9617e4d21d9b009f016329a43f8ddf7",
+    "apps/console/src/composables/useViewScope.ts": "4f7e639dbc2932d724d383f53854d2ca2aa7767114836e1e470cede3d6d83a92",
+    "apps/console/src/lib/utils.ts": "555f7ea8e1ea30ed122ee46772a026e9fa1c69eabfedd25e2829e1a1c37ab2cc",
+    "apps/console/src/lib/api.ts": "1b74a44a54d9bec4ff6f90cd0925ad0a2999fb23e3e42f7b3b98f715e3edbe19",
+    "apps/console/tests/unit/request.test.ts": "89ca9544f50df7d339840937332408fa5259614dc0e4556ca4194e36249aed4f",
+    "apps/console/tests/local-lab/s6-interface.spec.ts": "11f5e957c492fa5d1a0fae5b26ad8f79ec205e55a8c0acd9a9a10beb98937aa2",
+    "apps/console/tests/local-lab/s5-interface.spec.ts": "cccf20bcb548821763fd052bb48a06a3b3e9342089c991dddf0e99a584413dc7",
+    "apps/console/tests/fixtures/s5-data.ts": "12b6cece13c7da185e7d67753a960b087101ee59e56b792f467d5964d59b38e4",
+    "apps/console/tests/e2e/metadata.spec.ts": "2c9b40ce1ef8d398a3c092410b3b53fad0d4b93b7fca503c516f5f8da7687782",
+    "PRODUCT.md": "0df71d5ee00a30772f21f5fd02b8ebb529590ec8180533c90ea85dc772155a1c",
+    "DESIGN.md": "138890c661b42593e31ffa8e8ad711f397f0a565cf236fb2f8ecd76c31daa6c3",
+    "packages/control-plane/src/services/commands.ts": "e839cbddf3919122d497a2547b445d54a8bde4ce7837f21e9eaf6f3ca4289db9",
+    "apps/api/src/modules/projects/projects.controller.ts": "d2a027b0bb066d02fd79e7d11a29095dc203c4c65d611ad91d8dfae00c364e0b",
+    "apps/api/src/modules/projects/projects.service.ts": "d35736cf837c71d08920bd11315b1b414f3ba39303282608269a14598360def4",
+    "apps/console/src/styles.css": "91f32021f2bdef34c94db2d123b16bf1f26fb94b0abee97cc67ee42989837d97",
+    "apps/console/src/composables/useCreationDialogState.ts": "2ab2f6a0beb30333a1a472db82418f53733da08176e56988519793b798987187",
+    "apps/console/src/composables/useProjectEnvironments.ts": "64a66aa1a9bc680fe983750c52cec0a351cad94709448c699e830f4f5c64b890",
+    "apps/console/src/composables/useServiceCreationContext.ts": "e992d1cb4a1ce49ba11ce91d94b0421912b7a7ff98446a37bdd23b2b3a7a9d3a",
+    "apps/console/src/composables/useServiceCreationFlow.ts": "d2b6bbd9c5b191849705f50897c05122f4b2e3a8775a8dbd92a66490789025d5",
+    "apps/console/src/components/services/ServiceCreationDialog.vue": "fcf8d4c9bc0b438cfab3694be53e7e1760426f916c0506d776c777f1064663a5",
+    "apps/console/src/components/services/ServiceWorkspacePanel.vue": "e3daa29809d612fbfb93a4739d4c7c69da7868f6b145a3ad2257f42e88540d86",
+    "apps/console/src/components/services/creation-state.ts": "7a59f165c097a685b6af925f246d736d1d7c0f6e0e65804efdfd14146afaa916",
+    "apps/console/src/components/services/ServiceCreationFrame.vue": "be9943afc1b1a57ba162bc6bbe44e284b3da07ff2704f850d4e9aa125654d80e"
+  },
+  "limits": [
+    "Prototype uses demonstration data; planned capabilities are marked and are not new backend features.",
+    "53 browser cases are targeted coverage, not a claim that all 78 legacy scenarios have each been rerun.",
+    "No new real workload deployment, cloud acceptance or S7/G-MVP completion claimed.",
+    "Existing CI results are historical and do not certify this revision.",
+    "No VoiceOver or accessibility-specialist acceptance was performed."
+  ]
+}

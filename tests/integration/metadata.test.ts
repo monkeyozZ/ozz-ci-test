@@ -38,11 +38,16 @@ const masterKeyFile = join(directory, 'fixture-master-key.json');
 const db = new PrismaClient({ datasourceUrl: url.toString() });
 
 const unique = (label: string) => `${prefix}-${label}-${++sequence}`;
-async function request(method: Method, url: string, payload?: Record<string, unknown>) {
+async function request(
+  method: Method,
+  url: string,
+  payload?: Record<string, unknown>,
+  key?: string,
+) {
   const response = await app.inject({
     method,
     url: `/api${url}`,
-    headers: session.headers,
+    headers: { ...session.headers, ...(key === undefined ? {} : { 'idempotency-key': key }) },
     ...(payload ? { payload } : {}),
   });
   const kind = url.slice(1) as keyof typeof tracked;
@@ -121,6 +126,88 @@ afterAll(async () => {
 });
 
 describe('S1 metadata API with PostgreSQL', () => {
+  it('replays concurrent project creation without allocating another default environment', async () => {
+    const target = await cluster('creation-retry');
+    const key = randomUUID();
+    const input = {
+      name: unique('retry-project'),
+      slug: unique('retry-project'),
+      description: 'One project and one default environment',
+      clusterId: target.id,
+    };
+    const responses = await Promise.all(
+      Array.from({ length: 5 }, () => request('POST', '/projects', input, key)),
+    );
+    const original = responses[0]!.json<{ data: Resource }>();
+    for (const response of responses) {
+      expect(response.statusCode, response.body).toBe(201);
+      expect(response.json()).toEqual(original);
+    }
+    expect(await db.project.count({ where: { clusterId: target.id } })).toBe(1);
+    expect(await db.environment.findMany({ where: { projectId: original.data.id } })).toMatchObject(
+      [{ slug: 'production', revision: 1 }],
+    );
+    expect(
+      await db.commandReceipt.count({
+        where: { idempotencyScope: `project-create:${session.adminId}`, idempotencyKey: key },
+      }),
+    ).toBe(1);
+
+    // A lost response may be retried after the newly created project was edited.
+    const updated = await request('PATCH', `/projects/${original.data.id}`, {
+      name: unique('renamed'),
+      revision: original.data.revision,
+    });
+    expect(updated.statusCode).toBe(200);
+    const replay = await request('POST', '/projects', { ...input }, key);
+    expect(replay.statusCode).toBe(201);
+    expect(replay.json()).toEqual(original);
+    expect(await getResource(`/projects/${original.data.id}`)).toMatchObject({ revision: 2 });
+
+    for (const change of [
+      { name: unique('different-name') },
+      { slug: unique('different-slug') },
+      { description: 'Changed request' },
+      { clusterId: randomUUID() },
+    ]) {
+      const conflict = await request('POST', '/projects', { ...input, ...change }, key);
+      expect(conflict.statusCode, conflict.body).toBe(409);
+      expect(conflict.json()).toMatchObject({ code: 'IDEMPOTENCY_CONFLICT' });
+    }
+    expect(await db.project.count({ where: { clusterId: target.id } })).toBe(1);
+    expect(await db.environment.count({ where: { projectId: original.data.id } })).toBe(1);
+
+    await db.controlPlaneState.update({
+      where: { id: 'control-plane' },
+      data: { restoreLocked: true },
+    });
+    try {
+      const locked = await request('POST', '/projects', input, key);
+      expect(locked.statusCode, locked.body).toBe(503);
+      expect(locked.json()).toMatchObject({ code: 'RESTORE_READ_ONLY' });
+    } finally {
+      await db.controlPlaneState.update({
+        where: { id: 'control-plane' },
+        data: { restoreLocked: false },
+      });
+    }
+  });
+
+  it('rejects malformed project creation keys before creating metadata', async () => {
+    const target = await cluster('invalid-creation-key');
+    for (const key of ['', 'short', 'invalid key', 'x'.repeat(129)]) {
+      const response = await request(
+        'POST',
+        '/projects',
+        { name: unique('invalid-key'), slug: unique('invalid-key'), clusterId: target.id },
+        key,
+      );
+      expect(response.statusCode, response.body).toBe(422);
+      expect(response.json()).toMatchObject({ code: 'IDEMPOTENCY_KEY_REQUIRED' });
+    }
+    expect(await db.project.count({ where: { clusterId: target.id } })).toBe(0);
+  });
+
   it('creates project and production atomically, sharing an unverified registered target', async () => {
     const target = await cluster('target');
     expect(target).toMatchObject({

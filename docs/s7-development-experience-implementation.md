@@ -1,8 +1,10 @@
 # S7 开发体验实施方案（提案）
 
-日期：2026-10-26。状态：**仅方案提案，S7 尚未实施、尚未验收**。本文确定拟采用的契约、复用边界、分工和验收路径；类型、接口、表及数值上限中标为“拟”的内容均不是现有产品能力。本次只新增本文，不修改源码、schema、迁移、环境文件或公共运行面。
+方案基线日期：2026-10-26；范围修订：2026-10-29。状态：**仅方案提案，S7 尚未实施、尚未验收**。本文确定拟采用的契约、复用边界、分工和验收路径；类型、接口、表及数值上限中标为“拟”的内容均不是现有产品能力。本文仅记录方案及范围修订，不代表源码、schema、迁移、环境文件或公共运行面的实施。
 
-依据：[PRD v1.5](prd.md) §4.3–4.4、F26–F32、F37/F39 及 UX01–UX08；[开发计划](development-plan.md) S7.01–S7.10、E21/E22/E28/E29；[技术方案](technical-plan.md)；[UI 覆盖清单](ui-coverage-inventory.md)；[Stitch 映射](../designs/console-v2/stitch-screen-map.md)与[需求矩阵](../designs/console-v2/coverage-matrix.md)。S5/S6 的实际基础分别见[存储方案](s5-storage-implementation.md)和[Git 构建方案](s6-git-build-implementation.md)。
+依据：[PRD v1.6](prd.md) §4.3–4.4、F26–F32、F37/F39 及 UX01–UX08；[开发计划](development-plan.md) S7.01–S7.10、E21/E22/E28/E29；[技术方案](technical-plan.md)；[UI 覆盖清单](ui-coverage-inventory.md)；[Stitch 映射](../designs/console-v2/stitch-screen-map.md)与[需求矩阵](../designs/console-v2/coverage-matrix.md)。S5/S6 的实际基础分别见[存储方案](s5-storage-implementation.md)和[Git 构建方案](s6-git-build-implementation.md)。
+
+2026-10-29 用户范围调整：无障碍、辅助技术、真实读屏与 WCAG 合规不再作为当前需求和验收门槛（`excluded-by-user`）；普通键盘/焦点、IME、响应式、缩放与反馈要求保留，既有组件行为及历史证据保留。
 
 S7 的实施入口仍是 **G-MVP 通过**。S6 正在验收，本文不代表 S6 或 G-MVP 已通过，也不把已有设计页面计为产品实现。已应用的 `202610260004_s6_git_build/migration.sql` 保持冻结，S7 只能新增迁移。
 
@@ -456,7 +458,7 @@ Console 复用以下实际 Module：
 
 `AppShell.vue` 的全局 Cmd/Ctrl+K 目前只检查部分 IME 状态；S7 应尊重 defaultPrevented、完整 composition 状态及 composedPath 中编辑器/终端的快捷键归属。终端 Ctrl+C/D/L/K、编辑器保存/查找与中文组词 Enter/Esc 属于当前交互区；关闭弹层或会话正确归还焦点。CommandPalette 自身的 IME 防护不能替代 shell 层修复。
 
-连贯验收顺序为组合模板 → 同环境输出/文件配置 → 预览与发布 → Monorepo/自动构建 → 日志/终端定位 → 历史镜像回滚。始终保留项目/环境/继承集群上下文，区分未保存、已保存未发布、完整已发布及局部失败；检查明暗主题、键盘/读屏抽检、1440/1024/390 CSS px、200% 缩放和减少动效。持续日志不夺滚动/焦点，不阻塞输入；秘密不进入 URL 或浏览器持久存储。
+连贯验收顺序为组合模板 → 同环境输出/文件配置 → 预览与发布 → Monorepo/自动构建 → 日志/终端定位 → 历史镜像回滚。始终保留项目/环境/继承集群上下文，区分未保存、已保存未发布、完整已发布及局部失败；检查明暗主题、键盘/焦点抽检、1440/1024/390 CSS px、200% 缩放和减少动效。持续日志不夺滚动/焦点，不阻塞输入；秘密不进入 URL 或浏览器持久存储。
 
 ## 13. Stitch 精确映射
 
@@ -549,7 +551,7 @@ DeploymentSecretReference/ServiceSecretReference 继续承担历史/草稿秘密
 | S7-A15 / 08、E22     | 实际 argv/stdout/stderr/非零退出；无命令/无权限/Pod 消失可定位；超时/断联/超限/重放不假设远端退出或重复执行；无 argv/输出秘密落审计                   | Kubernetes 协议/背压故障＋真实容器命令与 HTTP 会话生命周期                                                                                                   |
 | S7-A16 / 09、E22     | 浏览器实际输入/PTY resize/退出；无 shell 可诊断；并发/ticket 重用/跨 session/Origin 拒绝；logout/过期关闭；新会话重连、UID replacement 与未知结果正确 | 真实 K3s＋真实浏览器＋慢消费者/代理断链；协议和会话记录                                                                                                      |
 | S7-A17 / 10、F37     | 关键词/下载范围与实际 source 一致，脱敏后检索，轮转/Pod 删除/previous/SSE 中断/超限提示；无界限下载和 PostgreSQL 原文累积不存在                       | API/SSE 限额测试＋浏览器下载内容/大小/来源、服务端内存/连接清理                                                                                              |
-| S7-A18 / 10、UX      | 完整模板→配置→Git→日志/终端→回滚链；IME Enter/Esc、终端 Ctrl 键、focus return、隐藏 tab/注销清理；明暗/窄屏/缩放与日志稳定                            | 生产构建产物清单＋浏览器资源/通道记录：初始服务页没有 CodeMirror/xterm 请求，首次激活才加载，明确连接仅创建一个 session，切目标不混入晚到输出；键盘/读屏抽检 |
+| S7-A18 / 10、UX      | 完整模板→配置→Git→日志/终端→回滚链；IME Enter/Esc、终端 Ctrl 键、focus return、隐藏 tab/注销清理；明暗/窄屏/缩放与日志稳定                            | 生产构建产物清单＋浏览器资源/通道记录：初始服务页没有 CodeMirror/xterm 请求，首次激活才加载，明确连接仅创建一个 session，切目标不混入晚到输出；键盘/焦点抽检 |
 | S7-A19 / 升级        | 新迁移能在 S6 基线上应用；引用/版本约束、tombstone/清理和回退限制正确；既有业务字段/密文/目标不被改写                                                 | 隔离 PostgreSQL 升级/非法 SQL 检查，按约定窗口的实际升级记录                                                                                                 |
 | S7-A20 / 退出        | S3/S5/S6 与 G-MVP 的既有边界继续通过；没有未知执行被误标取消、旧任务改投目标、数据保护回退或假在线 UI                                                 | 对改动相关回归一次完整复验；最终阶段记录通过项、失败项与未测集成                                                                                             |
 

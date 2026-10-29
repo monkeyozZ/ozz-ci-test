@@ -1,18 +1,24 @@
 {
   "schemaVersion": 4,
   "documentKind": "g-mvp-local-acceptance-index",
-  "recordedAt": "2026-10-29T06:05:17.662962+00:00",
-  "author": "workspace_recon",
+  "recordedAt": "2026-10-29T08:43:17.326545+00:00",
+  "author": "root",
   "status": "in-progress",
-  "scope": "Bounded published local evidence plus reader-04 transport failure and complete restoration; no new runtime test or overall acceptance approval.",
+  "scope": "Current user-revised requirements, preserved historical evidence, and the terminal third remote CI run on its exact pushed commit. Formal external gates remain unverified.",
   "decision": {
-    "localJointAcceptanceComplete": false,
+    "localJointAcceptanceComplete": true,
     "formalGmvpPassed": false,
     "s7EntrySatisfied": false,
     "acceptanceDecisionMade": false,
-    "reason": "L01–L07各具名本地范围保留；reader-04系统读屏传输阻点未消除，L08 partial；生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。 X01–X05未验。",
+    "reason": "用户于2026-10-29将无障碍、辅助技术、真实读屏和WCAG合规排除当前要求；常规键盘、焦点、IME、响应式、缩放及其他UX要求保留。 L01–L08具名本地范围保留。第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。 本地收口结论仅在本次最终字节外置核验为passed且发布字节一致时生效；X01–X05仍未验，正式G-MVP和S7不放行。",
     "publishedL07DecisionReused": true,
-    "publishedL01L06DecisionReused": true
+    "publishedL01L06DecisionReused": true,
+    "localCompletionValidity": {
+      "externalFinalValidation": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json",
+      "requiredStatus": "passed",
+      "publishedBytesMustMatchReceipt": true,
+      "candidateIsNotPublishedByThisGenerator": true
+    }
   },
   "statusSemantics": {
     "localStatus": "passed only supports verifiedLocalClaim within the stated local layer; it does not upgrade fixtures to real external systems or bind historical evidence to the final release candidate.",
@@ -20,16 +26,17 @@
     "unverified": "No published successful evidence for the specifically named remaining local behavior.",
     "globalTestTotal": null,
     "aggregationRule": "Never sum overlapping stage tests or different source versions into one final complete suite.",
-    "in-progress": "已发布具名本地范围可标passed；仍有真实读屏/外部门禁，不作S6/G-MVP总体完成或S7准入决定。",
-    "formalStatusReuse": "formalStatus 保留原草稿，不作新的正式判定；更新localStatus仅复用已发布结果所覆盖的本地事实。"
+    "in-progress": "Current local requirements and formal external gates are distinct. Accessibility is excluded by the user, not passed. Exact-head remote CI has a separately recorded terminal result; formal external gates remain open.",
+    "formalStatusReuse": "Historical formal statuses are retained except the explicit F24/N08/UX07 scope reassessments and N07 reassessment against observed remote CI. GM.05 formal status remains partial; these changes do not approve G-MVP or S7.",
+    "out-of-scope": "Explicitly removed from current requirements by the user; historical failed runs remain failed."
   },
   "sourceDocuments": [
     {
       "path": "docs/prd.md",
-      "sha256AtIndexGeneration": "4d29fc8ab7c6665efce966e519009f9457da5de1998a40b9fc243d6d861674f1",
-      "bytesAtIndexGeneration": 65793,
+      "sha256AtIndexGeneration": "70ac3b5bae1aa7b907a91ead7882c92ab02d590828a5d6b82b38e80d4397bc29",
+      "bytesAtIndexGeneration": 66228,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "4d29fc8ab7c6665efce966e519009f9457da5de1998a40b9fc243d6d861674f1",
       "previousPublishedIndexGeneration": {
         "sha256": "4d29fc8ab7c6665efce966e519009f9457da5de1998a40b9fc243d6d861674f1",
@@ -38,10 +45,10 @@
     },
     {
       "path": "docs/development-plan.md",
-      "sha256AtIndexGeneration": "d064c632c9ad2fa6d2faf620f744e064f18203ad884c3ef5c6d09551a8553108",
-      "bytesAtIndexGeneration": 111742,
+      "sha256AtIndexGeneration": "4cbcfedde4ce3afd292872cd23d0cd4a87be691aa4c020e4da59c75d2c3a7f07",
+      "bytesAtIndexGeneration": 112811,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "34cec935223b1887cea7da0decbe27febe0064e11d641bbf93ffac1cc4fbe04f",
       "historicalSevenFileScan": {
         "evidenceRef": "L07_SECRET_PUBLIC",
@@ -55,10 +62,10 @@
     },
     {
       "path": "docs/g-mvp-local-acceptance-plan.md",
-      "sha256AtIndexGeneration": "fb0df6d5613635ddb6f3bd6ed83a87dfcd9ed60a535ad23667b512c391c184c0",
-      "bytesAtIndexGeneration": 28788,
+      "sha256AtIndexGeneration": "c144598b4d5be51672d9baf85571beb9fc181647c03ca094739aa6bb36513947",
+      "bytesAtIndexGeneration": 30647,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "c2618eca26bad967ed39cc424d3f1254e35850c6503f3764c859bb295a031b68",
       "historicalSevenFileScan": {
         "evidenceRef": "L07_SECRET_PUBLIC",
@@ -72,10 +79,10 @@
     },
     {
       "path": "docs/acceptance/S6.md",
-      "sha256AtIndexGeneration": "35ddbbe8a5d1d5528fc711df6a47121acb16ab3d97bcc31599af8843b4a8f250",
-      "bytesAtIndexGeneration": 24634,
+      "sha256AtIndexGeneration": "45a98f50f6a7fb54c194c6e108a90a3cd96f379da68346083d5f367ff75b7bf8",
+      "bytesAtIndexGeneration": 25620,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "6f63005ee5f74453889fad785156ef929743d215de9518f68271d9cf76178743",
       "historicalSevenFileScan": {
         "evidenceRef": "L07_SECRET_PUBLIC",
@@ -91,8 +98,8 @@
       "path": "docs/control-plane-recovery.md",
       "sha256AtIndexGeneration": "962bb4a75f706702908ced8b27c654e2c9100976f4f6436398eac060a0626b2b",
       "bytesAtIndexGeneration": 22325,
-      "recheckAfterFinalDocumentationEdits": false,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "962bb4a75f706702908ced8b27c654e2c9100976f4f6436398eac060a0626b2b",
       "matchesPublishedIncrementScanAtIndexGeneration": true,
       "previousPublishedIndexGeneration": {
@@ -104,8 +111,8 @@
       "path": "docs/acceptance/g-mvp-snapshot-observation.md",
       "sha256AtIndexGeneration": "255a71b3dbe93db10ce2bfaddecd008a37f1781209f1a158e4b2ec2fcff9b7ee",
       "bytesAtIndexGeneration": 1835,
-      "recheckAfterFinalDocumentationEdits": false,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "255a71b3dbe93db10ce2bfaddecd008a37f1781209f1a158e4b2ec2fcff9b7ee",
       "matchesPublishedIncrementScanAtIndexGeneration": true,
       "previousPublishedIndexGeneration": {
@@ -117,8 +124,8 @@
       "path": "docs/acceptance/g-mvp-snapshot-observation-results.json",
       "sha256AtIndexGeneration": "cec6d9a9868c0ea88a12687853cc037e79620650568d7e0a158fb7f252677601",
       "bytesAtIndexGeneration": 5025,
-      "recheckAfterFinalDocumentationEdits": false,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "cec6d9a9868c0ea88a12687853cc037e79620650568d7e0a158fb7f252677601",
       "matchesPublishedIncrementScanAtIndexGeneration": true,
       "previousPublishedIndexGeneration": {
@@ -130,8 +137,8 @@
       "path": "docs/acceptance/g-mvp-runtime-resources.md",
       "sha256AtIndexGeneration": "c6df419180224dc90ddd598017fce51cfd85ed4873e6d727e62f2d003a6e6eac",
       "bytesAtIndexGeneration": 1639,
-      "recheckAfterFinalDocumentationEdits": false,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "c6df419180224dc90ddd598017fce51cfd85ed4873e6d727e62f2d003a6e6eac",
       "matchesPublishedIncrementScanAtIndexGeneration": true,
       "previousPublishedIndexGeneration": {
@@ -143,8 +150,8 @@
       "path": "docs/acceptance/g-mvp-runtime-resources-results.json",
       "sha256AtIndexGeneration": "ac2d87531e5830b8ddbb3205055ed66da40e6fbecf3cf5709a3278c3748af105",
       "bytesAtIndexGeneration": 18717,
-      "recheckAfterFinalDocumentationEdits": false,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "sha256AtPreviousIndexGeneration": "ac2d87531e5830b8ddbb3205055ed66da40e6fbecf3cf5709a3278c3748af105",
       "matchesPublishedIncrementScanAtIndexGeneration": true,
       "previousPublishedIndexGeneration": {
@@ -154,10 +161,10 @@
     },
     {
       "path": "README.md",
-      "sha256AtIndexGeneration": "7ecfa463f5024cd4683201e11c4aac969796a36a84150dee4393adbbada2e649",
-      "bytesAtIndexGeneration": 6003,
+      "sha256AtIndexGeneration": "365f6236a06548dd8cbba62787019b9e98fd47f69aa33e57d19abec5d8471dcb",
+      "bytesAtIndexGeneration": 6546,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "historicalSevenFileScan": {
         "evidenceRef": "L07_SECRET_PUBLIC",
         "matchesRecordedBytesAtIndexGeneration": false,
@@ -170,10 +177,10 @@
     },
     {
       "path": "PRODUCT.md",
-      "sha256AtIndexGeneration": "8db34f7c5234325c06f7fa368c8080ce9f1cdb1bae7bee44a18f3a1e894b2e51",
-      "bytesAtIndexGeneration": 6427,
+      "sha256AtIndexGeneration": "48310c5121221d9c573ba3641d68c7a761fd9b5f247392af87103595797f89b0",
+      "bytesAtIndexGeneration": 6773,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "historicalSevenFileScan": {
         "evidenceRef": "L07_SECRET_PUBLIC",
         "matchesRecordedBytesAtIndexGeneration": false,
@@ -186,10 +193,10 @@
     },
     {
       "path": "DESIGN.md",
-      "sha256AtIndexGeneration": "9d0267eda1d772f65bf3f4ced56c0ea8bb06a54b6174a96835aeccfa10e1ffe3",
-      "bytesAtIndexGeneration": 11635,
+      "sha256AtIndexGeneration": "6a0c304c3ba07afdce016edf0d7db0db452d4f22d4465be244497389a74df63e",
+      "bytesAtIndexGeneration": 12051,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "previousPublishedIndexGeneration": {
         "sha256": "86cd120eaed44dbbf444c0c188ba70e955d465ae790bb30073ef071189452abf",
         "bytes": 11425
@@ -200,7 +207,7 @@
       "sha256AtIndexGeneration": "64c3022ede518478b81925cdabe29e27f011fdd6f94c7e8c6fae4129e4ad8424",
       "bytesAtIndexGeneration": 6817,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "previousPublishedIndexGeneration": {
         "sha256": "64c3022ede518478b81925cdabe29e27f011fdd6f94c7e8c6fae4129e4ad8424",
         "bytes": 6817
@@ -211,7 +218,7 @@
       "sha256AtIndexGeneration": "9946724d02dbd0abc48734bc1003f1af287e92f5ae598ac4c626525624e4b27c",
       "bytesAtIndexGeneration": 9763,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "previousPublishedIndexGeneration": {
         "sha256": "9946724d02dbd0abc48734bc1003f1af287e92f5ae598ac4c626525624e4b27c",
         "bytes": 9763
@@ -221,8 +228,8 @@
       "path": "docs/acceptance/S6-deployment.md",
       "sha256AtIndexGeneration": "6f6743377f3dd40c6695f53ef19377d7a6dfe26eb25e4d65cfc497e68468e666",
       "bytesAtIndexGeneration": 6997,
-      "recheckAfterFinalDocumentationEdits": false,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "historicalSevenFileScan": {
         "evidenceRef": "L07_SECRET_PUBLIC",
         "matchesRecordedBytesAtIndexGeneration": true,
@@ -237,8 +244,8 @@
       "path": "docs/acceptance/s6-deployment-results.json",
       "sha256AtIndexGeneration": "f2148b3a78b4925174b3f343c2d36da679c3c3671430ddded417d8af9f289304",
       "bytesAtIndexGeneration": 218968,
-      "recheckAfterFinalDocumentationEdits": false,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "historicalSevenFileScan": {
         "evidenceRef": "L07_SECRET_PUBLIC",
         "matchesRecordedBytesAtIndexGeneration": true,
@@ -254,7 +261,7 @@
       "sha256AtIndexGeneration": "69d885d0a8ca55547d677a8a973b75cc7c308d7a154fda04e97b1b03b525778a",
       "bytesAtIndexGeneration": 9568,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "previousPublishedIndexGeneration": {
         "sha256": "69d885d0a8ca55547d677a8a973b75cc7c308d7a154fda04e97b1b03b525778a",
         "bytes": 9568
@@ -265,7 +272,7 @@
       "sha256AtIndexGeneration": "19ef545f780a1cd0e20081747f2639acd121e3980538e760f2730e917afe017b",
       "bytesAtIndexGeneration": 227319,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "本次生成读取的字节；最终文档/扫描绑定以外置核验清单为准。",
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally.",
       "previousPublishedIndexGeneration": {
         "sha256": "19ef545f780a1cd0e20081747f2639acd121e3980538e760f2730e917afe017b",
         "bytes": 227319
@@ -273,17 +280,52 @@
     },
     {
       "path": "docs/acceptance/g-mvp-screen-reader.md",
-      "sha256AtIndexGeneration": "6967d432c18506b4f8bd1a3a62040c0b1dfd8a6354211df31607fc6ee246d171",
-      "bytesAtIndexGeneration": 7721,
+      "sha256AtIndexGeneration": "460e84e849f455749b968514a21a48ca5a2e4e98ce4af7dab7e8d658dd01068f",
+      "bytesAtIndexGeneration": 9169,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "与本次准备的最终reader公开字节一致。"
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally."
     },
     {
       "path": "docs/acceptance/g-mvp-screen-reader-results.json",
-      "sha256AtIndexGeneration": "308ec81d1aa6cbfd4ac4e0ffa1ebc3949f3eab4e44bd14efdd0a3c876d18fe49",
-      "bytesAtIndexGeneration": 50080,
+      "sha256AtIndexGeneration": "7e69be01c9b80f5981463a7f43efdc4e88b9b73b8f92d17035e8554c32bdf383",
+      "bytesAtIndexGeneration": 65397,
       "recheckAfterFinalDocumentationEdits": true,
-      "bindingScope": "与本次准备的最终reader公开字节一致。"
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally."
+    },
+    {
+      "path": "docs/technical-plan.md",
+      "sha256AtIndexGeneration": "ea15f9b6ad781011cb8993c4c2740e04ee7ce6a2e25554de4a049b173960d4ef",
+      "bytesAtIndexGeneration": 74164,
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally."
+    },
+    {
+      "path": "docs/ui-coverage-inventory.md",
+      "sha256AtIndexGeneration": "9f48575822b88abb4ddc613747dd180c7b5b8161419955e82d8d8288b174f391",
+      "bytesAtIndexGeneration": 45740,
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally."
+    },
+    {
+      "path": "docs/s7-development-experience-implementation.md",
+      "sha256AtIndexGeneration": "f28f464208ad090e11383a1d739189be78c2b14d50df204408b5c2c478c6215a",
+      "bytesAtIndexGeneration": 88491,
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally."
+    },
+    {
+      "path": "docs/acceptance/g-mvp-ci.md",
+      "sha256AtIndexGeneration": "bd45f3386b05695ea686e7b9e53d81cdc09a8948a73748748ea4f3e2f53d6ff8",
+      "bytesAtIndexGeneration": 4279,
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally."
+    },
+    {
+      "path": "docs/acceptance/g-mvp-ci-results.json",
+      "sha256AtIndexGeneration": "d11abb529443b7049711a84f243291adbf46353c080e09f1485ef0a4477a1015",
+      "bytesAtIndexGeneration": 71183,
+      "recheckAfterFinalDocumentationEdits": true,
+      "bindingScope": "Exact current staged or retained source bytes; final release integrity is recorded externally."
     }
   ],
   "candidate": {
@@ -4952,21 +4994,59 @@
     },
     {
       "id": "GMVP_SCREEN_READER",
-      "path": "docs/acceptance/g-mvp-screen-reader-results.json",
+      "path": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/baseline/docs/acceptance/g-mvp-screen-reader-results.json",
       "sha256": "308ec81d1aa6cbfd4ac4e0ffa1ebc3949f3eab4e44bd14efdd0a3c876d18fe49",
       "bytes": 50080,
       "layer": "published local reader evidence",
       "claim": "reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
-      "scope": "失败尝试与恢复事实；不代表产品label缺陷、真实朗读通过或总体验收通过。"
+      "scope": "失败尝试与恢复事实；不代表产品label缺陷、真实朗读通过或总体验收通过。",
+      "originalPublishedPath": "docs/acceptance/g-mvp-screen-reader-results.json"
     },
     {
       "id": "GMVP_SCREEN_READER_MD",
-      "path": "docs/acceptance/g-mvp-screen-reader.md",
+      "path": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/baseline/docs/acceptance/g-mvp-screen-reader.md",
       "sha256": "6967d432c18506b4f8bd1a3a62040c0b1dfd8a6354211df31607fc6ee246d171",
       "bytes": 7721,
       "layer": "published local reader evidence",
       "claim": "真实读屏失败、恢复闭合、各历史尝试及范围说明。",
-      "scope": "失败尝试与恢复事实；不代表产品label缺陷、真实朗读通过或总体验收通过。"
+      "scope": "失败尝试与恢复事实；不代表产品label缺陷、真实朗读通过或总体验收通过。",
+      "originalPublishedPath": "docs/acceptance/g-mvp-screen-reader.md"
+    },
+    {
+      "id": "GMVP_SCREEN_READER_05",
+      "path": "docs/acceptance/g-mvp-screen-reader-results.json",
+      "sha256": "7e69be01c9b80f5981463a7f43efdc4e88b9b73b8f92d17035e8554c32bdf383",
+      "bytes": 65397,
+      "layer": "historical reader and current scope",
+      "claim": "reader05 permission granted, reply -1708, zero speech, restored; excluded from current requirements.",
+      "scope": "Only the stated run, local revision, or user scope decision; no overall acceptance promotion."
+    },
+    {
+      "id": "GMVP_SCREEN_READER_05_MD",
+      "path": "docs/acceptance/g-mvp-screen-reader.md",
+      "sha256": "460e84e849f455749b968514a21a48ca5a2e4e98ce4af7dab7e8d658dd01068f",
+      "bytes": 9169,
+      "layer": "historical reader and current scope",
+      "claim": "Preserved reader01–05 failures and current user scope.",
+      "scope": "Only the stated run, local revision, or user scope decision; no overall acceptance promotion."
+    },
+    {
+      "id": "GMVP_REMOTE_CI",
+      "path": "docs/acceptance/g-mvp-ci-results.json",
+      "sha256": "d11abb529443b7049711a84f243291adbf46353c080e09f1485ef0a4477a1015",
+      "bytes": 71183,
+      "layer": "Exact-head GitHub Actions and preserved run history",
+      "claim": "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。",
+      "scope": "Only the stated run, local revision, or user scope decision; no overall acceptance promotion."
+    },
+    {
+      "id": "GMVP_REMOTE_CI_MD",
+      "path": "docs/acceptance/g-mvp-ci.md",
+      "sha256": "bd45f3386b05695ea686e7b9e53d81cdc09a8948a73748748ea4f3e2f53d6ff8",
+      "bytes": 4279,
+      "layer": "Exact-head GitHub Actions and preserved run history",
+      "claim": "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。",
+      "scope": "Only the stated run, local revision, or user scope decision; no overall acceptance promotion."
     }
   ],
   "requirements": [
@@ -5502,8 +5582,8 @@
     {
       "id": "F24",
       "title": "中文控制台与 UX01–UX08",
-      "localStatus": "partial",
-      "formalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
       "evidenceRefs": [
         "S1_BROWSER",
         "S2_BROWSER",
@@ -5516,16 +5596,28 @@
         "GMVP_SCREEN_READER",
         "GMVP_SCREEN_READER_MD"
       ],
-      "verifiedLocalClaim": "P0 实际页面/项目上下文、明暗、IME、键盘/焦点、宽度/缩放、稳定列表/日志已有分层证据。 reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
-      "remainingLocal": [
-        "VoiceOver自动化权限前提仍阻断真实朗读；reader-04首项传输失败不建立产品语义缺陷结论，UX07/L08继续partial。"
-      ],
+      "verifiedLocalClaim": "P0 实际页面/项目上下文、明暗、IME、键盘/焦点、宽度/缩放、稳定列表/日志已有分层证据。",
+      "remainingLocal": [],
       "externalGateRefs": [],
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
         "line": 223
-      }
+      },
+      "scopeDecisionRef": "USER_SCOPE_20261029_ACCESSIBILITY_REMOVED",
+      "currentScopeExcludes": [
+        "accessibility conformance",
+        "assistive technology",
+        "real screen reader"
+      ],
+      "historicalReaderStatus": "failed; excluded from current acceptance, not promoted",
+      "historicalEvidenceRefs": [
+        "GMVP_SCREEN_READER",
+        "GMVP_SCREEN_READER_MD",
+        "GMVP_SCREEN_READER_05",
+        "GMVP_SCREEN_READER_05_MD"
+      ],
+      "formalStatusReevaluated": true
     },
     {
       "id": "F25",
@@ -5578,7 +5670,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 221
+        "line": 225
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false
@@ -5607,7 +5699,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 222
+        "line": 226
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false,
@@ -5641,7 +5733,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 223
+        "line": 227
       }
     },
     {
@@ -5672,7 +5764,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 224
+        "line": 228
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false,
@@ -5687,7 +5779,7 @@
     {
       "id": "GM.05",
       "title": "故障、安全、性能、UX 与交付清单",
-      "localStatus": "partial",
+      "localStatus": "passed",
       "formalStatus": "partial",
       "evidenceRefs": [
         "GMVP_ENGINEERING",
@@ -5715,13 +5807,12 @@
         "GMVP_INCREMENT_PUBLIC_SCAN",
         "GMVP_JOINT_RECOVERY",
         "GMVP_SCREEN_READER",
-        "GMVP_SCREEN_READER_MD"
+        "GMVP_SCREEN_READER_MD",
+        "GMVP_REMOTE_CI",
+        "GMVP_REMOTE_CI_MD"
       ],
-      "verifiedLocalClaim": "故障、分层工程/性能/真实UI、L07交付安全及已公开当前选定运行组件资源均已汇合；恢复工具补充包和新增五文档扫描已绑定。 joint-04应用身份及真实联合恢复计时已发布；失败历史及环境前提修复各自留证。 reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
-      "remainingLocal": [
-        "VoiceOver自动化权限前提仍阻断真实朗读；reader-04首项传输失败不建立产品语义缺陷结论，UX07/L08继续partial。",
-        "生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。 X01–X05仍未验。"
-      ],
+      "verifiedLocalClaim": "故障、分层工程/性能/真实UI、L07交付安全及已公开当前选定运行组件资源均已汇合；恢复工具补充包和新增五文档扫描已绑定。 joint-04应用身份及真实联合恢复计时已发布；失败历史及环境前提修复各自留证。 第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。",
+      "remainingLocal": [],
       "externalGateRefs": [
         "X01",
         "X02",
@@ -5732,10 +5823,15 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 225
+        "line": 229
       },
       "candidateGateAutoPromoted": false,
-      "formalStatusReevaluated": false
+      "formalStatusReevaluated": false,
+      "currentPublicBytesValidation": {
+        "path": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json",
+        "releaseRequiresPassedReceipt": true
+      },
+      "scopeDecisionRef": "USER_SCOPE_20261029_ACCESSIBILITY_REMOVED"
     },
     {
       "id": "E01",
@@ -5765,7 +5861,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 325
+        "line": 329
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false
@@ -5785,7 +5881,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 326
+        "line": 330
       }
     },
     {
@@ -5804,7 +5900,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 327
+        "line": 331
       }
     },
     {
@@ -5823,7 +5919,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 328
+        "line": 332
       }
     },
     {
@@ -5842,7 +5938,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 329
+        "line": 333
       }
     },
     {
@@ -5863,7 +5959,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 330
+        "line": 334
       }
     },
     {
@@ -5884,7 +5980,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 331
+        "line": 335
       }
     },
     {
@@ -5906,7 +6002,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 332
+        "line": 336
       }
     },
     {
@@ -5925,7 +6021,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 333
+        "line": 337
       }
     },
     {
@@ -5944,7 +6040,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 334
+        "line": 338
       }
     },
     {
@@ -5965,7 +6061,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 335
+        "line": 339
       }
     },
     {
@@ -5984,7 +6080,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 336
+        "line": 340
       }
     },
     {
@@ -6006,7 +6102,7 @@
       ],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 337
+        "line": 341
       }
     },
     {
@@ -6027,7 +6123,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 338
+        "line": 342
       }
     },
     {
@@ -6044,7 +6140,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 339
+        "line": 343
       }
     },
     {
@@ -6065,7 +6161,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 340
+        "line": 344
       }
     },
     {
@@ -6083,7 +6179,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 341
+        "line": 345
       }
     },
     {
@@ -6101,7 +6197,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 342
+        "line": 346
       }
     },
     {
@@ -6124,7 +6220,7 @@
       ],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 343
+        "line": 347
       }
     },
     {
@@ -6147,7 +6243,7 @@
       ],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 344
+        "line": 348
       }
     },
     {
@@ -6167,7 +6263,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 350
+        "line": 354
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false
@@ -6188,7 +6284,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 351
+        "line": 355
       }
     },
     {
@@ -6208,7 +6304,7 @@
       ],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 352
+        "line": 356
       }
     },
     {
@@ -6229,7 +6325,7 @@
       ],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 353
+        "line": 357
       }
     },
     {
@@ -6249,7 +6345,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/development-plan.md",
-        "line": 354
+        "line": 358
       }
     },
     {
@@ -6286,7 +6382,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
-        "line": 411
+        "line": 413
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false
@@ -6311,7 +6407,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
-        "line": 412
+        "line": 414
       }
     },
     {
@@ -6337,7 +6433,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
-        "line": 413
+        "line": 415
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false
@@ -6369,7 +6465,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
-        "line": 414
+        "line": 416
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false,
@@ -6401,7 +6497,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
-        "line": 415
+        "line": 417
       }
     },
     {
@@ -6430,7 +6526,7 @@
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
-        "line": 416
+        "line": 418
       },
       "candidateGateAutoPromoted": false,
       "formalStatusReevaluated": false
@@ -6438,8 +6534,8 @@
     {
       "id": "N07",
       "title": "工程与交付",
-      "localStatus": "partial",
-      "formalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
       "evidenceRefs": [
         "GMVP_ENGINEERING",
         "GMVP_CACHE_INCREMENT",
@@ -6451,26 +6547,30 @@
         "L07_UPGRADE",
         "L07_PUBLISHED",
         "L07_POST_DOC_SOURCE",
-        "GMVP_SNAPSHOT_INCREMENT"
+        "GMVP_SNAPSHOT_INCREMENT",
+        "GMVP_REMOTE_CI",
+        "GMVP_REMOTE_CI_MD"
       ],
-      "verifiedLocalClaim": "原完整工程与两个窄增量分别绑定；L07四镜像/Builder、包检查、安装升级回退、归档及说明已公开。 新宿主机工具已公开验证导出MVCC边界与恢复前绑定，6项单测/11项PG及独立补充包各自留证。",
-      "remainingLocal": [
-        "远端GitHub CI未执行，不能称CI已通过；保留其独立待验范围。"
-      ],
+      "verifiedLocalClaim": "原完整工程与两个窄增量分别绑定；L07四镜像/Builder、包检查、安装升级回退、归档及说明已公开。 新宿主机工具已公开验证导出MVCC边界与恢复前绑定，6项单测/11项PG及独立补充包各自留证。 第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。",
+      "remainingLocal": [],
       "externalGateRefs": [],
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
-        "line": 417
+        "line": 419
       },
       "candidateGateAutoPromoted": false,
-      "formalStatusReevaluated": false
+      "formalStatusReevaluated": true,
+      "currentPublicBytesValidation": {
+        "path": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json",
+        "releaseRequiresPassedReceipt": true
+      }
     },
     {
       "id": "N08",
-      "title": "UX 与可访问性",
-      "localStatus": "partial",
-      "formalStatus": "partial",
+      "title": "用户体验",
+      "localStatus": "passed",
+      "formalStatus": "passed",
       "evidenceRefs": [
         "S1_BROWSER",
         "S1_AXE",
@@ -6486,16 +6586,28 @@
         "GMVP_SCREEN_READER",
         "GMVP_SCREEN_READER_MD"
       ],
-      "verifiedLocalClaim": "P0 真实流程、IME/键盘/焦点/主题/窄屏/缩放/稳定日志与状态可复用。 reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
-      "remainingLocal": [
-        "VoiceOver自动化权限前提仍阻断真实朗读；reader-04首项传输失败不建立产品语义缺陷结论，UX07/L08继续partial。"
-      ],
+      "verifiedLocalClaim": "P0 真实流程、IME/键盘/焦点/主题/窄屏/缩放/稳定日志与状态可复用。",
+      "remainingLocal": [],
       "externalGateRefs": [],
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
-        "line": 418
-      }
+        "line": 420
+      },
+      "scopeDecisionRef": "USER_SCOPE_20261029_ACCESSIBILITY_REMOVED",
+      "currentScopeExcludes": [
+        "accessibility conformance",
+        "assistive technology",
+        "real screen reader"
+      ],
+      "historicalReaderStatus": "failed; excluded from current acceptance, not promoted",
+      "historicalEvidenceRefs": [
+        "GMVP_SCREEN_READER",
+        "GMVP_SCREEN_READER_MD",
+        "GMVP_SCREEN_READER_05",
+        "GMVP_SCREEN_READER_05_MD"
+      ],
+      "formalStatusReevaluated": true
     },
     {
       "id": "UX01",
@@ -6632,9 +6744,9 @@
     },
     {
       "id": "UX07",
-      "title": "键盘、辅助技术、窄屏与缩放",
-      "localStatus": "partial",
-      "formalStatus": "partial",
+      "title": "键盘、焦点、窄屏与缩放",
+      "localStatus": "passed",
+      "formalStatus": "passed",
       "evidenceRefs": [
         "S1_BROWSER",
         "S1_AXE",
@@ -6648,16 +6760,28 @@
         "GMVP_SCREEN_READER",
         "GMVP_SCREEN_READER_MD"
       ],
-      "verifiedLocalClaim": "键盘/焦点、可访问名称、非纯颜色、1440/1024/390 与 200% 缩放已有证据。 reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
-      "remainingLocal": [
-        "VoiceOver自动化权限前提仍阻断真实朗读；reader-04首项传输失败不建立产品语义缺陷结论，UX07/L08继续partial。"
-      ],
+      "verifiedLocalClaim": "键盘/焦点、可访问名称、非纯颜色、1440/1024/390 与 200% 缩放已有证据。",
+      "remainingLocal": [],
       "externalGateRefs": [],
       "outsideP0": [],
       "requirement": {
         "path": "docs/prd.md",
         "line": 326
-      }
+      },
+      "scopeDecisionRef": "USER_SCOPE_20261029_ACCESSIBILITY_REMOVED",
+      "currentScopeExcludes": [
+        "accessibility conformance",
+        "assistive technology",
+        "real screen reader"
+      ],
+      "historicalReaderStatus": "failed; excluded from current acceptance, not promoted",
+      "historicalEvidenceRefs": [
+        "GMVP_SCREEN_READER",
+        "GMVP_SCREEN_READER_MD",
+        "GMVP_SCREEN_READER_05",
+        "GMVP_SCREEN_READER_05_MD"
+      ],
+      "formalStatusReevaluated": true
     },
     {
       "id": "UX08",
@@ -6819,7 +6943,7 @@
     },
     {
       "id": "L08",
-      "status": "partial",
+      "status": "passed",
       "completedRefs": [
         "GMVP_UI_FINAL",
         "S6_FAULTS",
@@ -6839,27 +6963,23 @@
         "GMVP_INCREMENT_PUBLIC_SCAN",
         "GMVP_RECOVERY_TOOLS_SCAN"
       ],
-      "remaining": "VoiceOver自动化权限前提仍阻断真实朗读；reader-04首项传输失败不建立产品语义缺陷结论，UX07/L08继续partial。 生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。",
+      "remaining": null,
       "supplementalFailureAndRestorationRefs": [
         "GMVP_SCREEN_READER",
-        "GMVP_SCREEN_READER_MD"
+        "GMVP_SCREEN_READER_MD",
+        "GMVP_SCREEN_READER_05",
+        "GMVP_SCREEN_READER_05_MD"
       ],
-      "supplementalRefsCountAsProductPass": false
+      "supplementalRefsCountAsProductPass": false,
+      "scopeDecisionRef": "USER_SCOPE_20261029_ACCESSIBILITY_REMOVED",
+      "currentScope": "Existing resource, security and evidence work; real screen reader excluded by user.",
+      "currentPublicBytesValidation": {
+        "path": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json",
+        "releaseRequiresPassedReceipt": true
+      }
     }
   ],
-  "pendingRootEvidence": [
-    {
-      "id": "L08_REAL_SCREEN_READER",
-      "status": "blocked-on-native-reader-automation",
-      "action": "VoiceOver自动化权限前提仍阻断真实朗读；reader-04首项传输失败不建立产品语义缺陷结论，UX07/L08继续partial。 在前提确实可用后另立真实朗读session；不改写旧失败。"
-    },
-    {
-      "id": "CURRENT_PUBLIC_BYTES_SCAN",
-      "status": "pending-at-index-generation",
-      "action": "生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。",
-      "externalReceipt": ".local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json"
-    }
-  ],
+  "pendingRootEvidence": [],
   "securityClosure": [
     {
       "surface": "普通 API、原始 DB 与平台日志",
@@ -6941,12 +7061,15 @@
     "The historical seven-file scan cannot cover changed living documents or the four new public reports. A separate final-byte scan receipt is required; this generator performs none.",
     "reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
     "reader-01/02/03和2026-10-26旧失败与reader-04分别保留；不合并进程、尝试、恢复或静态检查来构成朗读成功。",
-    "生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。"
+    "生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。",
+    "用户于2026-10-29将无障碍、辅助技术、真实读屏和WCAG合规排除当前要求；常规键盘、焦点、IME、响应式、缩放及其他UX要求保留。 历史reader失败不再是当前阻塞，也不变成passed。",
+    "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。 GitHub Actions不替代X03中的产品GitHub授权、真实Webhook或Registry验收。",
+    "本次后续文档变更由独立最终字节核验绑定；不改称已包含在第三轮CI的提交中。代码仍按该CI提交的具名源码清单逐字节核对。"
   ],
   "suggestedFinalReport": {
     "targetPath": "docs/acceptance/G-MVP.md",
     "machineIndexTarget": "docs/acceptance/g-mvp-local-results.json",
-    "openingRule": "State actual local and formal status separately; retain unverified VoiceOver and external gates. Never write local acceptance complete while a required local item is open.",
+    "openingRule": "State current user scope, actual CI status and external gates; do not treat excluded accessibility as passed or local fixes as remote success.",
     "sections": [
       {
         "title": "当前结论与已验范围",
@@ -7000,17 +7123,16 @@
       }
     ],
     "publicationChecks": [
-      "Every evidence path exists and immutable raw report hash matches.",
-      "All 71 required IDs are present once; no P1 rows silently promoted into P0.",
-      "VoiceOver自动化权限前提仍阻断真实朗读；reader-04首项传输失败不建立产品语义缺陷结论，UX07/L08继续partial。 生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。",
-      "Regenerate only index references/hashes after concurrent documentation updates.",
-      "Publish no credential/session/CSRF/password/raw environment or protected key materials."
+      "All 71 requirement IDs remain unique; prior evidence bytes and historical failures are preserved.",
+      "Scope changes follow the explicit user instruction; ordinary UX and external gates remain.",
+      "Remote CI conclusions bind only the exact pushed commit and its observed terminal run; historical failures remain separate.",
+      "Publish only after the exact staged bytes pass the separate final validation; no secrets or raw speech."
     ]
   },
   "validation": {
     "requiredIdCount": 71,
     "uniqueIdCount": 71,
-    "evidenceFileCount": 97,
+    "evidenceFileCount": 101,
     "allEvidencePathsExist": true,
     "allEvidenceReferencesResolve": true,
     "historicalEvidenceSha256Verified": 47,
@@ -7041,19 +7163,19 @@
     },
     "newRuntimeOperations": 0,
     "productFilesModified": false,
-    "publicDocsModified": false,
+    "publicDocsModified": true,
     "sourceDocumentHashesMustBeRefreshedIfChangedAtPublication": true,
     "protectedPublicFilesVerified": 2,
     "publicIncrementFilesVerified": 5,
     "largeArchivesReadOrRehashed": 0,
-    "evidenceReferenceCount": 103,
-    "uniqueEvidenceFileCount": 97,
+    "evidenceReferenceCount": 107,
+    "uniqueEvidenceFileCount": 101,
     "previous83EvidenceEntriesVerifiedAndRetained": 83,
     "privateFilesRead": 0,
     "publicFilesWritten": 0,
     "historicalSevenFileScanRetained": true,
     "currentPublicationScanPerformed": false,
-    "formalStatusesChanged": 0,
+    "formalStatusesChanged": 4,
     "jointReceiptAndTimingValidation": {
       "passed": true,
       "sameParentIntegerIntervalsRecomputed": true,
@@ -7304,7 +7426,25 @@
       ]
     },
     "previous101EvidenceEntriesVerifiedAndRetained": true,
-    "publicationWriteScope": "此处记录准备阶段；实际四文件发布由独立publication-bindings记录。"
+    "publicationWriteScope": "Only the listed 16 prepared documentation files; publication requires the separate final-validation receipt.",
+    "publicationFiles": [
+      "DESIGN.md",
+      "PRODUCT.md",
+      "README.md",
+      "docs/acceptance/G-MVP.md",
+      "docs/acceptance/S6.md",
+      "docs/acceptance/g-mvp-ci-results.json",
+      "docs/acceptance/g-mvp-ci.md",
+      "docs/acceptance/g-mvp-local-results.json",
+      "docs/acceptance/g-mvp-screen-reader-results.json",
+      "docs/acceptance/g-mvp-screen-reader.md",
+      "docs/development-plan.md",
+      "docs/g-mvp-local-acceptance-plan.md",
+      "docs/prd.md",
+      "docs/s7-development-experience-implementation.md",
+      "docs/technical-plan.md",
+      "docs/ui-coverage-inventory.md"
+    ]
   },
   "draft": false,
   "previousDraft": {
@@ -8136,43 +8276,18 @@
     "publicTrustProved": false
   },
   "voiceOverEvidenceReview": {
-    "status": "blocked-on-native-reader-automation",
+    "status": "out-of-scope",
+    "reason": "excluded-by-user",
+    "scopeDecisionRef": "USER_SCOPE_20261029_ACCESSIBILITY_REMOVED",
     "evidenceRefs": [
-      "GMVP_UI_FINAL",
-      "GMVP_VOICEOVER",
-      "GMVP_VOICEOVER_RESTORATION",
-      "GMVP_SCREEN_READER",
-      "GMVP_SCREEN_READER_MD"
+      "GMVP_SCREEN_READER_05",
+      "GMVP_SCREEN_READER_05_MD"
     ],
-    "observed": "reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
-    "minimalSupplement": "环境条件确有变化后，以可用VoiceOver作一次真实导航/朗读：主导航与标题、字段名/错误、弹窗焦点与返回、部署/构建状态、日志控制。记录实际phrase及焦点序列，并核对关闭/偏好/专用进程恢复。",
-    "doNotSubstitute": [
-      "Axe",
-      "ARIA/DOM",
-      "键盘/缩放",
-      "能力预检"
-    ],
+    "observed": "reader05 permission status 0; first actual reply -1708; 0 passed, 0 speech, 11 unexecuted. VoiceOver, preferences and foreground restored. User subsequently excluded accessibility.",
+    "minimalSupplement": null,
+    "furtherReaderTestingPlanned": false,
     "newSuccessfulSpeechSampleCompleted": false,
-    "scope": "四个reader session与2026-10-26旧环境尝试分别留证；prepare、配置控制、恢复或静态检查不替代真实朗读。",
-    "retainedPreviousReview": {
-      "status": "needs-new-real-speech-evidence",
-      "evidenceRefs": [
-        "GMVP_UI_FINAL",
-        "GMVP_VOICEOVER",
-        "GMVP_VOICEOVER_RESTORATION"
-      ],
-      "observed": "所引2026-10-26旧尝试启动后退出、last phrase为零；退出根因未确定，不能标成12个产品缺陷或通过。",
-      "minimalSupplement": "环境条件确有变化后，以可用VoiceOver作一次真实导航/朗读：主导航与标题、字段名/错误、弹窗焦点与返回、部署/构建状态、日志控制。记录实际phrase及焦点序列，并核对关闭/偏好/专用进程恢复。",
-      "doNotSubstitute": [
-        "Axe",
-        "ARIA/DOM",
-        "键盘/缩放",
-        "能力预检"
-      ],
-      "newSuccessfulSpeechSampleCompleted": false,
-      "scope": "保留旧尝试与仍无有效朗读的结论；新会话及其恢复状态以另行完成的实际回执为准。"
-    },
-    "sameRunRestorationCompleted": true
+    "historicalFailuresPromotedToPass": false
   },
   "localStatusEvidenceMappings": [
     {
@@ -8250,139 +8365,115 @@
       "localStatus": "passed",
       "evidenceRef": "GMVP_JOINT_RECOVERY",
       "basis": "已发布joint-04实际具名本地范围完成；formalStatus、物理快照精确时刻局限和外部门禁不改变。"
+    },
+    {
+      "id": "F24",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
+      "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
+    },
+    {
+      "id": "N08",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
+      "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
+    },
+    {
+      "id": "UX07",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
+      "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
+    },
+    {
+      "id": "N07",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
+      "evidenceRefs": [
+        "GMVP_REMOTE_CI",
+        "GMVP_REMOTE_CI_MD"
+      ],
+      "basis": "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。"
+    },
+    {
+      "id": "GM.05",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "partial",
+      "evidenceRefs": [
+        "GMVP_REMOTE_CI",
+        "GMVP_REMOTE_CI_MD"
+      ],
+      "basis": "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。 GM.05的正式X01–X05关口仍保留。"
     }
   ],
   "reviewValidation": {
     "status": "passed",
-    "scope": "最终reader投影与101条原证据字节/71 ID/正式状态/具名公开文件绑定核对；不是产品测试或秘密扫描。",
-    "previousPublishedIndexReview": {
-      "status": "passed",
-      "scope": "本次只重新验证具名小文件绑定和当前索引/联合报告语义；旧工程/资源计算的验证记录明确来自已完成基线。",
-      "previousBaselineValidationEvidence": {
-        "path": ".local/g-mvp-s6-delivery-drafts/20261029-resources-snapshot-030150-561c2dca/run-20261029T030538Z-61f79479/validation-readonly.json",
-        "sha256": "778c3b44a0aad9749b891e23c30fe309d8349898e937a5ddd1a73d3fc19f98de",
-        "bytes": 2345
+    "scope": "Current scope and exact named evidence integrity; publication is gated separately.",
+    "retainedEvidenceEntriesVerified": 103,
+    "unchangedOriginalEvidenceEntries": 101,
+    "historicalReaderEvidenceRelocations": 2,
+    "currentScopeReassessments": [
+      {
+        "id": "F24",
+        "previousLocalStatus": "partial",
+        "previousFormalStatus": "partial",
+        "localStatus": "passed",
+        "formalStatus": "passed",
+        "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
       },
-      "previousCompletedBaselineReview": {
-        "protectedPublicFilesVerified": 7,
-        "largeArchivesReadOrRehashed": 0,
-        "secretInventoriesRead": 0,
-        "privateConfigurationRead": 0,
-        "runtimeOperations": 0,
-        "priorFaultProbeSourceHashesVerified": 6,
-        "publicFilesChanged": false,
-        "newPublicIncrementFilesVerified": 5,
-        "incrementSmallEvidenceBindingsVerified": [
-          {
-            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/recovery-tools-secret-scan-01.json",
-            "sha256": "66c9be9bb30444dcdf00272e5e21b489658fec1390a39bca691344c6e32540d5",
-            "bytes": 1638
-          },
-          {
-            "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025407Z-aff48566/report.json",
-            "sha256": "e78a36a0d6026de89850b8e0bd08576b04d4737e6f92c38fb3bea6ea2d3268a6",
-            "bytes": 17711
-          },
-          {
-            "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025407Z-aff48566/tool.py",
-            "sha256": "c9f50a99d8f0cb66b09d1cfdffd6d407e8f18e1a68afeb33f29475931f92fbbb",
-            "bytes": 16359
-          },
-          {
-            "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025117Z-bf5c64ab/report.json",
-            "sha256": "8ddb75d58daae0dca1ac52eef410479732083ae7fd89dfab8d6663a17192774b",
-            "bytes": 15639
-          },
-          {
-            "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025117Z-bf5c64ab/tool.py",
-            "sha256": "2e3762fb6718150c43c44b261c42107b72d1df949df1760bd594144ea1587a7b"
-          },
-          {
-            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/unit-01-summary.json",
-            "sha256": "90c788228ff72cc1913dad6e6ad5faded0ea68c968d6e1653b3b5b596304c35a",
-            "bytes": 325
-          },
-          {
-            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/integration-02.json",
-            "sha256": "aa57781ef8a22a38ffa77495588dc63d6bb9aa6edb2cbef3c8dc75e3042ba71c",
-            "bytes": 1734
-          },
-          {
-            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/integration-02-vitest.json",
-            "sha256": "5c743a0352a8404b11b22033c793f3b1dd449ac062a5b8475b69eecf978e4381",
-            "bytes": 5117
-          },
-          {
-            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/package-proof-01.json",
-            "sha256": "9c91221583ef1fc2d8ec20ea9a3d30e4004ea8cbb020f1b062a9f9ec678865a2",
-            "bytes": 825
-          },
-          {
-            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/recovery-tools-secret-scan-01.json",
-            "sha256": "66c9be9bb30444dcdf00272e5e21b489658fec1390a39bca691344c6e32540d5",
-            "bytes": 1638
-          },
-          {
-            "path": "scripts/backup-snapshot.mjs",
-            "sha256": "570973dfa256a15a79c6c9cdc4a35384baaaaf897e485c5c07a7471e3a94d1aa",
-            "bytes": 5712
-          },
-          {
-            "path": "scripts/backup-helpers.mjs",
-            "sha256": "bf25d214ced7fa643a4bc909a03be871be5bb5a6ab614d60112e6e5380df6ed9",
-            "bytes": 19425
-          },
-          {
-            "path": "scripts/backup-control-plane.mjs",
-            "sha256": "ac450f343819a7bb91afe955773912aeac9a90c14a6f4137b826694fb69b12de",
-            "bytes": 4560
-          },
-          {
-            "path": "scripts/restore-control-plane.mjs",
-            "sha256": "ac6a45b70c1791f6418b743b2d8f211cc5226ddee3a94a35ef891582019e62d2",
-            "bytes": 8825
-          },
-          {
-            "path": "tests/integration/recovery.test.ts",
-            "sha256": "d124bd6a3ac479763a91e03ecb1f4ff0dbf1f547f7e4b0a9788aaa6a1630f38e",
-            "bytes": 32326
-          },
-          {
-            "path": "tests/manual-data/backup-snapshot.test.mjs",
-            "sha256": "4bf06f2dddb75d7c649eca936e1207ed81b8d59e38abfd139684c27fc87a6d8f",
-            "bytes": 5232
-          },
-          {
-            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/integration-01.json",
-            "sha256": "a2e41b2d8d4af62a100d4bac97d8a5cf251cf645f83de830c2c38a68f8b43677"
-          }
+      {
+        "id": "N08",
+        "previousLocalStatus": "partial",
+        "previousFormalStatus": "partial",
+        "localStatus": "passed",
+        "formalStatus": "passed",
+        "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
+      },
+      {
+        "id": "UX07",
+        "previousLocalStatus": "partial",
+        "previousFormalStatus": "partial",
+        "localStatus": "passed",
+        "formalStatus": "passed",
+        "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
+      }
+    ],
+    "engineeringReassessments": [
+      {
+        "id": "N07",
+        "previousLocalStatus": "partial",
+        "previousFormalStatus": "partial",
+        "localStatus": "passed",
+        "formalStatus": "passed",
+        "evidenceRefs": [
+          "GMVP_REMOTE_CI",
+          "GMVP_REMOTE_CI_MD"
         ],
-        "resourceSummaryRecomputedFromFiveSamples": true,
-        "sourceFilesMatchPublishedSnapshotIncrement": 6,
-        "archiveReadsOrRescans": 0
+        "basis": "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。"
       },
-      "retainedBaselineEvidenceEntriesVerified": 83,
-      "protectedFrozenL07FilesVerified": 2,
-      "publishedSupplementFilesVerified": 5,
-      "jointPublishedSourceBindingsVerified": 23,
-      "jointStrictTlsObservationsVerified": 10,
-      "currentResourceSampleRecomputed": false,
-      "resourceValidationReusedFromCompletedBaseline": true,
-      "publicFilesChanged": true,
-      "publicFilesWritten": 2,
-      "runtimeOperations": 0,
-      "largeArchivesReadOrRehashed": 0,
-      "secretInventoriesRead": 0,
-      "privateConfigurationRead": 0,
-      "secretScanPerformed": false
-    },
-    "retainedEvidenceEntriesVerified": 101,
-    "readerAttemptStatus": "failed",
-    "readerTransportFailureIsNotProductDefect": true,
-    "frozenJointAndL07FilesVerified": 4,
+      {
+        "id": "GM.05",
+        "previousLocalStatus": "partial",
+        "previousFormalStatus": "partial",
+        "localStatus": "passed",
+        "formalStatus": "partial",
+        "evidenceRefs": [
+          "GMVP_REMOTE_CI",
+          "GMVP_REMOTE_CI_MD"
+        ],
+        "basis": "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。 GM.05的正式X01–X05关口仍保留。"
+      }
+    ],
     "runtimeOperations": 0,
-    "privateAuthenticationFilesRead": 0,
-    "archiveReadsOrRehashes": 0,
     "secretScanPerformed": false,
     "publicFilesWrittenAtPreparation": 0
   },
@@ -8620,22 +8711,13 @@
     "purpose": "Reuse the completed 83-entry baseline without reexecuting historical assemblers or frozen archive checks."
   },
   "currentPublicationScan": {
-    "statusAtIndexGeneration": "pending-independent-validation",
-    "scanPerformedByThisGenerator": false,
-    "newOrUpdatedPublicFiles": [
-      "docs/acceptance/g-mvp-screen-reader.md",
-      "docs/acceptance/g-mvp-screen-reader-results.json",
-      "docs/acceptance/G-MVP.md",
-      "docs/acceptance/g-mvp-local-results.json"
-    ],
+    "status": "external-final-validation-required-for-release",
     "externalFinalValidation": {
-      "path": ".local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json",
-      "statement": "生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。"
+      "path": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json"
     },
-    "receipt": null,
-    "separateReceiptRequired": true,
-    "scanHashWrittenBackIntoScannedJson": false,
-    "scope": "实际最终扫描及helper关闭由root独立收口，原有扫描范围不扩大。"
+    "generatorPerformedSecretScan": false,
+    "scanHashEmbeddedInScannedJson": false,
+    "previousReceiptStillHistorical": true
   },
   "currentSnapshotJointRecovery": {
     "status": "passed",
@@ -10169,12 +10251,28 @@
     "retainedUniqueEvidenceFiles": 77,
     "original47EvidenceHashesRetained": true,
     "all83EvidenceEntriesUnchanged": true,
-    "formalStatusesUnchanged": true,
+    "formalStatusesUnchanged": false,
     "externalGatesUnchanged": true,
     "baselineModulesExecuted": false,
     "archiveAssemblerExecuted": false,
     "all101PreviousEvidenceEntriesUnchanged": true,
-    "previousPublishedEvidenceEntriesRetained": 101
+    "previousPublishedEvidenceEntriesRetained": 103,
+    "previous103EvidencePayloadsPreserved": true,
+    "relocatedHistoricalReaderEvidence": [
+      {
+        "id": "GMVP_SCREEN_READER",
+        "originalPath": "docs/acceptance/g-mvp-screen-reader-results.json",
+        "archivePath": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/baseline/docs/acceptance/g-mvp-screen-reader-results.json",
+        "sha256": "308ec81d1aa6cbfd4ac4e0ffa1ebc3949f3eab4e44bd14efdd0a3c876d18fe49"
+      },
+      {
+        "id": "GMVP_SCREEN_READER_MD",
+        "originalPath": "docs/acceptance/g-mvp-screen-reader.md",
+        "archivePath": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/baseline/docs/acceptance/g-mvp-screen-reader.md",
+        "sha256": "6967d432c18506b4f8bd1a3a62040c0b1dfd8a6354211df31607fc6ee246d171"
+      }
+    ],
+    "formalStatusChangeReason": "The three explicit user-scope reassessments and, if successful, the separately listed N07 observed-CI reassessment; GM.05 formal external gates remain partial."
   },
   "supersededPublicVersions": [
     {
@@ -10227,26 +10325,26 @@
     }
   ],
   "screenReaderSupplement": {
-    "evidenceRef": "GMVP_SCREEN_READER",
-    "narrativeEvidenceRef": "GMVP_SCREEN_READER_MD",
+    "evidenceRef": "GMVP_SCREEN_READER_05",
+    "narrativeEvidenceRef": "GMVP_SCREEN_READER_05_MD",
     "selectedSession": {
       "status": "failed",
-      "session": "reader-20261029-04",
+      "session": "reader-20261029-05",
       "receipts": {
         "prepare": {
           "evidence": {
-            "label": "selected-prepare",
-            "sha256": "1591d3ee5c52045e47f497d4eed8d1a143e5ca5195787303e858b10ad28a827d",
-            "bytes": 6493
+            "label": "reader05-selected-prepare",
+            "sha256": "fc267271951870767fab07d1a0bc2fbe4531f6a08c5d64d1e8d3f354a6f34d3e",
+            "bytes": 6861
           },
           "owner": "ozz-g-mvp-screen-reader-v1",
-          "session": "reader-20261029-04",
-          "attempt": "2a1a7ad2-aaa3-4f0a-8bbf-97de8f7f0e4f",
-          "stateId": "fadbaaf6-f02f-462a-a2de-a5e7b27118cc",
+          "session": "reader-20261029-05",
+          "attempt": "43a5259d-dcb9-4e58-a3b0-fc48eb198f24",
+          "stateId": "88a84a27-3a7e-4b0a-a4c8-7e174942f06d",
           "mode": "prepare",
           "status": "passed",
-          "startedAt": "2026-10-29T05:40:25.230Z",
-          "completedAt": "2026-10-29T05:40:26.771Z",
+          "startedAt": "2026-10-29T07:07:49.002Z",
+          "completedAt": "2026-10-29T07:07:53.205Z",
           "productSpeechChecksPassed": false,
           "productScreenReaderPassedRecorded": false,
           "checks": [],
@@ -10303,26 +10401,53 @@
           "failure": null,
           "restorationFailure": null,
           "persistenceFlagsClear": true,
-          "nativeBridgeSha256RecordedByDriver": "64197420f156d60cdcdb57cd586cd18e9df8ddf951284759f81ae118d41c5939",
+          "nativeBridgeSha256RecordedByDriver": "1843b3cf3eb3b3301d20932b901cbf9d12b8838a97697c1e58154d507aad95e3",
           "nativeBridgeRehashedByGenerator": false,
           "recordedProtectedInputCount": 9,
           "preparationOnly": true,
-          "restorationOnly": false
+          "restorationOnly": false,
+          "systemConsent": {
+            "status": "not-requested",
+            "invocationOptedIn": false,
+            "intentRecorded": false,
+            "requestBudgetConsumed": false,
+            "requestAttempted": false,
+            "permissionStatus": null,
+            "permissionGranted": null,
+            "permissionOutcome": "unknown",
+            "helperGroupClosed": null,
+            "browserFocusReestablished": null,
+            "promptDisplayed": "unknown",
+            "dialogClosure": "unknown",
+            "interactionUnconfirmed": false,
+            "lateAuthorizationPossible": null,
+            "tccAuthorizationMayPersist": false
+          },
+          "overallRestoration": {
+            "schemaRecorded": true,
+            "nativeCompleteRecorded": null,
+            "nativeRestorationProved": false,
+            "overallCompleteRecorded": null,
+            "consentInteractionUnconfirmed": false,
+            "overallRestorationProved": false,
+            "systemDialogClosureProved": false,
+            "tccPermissionRollbackProved": false
+          }
         },
         "run": {
           "evidence": {
-            "label": "selected-run",
-            "sha256": "b89e3c77215b7ba0cab7ec5604cbaead2cb133b67b4f5d8f3bf957d8f1893f7c",
-            "bytes": 15125
+            "label": "reader05-selected-run",
+            "sha256": "dac98769ab7107046181c3153924f4b7d38391a6bc643bd221b2d8c0ca919351",
+            "bytes": 25570
           },
           "owner": "ozz-g-mvp-screen-reader-v1",
-          "session": "reader-20261029-04",
-          "attempt": "78a9d44c-d39e-46a3-af99-e5aa44b64710",
-          "stateId": "fadbaaf6-f02f-462a-a2de-a5e7b27118cc",
+          "session": "reader-20261029-05",
+          "attempt": "7410be72-1134-44c4-87e3-287a2984b427",
+          "stateId": "88a84a27-3a7e-4b0a-a4c8-7e174942f06d",
           "mode": "run",
           "status": "failed",
-          "startedAt": "2026-10-29T05:42:53.563Z",
-          "completedAt": "2026-10-29T05:43:25.645Z",
+          "startedAt": "2026-10-29T07:08:22.391Z",
+          "completedAt": "2026-10-29T07:08:55.142Z",
           "productSpeechChecksPassed": false,
           "productScreenReaderPassedRecorded": false,
           "checks": [
@@ -10424,19 +10549,47 @@
           "restorationRequired": false,
           "resumedAcrossProcesses": false,
           "failure": {
-            "code": "SCREEN_READER_VOICEOVER_AUTOMATION_NOT_AUTHORIZED",
+            "code": "SCREEN_READER_VOICEOVER_REPLY_FAILED",
             "stage": "twelve-real-voiceover-checks",
             "unmappedCodeOmitted": false,
             "unmappedStageOmitted": false,
-            "nativeCodeRecordedPrivately": true
+            "nativeCodeRecordedPrivately": true,
+            "nativeStatus": -1708
           },
           "restorationFailure": null,
           "persistenceFlagsClear": true,
-          "nativeBridgeSha256RecordedByDriver": "64197420f156d60cdcdb57cd586cd18e9df8ddf951284759f81ae118d41c5939",
+          "nativeBridgeSha256RecordedByDriver": "1843b3cf3eb3b3301d20932b901cbf9d12b8838a97697c1e58154d507aad95e3",
           "nativeBridgeRehashedByGenerator": false,
           "recordedProtectedInputCount": 9,
           "preparationOnly": false,
           "restorationOnly": false,
+          "systemConsent": {
+            "status": "granted-and-browser-focused",
+            "invocationOptedIn": true,
+            "intentRecorded": true,
+            "requestBudgetConsumed": true,
+            "requestAttempted": true,
+            "permissionStatus": 0,
+            "permissionGranted": true,
+            "permissionOutcome": "granted",
+            "helperGroupClosed": true,
+            "browserFocusReestablished": true,
+            "promptDisplayed": "unknown",
+            "dialogClosure": "unknown",
+            "interactionUnconfirmed": false,
+            "lateAuthorizationPossible": false,
+            "tccAuthorizationMayPersist": true
+          },
+          "overallRestoration": {
+            "schemaRecorded": true,
+            "nativeCompleteRecorded": true,
+            "nativeRestorationProved": true,
+            "overallCompleteRecorded": true,
+            "consentInteractionUnconfirmed": false,
+            "overallRestorationProved": true,
+            "systemDialogClosureProved": false,
+            "tccPermissionRollbackProved": false
+          },
           "checkFailureInterpretation": {
             "checkCountsDescribeDriverAttempts": true,
             "failedCheckAttemptsDueToReaderTransport": 1,
@@ -10449,22 +10602,22 @@
         "executedAndDependencySources": [
           {
             "path": "apps/console/tests/local-lab/g-mvp-screen-reader.mjs",
-            "recordedSha256": "0b8cdbcb84e8c1a94d8f7037de2c5cf0dbdfe398303d379d258e5b91e868c7a1",
+            "recordedSha256": "3d5fcc5fedea89191d064141ef605fbaf49d8f88feed269a2a26de98a7ee79e0",
             "evidence": {
-              "label": "selected-frozen-sources-source-1",
-              "sha256": "0b8cdbcb84e8c1a94d8f7037de2c5cf0dbdfe398303d379d258e5b91e868c7a1",
-              "bytes": 63932
+              "label": "reader05-selected-frozen-sources-source-1",
+              "sha256": "3d5fcc5fedea89191d064141ef605fbaf49d8f88feed269a2a26de98a7ee79e0",
+              "bytes": 72833
             },
             "binding": "frozen-original-source",
             "privateProtectedInputCopied": false
           },
           {
             "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader-native.m",
-            "recordedSha256": "2f5b237667ad1d9ded70f297ae4d2bf42c20c332412e2b4a755850bcabd33b83",
+            "recordedSha256": "04f4d055855d18364e35d858148071cecf375aeb629477bd2f6b70c0ace8811c",
             "evidence": {
-              "label": "selected-frozen-sources-source-2",
-              "sha256": "2f5b237667ad1d9ded70f297ae4d2bf42c20c332412e2b4a755850bcabd33b83",
-              "bytes": 48611
+              "label": "reader05-selected-frozen-sources-source-2",
+              "sha256": "04f4d055855d18364e35d858148071cecf375aeb629477bd2f6b70c0ace8811c",
+              "bytes": 56709
             },
             "binding": "frozen-original-source",
             "privateProtectedInputCopied": false
@@ -10473,7 +10626,7 @@
             "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader-checks.mjs",
             "recordedSha256": "5c96a1c8fc65c5b5a9e18138cb3952e98dc1c9edb2b656f37baf3d7391d0c594",
             "evidence": {
-              "label": "selected-frozen-sources-source-3",
+              "label": "reader05-selected-frozen-sources-source-3",
               "sha256": "5c96a1c8fc65c5b5a9e18138cb3952e98dc1c9edb2b656f37baf3d7391d0c594",
               "bytes": 8337
             },
@@ -10484,7 +10637,7 @@
             "path": "apps/console/tests/local-lab/s6-real-support.ts",
             "recordedSha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
             "evidence": {
-              "label": "selected-source-4",
+              "label": "reader05-selected-source-4",
               "sha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
               "bytes": 5414
             },
@@ -10495,7 +10648,7 @@
             "path": "tests/probes/support/g-mvp-recovery-joint-runtime.mjs",
             "recordedSha256": "b86c383e69ef6d00d4ec87d5d3b5e4e96ad731f486e8426d69c8c1fa58e0bd1a",
             "evidence": {
-              "label": "selected-source-5",
+              "label": "reader05-selected-source-5",
               "sha256": "b86c383e69ef6d00d4ec87d5d3b5e4e96ad731f486e8426d69c8c1fa58e0bd1a",
               "bytes": 21457
             },
@@ -10504,16 +10657,21 @@
           }
         ],
         "sourceSnapshot": {
-          "label": "selected-frozen-sources",
-          "sha256": "1670279eb4188ce2d8b21b324aa6eee2dc1372dd08d2bb1755879534e2513996",
-          "bytes": 9111
+          "label": "reader05-selected-frozen-sources",
+          "sha256": "a4635afafd6e8bd2d4dec979674507e6548bec56869372a12f0fe8bce0e64fd1",
+          "bytes": 12236
+        },
+        "sourceApproval": {
+          "label": "reader05-selected-frozen-sources-independent-approval",
+          "sha256": "e7668eb14ae094c85c1163d97b1874e24d0a71b63bbe9b8808fe90b6cf3de3bf",
+          "bytes": 16038
         },
         "archivedTestSource": {
           "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader.test.mjs",
           "evidence": {
-            "label": "selected-frozen-sources-source-4",
-            "sha256": "b9e289f2142ffab3cb92acf06024c2f2d7eba9d7e7566df46abed831b6c92825",
-            "bytes": 14327
+            "label": "reader05-selected-frozen-sources-source-4",
+            "sha256": "fc043c06cf61bf9af599f65a9293955510695f8560517e5a17bb9e6bd89e60d6",
+            "bytes": 23005
           },
           "recordedInProtectedRunInputs": false,
           "executedByReaderAttempt": false,
@@ -10533,9 +10691,9 @@
       "differentProcessesCombinedIntoProductSuccess": false,
       "operatorSummary": {
         "evidence": {
-          "label": "selected-operator-summary",
-          "sha256": "ad575806e4865477f2460d74df6c0fc2e6ad6363473510d048db69ee461ab6eb",
-          "bytes": 2062
+          "label": "reader05-selected-operator-summary",
+          "sha256": "a71af52ae5b0ae8f45465ec72b4341fd28372871b4b9de75401f00f2358aace1",
+          "bytes": 1930
         },
         "sameSessionAndRunReceiptSha256": true,
         "authenticationAttemptsMatchRun": true,
@@ -11378,19 +11536,624 @@
         "sameRunRestorationCompleted": true,
         "subsequentProbeChangeDoesNotRewriteThisFailure": true,
         "interpretation": "原生恢复控制预检的设置自动化权限错误，0产品检查/认证/捕获；同次自动恢复完整闭合。后续修订和新session不改写此failed run。"
+      },
+      "reader04": {
+        "status": "failed",
+        "session": "reader-20261029-04",
+        "receipts": {
+          "prepare": {
+            "evidence": {
+              "label": "selected-prepare",
+              "sha256": "1591d3ee5c52045e47f497d4eed8d1a143e5ca5195787303e858b10ad28a827d",
+              "bytes": 6493
+            },
+            "owner": "ozz-g-mvp-screen-reader-v1",
+            "session": "reader-20261029-04",
+            "attempt": "2a1a7ad2-aaa3-4f0a-8bbf-97de8f7f0e4f",
+            "stateId": "fadbaaf6-f02f-462a-a2de-a5e7b27118cc",
+            "mode": "prepare",
+            "status": "passed",
+            "startedAt": "2026-10-29T05:40:25.230Z",
+            "completedAt": "2026-10-29T05:40:26.771Z",
+            "productSpeechChecksPassed": false,
+            "productScreenReaderPassedRecorded": false,
+            "checks": [],
+            "checkCounts": {
+              "expected": 12,
+              "observed": 0,
+              "passed": 0,
+              "failed": 0,
+              "unexecuted": 12
+            },
+            "speechObservations": [],
+            "captureCoverageByCheck": {
+              "login-username-label": [],
+              "login-empty-password-label": [],
+              "login-native-required-error": [],
+              "project-selected-target": [],
+              "project-target-inheritance-context": [],
+              "project-slug-associated-help": [],
+              "oom-disclosure-summary": [],
+              "failed-deployment-status": [],
+              "build-log-bounded-region": [],
+              "build-log-source": [],
+              "deployment-log-bounded-region": [],
+              "deployment-log-source": []
+            },
+            "sameReaderProcessForAllCaptures": null,
+            "productIdentity": {
+              "recorded": false,
+              "sourceReportedPreserved": false,
+              "independentlyComparedEqual": false,
+              "beforeSha256": null,
+              "afterSha256": null
+            },
+            "auditCounts": {
+              "authenticationAttempts": 0,
+              "pageErrors": 0,
+              "blockedWritesCount": 0,
+              "blockedForeignRequestsCount": 0,
+              "apiFailuresCount": 0
+            },
+            "nativeRestoration": {
+              "recorded": false,
+              "provedRestored": false
+            },
+            "closure": {
+              "eventsClosed": true,
+              "releasedLockCount": 9,
+              "uniqueReleasedLockCount": 9,
+              "failureCount": 0,
+              "failureCodes": []
+            },
+            "restorationRequired": false,
+            "resumedAcrossProcesses": false,
+            "failure": null,
+            "restorationFailure": null,
+            "persistenceFlagsClear": true,
+            "nativeBridgeSha256RecordedByDriver": "64197420f156d60cdcdb57cd586cd18e9df8ddf951284759f81ae118d41c5939",
+            "nativeBridgeRehashedByGenerator": false,
+            "recordedProtectedInputCount": 9,
+            "preparationOnly": true,
+            "restorationOnly": false
+          },
+          "run": {
+            "evidence": {
+              "label": "selected-run",
+              "sha256": "b89e3c77215b7ba0cab7ec5604cbaead2cb133b67b4f5d8f3bf957d8f1893f7c",
+              "bytes": 15125
+            },
+            "owner": "ozz-g-mvp-screen-reader-v1",
+            "session": "reader-20261029-04",
+            "attempt": "78a9d44c-d39e-46a3-af99-e5aa44b64710",
+            "stateId": "fadbaaf6-f02f-462a-a2de-a5e7b27118cc",
+            "mode": "run",
+            "status": "failed",
+            "startedAt": "2026-10-29T05:42:53.563Z",
+            "completedAt": "2026-10-29T05:43:25.645Z",
+            "productSpeechChecksPassed": false,
+            "productScreenReaderPassedRecorded": false,
+            "checks": [
+              {
+                "name": "login-username-label",
+                "status": "failed",
+                "failure": {
+                  "code": "SCREEN_READER_VOICEOVER_TRANSPORT_FAILED",
+                  "stage": null,
+                  "unmappedCodeOmitted": false,
+                  "unmappedStageOmitted": false,
+                  "nativeCodeRecordedPrivately": false
+                },
+                "failureClass": "reader-transport",
+                "productSemanticFailureEstablished": false
+              }
+            ],
+            "checkCounts": {
+              "expected": 12,
+              "observed": 1,
+              "passed": 0,
+              "failed": 1,
+              "unexecuted": 11
+            },
+            "speechObservations": [],
+            "captureCoverageByCheck": {
+              "login-username-label": [],
+              "login-empty-password-label": [],
+              "login-native-required-error": [],
+              "project-selected-target": [],
+              "project-target-inheritance-context": [],
+              "project-slug-associated-help": [],
+              "oom-disclosure-summary": [],
+              "failed-deployment-status": [],
+              "build-log-bounded-region": [],
+              "build-log-source": [],
+              "deployment-log-bounded-region": [],
+              "deployment-log-source": []
+            },
+            "sameReaderProcessForAllCaptures": null,
+            "productIdentity": {
+              "recorded": false,
+              "sourceReportedPreserved": false,
+              "independentlyComparedEqual": false,
+              "beforeSha256": null,
+              "afterSha256": null
+            },
+            "auditCounts": {
+              "authenticationAttempts": 1,
+              "pageErrors": 0,
+              "blockedWritesCount": 0,
+              "blockedForeignRequestsCount": 0,
+              "apiFailuresCount": 0
+            },
+            "nativeRestoration": {
+              "recorded": true,
+              "completeRecorded": true,
+              "observedTwice": true,
+              "threeObservationsPresent": true,
+              "baselineShapeAndExplicitNativeOffValid": true,
+              "typedPreferenceShapesValid": {
+                "before": true,
+                "first": true,
+                "after": true
+              },
+              "preferencesMatchBaselineTwice": {
+                "activationDisk": true,
+                "activationClient": true,
+                "scriptingDisk": true,
+                "scriptingClient": true
+              },
+              "voiceOverOff": {
+                "before": true,
+                "first": true,
+                "after": true
+              },
+              "nativeProcessCounts": {
+                "before": 0,
+                "first": 0,
+                "after": 0
+              },
+              "foregroundMatchesFirst": true,
+              "foregroundMatchesAfter": true,
+              "failureCount": 0,
+              "cleanupIdentityFailureCount": 0,
+              "failureCodes": [],
+              "restorationRequiredCleared": true,
+              "provedRestored": true,
+              "rawPreferenceValuesOrProcessIdentitiesIncluded": false,
+              "stateClosureWithoutPriorNativeChange": false
+            },
+            "closure": {
+              "eventsClosed": true,
+              "releasedLockCount": 9,
+              "uniqueReleasedLockCount": 9,
+              "failureCount": 0,
+              "failureCodes": []
+            },
+            "restorationRequired": false,
+            "resumedAcrossProcesses": false,
+            "failure": {
+              "code": "SCREEN_READER_VOICEOVER_AUTOMATION_NOT_AUTHORIZED",
+              "stage": "twelve-real-voiceover-checks",
+              "unmappedCodeOmitted": false,
+              "unmappedStageOmitted": false,
+              "nativeCodeRecordedPrivately": true
+            },
+            "restorationFailure": null,
+            "persistenceFlagsClear": true,
+            "nativeBridgeSha256RecordedByDriver": "64197420f156d60cdcdb57cd586cd18e9df8ddf951284759f81ae118d41c5939",
+            "nativeBridgeRehashedByGenerator": false,
+            "recordedProtectedInputCount": 9,
+            "preparationOnly": false,
+            "restorationOnly": false,
+            "checkFailureInterpretation": {
+              "checkCountsDescribeDriverAttempts": true,
+              "failedCheckAttemptsDueToReaderTransport": 1,
+              "transportFailureEstablishesProductSemanticFailure": false,
+              "scope": "保留驱动检查尝试的failed状态；读屏传输失败未形成产品语义结论，不能认定对应label有产品缺陷。"
+            }
+          }
+        },
+        "sourceBindings": {
+          "executedAndDependencySources": [
+            {
+              "path": "apps/console/tests/local-lab/g-mvp-screen-reader.mjs",
+              "recordedSha256": "0b8cdbcb84e8c1a94d8f7037de2c5cf0dbdfe398303d379d258e5b91e868c7a1",
+              "evidence": {
+                "label": "selected-frozen-sources-source-1",
+                "sha256": "0b8cdbcb84e8c1a94d8f7037de2c5cf0dbdfe398303d379d258e5b91e868c7a1",
+                "bytes": 63932
+              },
+              "binding": "frozen-original-source",
+              "privateProtectedInputCopied": false
+            },
+            {
+              "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader-native.m",
+              "recordedSha256": "2f5b237667ad1d9ded70f297ae4d2bf42c20c332412e2b4a755850bcabd33b83",
+              "evidence": {
+                "label": "selected-frozen-sources-source-2",
+                "sha256": "2f5b237667ad1d9ded70f297ae4d2bf42c20c332412e2b4a755850bcabd33b83",
+                "bytes": 48611
+              },
+              "binding": "frozen-original-source",
+              "privateProtectedInputCopied": false
+            },
+            {
+              "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader-checks.mjs",
+              "recordedSha256": "5c96a1c8fc65c5b5a9e18138cb3952e98dc1c9edb2b656f37baf3d7391d0c594",
+              "evidence": {
+                "label": "selected-frozen-sources-source-3",
+                "sha256": "5c96a1c8fc65c5b5a9e18138cb3952e98dc1c9edb2b656f37baf3d7391d0c594",
+                "bytes": 8337
+              },
+              "binding": "frozen-original-source",
+              "privateProtectedInputCopied": false
+            },
+            {
+              "path": "apps/console/tests/local-lab/s6-real-support.ts",
+              "recordedSha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
+              "evidence": {
+                "label": "selected-source-4",
+                "sha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
+                "bytes": 5414
+              },
+              "binding": "current-named-source",
+              "privateProtectedInputCopied": false
+            },
+            {
+              "path": "tests/probes/support/g-mvp-recovery-joint-runtime.mjs",
+              "recordedSha256": "b86c383e69ef6d00d4ec87d5d3b5e4e96ad731f486e8426d69c8c1fa58e0bd1a",
+              "evidence": {
+                "label": "selected-source-5",
+                "sha256": "b86c383e69ef6d00d4ec87d5d3b5e4e96ad731f486e8426d69c8c1fa58e0bd1a",
+                "bytes": 21457
+              },
+              "binding": "current-named-source",
+              "privateProtectedInputCopied": false
+            }
+          ],
+          "sourceSnapshot": {
+            "label": "selected-frozen-sources",
+            "sha256": "1670279eb4188ce2d8b21b324aa6eee2dc1372dd08d2bb1755879534e2513996",
+            "bytes": 9111
+          },
+          "archivedTestSource": {
+            "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader.test.mjs",
+            "evidence": {
+              "label": "selected-frozen-sources-source-4",
+              "sha256": "b9e289f2142ffab3cb92acf06024c2f2d7eba9d7e7566df46abed831b6c92825",
+              "bytes": 14327
+            },
+            "recordedInProtectedRunInputs": false,
+            "executedByReaderAttempt": false,
+            "scope": "原测试源码归档旁证；不声称该文件由此prepare/run/restore执行。"
+          },
+          "publicSourceCount": 5,
+          "privateOrSystemDependencyFilesOpened": false,
+          "nativeBinaryOpened": false
+        },
+        "baselineBindings": {
+          "prepareToRunTypedPreferencesMatched": true,
+          "prepareToRunForegroundMayDiffer": true,
+          "runToSeparateRestoreEntireBaselineMatched": null
+        },
+        "productSpeechChecksPassed": false,
+        "separateRestoreDoesNotPromoteFailedRun": true,
+        "differentProcessesCombinedIntoProductSuccess": false,
+        "operatorSummary": {
+          "evidence": {
+            "label": "selected-operator-summary",
+            "sha256": "ad575806e4865477f2460d74df6c0fc2e6ad6363473510d048db69ee461ab6eb",
+            "bytes": 2062
+          },
+          "sameSessionAndRunReceiptSha256": true,
+          "authenticationAttemptsMatchRun": true,
+          "authenticationAcceptedReportedByOperator": true,
+          "privateAuthenticationReceiptReadByGenerator": false,
+          "nativeActionObjectsCopied": false
+        }
       }
     },
-    "claim": "reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
-    "l08Status": "partial",
+    "currentScope": {
+      "accessibilityAndVoiceOver": "out-of-scope",
+      "reason": "excluded-by-user",
+      "disposition": "excluded-by-user",
+      "decisionDate": "2026-10-29",
+      "authority": "explicit-user-instruction-relayed-by-root",
+      "remainingUxScopeUnchanged": true,
+      "furtherReaderTestingPlanned": false,
+      "readerFailureBlocksCurrentScope": false,
+      "historicalFailurePromotedToPass": false
+    },
+    "claim": "reader05 permission status 0; first actual reply -1708; 0 passed, 0 speech, 11 unexecuted. VoiceOver, preferences and foreground restored. User subsequently excluded accessibility.",
+    "l08ReaderComponentStatus": "out-of-scope",
+    "l08CurrentRemainingScopeStatus": "passed",
     "productSpeechPassEstablished": false,
+    "historicalFailuresPromotedToPass": false,
     "systemTransportFailureDoesNotEstablishProductLabelDefect": true,
     "inputEvidenceUsesLabelsAndHashes": true,
     "nativeActionsOrPrivatePathsCopied": false,
     "overlappingChecksOrIndependentAttemptsAddedIntoSuccess": false
   },
   "previousPublishedIndex": {
-    "path": ".local/g-mvp-s6-delivery-drafts/20261029-reader-publication-055305-c4ac2f97/baseline/g-mvp-local-results.json",
-    "sha256": "8e6afed595a9930da81d3dd9cb716cb6c993a6e1fb9154b562bfa2e3b4812353",
-    "bytes": 461042
+    "path": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/baseline/docs/acceptance/g-mvp-local-results.json",
+    "sha256": "2c08e096c5c81bff739466b045a7606801bbe68d957a0360e702eef54080da97",
+    "bytes": 519601
+  },
+  "currentScopeDecision": {
+    "id": "USER_SCOPE_20261029_ACCESSIBILITY_REMOVED",
+    "effectiveDate": "2026-10-29",
+    "authority": "Explicit user instruction in this continuation",
+    "decision": "excluded-from-current-requirements",
+    "excluded": [
+      "Dedicated accessibility compliance acceptance",
+      "WCAG conformance gate",
+      "Assistive technology and VoiceOver acceptance"
+    ],
+    "retained": [
+      "Ordinary keyboard operation and visible focus",
+      "Chinese IME",
+      "Responsive layout and zoom",
+      "Form feedback, navigation, themes and bounded logs"
+    ],
+    "historicalTestResultsChanged": false,
+    "permissionRequestsRemaining": 0,
+    "voiceOverTestContinues": false
+  },
+  "scopeStatusReassessments": [
+    {
+      "id": "F24",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
+      "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
+    },
+    {
+      "id": "N08",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
+      "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
+    },
+    {
+      "id": "UX07",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
+      "basis": "Existing successful ordinary UX evidence under the explicitly revised scope; no new speech pass."
+    }
+  ],
+  "engineeringStatusReassessments": [
+    {
+      "id": "N07",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "passed",
+      "evidenceRefs": [
+        "GMVP_REMOTE_CI",
+        "GMVP_REMOTE_CI_MD"
+      ],
+      "basis": "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。"
+    },
+    {
+      "id": "GM.05",
+      "previousLocalStatus": "partial",
+      "previousFormalStatus": "partial",
+      "localStatus": "passed",
+      "formalStatus": "partial",
+      "evidenceRefs": [
+        "GMVP_REMOTE_CI",
+        "GMVP_REMOTE_CI_MD"
+      ],
+      "basis": "第三轮远端CI run 40842129629、提交5abe480bd12f4517e6b5beb7e3d7030856450c61已完成，结论success；首轮ESLint失败、第二轮浏览器刷新/注销时序失败与各自修复分别保留。 GM.05的正式X01–X05关口仍保留。"
+    }
+  ],
+  "previousPendingRootEvidence": [
+    {
+      "id": "L08_REAL_SCREEN_READER",
+      "status": "blocked-on-native-reader-automation",
+      "action": "VoiceOver自动化权限前提仍阻断真实朗读；reader-04首项传输失败不建立产品语义缺陷结论，UX07/L08继续partial。 在前提确实可用后另立真实朗读session；不改写旧失败。"
+    },
+    {
+      "id": "CURRENT_PUBLIC_BYTES_SCAN",
+      "status": "pending-at-index-generation",
+      "action": "生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。",
+      "externalReceipt": ".local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json"
+    }
+  ],
+  "previousVoiceOverEvidenceReview": {
+    "status": "blocked-on-native-reader-automation",
+    "evidenceRefs": [
+      "GMVP_UI_FINAL",
+      "GMVP_VOICEOVER",
+      "GMVP_VOICEOVER_RESTORATION",
+      "GMVP_SCREEN_READER",
+      "GMVP_SCREEN_READER_MD"
+    ],
+    "observed": "reader-04一次测试认证已接受；首项检查尝试因VoiceOver自动化传输权限失败中止，0项通过、0份有效朗读、另11项未执行。同次自动恢复完整闭合，不能据此认定产品label失败或读屏通过。",
+    "minimalSupplement": "环境条件确有变化后，以可用VoiceOver作一次真实导航/朗读：主导航与标题、字段名/错误、弹窗焦点与返回、部署/构建状态、日志控制。记录实际phrase及焦点序列，并核对关闭/偏好/专用进程恢复。",
+    "doNotSubstitute": [
+      "Axe",
+      "ARIA/DOM",
+      "键盘/缩放",
+      "能力预检"
+    ],
+    "newSuccessfulSpeechSampleCompleted": false,
+    "scope": "四个reader session与2026-10-26旧环境尝试分别留证；prepare、配置控制、恢复或静态检查不替代真实朗读。",
+    "retainedPreviousReview": {
+      "status": "needs-new-real-speech-evidence",
+      "evidenceRefs": [
+        "GMVP_UI_FINAL",
+        "GMVP_VOICEOVER",
+        "GMVP_VOICEOVER_RESTORATION"
+      ],
+      "observed": "所引2026-10-26旧尝试启动后退出、last phrase为零；退出根因未确定，不能标成12个产品缺陷或通过。",
+      "minimalSupplement": "环境条件确有变化后，以可用VoiceOver作一次真实导航/朗读：主导航与标题、字段名/错误、弹窗焦点与返回、部署/构建状态、日志控制。记录实际phrase及焦点序列，并核对关闭/偏好/专用进程恢复。",
+      "doNotSubstitute": [
+        "Axe",
+        "ARIA/DOM",
+        "键盘/缩放",
+        "能力预检"
+      ],
+      "newSuccessfulSpeechSampleCompleted": false,
+      "scope": "保留旧尝试与仍无有效朗读的结论；新会话及其恢复状态以另行完成的实际回执为准。"
+    },
+    "sameRunRestorationCompleted": true
+  },
+  "remoteCiSupplement": {
+    "evidenceRef": "GMVP_REMOTE_CI",
+    "narrativeEvidenceRef": "GMVP_REMOTE_CI_MD",
+    "status": "passed",
+    "firstRun": 40834582691,
+    "firstHead": "5befe2df60ce3971b980bd14287974e19f9962b5",
+    "firstConclusion": "failure",
+    "latestRun": 40842129629,
+    "latestHead": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+    "latestConclusion": "success",
+    "latestAttempt": 1,
+    "successorCommit": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+    "successorPushed": true,
+    "remoteCiPassed": true,
+    "pushReceipt": {
+      "path": ".local/ozz-ci-run-20261029-e3257598-0316-421f-a294-1072f37b67bd/revision-03/push-result.json",
+      "sha256": "e1c7f69e6e5ffa4acce5ae88cf6ebf7aff1223983ab2d30e000e996ce53a1bff"
+    }
+  },
+  "previousReviewValidation": {
+    "status": "passed",
+    "scope": "最终reader投影与101条原证据字节/71 ID/正式状态/具名公开文件绑定核对；不是产品测试或秘密扫描。",
+    "previousPublishedIndexReview": {
+      "status": "passed",
+      "scope": "本次只重新验证具名小文件绑定和当前索引/联合报告语义；旧工程/资源计算的验证记录明确来自已完成基线。",
+      "previousBaselineValidationEvidence": {
+        "path": ".local/g-mvp-s6-delivery-drafts/20261029-resources-snapshot-030150-561c2dca/run-20261029T030538Z-61f79479/validation-readonly.json",
+        "sha256": "778c3b44a0aad9749b891e23c30fe309d8349898e937a5ddd1a73d3fc19f98de",
+        "bytes": 2345
+      },
+      "previousCompletedBaselineReview": {
+        "protectedPublicFilesVerified": 7,
+        "largeArchivesReadOrRehashed": 0,
+        "secretInventoriesRead": 0,
+        "privateConfigurationRead": 0,
+        "runtimeOperations": 0,
+        "priorFaultProbeSourceHashesVerified": 6,
+        "publicFilesChanged": false,
+        "newPublicIncrementFilesVerified": 5,
+        "incrementSmallEvidenceBindingsVerified": [
+          {
+            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/recovery-tools-secret-scan-01.json",
+            "sha256": "66c9be9bb30444dcdf00272e5e21b489658fec1390a39bca691344c6e32540d5",
+            "bytes": 1638
+          },
+          {
+            "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025407Z-aff48566/report.json",
+            "sha256": "e78a36a0d6026de89850b8e0bd08576b04d4737e6f92c38fb3bea6ea2d3268a6",
+            "bytes": 17711
+          },
+          {
+            "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025407Z-aff48566/tool.py",
+            "sha256": "c9f50a99d8f0cb66b09d1cfdffd6d407e8f18e1a68afeb33f29475931f92fbbb",
+            "bytes": 16359
+          },
+          {
+            "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025117Z-bf5c64ab/report.json",
+            "sha256": "8ddb75d58daae0dca1ac52eef410479732083ae7fd89dfab8d6663a17192774b",
+            "bytes": 15639
+          },
+          {
+            "path": ".local/local-lab/g-mvp-runtime-resources/20261029T025117Z-bf5c64ab/tool.py",
+            "sha256": "2e3762fb6718150c43c44b261c42107b72d1df949df1760bd594144ea1587a7b"
+          },
+          {
+            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/unit-01-summary.json",
+            "sha256": "90c788228ff72cc1913dad6e6ad5faded0ea68c968d6e1653b3b5b596304c35a",
+            "bytes": 325
+          },
+          {
+            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/integration-02.json",
+            "sha256": "aa57781ef8a22a38ffa77495588dc63d6bb9aa6edb2cbef3c8dc75e3042ba71c",
+            "bytes": 1734
+          },
+          {
+            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/integration-02-vitest.json",
+            "sha256": "5c743a0352a8404b11b22033c793f3b1dd449ac062a5b8475b69eecf978e4381",
+            "bytes": 5117
+          },
+          {
+            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/package-proof-01.json",
+            "sha256": "9c91221583ef1fc2d8ec20ea9a3d30e4004ea8cbb020f1b062a9f9ec678865a2",
+            "bytes": 825
+          },
+          {
+            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/recovery-tools-secret-scan-01.json",
+            "sha256": "66c9be9bb30444dcdf00272e5e21b489658fec1390a39bca691344c6e32540d5",
+            "bytes": 1638
+          },
+          {
+            "path": "scripts/backup-snapshot.mjs",
+            "sha256": "570973dfa256a15a79c6c9cdc4a35384baaaaf897e485c5c07a7471e3a94d1aa",
+            "bytes": 5712
+          },
+          {
+            "path": "scripts/backup-helpers.mjs",
+            "sha256": "bf25d214ced7fa643a4bc909a03be871be5bb5a6ab614d60112e6e5380df6ed9",
+            "bytes": 19425
+          },
+          {
+            "path": "scripts/backup-control-plane.mjs",
+            "sha256": "ac450f343819a7bb91afe955773912aeac9a90c14a6f4137b826694fb69b12de",
+            "bytes": 4560
+          },
+          {
+            "path": "scripts/restore-control-plane.mjs",
+            "sha256": "ac6a45b70c1791f6418b743b2d8f211cc5226ddee3a94a35ef891582019e62d2",
+            "bytes": 8825
+          },
+          {
+            "path": "tests/integration/recovery.test.ts",
+            "sha256": "d124bd6a3ac479763a91e03ecb1f4ff0dbf1f547f7e4b0a9788aaa6a1630f38e",
+            "bytes": 32326
+          },
+          {
+            "path": "tests/manual-data/backup-snapshot.test.mjs",
+            "sha256": "4bf06f2dddb75d7c649eca936e1207ed81b8d59e38abfd139684c27fc87a6d8f",
+            "bytes": 5232
+          },
+          {
+            "path": ".local/g-mvp-snapshot-observation/20261029T023156Z/integration-01.json",
+            "sha256": "a2e41b2d8d4af62a100d4bac97d8a5cf251cf645f83de830c2c38a68f8b43677"
+          }
+        ],
+        "resourceSummaryRecomputedFromFiveSamples": true,
+        "sourceFilesMatchPublishedSnapshotIncrement": 6,
+        "archiveReadsOrRescans": 0
+      },
+      "retainedBaselineEvidenceEntriesVerified": 83,
+      "protectedFrozenL07FilesVerified": 2,
+      "publishedSupplementFilesVerified": 5,
+      "jointPublishedSourceBindingsVerified": 23,
+      "jointStrictTlsObservationsVerified": 10,
+      "currentResourceSampleRecomputed": false,
+      "resourceValidationReusedFromCompletedBaseline": true,
+      "publicFilesChanged": true,
+      "publicFilesWritten": 2,
+      "runtimeOperations": 0,
+      "largeArchivesReadOrRehashed": 0,
+      "secretInventoriesRead": 0,
+      "privateConfigurationRead": 0,
+      "secretScanPerformed": false
+    },
+    "retainedEvidenceEntriesVerified": 101,
+    "readerAttemptStatus": "failed",
+    "readerTransportFailureIsNotProductDefect": true,
+    "frozenJointAndL07FilesVerified": 4,
+    "runtimeOperations": 0,
+    "privateAuthenticationFilesRead": 0,
+    "archiveReadsOrRehashes": 0,
+    "secretScanPerformed": false,
+    "publicFilesWrittenAtPreparation": 0
   }
 }

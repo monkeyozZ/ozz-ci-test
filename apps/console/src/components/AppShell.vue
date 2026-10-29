@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { Menu, Search, LogOut, ShieldCheck, LockKeyhole, X } from '@lucide/vue';
+import { Menu, Search, LogOut, ShieldCheck, LockKeyhole, X, Activity } from '@lucide/vue';
 import {
   DialogRoot,
   DialogPortal,
@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import NavigationContent from './NavigationContent.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 import CommandPalette from './CommandPalette.vue';
+import ServiceCreationDialog from './services/ServiceCreationDialog.vue';
 import { useAuthStore } from '@/stores/auth';
 import { useUiStore } from '@/stores/ui';
 import { hasUnsavedChanges } from '@/composables/useDirtyForm';
@@ -86,6 +87,9 @@ async function logout() {
           <Search class="size-4" /><span>快速打开项目与资源</span><kbd>⌘ K</kbd>
         </button>
         <div class="header-right">
+          <RouterLink to="/deployments" class="activity-trigger" aria-label="活动与任务"
+            ><Activity class="size-4" /><span class="mobile-hide">活动</span></RouterLink
+          >
           <ThemeSwitcher />
           <div class="admin-chip">
             <span class="avatar">{{ auth.user?.username.slice(0, 1).toUpperCase() }}</span
@@ -111,9 +115,7 @@ async function logout() {
         <DialogOverlay class="nav-overlay" />
         <DialogContent class="nav-drawer" @close-auto-focus="restoreNavigationFocus">
           <DialogTitle class="sr-only">工作台导航</DialogTitle>
-          <DialogDescription class="sr-only"
-            >选择项目、基础设施、诊断任务或设置。</DialogDescription
-          >
+          <DialogDescription class="sr-only">选择项目、服务器、服务或设置。</DialogDescription>
           <div class="flex justify-end px-3 pt-3">
             <Button
               variant="ghost"
@@ -141,8 +143,28 @@ async function logout() {
     </main>
   </div>
   <CommandPalette />
+  <ServiceCreationDialog
+    v-if="route.params.projectId && route.query.createService === '1'"
+    :key="`${route.path}:${route.query.environment ?? 'production'}:${route.query.environmentId ?? ''}`"
+  />
 </template>
 <style scoped>
+.activity-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  border-radius: 0.5rem;
+}
+.activity-trigger:hover {
+  background: var(--secondary);
+  color: var(--foreground);
+}
 .app-shell {
   --sidebar-width: 14rem;
   min-height: 100dvh;

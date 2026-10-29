@@ -5,21 +5,22 @@ import ImageServiceCreatePage from './ImageServiceCreatePage.vue';
 import TemplatesPage from './TemplatesPage.vue';
 import TemplateCreatePage from './TemplateCreatePage.vue';
 import GitServiceCreatePage from './GitServiceCreatePage.vue';
+import { creationViewKey } from '@/composables/useCreationDialogState';
 const route = useRoute();
 const template = computed(() =>
   typeof route.query.template === 'string' ? route.query.template : '',
 );
-const templateKey = computed(
-  () =>
-    `${template.value}:${String(route.query.version ?? '')}:${String(route.query.environment ?? '')}`,
+const viewKey = computed(() => creationViewKey(route));
+const component = computed(() =>
+  route.query.source === 'image'
+    ? ImageServiceCreatePage
+    : route.query.source === 'github'
+      ? GitServiceCreatePage
+      : template.value
+        ? TemplateCreatePage
+        : TemplatesPage,
 );
 </script>
 <template>
-  <ImageServiceCreatePage v-if="route.query.source === 'image'" />
-  <GitServiceCreatePage
-    v-else-if="route.query.source === 'github'"
-    :key="String(route.query.environment ?? '')"
-  />
-  <TemplateCreatePage v-else-if="template" :key="templateKey" />
-  <TemplatesPage v-else />
+  <KeepAlive :max="12"><component :is="component" :key="viewKey" /></KeepAlive>
 </template>

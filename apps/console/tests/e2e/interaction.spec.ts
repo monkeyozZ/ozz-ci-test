@@ -69,7 +69,7 @@ test('窄屏、紧凑桌面、宽屏及 200% 文字缩放保持可操作', async
       await menu.click();
       const drawer = page.getByRole('dialog', { name: '工作台导航', exact: true });
       await expect(drawer).toBeVisible();
-      await drawer.getByRole('link', { name: '基础设施', exact: true }).click();
+      await drawer.getByRole('link', { name: '服务器', exact: true }).click();
       await expect(page.getByRole('heading', { name: '基础设施', exact: true })).toBeVisible();
       await expect(drawer).toHaveCount(0);
       await page.goto('/projects');
@@ -121,7 +121,7 @@ test('切换项目后，迟到响应不能覆盖新的项目与继承目标', as
     });
     await page.getByRole('heading', { name: projectA!.name, exact: true }).click();
     await expect.poll(() => delayed).toBe(true);
-    await page.getByRole('link', { name: '返回项目列表', exact: true }).click();
+    await page.getByRole('link', { name: '所有项目', exact: true }).click();
     await page.getByRole('heading', { name: projectB!.name, exact: true }).click();
     await expect(
       page.getByRole('heading', { name: projectB!.name, exact: true, level: 1 }),

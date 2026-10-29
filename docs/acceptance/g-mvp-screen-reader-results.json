@@ -2,26 +2,26 @@
   "formatVersion": 1,
   "documentKind": "g-mvp-local-screen-reader-supplement",
   "draft": false,
-  "recordedAt": "2026-10-29T05:56:14.088435+00:00",
-  "status": "failed",
+  "recordedAt": "2026-10-29T07:24:56.399601+00:00",
+  "status": "out-of-scope",
   "selectedSession": {
     "status": "failed",
-    "session": "reader-20261029-04",
+    "session": "reader-20261029-05",
     "receipts": {
       "prepare": {
         "evidence": {
-          "label": "selected-prepare",
-          "sha256": "1591d3ee5c52045e47f497d4eed8d1a143e5ca5195787303e858b10ad28a827d",
-          "bytes": 6493
+          "label": "reader05-selected-prepare",
+          "sha256": "fc267271951870767fab07d1a0bc2fbe4531f6a08c5d64d1e8d3f354a6f34d3e",
+          "bytes": 6861
         },
         "owner": "ozz-g-mvp-screen-reader-v1",
-        "session": "reader-20261029-04",
-        "attempt": "2a1a7ad2-aaa3-4f0a-8bbf-97de8f7f0e4f",
-        "stateId": "fadbaaf6-f02f-462a-a2de-a5e7b27118cc",
+        "session": "reader-20261029-05",
+        "attempt": "43a5259d-dcb9-4e58-a3b0-fc48eb198f24",
+        "stateId": "88a84a27-3a7e-4b0a-a4c8-7e174942f06d",
         "mode": "prepare",
         "status": "passed",
-        "startedAt": "2026-10-29T05:40:25.230Z",
-        "completedAt": "2026-10-29T05:40:26.771Z",
+        "startedAt": "2026-10-29T07:07:49.002Z",
+        "completedAt": "2026-10-29T07:07:53.205Z",
         "productSpeechChecksPassed": false,
         "productScreenReaderPassedRecorded": false,
         "checks": [],
@@ -78,26 +78,53 @@
         "failure": null,
         "restorationFailure": null,
         "persistenceFlagsClear": true,
-        "nativeBridgeSha256RecordedByDriver": "64197420f156d60cdcdb57cd586cd18e9df8ddf951284759f81ae118d41c5939",
+        "nativeBridgeSha256RecordedByDriver": "1843b3cf3eb3b3301d20932b901cbf9d12b8838a97697c1e58154d507aad95e3",
         "nativeBridgeRehashedByGenerator": false,
         "recordedProtectedInputCount": 9,
         "preparationOnly": true,
-        "restorationOnly": false
+        "restorationOnly": false,
+        "systemConsent": {
+          "status": "not-requested",
+          "invocationOptedIn": false,
+          "intentRecorded": false,
+          "requestBudgetConsumed": false,
+          "requestAttempted": false,
+          "permissionStatus": null,
+          "permissionGranted": null,
+          "permissionOutcome": "unknown",
+          "helperGroupClosed": null,
+          "browserFocusReestablished": null,
+          "promptDisplayed": "unknown",
+          "dialogClosure": "unknown",
+          "interactionUnconfirmed": false,
+          "lateAuthorizationPossible": null,
+          "tccAuthorizationMayPersist": false
+        },
+        "overallRestoration": {
+          "schemaRecorded": true,
+          "nativeCompleteRecorded": null,
+          "nativeRestorationProved": false,
+          "overallCompleteRecorded": null,
+          "consentInteractionUnconfirmed": false,
+          "overallRestorationProved": false,
+          "systemDialogClosureProved": false,
+          "tccPermissionRollbackProved": false
+        }
       },
       "run": {
         "evidence": {
-          "label": "selected-run",
-          "sha256": "b89e3c77215b7ba0cab7ec5604cbaead2cb133b67b4f5d8f3bf957d8f1893f7c",
-          "bytes": 15125
+          "label": "reader05-selected-run",
+          "sha256": "dac98769ab7107046181c3153924f4b7d38391a6bc643bd221b2d8c0ca919351",
+          "bytes": 25570
         },
         "owner": "ozz-g-mvp-screen-reader-v1",
-        "session": "reader-20261029-04",
-        "attempt": "78a9d44c-d39e-46a3-af99-e5aa44b64710",
-        "stateId": "fadbaaf6-f02f-462a-a2de-a5e7b27118cc",
+        "session": "reader-20261029-05",
+        "attempt": "7410be72-1134-44c4-87e3-287a2984b427",
+        "stateId": "88a84a27-3a7e-4b0a-a4c8-7e174942f06d",
         "mode": "run",
         "status": "failed",
-        "startedAt": "2026-10-29T05:42:53.563Z",
-        "completedAt": "2026-10-29T05:43:25.645Z",
+        "startedAt": "2026-10-29T07:08:22.391Z",
+        "completedAt": "2026-10-29T07:08:55.142Z",
         "productSpeechChecksPassed": false,
         "productScreenReaderPassedRecorded": false,
         "checks": [
@@ -199,19 +226,47 @@
         "restorationRequired": false,
         "resumedAcrossProcesses": false,
         "failure": {
-          "code": "SCREEN_READER_VOICEOVER_AUTOMATION_NOT_AUTHORIZED",
+          "code": "SCREEN_READER_VOICEOVER_REPLY_FAILED",
           "stage": "twelve-real-voiceover-checks",
           "unmappedCodeOmitted": false,
           "unmappedStageOmitted": false,
-          "nativeCodeRecordedPrivately": true
+          "nativeCodeRecordedPrivately": true,
+          "nativeStatus": -1708
         },
         "restorationFailure": null,
         "persistenceFlagsClear": true,
-        "nativeBridgeSha256RecordedByDriver": "64197420f156d60cdcdb57cd586cd18e9df8ddf951284759f81ae118d41c5939",
+        "nativeBridgeSha256RecordedByDriver": "1843b3cf3eb3b3301d20932b901cbf9d12b8838a97697c1e58154d507aad95e3",
         "nativeBridgeRehashedByGenerator": false,
         "recordedProtectedInputCount": 9,
         "preparationOnly": false,
         "restorationOnly": false,
+        "systemConsent": {
+          "status": "granted-and-browser-focused",
+          "invocationOptedIn": true,
+          "intentRecorded": true,
+          "requestBudgetConsumed": true,
+          "requestAttempted": true,
+          "permissionStatus": 0,
+          "permissionGranted": true,
+          "permissionOutcome": "granted",
+          "helperGroupClosed": true,
+          "browserFocusReestablished": true,
+          "promptDisplayed": "unknown",
+          "dialogClosure": "unknown",
+          "interactionUnconfirmed": false,
+          "lateAuthorizationPossible": false,
+          "tccAuthorizationMayPersist": true
+        },
+        "overallRestoration": {
+          "schemaRecorded": true,
+          "nativeCompleteRecorded": true,
+          "nativeRestorationProved": true,
+          "overallCompleteRecorded": true,
+          "consentInteractionUnconfirmed": false,
+          "overallRestorationProved": true,
+          "systemDialogClosureProved": false,
+          "tccPermissionRollbackProved": false
+        },
         "checkFailureInterpretation": {
           "checkCountsDescribeDriverAttempts": true,
           "failedCheckAttemptsDueToReaderTransport": 1,
@@ -224,22 +279,22 @@
       "executedAndDependencySources": [
         {
           "path": "apps/console/tests/local-lab/g-mvp-screen-reader.mjs",
-          "recordedSha256": "0b8cdbcb84e8c1a94d8f7037de2c5cf0dbdfe398303d379d258e5b91e868c7a1",
+          "recordedSha256": "3d5fcc5fedea89191d064141ef605fbaf49d8f88feed269a2a26de98a7ee79e0",
           "evidence": {
-            "label": "selected-frozen-sources-source-1",
-            "sha256": "0b8cdbcb84e8c1a94d8f7037de2c5cf0dbdfe398303d379d258e5b91e868c7a1",
-            "bytes": 63932
+            "label": "reader05-selected-frozen-sources-source-1",
+            "sha256": "3d5fcc5fedea89191d064141ef605fbaf49d8f88feed269a2a26de98a7ee79e0",
+            "bytes": 72833
           },
           "binding": "frozen-original-source",
           "privateProtectedInputCopied": false
         },
         {
           "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader-native.m",
-          "recordedSha256": "2f5b237667ad1d9ded70f297ae4d2bf42c20c332412e2b4a755850bcabd33b83",
+          "recordedSha256": "04f4d055855d18364e35d858148071cecf375aeb629477bd2f6b70c0ace8811c",
           "evidence": {
-            "label": "selected-frozen-sources-source-2",
-            "sha256": "2f5b237667ad1d9ded70f297ae4d2bf42c20c332412e2b4a755850bcabd33b83",
-            "bytes": 48611
+            "label": "reader05-selected-frozen-sources-source-2",
+            "sha256": "04f4d055855d18364e35d858148071cecf375aeb629477bd2f6b70c0ace8811c",
+            "bytes": 56709
           },
           "binding": "frozen-original-source",
           "privateProtectedInputCopied": false
@@ -248,7 +303,7 @@
           "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader-checks.mjs",
           "recordedSha256": "5c96a1c8fc65c5b5a9e18138cb3952e98dc1c9edb2b656f37baf3d7391d0c594",
           "evidence": {
-            "label": "selected-frozen-sources-source-3",
+            "label": "reader05-selected-frozen-sources-source-3",
             "sha256": "5c96a1c8fc65c5b5a9e18138cb3952e98dc1c9edb2b656f37baf3d7391d0c594",
             "bytes": 8337
           },
@@ -259,7 +314,7 @@
           "path": "apps/console/tests/local-lab/s6-real-support.ts",
           "recordedSha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
           "evidence": {
-            "label": "selected-source-4",
+            "label": "reader05-selected-source-4",
             "sha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
             "bytes": 5414
           },
@@ -270,7 +325,7 @@
           "path": "tests/probes/support/g-mvp-recovery-joint-runtime.mjs",
           "recordedSha256": "b86c383e69ef6d00d4ec87d5d3b5e4e96ad731f486e8426d69c8c1fa58e0bd1a",
           "evidence": {
-            "label": "selected-source-5",
+            "label": "reader05-selected-source-5",
             "sha256": "b86c383e69ef6d00d4ec87d5d3b5e4e96ad731f486e8426d69c8c1fa58e0bd1a",
             "bytes": 21457
           },
@@ -279,16 +334,21 @@
         }
       ],
       "sourceSnapshot": {
-        "label": "selected-frozen-sources",
-        "sha256": "1670279eb4188ce2d8b21b324aa6eee2dc1372dd08d2bb1755879534e2513996",
-        "bytes": 9111
+        "label": "reader05-selected-frozen-sources",
+        "sha256": "a4635afafd6e8bd2d4dec979674507e6548bec56869372a12f0fe8bce0e64fd1",
+        "bytes": 12236
+      },
+      "sourceApproval": {
+        "label": "reader05-selected-frozen-sources-independent-approval",
+        "sha256": "e7668eb14ae094c85c1163d97b1874e24d0a71b63bbe9b8808fe90b6cf3de3bf",
+        "bytes": 16038
       },
       "archivedTestSource": {
         "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader.test.mjs",
         "evidence": {
-          "label": "selected-frozen-sources-source-4",
-          "sha256": "b9e289f2142ffab3cb92acf06024c2f2d7eba9d7e7566df46abed831b6c92825",
-          "bytes": 14327
+          "label": "reader05-selected-frozen-sources-source-4",
+          "sha256": "fc043c06cf61bf9af599f65a9293955510695f8560517e5a17bb9e6bd89e60d6",
+          "bytes": 23005
         },
         "recordedInProtectedRunInputs": false,
         "executedByReaderAttempt": false,
@@ -308,9 +368,9 @@
     "differentProcessesCombinedIntoProductSuccess": false,
     "operatorSummary": {
       "evidence": {
-        "label": "selected-operator-summary",
-        "sha256": "ad575806e4865477f2460d74df6c0fc2e6ad6363473510d048db69ee461ab6eb",
-        "bytes": 2062
+        "label": "reader05-selected-operator-summary",
+        "sha256": "a71af52ae5b0ae8f45465ec72b4341fd28372871b4b9de75401f00f2358aace1",
+        "bytes": 1930
       },
       "sameSessionAndRunReceiptSha256": true,
       "authenticationAttemptsMatchRun": true,
@@ -1153,6 +1213,321 @@
       "sameRunRestorationCompleted": true,
       "subsequentProbeChangeDoesNotRewriteThisFailure": true,
       "interpretation": "原生恢复控制预检的设置自动化权限错误，0产品检查/认证/捕获；同次自动恢复完整闭合。后续修订和新session不改写此failed run。"
+    },
+    "reader04": {
+      "status": "failed",
+      "session": "reader-20261029-04",
+      "receipts": {
+        "prepare": {
+          "evidence": {
+            "label": "selected-prepare",
+            "sha256": "1591d3ee5c52045e47f497d4eed8d1a143e5ca5195787303e858b10ad28a827d",
+            "bytes": 6493
+          },
+          "owner": "ozz-g-mvp-screen-reader-v1",
+          "session": "reader-20261029-04",
+          "attempt": "2a1a7ad2-aaa3-4f0a-8bbf-97de8f7f0e4f",
+          "stateId": "fadbaaf6-f02f-462a-a2de-a5e7b27118cc",
+          "mode": "prepare",
+          "status": "passed",
+          "startedAt": "2026-10-29T05:40:25.230Z",
+          "completedAt": "2026-10-29T05:40:26.771Z",
+          "productSpeechChecksPassed": false,
+          "productScreenReaderPassedRecorded": false,
+          "checks": [],
+          "checkCounts": {
+            "expected": 12,
+            "observed": 0,
+            "passed": 0,
+            "failed": 0,
+            "unexecuted": 12
+          },
+          "speechObservations": [],
+          "captureCoverageByCheck": {
+            "login-username-label": [],
+            "login-empty-password-label": [],
+            "login-native-required-error": [],
+            "project-selected-target": [],
+            "project-target-inheritance-context": [],
+            "project-slug-associated-help": [],
+            "oom-disclosure-summary": [],
+            "failed-deployment-status": [],
+            "build-log-bounded-region": [],
+            "build-log-source": [],
+            "deployment-log-bounded-region": [],
+            "deployment-log-source": []
+          },
+          "sameReaderProcessForAllCaptures": null,
+          "productIdentity": {
+            "recorded": false,
+            "sourceReportedPreserved": false,
+            "independentlyComparedEqual": false,
+            "beforeSha256": null,
+            "afterSha256": null
+          },
+          "auditCounts": {
+            "authenticationAttempts": 0,
+            "pageErrors": 0,
+            "blockedWritesCount": 0,
+            "blockedForeignRequestsCount": 0,
+            "apiFailuresCount": 0
+          },
+          "nativeRestoration": {
+            "recorded": false,
+            "provedRestored": false
+          },
+          "closure": {
+            "eventsClosed": true,
+            "releasedLockCount": 9,
+            "uniqueReleasedLockCount": 9,
+            "failureCount": 0,
+            "failureCodes": []
+          },
+          "restorationRequired": false,
+          "resumedAcrossProcesses": false,
+          "failure": null,
+          "restorationFailure": null,
+          "persistenceFlagsClear": true,
+          "nativeBridgeSha256RecordedByDriver": "64197420f156d60cdcdb57cd586cd18e9df8ddf951284759f81ae118d41c5939",
+          "nativeBridgeRehashedByGenerator": false,
+          "recordedProtectedInputCount": 9,
+          "preparationOnly": true,
+          "restorationOnly": false
+        },
+        "run": {
+          "evidence": {
+            "label": "selected-run",
+            "sha256": "b89e3c77215b7ba0cab7ec5604cbaead2cb133b67b4f5d8f3bf957d8f1893f7c",
+            "bytes": 15125
+          },
+          "owner": "ozz-g-mvp-screen-reader-v1",
+          "session": "reader-20261029-04",
+          "attempt": "78a9d44c-d39e-46a3-af99-e5aa44b64710",
+          "stateId": "fadbaaf6-f02f-462a-a2de-a5e7b27118cc",
+          "mode": "run",
+          "status": "failed",
+          "startedAt": "2026-10-29T05:42:53.563Z",
+          "completedAt": "2026-10-29T05:43:25.645Z",
+          "productSpeechChecksPassed": false,
+          "productScreenReaderPassedRecorded": false,
+          "checks": [
+            {
+              "name": "login-username-label",
+              "status": "failed",
+              "failure": {
+                "code": "SCREEN_READER_VOICEOVER_TRANSPORT_FAILED",
+                "stage": null,
+                "unmappedCodeOmitted": false,
+                "unmappedStageOmitted": false,
+                "nativeCodeRecordedPrivately": false
+              },
+              "failureClass": "reader-transport",
+              "productSemanticFailureEstablished": false
+            }
+          ],
+          "checkCounts": {
+            "expected": 12,
+            "observed": 1,
+            "passed": 0,
+            "failed": 1,
+            "unexecuted": 11
+          },
+          "speechObservations": [],
+          "captureCoverageByCheck": {
+            "login-username-label": [],
+            "login-empty-password-label": [],
+            "login-native-required-error": [],
+            "project-selected-target": [],
+            "project-target-inheritance-context": [],
+            "project-slug-associated-help": [],
+            "oom-disclosure-summary": [],
+            "failed-deployment-status": [],
+            "build-log-bounded-region": [],
+            "build-log-source": [],
+            "deployment-log-bounded-region": [],
+            "deployment-log-source": []
+          },
+          "sameReaderProcessForAllCaptures": null,
+          "productIdentity": {
+            "recorded": false,
+            "sourceReportedPreserved": false,
+            "independentlyComparedEqual": false,
+            "beforeSha256": null,
+            "afterSha256": null
+          },
+          "auditCounts": {
+            "authenticationAttempts": 1,
+            "pageErrors": 0,
+            "blockedWritesCount": 0,
+            "blockedForeignRequestsCount": 0,
+            "apiFailuresCount": 0
+          },
+          "nativeRestoration": {
+            "recorded": true,
+            "completeRecorded": true,
+            "observedTwice": true,
+            "threeObservationsPresent": true,
+            "baselineShapeAndExplicitNativeOffValid": true,
+            "typedPreferenceShapesValid": {
+              "before": true,
+              "first": true,
+              "after": true
+            },
+            "preferencesMatchBaselineTwice": {
+              "activationDisk": true,
+              "activationClient": true,
+              "scriptingDisk": true,
+              "scriptingClient": true
+            },
+            "voiceOverOff": {
+              "before": true,
+              "first": true,
+              "after": true
+            },
+            "nativeProcessCounts": {
+              "before": 0,
+              "first": 0,
+              "after": 0
+            },
+            "foregroundMatchesFirst": true,
+            "foregroundMatchesAfter": true,
+            "failureCount": 0,
+            "cleanupIdentityFailureCount": 0,
+            "failureCodes": [],
+            "restorationRequiredCleared": true,
+            "provedRestored": true,
+            "rawPreferenceValuesOrProcessIdentitiesIncluded": false,
+            "stateClosureWithoutPriorNativeChange": false
+          },
+          "closure": {
+            "eventsClosed": true,
+            "releasedLockCount": 9,
+            "uniqueReleasedLockCount": 9,
+            "failureCount": 0,
+            "failureCodes": []
+          },
+          "restorationRequired": false,
+          "resumedAcrossProcesses": false,
+          "failure": {
+            "code": "SCREEN_READER_VOICEOVER_AUTOMATION_NOT_AUTHORIZED",
+            "stage": "twelve-real-voiceover-checks",
+            "unmappedCodeOmitted": false,
+            "unmappedStageOmitted": false,
+            "nativeCodeRecordedPrivately": true
+          },
+          "restorationFailure": null,
+          "persistenceFlagsClear": true,
+          "nativeBridgeSha256RecordedByDriver": "64197420f156d60cdcdb57cd586cd18e9df8ddf951284759f81ae118d41c5939",
+          "nativeBridgeRehashedByGenerator": false,
+          "recordedProtectedInputCount": 9,
+          "preparationOnly": false,
+          "restorationOnly": false,
+          "checkFailureInterpretation": {
+            "checkCountsDescribeDriverAttempts": true,
+            "failedCheckAttemptsDueToReaderTransport": 1,
+            "transportFailureEstablishesProductSemanticFailure": false,
+            "scope": "保留驱动检查尝试的failed状态；读屏传输失败未形成产品语义结论，不能认定对应label有产品缺陷。"
+          }
+        }
+      },
+      "sourceBindings": {
+        "executedAndDependencySources": [
+          {
+            "path": "apps/console/tests/local-lab/g-mvp-screen-reader.mjs",
+            "recordedSha256": "0b8cdbcb84e8c1a94d8f7037de2c5cf0dbdfe398303d379d258e5b91e868c7a1",
+            "evidence": {
+              "label": "selected-frozen-sources-source-1",
+              "sha256": "0b8cdbcb84e8c1a94d8f7037de2c5cf0dbdfe398303d379d258e5b91e868c7a1",
+              "bytes": 63932
+            },
+            "binding": "frozen-original-source",
+            "privateProtectedInputCopied": false
+          },
+          {
+            "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader-native.m",
+            "recordedSha256": "2f5b237667ad1d9ded70f297ae4d2bf42c20c332412e2b4a755850bcabd33b83",
+            "evidence": {
+              "label": "selected-frozen-sources-source-2",
+              "sha256": "2f5b237667ad1d9ded70f297ae4d2bf42c20c332412e2b4a755850bcabd33b83",
+              "bytes": 48611
+            },
+            "binding": "frozen-original-source",
+            "privateProtectedInputCopied": false
+          },
+          {
+            "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader-checks.mjs",
+            "recordedSha256": "5c96a1c8fc65c5b5a9e18138cb3952e98dc1c9edb2b656f37baf3d7391d0c594",
+            "evidence": {
+              "label": "selected-frozen-sources-source-3",
+              "sha256": "5c96a1c8fc65c5b5a9e18138cb3952e98dc1c9edb2b656f37baf3d7391d0c594",
+              "bytes": 8337
+            },
+            "binding": "frozen-original-source",
+            "privateProtectedInputCopied": false
+          },
+          {
+            "path": "apps/console/tests/local-lab/s6-real-support.ts",
+            "recordedSha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
+            "evidence": {
+              "label": "selected-source-4",
+              "sha256": "02c3b7a0f064219f1359eee93462bf48cbaa62961320505c39c9db9b0bb1449b",
+              "bytes": 5414
+            },
+            "binding": "current-named-source",
+            "privateProtectedInputCopied": false
+          },
+          {
+            "path": "tests/probes/support/g-mvp-recovery-joint-runtime.mjs",
+            "recordedSha256": "b86c383e69ef6d00d4ec87d5d3b5e4e96ad731f486e8426d69c8c1fa58e0bd1a",
+            "evidence": {
+              "label": "selected-source-5",
+              "sha256": "b86c383e69ef6d00d4ec87d5d3b5e4e96ad731f486e8426d69c8c1fa58e0bd1a",
+              "bytes": 21457
+            },
+            "binding": "current-named-source",
+            "privateProtectedInputCopied": false
+          }
+        ],
+        "sourceSnapshot": {
+          "label": "selected-frozen-sources",
+          "sha256": "1670279eb4188ce2d8b21b324aa6eee2dc1372dd08d2bb1755879534e2513996",
+          "bytes": 9111
+        },
+        "archivedTestSource": {
+          "path": "apps/console/tests/local-lab/support/g-mvp-screen-reader.test.mjs",
+          "evidence": {
+            "label": "selected-frozen-sources-source-4",
+            "sha256": "b9e289f2142ffab3cb92acf06024c2f2d7eba9d7e7566df46abed831b6c92825",
+            "bytes": 14327
+          },
+          "recordedInProtectedRunInputs": false,
+          "executedByReaderAttempt": false,
+          "scope": "原测试源码归档旁证；不声称该文件由此prepare/run/restore执行。"
+        },
+        "publicSourceCount": 5,
+        "privateOrSystemDependencyFilesOpened": false,
+        "nativeBinaryOpened": false
+      },
+      "baselineBindings": {
+        "prepareToRunTypedPreferencesMatched": true,
+        "prepareToRunForegroundMayDiffer": true,
+        "runToSeparateRestoreEntireBaselineMatched": null
+      },
+      "productSpeechChecksPassed": false,
+      "separateRestoreDoesNotPromoteFailedRun": true,
+      "differentProcessesCombinedIntoProductSuccess": false,
+      "operatorSummary": {
+        "evidence": {
+          "label": "selected-operator-summary",
+          "sha256": "ad575806e4865477f2460d74df6c0fc2e6ad6363473510d048db69ee461ab6eb",
+          "bytes": 2062
+        },
+        "sameSessionAndRunReceiptSha256": true,
+        "authenticationAttemptsMatchRun": true,
+        "authenticationAcceptedReportedByOperator": true,
+        "privateAuthenticationReceiptReadByGenerator": false,
+        "nativeActionObjectsCopied": false
+      }
     }
   },
   "expectedCheckNames": [
@@ -1170,34 +1545,60 @@
     "deployment-log-source"
   ],
   "limits": [
-    "一次本地macOS VoiceOver会话中的12个选定产品语义；不是全部UX矩阵或完整WCAG审计。",
-    "原生bridge编译、自描述事件构造/静态测试及prepare通过不证明VoiceOver实际朗读；运行通过须12项实际检查、非空PID定向朗读证据、身份保持、请求审计及恢复闭合。",
+    "用户于2026-10-29将无障碍与VoiceOver读屏验收排除当前范围；其余UX验收保留。此文仅记录历史，不安排继续补验。",
+    "历史12项样本不代表完整UX矩阵或WCAG审计；授权、prepare和纯自检不构成实际朗读通过，退出当前范围也不会把failed历史改为passed。",
     "仅投影显式具名terminal report；公开证据用label、SHA256和字节数定位，绝对路径只在本地私有映射保存。原始朗读、认证对象、请求路径、前台进程路径和nativeActions不发布。",
     "独立restore成功只证明环境恢复，不能把此前failed run改成读屏通过；各尝试、源码版本与计数分别保留。",
     "本地HTTPS使用保留测试CA和专用浏览器上下文，不新增生产Secure Cookie、公共根信任或公网验收结论。",
     "除测试鉴权外，具名run不执行部署、构建、基础设施或产品配置变更；现有产品身份由驱动和报告字段分别核对。",
     "恢复范围包括实际VoiceOver getter、四个typed激活/脚本偏好、原生进程和原前台；未扩展到系统所有偏好键或用户其他应用状态。",
     "生成器不运行浏览器、VoiceOver、原生bridge、数据库、SSH、VM或负载；不读profile、state、配置/凭据文件、私日志、独立phrase文件或归档，也不执行秘密扫描。",
-    "S6/G-MVP总体与外部门禁由主验收记录另行判断，S7入口不由此局部报告自动满足。"
+    "S6/G-MVP总体与外部门禁由主验收记录另行判断，S7入口不由此局部报告自动满足。",
+    "系统授权API返回与实际弹窗显示分开记录；一次请求不证明显示过一次弹窗。TCC授权可能持久存在，原生恢复不等于授权回滚或系统弹窗已确认关闭。"
   ],
+  "currentScope": {
+    "accessibilityAndVoiceOver": "out-of-scope",
+    "reason": "excluded-by-user",
+    "disposition": "excluded-by-user",
+    "decisionDate": "2026-10-29",
+    "authority": "explicit-user-instruction-relayed-by-root",
+    "remainingUxScopeUnchanged": true,
+    "furtherReaderTestingPlanned": false,
+    "readerFailureBlocksCurrentScope": false,
+    "historicalFailurePromotedToPass": false
+  },
+  "historyPreservation": {
+    "sourcePublication": {
+      "label": "reader01-through04-retained-publication",
+      "sha256": "308ec81d1aa6cbfd4ac4e0ffa1ebc3949f3eab4e44bd14efdd0a3c876d18fe49",
+      "bytes": 50080
+    },
+    "rawHistoricalReceiptsReopened": false,
+    "previousHistoryCanonicalSha256": "dfc00c9014719daae16c04f199b93ff9bba189d5b0a45eef1e414aaf2fb37c02",
+    "reader04SelectedProjectionCanonicalSha256": "979f9f6a8383ab7f314fe098bce41083e2170139c99a5b3eab1e190d5a72312d",
+    "historicalJsonValuesPreserved": true,
+    "historicalEvidenceLabelsAndHashesPreserved": true
+  },
   "decision": {
     "selectedTwelveCheckSample": "failed",
+    "currentAccessibilityRequirement": "out-of-scope",
     "l08OverallAcceptanceDecided": false,
     "s6": "in-progress",
     "gMvp": "in-progress",
     "s7EntrySatisfied": false,
-    "formalRequirementStatusesPromoted": false
+    "formalRequirementStatusesPromoted": false,
+    "excludedByUser": true
   },
   "generatorSources": [
     {
-      "label": "generator-1",
-      "sha256": "4ac609b811a78d6215773a7846f440d8337be1e7684d13be25fd7ccc2b406027",
-      "bytes": 22102
+      "label": "reader05-generator-1",
+      "sha256": "513b47c98002241f433a0bfc9f39737f4c6a4f7fbf1be6784cae3193a976a0aa",
+      "bytes": 22040
     },
     {
-      "label": "generator-2",
-      "sha256": "b577b41efb3707385e705ec7808be115ea2226184a89847faef3880942c6a4f3",
-      "bytes": 40725
+      "label": "reader05-generator-2",
+      "sha256": "00f3157ba55bd3d992c383c37386ba97e2448292a1dc7e7a338c2010c01c1259",
+      "bytes": 46850
     }
   ],
   "privacy": {
@@ -1232,27 +1633,9 @@
     ],
     "permittedByThisDraftTool": false,
     "externalFinalValidation": {
-      "path": ".local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json",
-      "scope": "生成时待核验，最终结果以外置收据为准。root在最终字节扫描和helper关闭后写此清单；生成器未扫描，不预填通过结论，不向本JSON回填扫描摘要。"
-    }
-  },
-  "publicationPreparation": {
-    "sourceDraftEvidence": {
-      "label": "reader04-reviewed-draft",
-      "sha256": "b0d7d45abcec4e9608a999a8f46cd61c660e2a1f5e06df34a5f18fc807ec19a4",
-      "bytes": 49190
+      "path": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json",
+      "scope": "This publication is released only after its exact staged bytes pass the external final validation; previous scans retain their original scopes."
     },
-    "rootAuthorizedFourFileScope": [
-      "docs/acceptance/g-mvp-screen-reader.md",
-      "docs/acceptance/g-mvp-screen-reader-results.json",
-      "docs/acceptance/G-MVP.md",
-      "docs/acceptance/g-mvp-local-results.json"
-    ],
-    "originalDraftInterpreterDidNotPublish": true,
-    "scope": "仅将已审核的实际失败和恢复投影准备为最终公开字节；不新增运行或产品通过项。",
-    "finalValidation": {
-      "path": ".local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json",
-      "statement": "生成时待核验，最终结果以外置收据为准；不向被扫描JSON回填扫描hash。"
-    }
+    "publishedBy": "root after final byte validation"
   }
 }

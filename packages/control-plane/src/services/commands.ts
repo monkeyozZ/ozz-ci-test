@@ -1,6 +1,7 @@
 import { Prisma } from '@ozz/database';
 import { createHash, randomBytes } from 'node:crypto';
 import { parseImageReference } from '@ozz/infrastructure/registry';
+import { canonicalJson } from '@ozz/infrastructure/build';
 import { withWritableControlPlane } from '../recovery.js';
 import { SecretCipher } from '../secrets.js';
 import {
@@ -41,10 +42,17 @@ import {
   storeConfiguration,
   type ServiceRecord,
 } from './persistence.js';
-import { integer, record, resourceId, text, validateServiceConfiguration } from './validation.js';
+import {
+  integer,
+  record,
+  resourceId,
+  text,
+  validateRuntimeConfiguration,
+  validateServiceConfiguration,
+} from './validation.js';
 import { presentService } from './views.js';
 import { readServiceSnapshot, snapshotVolumes, snapshotDatabaseBindings } from './snapshots.js';
-import { saveGitSource } from '../git/persistence.js';
+import { saveGitSource, validateGitSourceInput } from '../git/persistence.js';
 import { compileTemplate } from '../templates/catalog.js';
 import { assertDatabaseSnapshot, databaseSnapshot } from '../databases/protection.js';
 import { assertDatabaseConfiguration } from '../databases/runtime.js';
@@ -69,6 +77,8 @@ import {
 function optionalDescription(value: unknown): string | null {
   return value === undefined || value === null ? null : text(value, 1000, '描述', true);
 }
+
+const CREATE_REQUEST_FINGERPRINT_PURPOSE = 'service-create.v1';
 
 function booleanOption(value: unknown): boolean {
   if (value !== undefined && typeof value !== 'boolean')
@@ -202,12 +212,18 @@ export class ServiceCommands {
         'SERVICE_SOURCE_INVALID',
         'Git 应用须使用来源中固定的镜像仓库，不能同时选择模板。',
       );
-    const idempotencyKey = template ? validateIdempotencyKey(key) : null;
+    const idempotencyKey = template || key !== undefined ? validateIdempotencyKey(key) : null;
     if (template && !actor?.id)
       throw new OperationRequestError(
         422,
         'TEMPLATE_ACTOR_REQUIRED',
         '创建模板需要有效的操作者和幂等键。',
+      );
+    if (idempotencyKey && !actor?.id)
+      throw new OperationRequestError(
+        422,
+        'SERVICE_ACTOR_REQUIRED',
+        '创建服务需要有效的操作者和幂等键。',
       );
     const environmentId = resourceId(input.environmentId);
     const name = text(input.name, 120, '服务名').trim();
@@ -219,39 +235,66 @@ export class ServiceCommands {
         '服务标识须以字母开头，并只包含小写字母、数字和单个连字符。',
       );
     return withWritableControlPlane(this.repository.db, async (tx) => {
-      const scope = `template-create:${actor?.id ?? ''}`;
-      const requestHash = createHash('sha256')
-        .update(
-          JSON.stringify({
-            environmentId,
-            name,
-            slug,
-            description: optionalDescription(input.description),
-            projectId: input.projectId ?? null,
-            registryCredentialRefId: input.registryCredentialRefId ?? null,
-            template: template
-              ? {
-                  id: template.template.id,
-                  version: template.template.version,
-                  parameters: template.parameters,
-                }
-              : null,
-          }),
-        )
-        .digest('hex');
+      const serviceScope = `service-create:${actor?.id ?? ''}`;
+      const templateScope = `template-create:${actor?.id ?? ''}`;
+      const scope = template ? templateScope : serviceScope;
+      const request = {
+        environmentId,
+        name,
+        slug,
+        description: optionalDescription(input.description),
+        projectId: input.projectId ?? null,
+        registryCredentialRefId: input.registryCredentialRefId ?? null,
+        template: template
+          ? {
+              id: template.template.id,
+              version: template.template.version,
+              parameters: template.parameters,
+            }
+          : null,
+      };
+      const fingerprintPayload =
+        !template && idempotencyKey
+          ? canonicalJson({
+              ...request,
+              configuration: gitSource
+                ? validateRuntimeConfiguration(input.configuration)
+                : validateServiceConfiguration(input.configuration),
+              source: gitSource ? validateGitSourceInput(gitSource) : { kind: 'image' },
+            })
+          : '';
+      // Template parameters are public and preserve their existing receipt format.
+      // Other sources can contain secret values, so a keyed fingerprint is required.
+      const requestHash = template
+        ? createHash('sha256').update(JSON.stringify(request)).digest('hex')
+        : idempotencyKey
+          ? this.cipher.requestFingerprint(CREATE_REQUEST_FINGERPRINT_PURPOSE, fingerprintPayload)
+          : '';
       if (idempotencyKey) {
+        // One key covers every source. Also take the existing template lock so
+        // older template admissions cannot race a newly keyed image/Git request.
         await tx.$executeRaw(
-          Prisma.sql`SELECT pg_advisory_xact_lock(hashtext(${scope}), hashtext(${idempotencyKey}))`,
+          Prisma.sql`SELECT pg_advisory_xact_lock(hashtext(${serviceScope}), hashtext(${idempotencyKey}))`,
         );
-        const receipt = await tx.commandReceipt.findUnique({
-          where: { idempotencyScope_idempotencyKey: { idempotencyScope: scope, idempotencyKey } },
+        await tx.$executeRaw(
+          Prisma.sql`SELECT pg_advisory_xact_lock(hashtext(${templateScope}), hashtext(${idempotencyKey}))`,
+        );
+        const receipt = await tx.commandReceipt.findFirst({
+          where: { idempotencyKey, idempotencyScope: { in: [serviceScope, templateScope] } },
         });
         if (receipt) {
-          if (receipt.requestHash !== requestHash)
+          const sameRequest = template
+            ? receipt.requestHash === requestHash
+            : this.cipher.matchesRequestFingerprint(
+                CREATE_REQUEST_FINGERPRINT_PURPOSE,
+                fingerprintPayload,
+                receipt.requestHash,
+              );
+          if (receipt.idempotencyScope !== scope || !sameRequest)
             throw new OperationRequestError(
               409,
               'IDEMPOTENCY_CONFLICT',
-              '该幂等键已经用于另一份模板创建请求。',
+              '该幂等键已经用于另一份服务创建请求。',
             );
           return receipt.resultJson as unknown as ServiceView;
         }

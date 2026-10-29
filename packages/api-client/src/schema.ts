@@ -5821,10 +5821,9 @@ export interface operations {
     createService: {
         parameters: {
             query?: never;
-            header: {
-                "idempotency-key": string;
-                /** @description 模板创建必填；重复请求返回原创建结果 */
-                "Idempotency-Key"?: string;
+            header?: {
+                /** @description 模板创建必填；镜像和 Git 创建可使用同一键重试，重复请求返回原创建结果 */
+                "idempotency-key"?: string;
             };
             path?: never;
             cookie?: never;
@@ -8908,7 +8907,10 @@ export interface operations {
     createProject: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description 重试同一份创建请求时保留此键，返回原项目和默认环境的创建结果 */
+                "idempotency-key"?: string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -8928,6 +8930,13 @@ export interface operations {
             };
             /** @description 需要有效的管理员会话 */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description 标识已被使用或幂等键对应另一份创建请求 */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };

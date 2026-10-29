@@ -1,0 +1,1664 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-29T09:46:02.245859+00:00",
+  "scope": "Isolated macOS ARM64 prepare output evaluation only",
+  "evaluationCompleted": true,
+  "capabilityAcceptance": "conditional-candidate-with-known-gaps",
+  "s7ImplementationCompleted": false,
+  "s7AcceptancePassed": false,
+  "gMvpStatusChanged": false,
+  "ciRunReusedForThisEvaluation": false,
+  "source": {
+    "repository": "railwayapp/railpack",
+    "release": "v0.43.0",
+    "commit": "c71ae09408996068bcc9cf685146f55d428ef816"
+  },
+  "toolchain": {
+    "railpack": {
+      "recordedAt": "2026-10-29T09:32:36.660424+00:00",
+      "archive": {
+        "path": ".local/s7-builder-evaluation-20261029/native-20261029T091955Z-380000af/downloads/railpack-v0.43.0-arm64-apple-darwin.verified.tar.gz",
+        "bytes": 8360493,
+        "sha256": "385026934127726fd0f9b5a1431c5ae441062ea9958a5f9dbb0e98a29142d6de"
+      },
+      "members": [
+        {
+          "name": "LICENSE",
+          "bytes": 1070,
+          "regularFile": true
+        },
+        {
+          "name": "README.md",
+          "bytes": 1794,
+          "regularFile": true
+        },
+        {
+          "name": "railpack",
+          "bytes": 23230290,
+          "regularFile": true
+        }
+      ],
+      "selectedMember": "railpack",
+      "executable": {
+        "path": ".local/s7-builder-evaluation-20261029/native-20261029T091955Z-380000af/bin/railpack",
+        "bytes": 23230290,
+        "sha256": "dd0caa9b9240aab1eb5e78a7b6a5944a6dd0719f654eb92bc9ec22f6f068d032"
+      },
+      "executedAtExtraction": false
+    },
+    "mise": {
+      "recordedAt": "2026-10-29T09:40:26.585667+00:00",
+      "archiveSha256": "eb68c824e16af90f61e70e0d785179f335b1b95466606a5e0d8b9da504bb7bb2",
+      "archiveBytes": 46101813,
+      "members": 13,
+      "selectedMember": "mise/bin/mise",
+      "executablePath": ".local/s7-builder-evaluation-20261029/native-20261029T091955Z-380000af/cache/railpack/mise/mise-2026.10.14",
+      "executableBytes": 134961808,
+      "executableSha256": "005b32b9c22ca9cb63ff9d35c74b3abe69c433e9ca655fea288ba3dcbe7e4918",
+      "matchesOfficialStandaloneChecksum": true,
+      "verifiedMisePreseeded": true,
+      "railpackColdDependencyBootstrapTested": false
+    }
+  },
+  "executionStartedAt": "2026-10-29T09:40:41.522796+00:00",
+  "executionFinishedAt": "2026-10-29T09:40:57.418226+00:00",
+  "caseCount": 15,
+  "exitZeroCount": 12,
+  "exitOneCount": 3,
+  "timeoutCount": 0,
+  "canonicalPlanHashMethod": "UTF-8 JSON encoding, recursively sorted object keys, separators comma/colon, ensure_ascii=false; all fields and array order retained; not an RFC8785 claim",
+  "privateSessionPath": ".local/s7-builder-evaluation-20261029/native-20261029T091955Z-380000af",
+  "harnessSha256": "57b0ff3a8e3559fbc3867ee87cd61d66164fcb314efb63977927f30f80edb11f",
+  "fixtureManifestSha256": "d8b5366899e18133dcbdf17b539b4973e093471348c97ee258c7370c27d72903",
+  "isolation": {
+    "fixedCacheBefore": "absent",
+    "fixedCacheAfter": "absent",
+    "temporarySymlinkTargetWithinSession": true,
+    "writeOutsideSessionDeniedInCanaryProbe": true,
+    "inheritedAuthenticationEnvironment": false,
+    "hostHomeOverrideByHarness": false,
+    "miseVerifiedPreseed": true,
+    "coldMiseBootstrapTested": false,
+    "productionProcessesRestarted": false,
+    "productionDataMutatingTestsRun": false,
+    "containersOrVMsStarted": false
+  },
+  "cases": [
+    {
+      "id": "01-node-web",
+      "fixture": "node-web",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "afec3d18108bdb5cd41c61aa8dcebcd688eef2f0e72fa76fddcaf5c8eb21d511",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 266,
+          "sha256": "3c03075ab289cf10b0a6be43ac6543ce77d4bb02b50758e8b534d9bc2e1cd149"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/01-node-web/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/01-node-web/info.json",
+        "${EVALUATION_ROOT}/fixtures/node-web"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4425,
+          "sha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+          "canonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1074,
+          "sha256": "f35d9a52b5bd04538537ea3749e9c716cb03db28100b2e8a1a983feb7db06429",
+          "canonicalSha256": "8c1a463e37d9244412265681f65168f62f4c993a268f39309cfc4ad53ecca9ee"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+      "planCanonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d",
+      "startCommand": "pnpm run start",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 2.153
+    },
+    {
+      "id": "02-node-web-repeat",
+      "fixture": "node-web",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "afec3d18108bdb5cd41c61aa8dcebcd688eef2f0e72fa76fddcaf5c8eb21d511",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 266,
+          "sha256": "3c03075ab289cf10b0a6be43ac6543ce77d4bb02b50758e8b534d9bc2e1cd149"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/02-node-web-repeat/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/02-node-web-repeat/info.json",
+        "${EVALUATION_ROOT}/fixtures/node-web"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4425,
+          "sha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+          "canonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1074,
+          "sha256": "f35d9a52b5bd04538537ea3749e9c716cb03db28100b2e8a1a983feb7db06429",
+          "canonicalSha256": "8c1a463e37d9244412265681f65168f62f4c993a268f39309cfc4ad53ecca9ee"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+      "planCanonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d",
+      "startCommand": "pnpm run start",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.258
+    },
+    {
+      "id": "03-node-start-changed",
+      "fixture": "node-start-changed",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "16e86b1f400f53e7373b765b30cdab2c9b3b6460d5d90dd31b558c95002bae20",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 281,
+          "sha256": "84751b6f07600069c2b7ec587856662d9855848343e9bffd8e81f8c2835dfcb7"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/03-node-start-changed/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/03-node-start-changed/info.json",
+        "${EVALUATION_ROOT}/fixtures/node-start-changed"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4425,
+          "sha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+          "canonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1074,
+          "sha256": "f35d9a52b5bd04538537ea3749e9c716cb03db28100b2e8a1a983feb7db06429",
+          "canonicalSha256": "8c1a463e37d9244412265681f65168f62f4c993a268f39309cfc4ad53ecca9ee"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+      "planCanonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d",
+      "startCommand": "pnpm run start",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.203
+    },
+    {
+      "id": "04-node-lock-changed",
+      "fixture": "node-lock-changed",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "1cb101868d1c83faef89b05680727b31e8429ff7a90d1f7d607d7d856d12da36",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 266,
+          "sha256": "3c03075ab289cf10b0a6be43ac6543ce77d4bb02b50758e8b534d9bc2e1cd149"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 112,
+          "sha256": "a9d6ab9de527daca136e6a75c4b34ed3dbbefc76805ff93b6a10a9c7fa5307e8"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/04-node-lock-changed/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/04-node-lock-changed/info.json",
+        "${EVALUATION_ROOT}/fixtures/node-lock-changed"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4425,
+          "sha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+          "canonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1074,
+          "sha256": "f35d9a52b5bd04538537ea3749e9c716cb03db28100b2e8a1a983feb7db06429",
+          "canonicalSha256": "8c1a463e37d9244412265681f65168f62f4c993a268f39309cfc4ad53ecca9ee"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+      "planCanonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d",
+      "startCommand": "pnpm run start",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.294
+    },
+    {
+      "id": "05-start-override",
+      "fixture": "node-web",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "afec3d18108bdb5cd41c61aa8dcebcd688eef2f0e72fa76fddcaf5c8eb21d511",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 266,
+          "sha256": "3c03075ab289cf10b0a6be43ac6543ce77d4bb02b50758e8b534d9bc2e1cd149"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/05-start-override/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/05-start-override/info.json",
+        "--start-cmd",
+        "node dist/server.mjs --mode=preview",
+        "${EVALUATION_ROOT}/fixtures/node-web"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4446,
+          "sha256": "8bfe58ca3174367e80941bf5d00439f6fb4f454d025cebbe9e6aacf0c2e58d19",
+          "canonicalSha256": "469a9c26865536ee63db5c31acc5b86227b27ceff3ab2246d17001cea5e2c252"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1074,
+          "sha256": "f35d9a52b5bd04538537ea3749e9c716cb03db28100b2e8a1a983feb7db06429",
+          "canonicalSha256": "8c1a463e37d9244412265681f65168f62f4c993a268f39309cfc4ad53ecca9ee"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "8bfe58ca3174367e80941bf5d00439f6fb4f454d025cebbe9e6aacf0c2e58d19",
+      "planCanonicalSha256": "469a9c26865536ee63db5c31acc5b86227b27ceff3ab2246d17001cea5e2c252",
+      "startCommand": "node dist/server.mjs --mode=preview",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.188
+    },
+    {
+      "id": "06-static-ready",
+      "fixture": "static-ready",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "071d36953d5cba9f0f77e8136986ff627784073766336c5cde2ff779a0252196",
+      "fixtureFiles": [
+        {
+          "path": "Staticfile",
+          "bytes": 34,
+          "sha256": "db74dbfb77a396bf344232d99fb83cc95798cdbae6e6589b458ead1e265cb875"
+        },
+        {
+          "path": "public/index.html",
+          "bytes": 63,
+          "sha256": "32b590640096312511e9a823f02a2e7b69a5e0fec30a99d3f963a1de292d75eb"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/06-static-ready/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/06-static-ready/info.json",
+        "${EVALUATION_ROOT}/fixtures/static-ready"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "caddy": {
+          "name": "caddy",
+          "requestedVersion": "2",
+          "resolvedVersion": "2.11.7",
+          "source": "railpack default"
+        }
+      },
+      "detectedProviders": ["staticfile"],
+      "metadata": {
+        "providers": "staticfile"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 2885,
+          "sha256": "f193d37b6b1b71cdd1c70b0af607691062642eef8104dd80d371d4c4e76dd98f",
+          "canonicalSha256": "b84098e179e5e1c67a9cb485594d1b001540b7dceea87a80e5f7ac2aa6b86930"
+        },
+        {
+          "path": "info.json",
+          "bytes": 701,
+          "sha256": "c94cb067faa8194715c1139514c88717ca4278069e8e3d55a1a1a075a37e96e2",
+          "canonicalSha256": "a2cc077bce42a03e83335e827f058290f7a9675f8d455d5b0f453384fecdeb90"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "f193d37b6b1b71cdd1c70b0af607691062642eef8104dd80d371d4c4e76dd98f",
+      "planCanonicalSha256": "b84098e179e5e1c67a9cb485594d1b001540b7dceea87a80e5f7ac2aa6b86930",
+      "startCommand": "caddy run --config Caddyfile --adapter caddyfile 2>&1",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.912
+    },
+    {
+      "id": "07-static-generated",
+      "fixture": "static-generated",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "5ac326fb11debf9a529dd8490501db1104858247ad593a3500088739efb91505",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 219,
+          "sha256": "88c1b34bfbd4ec0292d2fcb3bb3b25d70b1808e945745a84adb69ac31b736a23"
+        },
+        {
+          "path": "package.json",
+          "bytes": 229,
+          "sha256": "96eaedbd329dc3825c161e8a84a7e81c020508b179fccf2997bd04893596f1fc"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "public/index.html",
+          "bytes": 55,
+          "sha256": "762b334e2d1bdf8c21eeb95334c63e9f596ec9898169b33646b9c4b00a8b6101"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/07-static-generated/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/07-static-generated/info.json",
+        "--env",
+        "RAILPACK_SPA_OUTPUT_DIR=dist",
+        "${EVALUATION_ROOT}/fixtures/static-generated"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "caddy": {
+          "name": "caddy",
+          "requestedVersion": "latest",
+          "resolvedVersion": "2.11.7",
+          "source": "railpack default"
+        },
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodeIsSPA": "true",
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "static",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 6165,
+          "sha256": "96e31f4fc15bb178b27b58ae70a768e4d38b885a48cf1afb82dffb4a9252ba12",
+          "canonicalSha256": "5a475aa676d5c35d7fb3fd91e395eadfebf897c86022268cb0d5641e45725045"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1322,
+          "sha256": "ebec0c994c69e5a145ed8d002c19dcd6ba013f9c3368b07597af0328979a452a",
+          "canonicalSha256": "cc175f6fc9f229da7412ee3a10d9851c294a44b7ea6ace8bb2f55e046f3f86fb"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 64,
+          "sha256": "622428fa265860c141ccc1c7cda91d3bbaf8bd5de6125b6c2b2066304b288217"
+        }
+      ],
+      "planRawSha256": "96e31f4fc15bb178b27b58ae70a768e4d38b885a48cf1afb82dffb4a9252ba12",
+      "planCanonicalSha256": "5a475aa676d5c35d7fb3fd91e395eadfebf897c86022268cb0d5641e45725045",
+      "startCommand": "caddy run --config /Caddyfile --adapter caddyfile 2>&1",
+      "planSecretNames": ["RAILPACK_SPA_OUTPUT_DIR"],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 6.764
+    },
+    {
+      "id": "08-conflicting-locks",
+      "fixture": "conflicting-locks",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "6e372cfc8e564864e35dfdd4fb4c4e58e0386a12b50b49e894425df332d06265",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package-lock.json",
+          "bytes": 263,
+          "sha256": "e31b528a4417b845c44a89edcf9053dafd74af12e9c361a64fe13a7661e4fa10"
+        },
+        {
+          "path": "package.json",
+          "bytes": 230,
+          "sha256": "fe9e7f5b253b12b2ced442a82241e014a3ca597778fef7b7892a8357584cf080"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/08-conflicting-locks/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/08-conflicting-locks/info.json",
+        "${EVALUATION_ROOT}/fixtures/conflicting-locks"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "9",
+          "resolvedVersion": "9.15.9",
+          "source": "pnpm-lock.yaml"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4517,
+          "sha256": "079d8540a6b953f9deaa32f2e8f21c9fff434a2b1a3b09063d9b235e9e8f3edb",
+          "canonicalSha256": "3295514192c1ecaca9024e55c375b46a92777edd93527e548b07391cec9d5378"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1059,
+          "sha256": "ae6131f87c105d67d428cafb8907e2223c9954b8d5024ced51bc8f6159bb989b",
+          "canonicalSha256": "ebb4ec658eb5ae0204e3f9304d0611a81359c98965b13908a174462c3132970a"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "079d8540a6b953f9deaa32f2e8f21c9fff434a2b1a3b09063d9b235e9e8f3edb",
+      "planCanonicalSha256": "3295514192c1ecaca9024e55c375b46a92777edd93527e548b07391cec9d5378",
+      "startCommand": "pnpm run start",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.174
+    },
+    {
+      "id": "09-manager-lock-mismatch",
+      "fixture": "manager-lock-mismatch",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "61280745dca73faa6e5e6b899c8976af6d91a4aed1f0a2b0820de7b9938ff4c4",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 264,
+          "sha256": "f00ae82007ac59beb7a74f5f671d863df9a6695a984874cdd620322ed7efcef4"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/09-manager-lock-mismatch/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/09-manager-lock-mismatch/info.json",
+        "${EVALUATION_ROOT}/fixtures/manager-lock-mismatch"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "npm",
+        "nodeRuntime": "node",
+        "nodeUsesCorepack": "true",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4652,
+          "sha256": "a5ca881a798f9ca702f8b823ef53f0922dd84f2d3181602aeb8b2cbc5a22afc1",
+          "canonicalSha256": "90f4338afe5b5c40d204a2d5e5e61cb39a1ab7ccd0e9b88c65b7b79147da6d4c"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1222,
+          "sha256": "46f573600990b02989295c3edc3f08f3746ca1676aa815d23d447a8027757d48",
+          "canonicalSha256": "567eac0f50289febc6fcd4671d138df3e814594745efdd1323e6c2b242a6eb0b"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "a5ca881a798f9ca702f8b823ef53f0922dd84f2d3181602aeb8b2cbc5a22afc1",
+      "planCanonicalSha256": "90f4338afe5b5c40d204a2d5e5e61cb39a1ab7ccd0e9b88c65b7b79147da6d4c",
+      "startCommand": "npm run start",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.71
+    },
+    {
+      "id": "10-unsupported-empty",
+      "fixture": "unsupported-empty",
+      "exitCode": 1,
+      "infoSuccess": false,
+      "fixtureManifestSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "fixtureFiles": [],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/10-unsupported-empty/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/10-unsupported-empty/info.json",
+        "${EVALUATION_ROOT}/fixtures/unsupported-empty"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": null,
+      "detectedProviders": null,
+      "metadata": null,
+      "outputFiles": [
+        {
+          "path": "info.json",
+          "bytes": 722,
+          "sha256": "f3c0c58a396a4d6c961eced3702efd3951c182cfa9af076dfd7b41c0f792b14e",
+          "canonicalSha256": "a4a485b73eb6d9e2be068e32254d295c9133b37862a68333cd31e5f811014857"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": null,
+      "planCanonicalSha256": null,
+      "startCommand": null,
+      "planSecretNames": null,
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.116
+    },
+    {
+      "id": "11-unsupported-readme",
+      "fixture": "unsupported-readme",
+      "exitCode": 1,
+      "infoSuccess": false,
+      "fixtureManifestSha256": "d96a89e5961cc21de360f6aabb7355c5e604b9d839860db501d40ac96d39f583",
+      "fixtureFiles": [
+        {
+          "path": "README.md",
+          "bytes": 28,
+          "sha256": "eeb56145e809544b61c685eb0236d0fe42783995ea28553d2729091fd52ca9c6"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/11-unsupported-readme/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/11-unsupported-readme/info.json",
+        "${EVALUATION_ROOT}/fixtures/unsupported-readme"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": null,
+      "detectedProviders": null,
+      "metadata": null,
+      "outputFiles": [
+        {
+          "path": "info.json",
+          "bytes": 743,
+          "sha256": "3ec2eef2612f0e20f03abfd1f05cd3aa71c3c5c0621d5f642d8cfa5b5c4beffd",
+          "canonicalSha256": "cac852fb6eea6d1722229ba467e6066228bbd01605aa20ccebdd288dfcca8a95"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": null,
+      "planCanonicalSha256": null,
+      "startCommand": null,
+      "planSecretNames": null,
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.103
+    },
+    {
+      "id": "12-missing-start",
+      "fixture": "missing-start",
+      "exitCode": 1,
+      "infoSuccess": false,
+      "fixtureManifestSha256": "ce5457afe6f75a873cc5717ff04238043c937c41f84c539a4e2ae1d7b4006c01",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 229,
+          "sha256": "96eaedbd329dc3825c161e8a84a7e81c020508b179fccf2997bd04893596f1fc"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/12-missing-start/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/12-missing-start/info.json",
+        "${EVALUATION_ROOT}/fixtures/missing-start"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": null,
+      "detectedProviders": null,
+      "metadata": null,
+      "outputFiles": [
+        {
+          "path": "info.json",
+          "bytes": 1297,
+          "sha256": "fae69a2b0ec9f2d2bf97d9a595d0bd8a3ac678b2997357e6ae0ece3e517dcc4a",
+          "canonicalSha256": "d965d1427f9ec437e517ef30707a76ef7609951a09d8b587be4d50e3dcccffdc"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": null,
+      "planCanonicalSha256": null,
+      "startCommand": null,
+      "planSecretNames": null,
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.233
+    },
+    {
+      "id": "13-dockerfile-present",
+      "fixture": "dockerfile-present",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "95a5ad4f8e3c68a7566919a4dce613db91d044ee830a1511602e6c23aec9a8f9",
+      "fixtureFiles": [
+        {
+          "path": "Dockerfile",
+          "bytes": 86,
+          "sha256": "f93ae19b8bab85075fa414dae16b4293ac79216336e2a98560465d55cfe426f6"
+        },
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 266,
+          "sha256": "3c03075ab289cf10b0a6be43ac6543ce77d4bb02b50758e8b534d9bc2e1cd149"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/13-dockerfile-present/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/13-dockerfile-present/info.json",
+        "${EVALUATION_ROOT}/fixtures/dockerfile-present"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4425,
+          "sha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+          "canonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1074,
+          "sha256": "f35d9a52b5bd04538537ea3749e9c716cb03db28100b2e8a1a983feb7db06429",
+          "canonicalSha256": "8c1a463e37d9244412265681f65168f62f4c993a268f39309cfc4ad53ecca9ee"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "6612dc1a7559a0be8f36efc721fa9c57eb42f9bb406a20504020a7a788c48e9d",
+      "planCanonicalSha256": "aa8198e564eca47546cc371a1978b40946031a50fdc34dd8cd0606af0b788f3d",
+      "startCommand": "pnpm run start",
+      "planSecretNames": [],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.259
+    },
+    {
+      "id": "14-environment",
+      "fixture": "environment",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "1fa5948e9b4866232da54a14e5063473570a4e3fe96eed9320de4e4b1882c983",
+      "fixtureFiles": [
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "mark-install.mjs",
+          "bytes": 99,
+          "sha256": "e41c10d972b904e741d2aa7aae7a8b04aaa9cef8be2cf015975f30fd2a0468f8"
+        },
+        {
+          "path": "package.json",
+          "bytes": 309,
+          "sha256": "469542a96ae72f3c70bcefb7ed671759890d6c67dda08c6309c9a52df3b8a4cc"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/14-environment/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/14-environment/info.json",
+        "--env",
+        "OZZ_PUBLIC_VALUE",
+        "--env",
+        "OZZ_BUILD_SECRET",
+        "${EVALUATION_ROOT}/fixtures/environment"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "OZZ_BUILD_SECRET",
+        "OZZ_PUBLIC_VALUE",
+        "OZZ_RUNTIME_SECRET",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": ["OZZ_PUBLIC_VALUE", "OZZ_BUILD_SECRET"],
+      "syntheticVariableHashes": {
+        "OZZ_PUBLIC_VALUE": "82f16784393177c8b3d6ddad65f11e7a8ce283460d7cda001046b283f87af54c",
+        "OZZ_BUILD_SECRET": "c605b87983adc9e143b81def28dd060a2e3d4660f783d4df33b91bb6d5268d20",
+        "OZZ_RUNTIME_SECRET": "1a65551e03f389202405f62208108d18f26c8964f204da498f1a383d6efba4fb"
+      },
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "24.22.1",
+          "resolvedVersion": "24.22.1",
+          "source": "package.json > engines > node"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4411,
+          "sha256": "b2047f39ab572ace5991557157ce9954a05813f5c92725974a2cf2cc05cf83a5",
+          "canonicalSha256": "1f6af096841e8ba38e4e4492df6a76c27272fbd501c7d0d7d72d1bbe0cf7e096"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1074,
+          "sha256": "f35d9a52b5bd04538537ea3749e9c716cb03db28100b2e8a1a983feb7db06429",
+          "canonicalSha256": "8c1a463e37d9244412265681f65168f62f4c993a268f39309cfc4ad53ecca9ee"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "b2047f39ab572ace5991557157ce9954a05813f5c92725974a2cf2cc05cf83a5",
+      "planCanonicalSha256": "1f6af096841e8ba38e4e4492df6a76c27272fbd501c7d0d7d72d1bbe0cf7e096",
+      "startCommand": "pnpm run start",
+      "planSecretNames": ["OZZ_BUILD_SECRET", "OZZ_PUBLIC_VALUE"],
+      "syntheticCanaryScan": [
+        {
+          "path": "plan.json",
+          "name": "OZZ_PUBLIC_VALUE",
+          "namePresent": true,
+          "valuePresent": false
+        },
+        {
+          "path": "plan.json",
+          "name": "OZZ_BUILD_SECRET",
+          "namePresent": true,
+          "valuePresent": false
+        },
+        {
+          "path": "plan.json",
+          "name": "OZZ_RUNTIME_SECRET",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "info.json",
+          "name": "OZZ_PUBLIC_VALUE",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "info.json",
+          "name": "OZZ_BUILD_SECRET",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "info.json",
+          "name": "OZZ_RUNTIME_SECRET",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "stdout.txt",
+          "name": "OZZ_PUBLIC_VALUE",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "stdout.txt",
+          "name": "OZZ_BUILD_SECRET",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "stdout.txt",
+          "name": "OZZ_RUNTIME_SECRET",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "stderr.txt",
+          "name": "OZZ_PUBLIC_VALUE",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "stderr.txt",
+          "name": "OZZ_BUILD_SECRET",
+          "namePresent": false,
+          "valuePresent": false
+        },
+        {
+          "path": "stderr.txt",
+          "name": "OZZ_RUNTIME_SECRET",
+          "namePresent": false,
+          "valuePresent": false
+        }
+      ],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.245
+    },
+    {
+      "id": "15-version-override",
+      "fixture": "version-override",
+      "exitCode": 0,
+      "infoSuccess": true,
+      "fixtureManifestSha256": "29b731182c5ce1fb261c1a39a823b5194f942daafc254ec7b2ca4e9fc117bdb4",
+      "fixtureFiles": [
+        {
+          "path": ".nvmrc",
+          "bytes": 8,
+          "sha256": "c989649ac5c541692f22f2e41f5fbc34927c02bf1644e5dcca46bb4c88281f87"
+        },
+        {
+          "path": "build.mjs",
+          "bytes": 216,
+          "sha256": "3c624821a1e94e14d0288a091742b9c4c3c588b3165e7864fe581f85566cef15"
+        },
+        {
+          "path": "package.json",
+          "bytes": 266,
+          "sha256": "3c03075ab289cf10b0a6be43ac6543ce77d4bb02b50758e8b534d9bc2e1cd149"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "bytes": 111,
+          "sha256": "15709a4944e0a189685e0bc13e56d1d0d37a88e24d8b7ecc2415e5d4b1eff1ee"
+        },
+        {
+          "path": "src/server.mjs",
+          "bytes": 159,
+          "sha256": "48cc6bf30d8be1ef1cf80a160dbdf5b7ebf8aedf09a94a00e194446bdf8cbe1b"
+        }
+      ],
+      "argv": [
+        "${EVALUATION_ROOT}/bin/railpack",
+        "prepare",
+        "--hide-pretty-plan",
+        "--error-missing-start",
+        "--plan-out",
+        "${EVALUATION_ROOT}/runs/15-version-override/plan.json",
+        "--info-out",
+        "${EVALUATION_ROOT}/runs/15-version-override/info.json",
+        "--env",
+        "RAILPACK_NODE_VERSION=24.22.1",
+        "${EVALUATION_ROOT}/fixtures/version-override"
+      ],
+      "processEnvironmentKeys": [
+        "CI",
+        "HOME",
+        "LANG",
+        "LOGNAME",
+        "NO_COLOR",
+        "PATH",
+        "TMPDIR",
+        "USER"
+      ],
+      "forwardedVariableNames": [],
+      "syntheticVariableHashes": {},
+      "resolvedPackages": {
+        "node": {
+          "name": "node",
+          "requestedVersion": "22.14.0",
+          "resolvedVersion": "22.14.0",
+          "source": "idiomatic-version-file"
+        },
+        "pnpm": {
+          "name": "pnpm",
+          "requestedVersion": "12.14.0",
+          "resolvedVersion": "12.14.0",
+          "source": "idiomatic-version-file"
+        }
+      },
+      "detectedProviders": ["node"],
+      "metadata": {
+        "nodePackageManager": "pnpm",
+        "nodeRuntime": "node",
+        "providers": "node"
+      },
+      "outputFiles": [
+        {
+          "path": "plan.json",
+          "bytes": 4623,
+          "sha256": "61cfdc622c6b309e556c049cb9dda88c02a3e58c5853f579a42dd324cb091e0e",
+          "canonicalSha256": "971d2b0ef570a9d1f62c114badacd8294c1f781187a31f4bef43d0ea42812f45"
+        },
+        {
+          "path": "info.json",
+          "bytes": 1057,
+          "sha256": "502f49e65b63edc6a8f38ef68c1c4e0fb514e13efc0636d37750d68389b9c5b1",
+          "canonicalSha256": "01962b9d9d5155ffd5d0db1da601782a8d7a0e33daccc2852ee2a61fcaa97ee1"
+        },
+        {
+          "path": "stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "planRawSha256": "61cfdc622c6b309e556c049cb9dda88c02a3e58c5853f579a42dd324cb091e0e",
+      "planCanonicalSha256": "971d2b0ef570a9d1f62c114badacd8294c1f781187a31f4bef43d0ea42812f45",
+      "startCommand": "pnpm run start",
+      "planSecretNames": ["RAILPACK_NODE_VERSION"],
+      "syntheticCanaryScan": [],
+      "fixtureUnchanged": true,
+      "scriptMarkersAbsent": true,
+      "normalExitProcessGroupEmptyAtCheck": true,
+      "durationSeconds": 0.169
+    }
+  ],
+  "notVerified": [
+    "Linux planner and sandbox lifecycle",
+    "dependency installation",
+    "BuildKit solve/export/push",
+    "image digest verification",
+    "K3s workload and HTTP",
+    "Ozz protocol and secret stage integration",
+    "Cross-host reproducibility",
+    "BuildKit frontend and base image digest resolution",
+    "Actual secret mount/cache invalidation",
+    "Timeout/cancel/crash recovery proof"
+  ]
+}

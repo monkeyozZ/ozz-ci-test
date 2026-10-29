@@ -7,6 +7,11 @@ import {
   discardUnsavedChanges,
 } from '@/composables/useDirtyForm';
 import { safeReturnPath } from '@/lib/utils';
+import {
+  CREATION_SCOPE,
+  creationNavigationLocked,
+  creationUncertain,
+} from '@/composables/useCreationDialogState';
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -39,7 +44,14 @@ export const router = createRouter({
         },
         {
           path: 'projects/:projectId/services/new',
-          component: () => import('@/pages/ServiceCreatePage.vue'),
+          redirect: (to) => ({
+            path:
+              typeof to.query.fromService === 'string' &&
+              /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(to.query.fromService)
+                ? `/projects/${to.params.projectId}/services/${to.query.fromService}`
+                : `/projects/${to.params.projectId}`,
+            query: { ...to.query, createService: '1' },
+          }),
           meta: { title: '添加服务' },
         },
         {
@@ -171,14 +183,36 @@ router.beforeEach(async (to, from) => {
   if (!auth.ready) await auth.refresh();
   if (!to.meta.public && !auth.user) return { name: 'login', query: { returnTo: to.fullPath } };
   if (to.name === 'login' && auth.user) return safeReturnPath(to.query.returnTo);
-  if (auth.user && from.fullPath !== to.fullPath && hasUnsavedChanges()) {
+  const fromCreation = from.query.createService === '1' && !!from.params.projectId;
+  const toCreation = to.query.createService === '1' && !!to.params.projectId;
+  if (auth.user && fromCreation && creationNavigationLocked.value) {
+    useUiStore().toast(
+      creationUncertain.value ? '请先重试确认保存结果，再继续。' : '正在处理当前请求，请稍候。',
+    );
+    return false;
+  }
+  const sameContext =
+    from.path === to.path &&
+    from.params.projectId === to.params.projectId &&
+    ((from.query.environment ?? 'production') === (to.query.environment ?? 'production') ||
+      (!fromCreation && toCreation && !!from.params.serviceId && from.query.environment == null)) &&
+    (from.query.environmentId ?? '') === (to.query.environmentId ?? '');
+  let dirtyScope: string | undefined;
+  if (sameContext && (fromCreation || toCreation)) {
+    if (toCreation) return;
+    dirtyScope = CREATION_SCOPE;
+  } else if (sameContext && from.params.serviceId && !fromCreation && !toCreation) {
+    // The service workspace keeps all visited editor panels mounted across its tabs.
+    return;
+  }
+  if (auth.user && from.fullPath !== to.fullPath && hasUnsavedChanges(dirtyScope)) {
     const leave = await useUiStore().confirm({
       title: '离开前保留当前编辑？',
-      description: `${unsavedLabels()}有尚未保存的修改，离开后需要重新填写。`,
+      description: `${unsavedLabels(dirtyScope)}有尚未保存的修改，离开后需要重新填写。`,
       confirmText: '放弃修改并离开',
     });
     if (!leave) return false;
-    discardUnsavedChanges();
+    discardUnsavedChanges(dirtyScope);
   }
 });
 router.afterEach((to, _from, failure) => {

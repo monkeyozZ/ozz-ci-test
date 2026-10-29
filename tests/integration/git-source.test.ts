@@ -21,6 +21,7 @@ import {
   snapshotConfiguration,
 } from '../../packages/control-plane/src/services/snapshots.js';
 import type {
+  CreateServiceInput,
   ServiceSnapshotV3,
   ServiceView,
 } from '../../packages/control-plane/src/services/contracts.js';
@@ -446,6 +447,246 @@ afterAll(async () => {
 });
 
 describe('S6 Git sources and persistent admission', () => {
+  it.each(['image', 'github'] as const)(
+    'replays concurrent %s service creation without duplicating the service or encrypted variables',
+    async (kind) => {
+      const key = randomUUID();
+      const secretValue = `synthetic-retry-secret-${randomUUID()}`;
+      const configuration = {
+        ...(kind === 'image' ? { image: 'nginx:1.27' } : {}),
+        replicas: 1,
+        environment: [{ name: 'API_TOKEN', value: secretValue, secret: true }],
+      };
+      const input = {
+        environmentId: fixture.environment.id,
+        projectId: fixture.project.id,
+        name: 'Retry the same service',
+        slug: 'same-service',
+        configuration,
+        source: kind === 'github' ? source() : { kind: 'image' as const },
+      };
+      const headers = { ...session.headers, 'idempotency-key': key };
+      const secretsBefore = await db.secretReference.count();
+      const responses = await Promise.all(
+        Array.from({ length: 5 }, () =>
+          app.inject({ method: 'POST', url: '/api/services', headers, payload: input }),
+        ),
+      );
+      const original = responses[0]!.json<{ data: ServiceView }>();
+      for (const response of responses) {
+        expect(response.statusCode, response.body).toBe(201);
+        expect(response.json()).toEqual(original);
+        expect(response.body).not.toContain(secretValue);
+      }
+      expect(await db.service.count({ where: { environmentId: fixture.environment.id } })).toBe(1);
+      expect(await db.secretReference.count()).toBe(secretsBefore + 1);
+      expect(
+        await db.serviceSecretReference.count({ where: { serviceId: original.data.id } }),
+      ).toBe(1);
+      expect(await db.gitSource.count({ where: { serviceId: original.data.id } })).toBe(
+        kind === 'github' ? 1 : 0,
+      );
+      expect(
+        await db.gitSourceRevision.count({ where: { source: { serviceId: original.data.id } } }),
+      ).toBe(kind === 'github' ? 1 : 0);
+      const receipts = await db.commandReceipt.findMany({
+        where: { idempotencyScope: `service-create:${session.adminId}`, idempotencyKey: key },
+      });
+      expect(receipts).toHaveLength(1);
+      expect(JSON.stringify(receipts)).not.toContain(secretValue);
+
+      // JSON object order is not a change to the user's deployment configuration.
+      const replay = await app.inject({
+        method: 'POST',
+        url: '/api/services',
+        headers,
+        payload: {
+          ...input,
+          configuration: Object.fromEntries(Object.entries(configuration).reverse()),
+          source: Object.fromEntries(Object.entries(input.source).reverse()),
+        },
+      });
+      expect(replay.statusCode, replay.body).toBe(201);
+      expect(replay.json()).toEqual(original);
+
+      const conflicts = [
+        { ...input, name: 'Different name' },
+        { ...input, configuration: { ...configuration, replicas: 2 } },
+        {
+          ...input,
+          configuration: {
+            ...configuration,
+            environment: [{ name: 'API_TOKEN', value: 'changed-secret', secret: true }],
+          },
+        },
+        kind === 'github'
+          ? { ...input, source: source({ branchRef: 'refs/heads/other' }) }
+          : { ...input, configuration: { ...configuration, image: 'nginx:1.28' } },
+        {
+          ...input,
+          configuration: kind === 'github' ? { image: 'nginx:1.27' } : {},
+          source: kind === 'github' ? { kind: 'image' } : source(),
+        },
+      ];
+      for (const payload of conflicts) {
+        const response = await app.inject({
+          method: 'POST',
+          url: '/api/services',
+          headers,
+          payload,
+        });
+        expect(response.statusCode, response.body).toBe(409);
+        expect(response.json()).toMatchObject({ code: 'IDEMPOTENCY_CONFLICT' });
+      }
+      expect(await db.service.count({ where: { environmentId: fixture.environment.id } })).toBe(1);
+      expect(await db.secretReference.count()).toBe(secretsBefore + 1);
+
+      await db.controlPlaneState.update({
+        where: { id: 'control-plane' },
+        data: { restoreLocked: true },
+      });
+      try {
+        const response = await app.inject({
+          method: 'POST',
+          url: '/api/services',
+          headers,
+          payload: input,
+        });
+        expect(response.statusCode, response.body).toBe(503);
+        expect(response.json()).toMatchObject({ code: 'RESTORE_READ_ONLY' });
+      } finally {
+        await db.controlPlaneState.update({
+          where: { id: 'control-plane' },
+          data: { restoreLocked: false },
+        });
+      }
+    },
+  );
+
+  it.each(['image', 'github'] as const)(
+    'replays %s creation across retained master-key rotation and fingerprints new requests with the active key',
+    async (kind) => {
+      const key = randomUUID();
+      const input: CreateServiceInput = {
+        environmentId: fixture.environment.id,
+        name: 'Service before key rotation',
+        slug: 'before-key-rotation',
+        configuration: {
+          ...(kind === 'image' ? { image: 'nginx:1.27' } : {}),
+          environment: [{ name: 'API_TOKEN', value: 'fixture-pin-1234', secret: true }],
+        },
+        source: kind === 'github' ? source() : { kind: 'image' },
+      };
+      const initial = await app.inject({
+        method: 'POST',
+        url: '/api/services',
+        headers: { ...session.headers, 'idempotency-key': key },
+        payload: input,
+      });
+      expect(initial.statusCode, initial.body).toBe(201);
+      const original = initial.json<{ data: ServiceView }>().data;
+      const originalReceipt = await db.commandReceipt.findUniqueOrThrow({
+        where: {
+          idempotencyScope_idempotencyKey: {
+            idempotencyScope: `service-create:${actor.id}`,
+            idempotencyKey: key,
+          },
+        },
+      });
+      const secretsBeforeReplay = await db.secretReference.count();
+      const rotatedKey = randomBytes(32);
+      const rotatedCommands = new ServiceCommands(
+        tasks,
+        new SecretCipher({
+          activeVersion: 2,
+          keys: new Map([
+            [1, masterKey],
+            [2, rotatedKey],
+          ]),
+        }),
+      );
+      expect(await rotatedCommands.create(input, actor, key)).toEqual(original);
+      await expect(
+        rotatedCommands.create(
+          {
+            ...input,
+            configuration: {
+              ...input.configuration,
+              environment: [{ name: 'API_TOKEN', value: 'changed-fixture-pin', secret: true }],
+            },
+          },
+          actor,
+          key,
+        ),
+      ).rejects.toMatchObject({ status: 409, code: 'IDEMPOTENCY_CONFLICT' });
+      expect(await db.service.count({ where: { environmentId: fixture.environment.id } })).toBe(1);
+      expect(await db.secretReference.count()).toBe(secretsBeforeReplay);
+      expect(
+        await db.commandReceipt.findUniqueOrThrow({ where: { id: originalReceipt.id } }),
+      ).toEqual(originalReceipt);
+
+      const nextInput = {
+        ...input,
+        name: 'Service after key rotation',
+        slug: 'after-key-rotation',
+      };
+      const nextKey = randomUUID();
+      const created = await rotatedCommands.create(nextInput, actor, nextKey);
+      const storedSecret = await db.secretReference.findUniqueOrThrow({
+        where: { id: created.configuration.environment[0]!.secretRefId! },
+      });
+      expect(storedSecret.keyVersion).toBe(2);
+      const activeKeyOnly = new ServiceCommands(
+        tasks,
+        new SecretCipher({ activeVersion: 2, keys: new Map([[2, rotatedKey]]) }),
+      );
+      expect(await activeKeyOnly.create(nextInput, actor, nextKey)).toEqual(created);
+      await expect(services.create(nextInput, actor, nextKey)).rejects.toMatchObject({
+        status: 409,
+        code: 'IDEMPOTENCY_CONFLICT',
+      });
+      expect(await db.service.count({ where: { environmentId: fixture.environment.id } })).toBe(2);
+      expect(await db.secretReference.count()).toBe(secretsBeforeReplay + 1);
+    },
+  );
+
+  it('rejects malformed service creation keys and keeps invalid requests retryable', async () => {
+    const input = {
+      environmentId: fixture.environment.id,
+      name: 'Invalid creation key',
+      slug: 'invalid-creation-key',
+      configuration: { image: 'nginx:1.27' },
+    };
+    for (const key of ['', 'short', 'invalid key', 'x'.repeat(129)]) {
+      const response = await app.inject({
+        method: 'POST',
+        url: '/api/services',
+        headers: { ...session.headers, 'idempotency-key': key },
+        payload: input,
+      });
+      expect(response.statusCode, response.body).toBe(422);
+      expect(response.json()).toMatchObject({ code: 'IDEMPOTENCY_KEY_REQUIRED' });
+    }
+    const key = randomUUID();
+    const headers = { ...session.headers, 'idempotency-key': key };
+    const invalid = await app.inject({
+      method: 'POST',
+      url: '/api/services',
+      headers,
+      payload: { ...input, configuration: { image: 'nginx:1.27', replicas: 0 } },
+    });
+    expect(invalid.statusCode).toBe(422);
+    expect(await db.service.count({ where: { environmentId: fixture.environment.id } })).toBe(0);
+    expect(await db.commandReceipt.count({ where: { idempotencyKey: key } })).toBe(0);
+    const corrected = await app.inject({
+      method: 'POST',
+      url: '/api/services',
+      headers,
+      payload: input,
+    });
+    expect(corrected.statusCode, corrected.body).toBe(201);
+  });
+
   it('offers applied V3 HTTP ports for domains while keeping unpublished draft ports separate', async () => {
     const http = { name: 'http', protocol: 'http', containerPort: 80, servicePort: 80 };
     const value = await service({}, { ports: [http] });

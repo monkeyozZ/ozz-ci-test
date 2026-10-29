@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { eventStream, onUnauthorized, request, setCsrfToken } from '../../src/lib/api';
+import { api, eventStream, onUnauthorized, request, setCsrfToken } from '../../src/lib/api';
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
@@ -16,6 +16,60 @@ afterEach(() => {
 });
 
 describe('response body session isolation', () => {
+  it.each([
+    new SyntaxError('Incomplete JSON'),
+    new TypeError('Body stream closed'),
+    new DOMException('Body timed out', 'TimeoutError'),
+  ])('keeps an accepted mutation unresolved when reading its body fails: %s', async (error) => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: true, status: 201, json: () => Promise.reject(error) }),
+    );
+    await expect(
+      api.create('/services', { name: 'accepted-service' }, 'original-key'),
+    ).rejects.toMatchObject({ status: 0, problem: { code: 'RESPONSE_UNCONFIRMED' } });
+  });
+
+  it.each([{}, null])('rejects an incomplete success envelope: %s', async (body) => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: true, status: 201, json: async () => body }),
+    );
+    await expect(
+      api.create('/projects', { name: 'accepted-project' }, 'original-key'),
+    ).rejects.toMatchObject({ status: 0 });
+  });
+
+  it('retains a known rejection status when its problem body is unreadable', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: false,
+        status: 409,
+        json: () => Promise.reject(new TypeError('Body closed')),
+      }),
+    );
+    await expect(api.create('/services', {}, 'original-key')).rejects.toMatchObject({
+      status: 409,
+    });
+  });
+
+  it('still fences a broken success body from an expired session', async () => {
+    setCsrfToken('old-test-session');
+    const body = deferred<unknown>();
+    const json = vi.fn(() =>
+      body.promise.then(() => {
+        throw new TypeError('Body closed');
+      }),
+    );
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 201, json }));
+    const outcome = api.create('/services', {}).catch((error) => error);
+    await vi.waitFor(() => expect(json).toHaveBeenCalled());
+    setCsrfToken(null);
+    body.resolve(null);
+    expect(await outcome).toMatchObject({ name: 'AbortError' });
+  });
+
   it('drops an old successful mutation body after logout and a new login', async () => {
     setCsrfToken('old-test-session');
     const body = deferred<unknown>();

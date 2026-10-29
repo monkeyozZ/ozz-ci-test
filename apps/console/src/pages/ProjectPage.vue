@@ -12,6 +12,10 @@ import {
   Info,
   Check,
   LoaderCircle,
+  Link2,
+  Database,
+  Globe,
+  HardDrive,
 } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,11 +25,14 @@ import MutationError from '@/components/MutationError.vue';
 import StatusBadge from '@/components/StatusBadge.vue';
 import ServiceCollection from '@/components/services/ServiceCollection.vue';
 import { api } from '@/lib/api';
-import { queryClient, useCollection, invalidateCollection } from '@/lib/query';
+import { queryClient, invalidateCollection, useCollection } from '@/lib/query';
+import type { Service } from '@/components/services/types';
+import { serviceLocation } from '@/components/services/presentation';
 import { useDirtyForm } from '@/composables/useDirtyForm';
 import { useUiStore } from '@/stores/ui';
 import { useViewScope } from '@/composables/useViewScope';
 import { useAuthStore } from '@/stores/auth';
+import { useProjectEnvironments } from '@/composables/useProjectEnvironments';
 import { dateTime, idempotencyKey } from '@/lib/utils';
 import type { Project, Environment } from '@/lib/types';
 const isViewActive = useViewScope();
@@ -35,7 +42,9 @@ const ui = useUiStore();
 const auth = useAuthStore();
 const projectId = String(route.params.projectId);
 const tab = computed(() =>
-  route.query.tab === 'settings' || route.query.tab === 'environments'
+  route.query.tab === 'settings' ||
+  route.query.tab === 'environments' ||
+  route.query.tab === 'integrations'
     ? route.query.tab
     : 'overview',
 );
@@ -43,12 +52,48 @@ const project = useQuery({
   queryKey: ['project', projectId],
   queryFn: ({ signal }) => api.get<Project>(`/projects/${projectId}`, signal),
 });
-const environments = useCollection<Environment>('/environments', { projectId });
 const environmentSlug = computed(() =>
-  typeof route.query.environment === 'string' ? route.query.environment : 'production',
+  route.query.environment == null
+    ? 'production'
+    : typeof route.query.environment === 'string'
+      ? route.query.environment
+      : '',
 );
-const currentEnvironment = computed(() =>
-  environments.items.value.find((environment) => environment.slug === environmentSlug.value),
+const environments = useProjectEnvironments(projectId, environmentSlug);
+const currentEnvironment = environments.currentEnvironment;
+const enteringProject = computed(
+  () => route.query.openService === '1' && !route.query.createService,
+);
+const entryServices = useCollection<Service>(
+  '/services',
+  computed(() => ({ projectId, environmentId: currentEnvironment.value?.id ?? '' })),
+  computed(() => enteringProject.value && !!currentEnvironment.value),
+);
+watch(
+  [
+    enteringProject,
+    entryServices.items,
+    entryServices.isPending,
+    entryServices.isFetching,
+    entryServices.error,
+  ],
+  () => {
+    if (
+      !enteringProject.value ||
+      !currentEnvironment.value ||
+      entryServices.isPending.value ||
+      entryServices.isFetching.value ||
+      !isViewActive()
+    )
+      return;
+    const service = entryServices.items.value.find(
+      (item) => item.projectId === projectId && item.environmentId === currentEnvironment.value!.id,
+    );
+    if (service && !entryServices.error.value) void router.replace(serviceLocation(service));
+    else
+      void router.replace({ path: route.path, query: { ...route.query, openService: undefined } });
+  },
+  { immediate: true },
 );
 const projectForm = reactive({ name: '', description: '', revision: 1 });
 const projectGuard = useDirtyForm(projectForm, '项目资料');
@@ -241,7 +286,9 @@ function tabLocation(value: string) {
     <RouterLink to="/projects" class="text-link">项目</RouterLink><ChevronRight /><span>{{
       project.data.value?.name ?? '项目工作区'
     }}</span
-    ><ChevronRight /><span>{{ environmentSlug }}</span>
+    ><template v-if="environments.showEnvironmentControl.value && environmentSlug"
+      ><ChevronRight /><span>{{ environmentSlug }}</span></template
+    >
   </nav>
   <QueryState
     :pending="project.isPending.value"
@@ -251,14 +298,23 @@ function tabLocation(value: string) {
     <template v-if="project.data.value">
       <div class="page-head">
         <div>
-          <h1>{{ project.data.value.name }}</h1>
-          <p>{{ project.data.value.description || '管理当前环境的服务、部署与项目资料。' }}</p>
+          <h1>
+            {{
+              tab === 'integrations'
+                ? '整合'
+                : tab === 'settings' || tab === 'environments'
+                  ? '项目设置'
+                  : project.data.value.name
+            }}
+          </h1>
+          <p v-if="project.data.value.description && tab === 'overview'">
+            {{ project.data.value.description }}
+          </p>
           <div class="mt-3 flex flex-wrap items-center gap-2 text-sm">
             <Layers3 class="size-4 text-muted-foreground" /><RouterLink
               :to="`/clusters/${project.data.value.clusterId}`"
               class="text-link"
               >{{ project.data.value.cluster?.name ?? project.data.value.clusterId }}</RouterLink
-            ><span class="meta">由项目固定继承</span
             ><StatusBadge
               :status="project.data.value.cluster?.connectionStatus"
               :observed-at="project.data.value.cluster?.lastObservedAt"
@@ -266,12 +322,15 @@ function tabLocation(value: string) {
           </div>
         </div>
       </div>
-      <nav class="page-tabs" aria-label="项目页面">
+      <nav
+        v-if="tab === 'settings' || tab === 'environments'"
+        class="page-tabs"
+        aria-label="项目设置页面"
+      >
         <RouterLink
           v-for="item in [
-            { id: 'overview', label: '服务' },
-            { id: 'environments', label: '环境' },
-            { id: 'settings', label: '项目设置' },
+            { id: 'settings', label: '项目资料' },
+            { id: 'environments', label: '环境管理' },
           ]"
           :key="item.id"
           :to="tabLocation(item.id)"
@@ -282,12 +341,12 @@ function tabLocation(value: string) {
       </nav>
       <div v-if="tab === 'overview'" class="stack">
         <QueryState
-          :pending="environments.isPending.value"
+          :pending="environments.isResolving.value"
           :error="environments.error.value"
           @retry="environments.refetch()"
         >
           <template v-if="currentEnvironment">
-            <div class="environment-summary">
+            <div v-if="environments.showEnvironmentControl.value" class="environment-summary">
               <div class="flex flex-wrap items-center gap-3 min-w-0">
                 <span class="environment-icon"><Layers3 class="size-5" /></span>
                 <div class="min-w-0">
@@ -306,7 +365,7 @@ function tabLocation(value: string) {
               :environment-id="currentEnvironment.id"
               :environment-slug="currentEnvironment.slug"
             />
-            <details class="environment-details">
+            <details v-if="environments.showEnvironmentControl.value" class="environment-details">
               <summary>环境资料</summary>
               <dl class="detail-list mt-5">
                 <div>
@@ -348,6 +407,40 @@ function tabLocation(value: string) {
             </div>
           </div>
         </QueryState>
+      </div>
+      <div v-else-if="tab === 'integrations'" class="stack max-w-4xl">
+        <section class="panel">
+          <h2>GitHub 与构建</h2>
+          <p class="muted mt-2 mb-5">
+            配置仓库授权、镜像仓库与构建器，在添加 GitHub 服务时选择使用。
+          </p>
+          <Button as-child variant="outline"
+            ><RouterLink to="/settings?tab=git"><Link2 />管理发布连接</RouterLink></Button
+          >
+        </section>
+        <section>
+          <h2 class="mb-4">项目资源</h2>
+          <div class="project-resource-links">
+            <RouterLink
+              v-for="item in [
+                { to: '/databases', label: '数据库与连接', icon: Database },
+                { to: '/volumes', label: '持久卷与保留数据', icon: HardDrive },
+                { to: '/domains', label: '域名与网络', icon: Globe },
+              ]"
+              :key="item.to"
+              :to="{
+                path: item.to,
+                query: {
+                  projectId,
+                  ...(currentEnvironment ? { environmentId: currentEnvironment.id } : {}),
+                },
+              }"
+              class="project-resource-link"
+              ><component :is="item.icon" class="size-5" /><span>{{ item.label }}</span
+              ><ChevronRight class="size-4 ml-auto"
+            /></RouterLink>
+          </div>
+        </section>
       </div>
       <div v-else-if="tab === 'environments'" class="stack">
         <div class="section-head mb-0">
@@ -496,6 +589,16 @@ function tabLocation(value: string) {
         </p>
       </div>
       <div v-else class="stack max-w-4xl">
+        <div class="notice">
+          <Layers3 />
+          <div>
+            <strong>项目环境</strong>
+            <p>当前项目的应用和数据库按环境组织。需要独立的测试配置时，可以添加环境。</p>
+            <RouterLink :to="tabLocation('environments')" class="text-link mt-2 inline-block"
+              >管理环境</RouterLink
+            >
+          </div>
+        </div>
         <section class="panel">
           <div class="section-head">
             <h2>项目资料</h2>
@@ -582,6 +685,22 @@ function tabLocation(value: string) {
   </QueryState>
 </template>
 <style scoped>
+.project-resource-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.project-resource-link {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+.project-resource-link:hover {
+  background: var(--secondary);
+}
 .environment-icon {
   display: grid;
   place-items: center;

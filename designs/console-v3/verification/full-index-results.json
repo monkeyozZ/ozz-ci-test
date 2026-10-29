@@ -1,0 +1,363 @@
+{
+  "scope": "real index.html with core and management modules; in-memory prototype only",
+  "startedAt": "2026-10-29T13:34:12.904Z",
+  "checks": [
+    {
+      "name": "route rendering",
+      "passed": true,
+      "evidence": [
+        {
+          "route": "#/projects",
+          "title": "项目"
+        },
+        {
+          "route": "#/projects/new",
+          "title": "创建项目"
+        },
+        {
+          "route": "#/servers",
+          "title": "服务器"
+        },
+        {
+          "route": "#/servers?tab=clusters",
+          "title": "服务器"
+        },
+        {
+          "route": "#/server/server-tokyo",
+          "title": "Tokyo-01"
+        },
+        {
+          "route": "#/server/server-tokyo?tab=preflight",
+          "title": "Tokyo-01"
+        },
+        {
+          "route": "#/cluster/cluster-tokyo",
+          "title": "Tokyo-01"
+        },
+        {
+          "route": "#/cluster/cluster-tokyo?tab=connection",
+          "title": "Tokyo-01"
+        },
+        {
+          "route": "#/settings",
+          "title": "Git 与构建集成"
+        },
+        {
+          "route": "#/settings?tab=credentials",
+          "title": "凭证"
+        },
+        {
+          "route": "#/settings?tab=integrations",
+          "title": "Git 与构建集成"
+        },
+        {
+          "route": "#/settings?tab=entry",
+          "title": "域名与入口"
+        },
+        {
+          "route": "#/settings?tab=appearance",
+          "title": "外观"
+        },
+        {
+          "route": "#/settings?tab=platform",
+          "title": "平台状态"
+        },
+        {
+          "route": "#/resources?type=services",
+          "title": "所有资源"
+        },
+        {
+          "route": "#/resources?type=volumes",
+          "title": "所有资源"
+        },
+        {
+          "route": "#/resources?type=databases",
+          "title": "所有资源"
+        },
+        {
+          "route": "#/resources?type=domains",
+          "title": "所有资源"
+        },
+        {
+          "route": "#/volume/vol-postgres",
+          "title": "postgres-data"
+        },
+        {
+          "route": "#/volume/vol-postgres?tab=maintenance",
+          "title": "postgres-data"
+        },
+        {
+          "route": "#/volume/vol-postgres?tab=records",
+          "title": "postgres-data"
+        },
+        {
+          "route": "#/database/db-postgres",
+          "title": "postgres"
+        },
+        {
+          "route": "#/domain/dom-web",
+          "title": "blog.tokyo.ozz.test"
+        },
+        {
+          "route": "#/activity",
+          "title": "活动与任务"
+        },
+        {
+          "route": "#/task/deploy-api-4",
+          "title": "api · 发布 #4"
+        },
+        {
+          "route": "#/project/blog/settings?env=blog-production",
+          "title": "项目设置"
+        },
+        {
+          "route": "#/project/blog/integrations?env=blog-production",
+          "title": "整合"
+        },
+        {
+          "route": "#/planning",
+          "title": "产品规划"
+        },
+        {
+          "route": "#/planning?phase=p2",
+          "title": "产品规划"
+        }
+      ]
+    },
+    {
+      "name": "project creation and five real templates",
+      "passed": true,
+      "evidence": {
+        "automaticProject": "project-u10ix20",
+        "templates": [
+          {
+            "id": "docker",
+            "serviceId": "service-nbzy54i",
+            "templateVersion": "1.0.0",
+            "image": "nginx:1.28.3-alpine3.23",
+            "storageGiB": null,
+            "status": "draft"
+          },
+          {
+            "id": "node-example",
+            "serviceId": "service-82m58hw",
+            "templateVersion": "1.0.0",
+            "image": "node:24.22.1-alpine3.24",
+            "storageGiB": null,
+            "status": "draft"
+          },
+          {
+            "id": "static-example",
+            "serviceId": "service-5knyl1a",
+            "templateVersion": "1.0.0",
+            "image": "nginx:1.28.3-alpine3.23",
+            "storageGiB": null,
+            "status": "draft"
+          },
+          {
+            "id": "postgresql",
+            "serviceId": "service-tv8lqdr",
+            "templateVersion": "1.0.0",
+            "image": "postgres:17.11-bookworm",
+            "storageGiB": 4,
+            "status": "draft"
+          },
+          {
+            "id": "redis",
+            "serviceId": "service-2g4d90d",
+            "templateVersion": "1.0.0",
+            "image": "redis:7.4.11-bookworm",
+            "storageGiB": 1,
+            "status": "draft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "source switching preserves independent drafts",
+      "passed": true,
+      "evidence": {
+        "dockerDraftPreserved": true,
+        "databaseDraftPreserved": true,
+        "arrowAndEnter": true
+      }
+    },
+    {
+      "name": "failed deployment retry and independent draft snapshot",
+      "passed": true,
+      "evidence": {
+        "retryTask": "deploy-bczkmb7",
+        "sameService": "blog-api",
+        "originalFailureKept": true,
+        "resumeDoesNotPublishDraft": true
+      }
+    },
+    {
+      "name": "saved creation preview uses same service and unknown request",
+      "passed": true,
+      "evidence": {
+        "savedBeforeReview": "service-8g553ut",
+        "editReusesService": true,
+        "fixedUnknownRequest": {
+          "key": "service-kbhiftg",
+          "id": "service-kbhiftg"
+        },
+        "unknownConfirmationDoesNotCreateDuplicate": true,
+        "noDeploymentBeforeConfirmation": true
+      }
+    },
+    {
+      "name": "environment file import validates and preserves published snapshot",
+      "passed": true,
+      "evidence": {
+        "duplicateImportBlocked": true,
+        "parsedVariables": 2,
+        "savedAsDraft": true,
+        "variableTypeClearsValue": true,
+        "serviceReferenceProtectsCredential": true
+      }
+    },
+    {
+      "name": "stopped Git service queues commit and resumes original version",
+      "passed": true,
+      "evidence": {
+        "stoppedPushCreatesNoDeployment": true,
+        "pendingCommitPreservedAfterResume": true,
+        "invalidSignatureRejectedWithoutTask": true
+      }
+    },
+    {
+      "name": "project metadata and environment ownership",
+      "passed": true,
+      "evidence": {
+        "renamed": "博客工作区",
+        "environment": "blog-env-2farig6",
+        "inheritedTarget": "cluster-tokyo",
+        "originalServices": 4,
+        "invalidScopeBlocked": true
+      }
+    },
+    {
+      "name": "server registration fingerprint preflight and cluster import",
+      "passed": true,
+      "evidence": {
+        "registeredServer": "server-gfsysze",
+        "preflight": true,
+        "importedCluster": "cluster-lgbvxg3",
+        "existingProjectTargetUnchanged": true,
+        "secretClearedOnBack": true
+      }
+    },
+    {
+      "name": "credential secrets and referenced deletion",
+      "passed": true,
+      "evidence": {
+        "typeChangeClearsSecret": true,
+        "savedStateHasNoSecret": true,
+        "referencedCredentialRetained": true
+      }
+    },
+    {
+      "name": "registry identities and builder field validation",
+      "passed": true,
+      "evidence": {
+        "pushPullSeparate": true,
+        "fixedBuilderIdentityFields": true,
+        "malformedFrontendBlocked": true
+      }
+    },
+    {
+      "name": "volume draft published and observed references",
+      "passed": true,
+      "evidence": {
+        "savedDraftDoesNotFakeMount": true,
+        "publicationUpdatesActual": true,
+        "removalWaitsForPublication": true,
+        "unrelatedObservationUnchanged": true
+      }
+    },
+    {
+      "name": "manual maintenance evidence and operation interlock",
+      "passed": true,
+      "evidence": {
+        "maintenanceTask": "op-d7c5s3g",
+        "record": "record-lrs6gbf",
+        "recordCreatesNoExecutionTask": true,
+        "deploymentBlockedWhileLocked": true,
+        "exitIndependentlyVerified": true
+      }
+    },
+    {
+      "name": "database mapping and shared service resource creation",
+      "passed": true,
+      "evidence": {
+        "databaseMappingIsDraft": true,
+        "newVolumeWaitsForConsumer": "vol-2xw66eo",
+        "domainUsesPublishedPort": 8080,
+        "stagingBeforeProduction": true,
+        "sharedManagementControls": true
+      }
+    },
+    {
+      "name": "domain unbind and service deletion retains data",
+      "passed": true,
+      "evidence": {
+        "domainBindingRemoved": true,
+        "serviceDeleted": true,
+        "independentVolume": "vol-archive",
+        "retainedVolumeReachable": true
+      }
+    },
+    {
+      "name": "task unknown reconciliation and cancellation",
+      "passed": true,
+      "evidence": {
+        "unknownRequiresOriginalReconciliation": "deploy-zc8qg94",
+        "noDuplicateOnReconcile": true,
+        "cancelledTask": "deploy-4oc79it"
+      }
+    },
+    {
+      "name": "planning parameters results and validation boundary",
+      "passed": true,
+      "evidence": {
+        "componentCountFollowsParameters": 2,
+        "independentPlanningRecords": 2,
+        "noRealTaskCreated": true,
+        "independentDataVerification": true
+      }
+    },
+    {
+      "name": "responsive themes logs keyboard and synthetic IME",
+      "passed": true,
+      "evidence": {
+        "widths": [
+          390,
+          1024,
+          1440
+        ],
+        "noPageOverflow": true,
+        "logFilterPauseWrap": true,
+        "themePreservesInput": true,
+        "syntheticCompositionPreventsSubmit": true,
+        "realIME": "not tested"
+      }
+    }
+  ],
+  "errors": [],
+  "network": [],
+  "hashes": {
+    "index.html": "d23af9e8c997fb9fc67f379caa448d7a8567f23837c5d1affc003b14ac0f3db1",
+    "app.js": "5a9f2d7f7d571db24d2a3142feaf77973d7dd98cfc9d45b939a98b5915b77c46",
+    "styles.css": "d25bd1c643439f636e6326b455e96c73d1c5f31c2b64a76bee1b230a7937e6b6",
+    "management.js": "cfb065965b0964278089c0b433ed983cf6bd2d6ededaba20d4bfadcbc76ae560",
+    "management.css": "73b330235658a142625d03cdcc60f6de8a1da40239245ec6dfcae9cc42ec4641"
+  },
+  "limitations": [
+    "No real API, infrastructure, authorization, data backup or restore.",
+    "Synthetic composition events only; no real Chinese IME or screen-reader claim.",
+    "Targeted controls, not all 78 legacy scenarios individually tested."
+  ],
+  "finishedAt": "2026-10-29T13:34:48.094Z",
+  "passed": true
+}

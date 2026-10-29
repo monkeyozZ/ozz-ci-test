@@ -1,0 +1,1868 @@
+{
+  "schema": "ozz.ci-report-draft.v1",
+  "draft": false,
+  "generated_at": "2026-10-29T08:39:42.533649+00:00",
+  "repository": "monkeyozZ/ozz-ci-test",
+  "status": "passed",
+  "first_observed_run": {
+    "actions_url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40834582691",
+    "workflow_name": "S1 control plane",
+    "run_id": 40834582691,
+    "run_number": 1,
+    "run_attempt": 1,
+    "head_sha": "5befe2df60ce3971b980bd14287974e19f9962b5",
+    "head_branch": "main",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-10-29T07:18:25Z",
+    "updated_at": "2026-10-29T07:19:47Z",
+    "job": {
+      "id": 123316268629,
+      "run_id": 40834582691,
+      "run_attempt": 1,
+      "head_sha": "5befe2df60ce3971b980bd14287974e19f9962b5",
+      "name": "verify",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-10-29T07:18:30Z",
+      "completed_at": "2026-10-29T07:19:47Z",
+      "labels": [
+        "ubuntu-24.04-arm"
+      ],
+      "runner_name": "GitHub Actions 1000000968",
+      "runner_group_name": "GitHub Actions",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-29T07:18:30Z",
+          "completed_at": "2026-10-29T07:18:31Z"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-29T07:18:31Z",
+          "completed_at": "2026-10-29T07:18:32Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-29T07:18:32Z",
+          "completed_at": "2026-10-29T07:18:35Z"
+        },
+        {
+          "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-29T07:18:35Z",
+          "completed_at": "2026-10-29T07:18:36Z"
+        },
+        {
+          "name": "Install pinned dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-29T07:18:36Z",
+          "completed_at": "2026-10-29T07:18:55Z"
+        },
+        {
+          "name": "Create isolated random local configuration",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-29T07:18:55Z",
+          "completed_at": "2026-10-29T07:18:55Z"
+        },
+        {
+          "name": "Start PostgreSQL and Redis",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-29T07:18:55Z",
+          "completed_at": "2026-10-29T07:19:03Z"
+        },
+        {
+          "name": "Build, typecheck, lint, format and unit tests",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 8,
+          "started_at": "2026-10-29T07:19:03Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Migrate the empty database",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Generate and verify API contract",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Real PostgreSQL, Redis, security and recovery tests",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 11,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Audit production dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Initialize the isolated browser-test administrator",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 13,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 14,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Browser tests against production assets",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 15,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Save browser evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Stop test infrastructure and preserve volumes until runner disposal",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 32,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:44Z"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34,
+          "started_at": "2026-10-29T07:19:44Z",
+          "completed_at": "2026-10-29T07:19:45Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35,
+          "started_at": "2026-10-29T07:19:45Z",
+          "completed_at": "2026-10-29T07:19:45Z"
+        }
+      ]
+    },
+    "job_duration_seconds": 77,
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/5befe2df60ce3971b980bd14287974e19f9962b5/.github",
+        "start_line": 215,
+        "start_column": null,
+        "end_line": 215,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "raw_details": ""
+      },
+      {
+        "path": "apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+        "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/5befe2df60ce3971b980bd14287974e19f9962b5/apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+        "start_line": 194,
+        "start_column": 91,
+        "end_line": 194,
+        "end_column": 91,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "'document' is not defined              ",
+        "raw_details": ""
+      },
+      {
+        "path": "apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+        "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/5befe2df60ce3971b980bd14287974e19f9962b5/apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+        "start_line": 194,
+        "start_column": 64,
+        "end_line": 194,
+        "end_column": 64,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "'innerWidth' is not defined            ",
+        "raw_details": ""
+      },
+      {
+        "path": "apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+        "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/5befe2df60ce3971b980bd14287974e19f9962b5/apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+        "start_line": 166,
+        "start_column": 48,
+        "end_line": 166,
+        "end_column": 48,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "'_generation' is defined but never used",
+        "raw_details": ""
+      }
+    ],
+    "artifact_count": 0,
+    "failure_diagnosis": "ESLint reported one unused binding and two undefined browser globals in apps/console/tests/local-lab/g-mvp-recovery-https.mjs. The workflow stopped in pnpm check. Database migration, API contract, integration, audit, and browser test steps were skipped.",
+    "check_chain_inference": {
+      "basis": "Pinned package.json defines an && chain, and exact-head GitHub check annotations show lint failures. Full job logs were unavailable through anonymous REST.",
+      "preceding_success_inferred": [
+        "db:generate",
+        "build",
+        "typecheck"
+      ],
+      "failed": "lint",
+      "not_reached_inferred": [
+        "format:check",
+        "test:unit"
+      ]
+    },
+    "job_log_access": {
+      "http_status": 403,
+      "diagnostic_source": "public check annotations",
+      "signed_urls_saved": false,
+      "credentials_extracted": false
+    }
+  },
+  "local_successor": {
+    "commit": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+    "parent": "0f71b3db8c2b87740357da2c89801c486338af95",
+    "tree": "e85befa4fef07bc348d665425d701b284cf1c0cd",
+    "created_at": "2026-10-29T08:25:53.944616+00:00",
+    "changed": [
+      "apps/console/playwright.config.ts",
+      "apps/console/tests/e2e/accessibility.spec.ts",
+      "apps/console/tests/e2e/infrastructure.spec.ts",
+      "apps/console/tests/e2e/interaction.spec.ts"
+    ],
+    "tracked_file_count": 853,
+    "receipt_status": "local-commit-created-not-pushed",
+    "receipt_status_scope": "Historical snapshot when the local commit was created; subsequent push and remote verification are recorded below.",
+    "checks_recorded_by_local_commit_receipt": {
+      "local_checks_sha256": "38c3b53c9cc3ab7f28da12753406e776f99fb1675ae3abdb9a3894653e9400e0",
+      "precommit_receipt_sha256": "04e5ffe0b8fbdbed82de0d7f09ba054df60a4424c834a1845685f63dbfb94956"
+    },
+    "local_checks_reported_by_root": {
+      "four_file_lint_exit_code": 0,
+      "playwright_list_exit_code": 0,
+      "playwright_discovered_tests": 16,
+      "playwright_discovered_files": 5,
+      "local_browser_executed": false,
+      "scope": "Static checks/discovery only; not remote execution counts."
+    },
+    "known_value_scan": {
+      "status": "passed",
+      "candidate_files": 853,
+      "inventories": 5,
+      "inventory_files_read": 73,
+      "known_patterns": 118,
+      "files_with_known_values": 0,
+      "coverage": {
+        "explicitExistingInventoryValuesOnly": true,
+        "unrecoverableProcessMemoryCovered": false,
+        "expiredInMemorySessionAndCsrfValuesCovered": false,
+        "unknownSecretsCovered": false
+      },
+      "secret_values_returned": false
+    },
+    "push": {
+      "status": "succeeded",
+      "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+      "head_confirmed": true,
+      "receipt_evidence_id": "third-push-result",
+      "push_exit_code": 0,
+      "remote_head_verification_exit_code": 0,
+      "verified_remote_head": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+      "force": false,
+      "remote_confirmation": {
+        "run_id": 40842129629,
+        "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+        "event": "push",
+        "branch": "main",
+        "evidence_id": "third-run"
+      }
+    },
+    "remote_run": {
+      "status": "completed",
+      "run_id": 40842129629,
+      "run_attempt": 1,
+      "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+      "conclusion": "success",
+      "actions_url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40842129629",
+      "provenance": "Exact-run/head/attempt public GitHub run, jobs, and check metadata."
+    }
+  },
+  "acceptance_boundary": {
+    "remote_ci_passed": true,
+    "local_checks_are_remote_ci": false,
+    "real_cloud_product_acceptance_claimed": false,
+    "note": "The repository default control-plane CI passed for this exact commit, including build, unit, integration, audit, and browser verification steps. The user-cancelled specialized accessibility test is excluded by the default configuration. This is not product-functionality acceptance on real cloud resources."
+  },
+  "draft_generation": {
+    "scope": "Offline assembly from saved REST bodies and existing local receipts; network monitoring and prior root-selected log diagnosis are recorded separately.",
+    "network_requests": 0,
+    "remote_mutations": 0,
+    "source_mutations": 0,
+    "product_or_test_commands_executed": 0,
+    "docs_published": false,
+    "only_new_private_draft_files_written": true,
+    "previous_report_sha256": "9757f156c764f8da922738a7a3a2bfe93c15494bff1ed44f849e604b4f3a51be"
+  },
+  "evidence": [
+    {
+      "id": "first-run",
+      "path_relative_to_run_directory": "actions-watch-20261029T072149Z-d8422808/20261029T072358Z-run.json",
+      "sha256": "56adb2e18f5a98e4f563cc92ee9feafc8fa3d60777c0bd5203911cf80b771c11",
+      "bytes": 12330,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "first-run-jobs",
+      "path_relative_to_run_directory": "actions-watch-20261029T072149Z-d8422808/20261029T072358Z-jobs.json",
+      "sha256": "79d9c3cab9fd22dcdf38a8631d8989c84d8e9cd3760778c7c8d914e0d014d4fe",
+      "bytes": 4778,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "first-run-check",
+      "path_relative_to_run_directory": "actions-watch-20261029T072149Z-d8422808/20261029T072526Z-check-run-sanitized.txt",
+      "sha256": "ddddeb552ab873e1e26b8fdde55c83747e0acd2e16c6f568e6db503bb31dec59",
+      "bytes": 3060,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "first-run-annotations",
+      "path_relative_to_run_directory": "actions-watch-20261029T072149Z-d8422808/20261029T072526Z-annotations-sanitized.txt",
+      "sha256": "d121033990e27c7e07c7d6cdef67a0681be13afd14159852149ff7888ab9804d",
+      "bytes": 1489,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "first-run-artifacts",
+      "path_relative_to_run_directory": "actions-watch-20261029T072149Z-d8422808/20261029T072616Z-artifacts.json",
+      "sha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c",
+      "bytes": 32,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "first-run-log-access",
+      "path_relative_to_run_directory": "actions-watch-20261029T072149Z-d8422808/20261029T072526Z-job-log-fetch-receipt.json",
+      "sha256": "d99826958b7e99b9e57cf2cdba17bc91345e3785f3c01647407c6f97e8bebca1",
+      "bytes": 140,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "local-commit",
+      "path_relative_to_run_directory": "revision-02/local-commit-receipt.json",
+      "sha256": "045d8f93f686fb67b0529afab726e17f00e3fc364f1756bc005bd0191daa412b",
+      "bytes": 672,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "known-value-scan",
+      "path_relative_to_run_directory": "revision-02/known-secret-scan.json",
+      "sha256": "51fea29f81b0b477a0252f088fa1507a5cfb7131c9432783b56a183c37ebaed9",
+      "bytes": 224154,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "source-manifest",
+      "path_relative_to_run_directory": "revision-02/source-manifest.json",
+      "sha256": "3c3e71f1b144fe73cfa66e932a746433d0e1de50dc66b255523bb09e324538d3",
+      "bytes": 196157,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "second-run",
+      "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-006-run.json",
+      "sha256": "a2fbb034474df0104a6e21f33f4e1c770ac6a33694bf7e1db62bb9b9cbcea169",
+      "bytes": 13762,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "second-run-jobs",
+      "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-006-jobs.json",
+      "sha256": "0dd1d288d1ef5705d7b10756fdfcec9a9a092d90191fba7f14ba0ee9514fe4be",
+      "bytes": 6898,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "second-run-check",
+      "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/diagnostic-001-check-run-raw.json",
+      "sha256": "450c550ebac926b392a9632da81a2903c35028a0cc61e596d99f06a59a1bf579",
+      "bytes": 3814,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "second-run-annotations",
+      "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/diagnostic-001-annotations-raw.json",
+      "sha256": "e03a01bbdb022d50b0a7e58acd187e939f69419e8e6c09298bfd9ac90d028bd6",
+      "bytes": 370,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "second-run-artifacts",
+      "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-006-artifacts.json",
+      "sha256": "fb8a05b9c9a8b393edd2d2885a86044f39f3a1ad224f0bca656885e13c65306b",
+      "bytes": 900,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "second-run-discovery",
+      "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/head-runs-initial.json",
+      "sha256": "0d2e6425c74250075b3a01aa39bd525799d5d24364a8cc2a7ca63ce6b8d59cf4",
+      "bytes": 14712,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "second-run-final-observation",
+      "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-006-receipt.json",
+      "sha256": "f9cb94bf42bbc28cec0afaed75ebde0a60d9f25e3738fd3d5322c4245a418072",
+      "bytes": 6772,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "second-run-diagnostics",
+      "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/diagnostic-001-receipt.json",
+      "sha256": "50790e9a95ff050abe9ab332827d6c023eb9c4430c726580839f1ad8470664bc",
+      "bytes": 1736,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "second-run-selected-job-diagnosis",
+      "path_relative_to_run_directory": "selected-job-log-9c8e218d-823d-43de-ab32-2eb10b106581/diagnosis.json",
+      "sha256": "09fd0c73c06b1d84af3cf63453a1b2c8facf0e9626936c2e66e84b0dafafc766",
+      "bytes": 1479,
+      "kind": "root-produced-sanitized-job-log-diagnosis"
+    },
+    {
+      "id": "third-run",
+      "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/observation-002-run.json",
+      "sha256": "50d1240aff1b69f45b59e090e8b2d1379b406ee4644db8c81504a179a0032366",
+      "bytes": 13644,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "third-run-jobs",
+      "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/observation-002-jobs.json",
+      "sha256": "7db898b059d9906e8613056fde6ec676092bb6d306ba3b8b72cf43c13b825bdf",
+      "bytes": 6898,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "third-run-check",
+      "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/terminal-check-run-raw.json",
+      "sha256": "3cbaa72ce51cd03ad16b891e6afec77f965fa0f9a6fd51f86ce6d0cea39f990d",
+      "bytes": 3814,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "third-run-annotations",
+      "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/terminal-annotations-raw.json",
+      "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d",
+      "bytes": 5,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "third-run-artifacts",
+      "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/terminal-artifacts-raw.json",
+      "sha256": "7ef31d4f5dbdcee629f60928060b59fe4baffb1e1f654b8390e9543fb00c7b00",
+      "bytes": 900,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "third-run-discovery",
+      "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/head-runs-initial.json",
+      "sha256": "5b11b9ea5a1b09a65bd92ef21c7c6ed13274f3e19d2ccc2ee5fe29d23db5bf45",
+      "bytes": 14594,
+      "kind": "exact-public-rest-body"
+    },
+    {
+      "id": "third-run-final-observation",
+      "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/observation-002-receipt.json",
+      "sha256": "348fc153efd6c7d635b0e28a0e1e6909381de61cccc58f92563c6790c4d8756e",
+      "bytes": 6772,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "third-local-commit",
+      "path_relative_to_run_directory": "revision-03/local-commit-receipt.json",
+      "sha256": "8a31509592a2ee72b834b37aad60c63d159a33ca098d4fcb71967280f4ab1b60",
+      "bytes": 878,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "third-source-manifest",
+      "path_relative_to_run_directory": "revision-03/source-manifest.json",
+      "sha256": "71fab885430b4d05647d364ef8564d2cfbbc4b872ab771d598b030e7e46ed24f",
+      "bytes": 196357,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "third-known-value-scan",
+      "path_relative_to_run_directory": "revision-03/known-secret-scan.json",
+      "sha256": "b050b0267a3017a3e63170be36d011ac843184aaf6acb7199efcdabe49d83f09",
+      "bytes": 224154,
+      "kind": "local-receipt"
+    },
+    {
+      "id": "third-push-result",
+      "path_relative_to_run_directory": "revision-03/push-result.json",
+      "sha256": "e1c7f69e6e5ffa4acce5ae88cf6ebf7aff1223983ab2d30e000e996ce53a1bff",
+      "bytes": 663,
+      "kind": "local-receipt"
+    }
+  ],
+  "report_revision": 4,
+  "latest_observed_run": {
+    "actions_url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40842129629",
+    "workflow_name": "S1 control plane",
+    "run_id": 40842129629,
+    "run_number": 3,
+    "run_attempt": 1,
+    "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+    "head_branch": "main",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-29T08:26:20Z",
+    "updated_at": "2026-10-29T08:33:20Z",
+    "job": {
+      "id": 123340757370,
+      "run_id": 40842129629,
+      "run_attempt": 1,
+      "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+      "name": "verify",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-29T08:26:25Z",
+      "completed_at": "2026-10-29T08:33:20Z",
+      "labels": [
+        "ubuntu-24.04-arm"
+      ],
+      "runner_name": "GitHub Actions 1000000970",
+      "runner_group_name": "GitHub Actions",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-29T08:26:26Z",
+          "completed_at": "2026-10-29T08:26:27Z"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-29T08:26:27Z",
+          "completed_at": "2026-10-29T08:26:28Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-29T08:26:28Z",
+          "completed_at": "2026-10-29T08:26:31Z"
+        },
+        {
+          "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-29T08:26:31Z",
+          "completed_at": "2026-10-29T08:26:31Z"
+        },
+        {
+          "name": "Install pinned dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-29T08:26:31Z",
+          "completed_at": "2026-10-29T08:26:54Z"
+        },
+        {
+          "name": "Create isolated random local configuration",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-29T08:26:54Z",
+          "completed_at": "2026-10-29T08:26:54Z"
+        },
+        {
+          "name": "Start PostgreSQL and Redis",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-29T08:26:54Z",
+          "completed_at": "2026-10-29T08:27:03Z"
+        },
+        {
+          "name": "Build, typecheck, lint, format and unit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-29T08:27:03Z",
+          "completed_at": "2026-10-29T08:28:43Z"
+        },
+        {
+          "name": "Migrate the empty database",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-29T08:28:43Z",
+          "completed_at": "2026-10-29T08:28:44Z"
+        },
+        {
+          "name": "Generate and verify API contract",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-29T08:28:44Z",
+          "completed_at": "2026-10-29T08:29:00Z"
+        },
+        {
+          "name": "Real PostgreSQL, Redis, security and recovery tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-29T08:29:00Z",
+          "completed_at": "2026-10-29T08:32:12Z"
+        },
+        {
+          "name": "Audit production dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-29T08:32:12Z",
+          "completed_at": "2026-10-29T08:32:12Z"
+        },
+        {
+          "name": "Initialize the isolated browser-test administrator",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-29T08:32:12Z",
+          "completed_at": "2026-10-29T08:32:13Z"
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-29T08:32:13Z",
+          "completed_at": "2026-10-29T08:32:40Z"
+        },
+        {
+          "name": "Browser tests against production assets",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-29T08:32:40Z",
+          "completed_at": "2026-10-29T08:33:10Z"
+        },
+        {
+          "name": "Save browser evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-29T08:33:10Z",
+          "completed_at": "2026-10-29T08:33:11Z"
+        },
+        {
+          "name": "Stop test infrastructure and preserve volumes until runner disposal",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-29T08:33:11Z",
+          "completed_at": "2026-10-29T08:33:13Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32,
+          "started_at": "2026-10-29T08:33:13Z",
+          "completed_at": "2026-10-29T08:33:17Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-10-29T08:33:17Z",
+          "completed_at": "2026-10-29T08:33:18Z"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34,
+          "started_at": "2026-10-29T08:33:18Z",
+          "completed_at": "2026-10-29T08:33:18Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35,
+          "started_at": "2026-10-29T08:33:18Z",
+          "completed_at": "2026-10-29T08:33:18Z"
+        }
+      ]
+    },
+    "job_duration_seconds": 415,
+    "annotations": [],
+    "annotation_count": 0,
+    "failed_step": null,
+    "failure_diagnosis": null,
+    "artifact_count": 1,
+    "artifact_metadata": [
+      {
+        "id": 12883063851,
+        "name": "console-browser-evidence",
+        "size_in_bytes": 3571,
+        "created_at": "2026-10-29T08:33:11Z",
+        "expires_at": "2026-11-05T08:33:10Z",
+        "expired": false,
+        "digest": "sha256:2cb03ec398d40be9461521d5536a27b3b56d81ec0174b145c46b34453c76cc21",
+        "workflow_run": {
+          "id": 40842129629,
+          "repository_id": 1438048604,
+          "head_repository_id": 1438048604,
+          "head_branch": "main",
+          "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61"
+        }
+      }
+    ],
+    "artifact_digest_scope": "GitHub REST metadata only; artifact archives were not downloaded or hashed locally.",
+    "successful_entry_commands": [
+      "pnpm install --frozen-lockfile",
+      "pnpm dev:setup",
+      "pnpm dev:infra",
+      "pnpm check",
+      "pnpm db:migrate",
+      "pnpm api:generate and git diff --exit-code for generated API contract",
+      "pnpm test:integration",
+      "pnpm audit --prod --audit-level=high",
+      "pnpm admin:init",
+      "Playwright Chromium installation",
+      "service startup/readiness and pnpm test:e2e",
+      "artifact upload",
+      "Docker Compose stop"
+    ],
+    "workflow_source": {
+      "path": ".github/workflows/ci.yaml",
+      "commit": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+      "url": "https://github.com/monkeyozZ/ozz-ci-test/blob/5abe480bd12f4517e6b5beb7e3d7030856450c61/.github/workflows/ci.yaml"
+    },
+    "test_counts": {
+      "node": null,
+      "unit": null,
+      "integration": null,
+      "e2e": null
+    },
+    "test_count_basis": "REST proves successful completion of workflow steps, not exact test counts. No third-run job log or artifact contents were read. Neither previous-run counts nor local Playwright list output are used as this run execution counts.",
+    "job_log_access": {
+      "requested_for_this_run": false,
+      "raw_log_read_by_this_report_author": false,
+      "credentials_read_by_this_report_author": false,
+      "artifact_contents_downloaded_by_this_report_author": false
+    }
+  },
+  "observed_runs": [
+    {
+      "actions_url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40834582691",
+      "workflow_name": "S1 control plane",
+      "run_id": 40834582691,
+      "run_number": 1,
+      "run_attempt": 1,
+      "head_sha": "5befe2df60ce3971b980bd14287974e19f9962b5",
+      "head_branch": "main",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-29T07:18:25Z",
+      "updated_at": "2026-10-29T07:19:47Z",
+      "job": {
+        "id": 123316268629,
+        "run_id": 40834582691,
+        "run_attempt": 1,
+        "head_sha": "5befe2df60ce3971b980bd14287974e19f9962b5",
+        "name": "verify",
+        "status": "completed",
+        "conclusion": "failure",
+        "started_at": "2026-10-29T07:18:30Z",
+        "completed_at": "2026-10-29T07:19:47Z",
+        "labels": [
+          "ubuntu-24.04-arm"
+        ],
+        "runner_name": "GitHub Actions 1000000968",
+        "runner_group_name": "GitHub Actions",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T07:18:30Z",
+            "completed_at": "2026-10-29T07:18:31Z"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T07:18:31Z",
+            "completed_at": "2026-10-29T07:18:32Z"
+          },
+          {
+            "name": "Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T07:18:32Z",
+            "completed_at": "2026-10-29T07:18:35Z"
+          },
+          {
+            "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T07:18:35Z",
+            "completed_at": "2026-10-29T07:18:36Z"
+          },
+          {
+            "name": "Install pinned dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T07:18:36Z",
+            "completed_at": "2026-10-29T07:18:55Z"
+          },
+          {
+            "name": "Create isolated random local configuration",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T07:18:55Z",
+            "completed_at": "2026-10-29T07:18:55Z"
+          },
+          {
+            "name": "Start PostgreSQL and Redis",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T07:18:55Z",
+            "completed_at": "2026-10-29T07:19:03Z"
+          },
+          {
+            "name": "Build, typecheck, lint, format and unit tests",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 8,
+            "started_at": "2026-10-29T07:19:03Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Migrate the empty database",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 9,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Generate and verify API contract",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 10,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Real PostgreSQL, Redis, security and recovery tests",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Audit production dependencies",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 12,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Initialize the isolated browser-test administrator",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 13,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Install Chromium",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 14,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Browser tests against production assets",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 15,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Save browser evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Stop test infrastructure and preserve volumes until runner disposal",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 32,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Post Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:44Z"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 34,
+            "started_at": "2026-10-29T07:19:44Z",
+            "completed_at": "2026-10-29T07:19:45Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 35,
+            "started_at": "2026-10-29T07:19:45Z",
+            "completed_at": "2026-10-29T07:19:45Z"
+          }
+        ]
+      },
+      "job_duration_seconds": 77,
+      "annotations": [
+        {
+          "path": ".github",
+          "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/5befe2df60ce3971b980bd14287974e19f9962b5/.github",
+          "start_line": 215,
+          "start_column": null,
+          "end_line": 215,
+          "end_column": null,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "Process completed with exit code 1.",
+          "raw_details": ""
+        },
+        {
+          "path": "apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+          "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/5befe2df60ce3971b980bd14287974e19f9962b5/apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+          "start_line": 194,
+          "start_column": 91,
+          "end_line": 194,
+          "end_column": 91,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "'document' is not defined              ",
+          "raw_details": ""
+        },
+        {
+          "path": "apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+          "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/5befe2df60ce3971b980bd14287974e19f9962b5/apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+          "start_line": 194,
+          "start_column": 64,
+          "end_line": 194,
+          "end_column": 64,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "'innerWidth' is not defined            ",
+          "raw_details": ""
+        },
+        {
+          "path": "apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+          "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/5befe2df60ce3971b980bd14287974e19f9962b5/apps/console/tests/local-lab/g-mvp-recovery-https.mjs",
+          "start_line": 166,
+          "start_column": 48,
+          "end_line": 166,
+          "end_column": 48,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "'_generation' is defined but never used",
+          "raw_details": ""
+        }
+      ],
+      "artifact_count": 0,
+      "failure_diagnosis": "ESLint reported one unused binding and two undefined browser globals in apps/console/tests/local-lab/g-mvp-recovery-https.mjs. The workflow stopped in pnpm check. Database migration, API contract, integration, audit, and browser test steps were skipped.",
+      "check_chain_inference": {
+        "basis": "Pinned package.json defines an && chain, and exact-head GitHub check annotations show lint failures. Full job logs were unavailable through anonymous REST.",
+        "preceding_success_inferred": [
+          "db:generate",
+          "build",
+          "typecheck"
+        ],
+        "failed": "lint",
+        "not_reached_inferred": [
+          "format:check",
+          "test:unit"
+        ]
+      },
+      "job_log_access": {
+        "http_status": 403,
+        "diagnostic_source": "public check annotations",
+        "signed_urls_saved": false,
+        "credentials_extracted": false
+      }
+    },
+    {
+      "actions_url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40837555726",
+      "workflow_name": "S1 control plane",
+      "run_id": 40837555726,
+      "run_number": 2,
+      "run_attempt": 1,
+      "head_sha": "0f71b3db8c2b87740357da2c89801c486338af95",
+      "head_branch": "main",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-29T07:46:10Z",
+      "updated_at": "2026-10-29T07:55:30Z",
+      "job": {
+        "id": 123325808392,
+        "run_id": 40837555726,
+        "run_attempt": 1,
+        "head_sha": "0f71b3db8c2b87740357da2c89801c486338af95",
+        "name": "verify",
+        "status": "completed",
+        "conclusion": "failure",
+        "started_at": "2026-10-29T07:46:15Z",
+        "completed_at": "2026-10-29T07:55:29Z",
+        "labels": [
+          "ubuntu-24.04-arm"
+        ],
+        "runner_name": "GitHub Actions 1000000969",
+        "runner_group_name": "GitHub Actions",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T07:46:15Z",
+            "completed_at": "2026-10-29T07:46:16Z"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T07:46:16Z",
+            "completed_at": "2026-10-29T07:46:17Z"
+          },
+          {
+            "name": "Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T07:46:17Z",
+            "completed_at": "2026-10-29T07:46:34Z"
+          },
+          {
+            "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T07:46:34Z",
+            "completed_at": "2026-10-29T07:46:37Z"
+          },
+          {
+            "name": "Install pinned dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T07:46:37Z",
+            "completed_at": "2026-10-29T07:47:10Z"
+          },
+          {
+            "name": "Create isolated random local configuration",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T07:47:10Z",
+            "completed_at": "2026-10-29T07:47:11Z"
+          },
+          {
+            "name": "Start PostgreSQL and Redis",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T07:47:11Z",
+            "completed_at": "2026-10-29T07:47:25Z"
+          },
+          {
+            "name": "Build, typecheck, lint, format and unit tests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T07:47:25Z",
+            "completed_at": "2026-10-29T07:49:07Z"
+          },
+          {
+            "name": "Migrate the empty database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T07:49:07Z",
+            "completed_at": "2026-10-29T07:49:09Z"
+          },
+          {
+            "name": "Generate and verify API contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T07:49:09Z",
+            "completed_at": "2026-10-29T07:49:25Z"
+          },
+          {
+            "name": "Real PostgreSQL, Redis, security and recovery tests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T07:49:25Z",
+            "completed_at": "2026-10-29T07:52:45Z"
+          },
+          {
+            "name": "Audit production dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-29T07:52:45Z",
+            "completed_at": "2026-10-29T07:52:45Z"
+          },
+          {
+            "name": "Initialize the isolated browser-test administrator",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-29T07:52:45Z",
+            "completed_at": "2026-10-29T07:52:46Z"
+          },
+          {
+            "name": "Install Chromium",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-29T07:52:46Z",
+            "completed_at": "2026-10-29T07:53:09Z"
+          },
+          {
+            "name": "Browser tests against production assets",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 15,
+            "started_at": "2026-10-29T07:53:09Z",
+            "completed_at": "2026-10-29T07:55:26Z"
+          },
+          {
+            "name": "Save browser evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T07:55:26Z",
+            "completed_at": "2026-10-29T07:55:27Z"
+          },
+          {
+            "name": "Stop test infrastructure and preserve volumes until runner disposal",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-29T07:55:27Z",
+            "completed_at": "2026-10-29T07:55:27Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 32,
+            "started_at": "2026-10-29T07:55:27Z",
+            "completed_at": "2026-10-29T07:55:27Z"
+          },
+          {
+            "name": "Post Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-29T07:55:27Z",
+            "completed_at": "2026-10-29T07:55:27Z"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 34,
+            "started_at": "2026-10-29T07:55:27Z",
+            "completed_at": "2026-10-29T07:55:28Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 35,
+            "started_at": "2026-10-29T07:55:28Z",
+            "completed_at": "2026-10-29T07:55:28Z"
+          }
+        ]
+      },
+      "job_duration_seconds": 554,
+      "annotations": [
+        {
+          "path": ".github",
+          "blob_href": "https://github.com/monkeyozZ/ozz-ci-test/blob/0f71b3db8c2b87740357da2c89801c486338af95/.github",
+          "start_line": 86,
+          "start_column": null,
+          "end_line": 86,
+          "end_column": null,
+          "annotation_level": "failure",
+          "title": "",
+          "message": "Process completed with exit code 1.",
+          "raw_details": ""
+        }
+      ],
+      "annotation_count": 1,
+      "artifact_count": 1,
+      "artifact_metadata": [
+        {
+          "id": 12881651990,
+          "name": "console-browser-evidence",
+          "size_in_bytes": 5266,
+          "created_at": "2026-10-29T07:55:27Z",
+          "expires_at": "2026-11-05T07:55:26Z",
+          "expired": false,
+          "digest": "sha256:37581b966382aa9257293bf9abd9679350747f85c39983ea40bbba079d91ee9b",
+          "workflow_run": {
+            "id": 40837555726,
+            "repository_id": 1438048604,
+            "head_repository_id": 1438048604,
+            "head_branch": "main",
+            "head_sha": "0f71b3db8c2b87740357da2c89801c486338af95"
+          }
+        }
+      ],
+      "artifact_digest_scope": "Digest supplied by GitHub REST metadata; artifact archive was not downloaded or hashed locally.",
+      "failed_step": {
+        "number": 15,
+        "name": "Browser tests against production assets",
+        "started_at": "2026-10-29T07:53:09Z",
+        "completed_at": "2026-10-29T07:55:26Z",
+        "exit_code": 1,
+        "failed_subcommand": "pnpm test:e2e",
+        "failed_test_name": null,
+        "diagnostic_detail_available": true,
+        "test_file": "apps/console/tests/e2e/interaction.spec.ts",
+        "test_line": 144,
+        "failure_line": 155,
+        "failure_code": "locator.click timeout",
+        "timeout_ms": 90000
+      },
+      "failure_diagnosis": "The browser suite ran: 16 tests passed and 1 failed. The interaction test at interaction.spec.ts:144 timed out at line 155 while clicking refresh after server-side logout. The refresh button was initially disabled while loading and subsequently detached. Trace and source support a test synchronization race; the failed page URL was not recorded, so a particular redirect destination remains unverified.",
+      "successful_check_commands": [
+        "pnpm check",
+        "pnpm db:migrate",
+        "pnpm api:generate and generated API contract diff",
+        "pnpm test:integration",
+        "pnpm audit --prod --audit-level=high"
+      ],
+      "test_counts": {
+        "node": null,
+        "unit": {
+          "root": {
+            "filesPassed": 30,
+            "testsPassed": 419
+          },
+          "console": {
+            "filesPassed": 7,
+            "testsPassed": 49
+          }
+        },
+        "integration": {
+          "filesPassed": 16,
+          "testsPassed": 276
+        },
+        "e2e": {
+          "passed": 16,
+          "failed": 1,
+          "total": 17
+        }
+      },
+      "test_count_basis": "Actual selected-job log counts recorded in root-produced diagnosis.json for this exact run/head/job. Node manual-data counts were not supplied. Counts do not apply to either the first run or any future run.",
+      "job_log_access": {
+        "selected_job_log_retrieved_by": "root via an authorized read-only retrieval",
+        "diagnostic_source": "selected-job-log-9c8e218d-823d-43de-ab32-2eb10b106581/diagnosis.json",
+        "raw_log_sha256_reported_by_diagnosis": "69dc3cb560643928d5083ffd2a16ba521b385b86f9f6a0bf037441b50864b8d8",
+        "raw_log_bytes_reported_by_diagnosis": 224563,
+        "raw_log_read_by_this_report_author": false,
+        "raw_log_published": false,
+        "credential_values_published": false,
+        "credentials_read_by_this_report_author": false,
+        "artifact_contents_downloaded_by_this_report_author": false
+      },
+      "diagnostic_confidence": {
+        "source": "root-produced sanitized diagnosis.json derived from the actual job log",
+        "observed_failure": {
+          "testFile": "apps/console/tests/e2e/interaction.spec.ts",
+          "testLine": 144,
+          "failureLine": 155,
+          "operation": "Click refresh projects after server-side logout",
+          "code": "locator.click timeout",
+          "timeoutMs": 90000,
+          "trace": [
+            "Refresh button initially disabled while loading",
+            "Element detached before click could complete"
+          ],
+          "failedPageUrlObserved": false
+        },
+        "supported_interpretation": {
+          "classification": "test synchronization race",
+          "confidence": "Trace and source support request/logout timing competition; the exact destination URL at failure was not recorded.",
+          "plannedCorrection": "Start and gate a real refresh while ready, revoke session, release the real request, assert actual 401 and authentication behavior."
+        },
+        "failed_page_url_observed": false,
+        "specific_early_login_redirect_verified": false
+      }
+    },
+    {
+      "actions_url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40842129629",
+      "workflow_name": "S1 control plane",
+      "run_id": 40842129629,
+      "run_number": 3,
+      "run_attempt": 1,
+      "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+      "head_branch": "main",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-29T08:26:20Z",
+      "updated_at": "2026-10-29T08:33:20Z",
+      "job": {
+        "id": 123340757370,
+        "run_id": 40842129629,
+        "run_attempt": 1,
+        "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+        "name": "verify",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-29T08:26:25Z",
+        "completed_at": "2026-10-29T08:33:20Z",
+        "labels": [
+          "ubuntu-24.04-arm"
+        ],
+        "runner_name": "GitHub Actions 1000000970",
+        "runner_group_name": "GitHub Actions",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T08:26:26Z",
+            "completed_at": "2026-10-29T08:26:27Z"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T08:26:27Z",
+            "completed_at": "2026-10-29T08:26:28Z"
+          },
+          {
+            "name": "Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T08:26:28Z",
+            "completed_at": "2026-10-29T08:26:31Z"
+          },
+          {
+            "name": "Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T08:26:31Z",
+            "completed_at": "2026-10-29T08:26:31Z"
+          },
+          {
+            "name": "Install pinned dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T08:26:31Z",
+            "completed_at": "2026-10-29T08:26:54Z"
+          },
+          {
+            "name": "Create isolated random local configuration",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T08:26:54Z",
+            "completed_at": "2026-10-29T08:26:54Z"
+          },
+          {
+            "name": "Start PostgreSQL and Redis",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T08:26:54Z",
+            "completed_at": "2026-10-29T08:27:03Z"
+          },
+          {
+            "name": "Build, typecheck, lint, format and unit tests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T08:27:03Z",
+            "completed_at": "2026-10-29T08:28:43Z"
+          },
+          {
+            "name": "Migrate the empty database",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T08:28:43Z",
+            "completed_at": "2026-10-29T08:28:44Z"
+          },
+          {
+            "name": "Generate and verify API contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T08:28:44Z",
+            "completed_at": "2026-10-29T08:29:00Z"
+          },
+          {
+            "name": "Real PostgreSQL, Redis, security and recovery tests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T08:29:00Z",
+            "completed_at": "2026-10-29T08:32:12Z"
+          },
+          {
+            "name": "Audit production dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-29T08:32:12Z",
+            "completed_at": "2026-10-29T08:32:12Z"
+          },
+          {
+            "name": "Initialize the isolated browser-test administrator",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-29T08:32:12Z",
+            "completed_at": "2026-10-29T08:32:13Z"
+          },
+          {
+            "name": "Install Chromium",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-29T08:32:13Z",
+            "completed_at": "2026-10-29T08:32:40Z"
+          },
+          {
+            "name": "Browser tests against production assets",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-29T08:32:40Z",
+            "completed_at": "2026-10-29T08:33:10Z"
+          },
+          {
+            "name": "Save browser evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T08:33:10Z",
+            "completed_at": "2026-10-29T08:33:11Z"
+          },
+          {
+            "name": "Stop test infrastructure and preserve volumes until runner disposal",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-29T08:33:11Z",
+            "completed_at": "2026-10-29T08:33:13Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32,
+            "started_at": "2026-10-29T08:33:13Z",
+            "completed_at": "2026-10-29T08:33:17Z"
+          },
+          {
+            "name": "Post Run pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-29T08:33:17Z",
+            "completed_at": "2026-10-29T08:33:18Z"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 34,
+            "started_at": "2026-10-29T08:33:18Z",
+            "completed_at": "2026-10-29T08:33:18Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 35,
+            "started_at": "2026-10-29T08:33:18Z",
+            "completed_at": "2026-10-29T08:33:18Z"
+          }
+        ]
+      },
+      "job_duration_seconds": 415,
+      "annotations": [],
+      "annotation_count": 0,
+      "failed_step": null,
+      "failure_diagnosis": null,
+      "artifact_count": 1,
+      "artifact_metadata": [
+        {
+          "id": 12883063851,
+          "name": "console-browser-evidence",
+          "size_in_bytes": 3571,
+          "created_at": "2026-10-29T08:33:11Z",
+          "expires_at": "2026-11-05T08:33:10Z",
+          "expired": false,
+          "digest": "sha256:2cb03ec398d40be9461521d5536a27b3b56d81ec0174b145c46b34453c76cc21",
+          "workflow_run": {
+            "id": 40842129629,
+            "repository_id": 1438048604,
+            "head_repository_id": 1438048604,
+            "head_branch": "main",
+            "head_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61"
+          }
+        }
+      ],
+      "artifact_digest_scope": "GitHub REST metadata only; artifact archives were not downloaded or hashed locally.",
+      "successful_entry_commands": [
+        "pnpm install --frozen-lockfile",
+        "pnpm dev:setup",
+        "pnpm dev:infra",
+        "pnpm check",
+        "pnpm db:migrate",
+        "pnpm api:generate and git diff --exit-code for generated API contract",
+        "pnpm test:integration",
+        "pnpm audit --prod --audit-level=high",
+        "pnpm admin:init",
+        "Playwright Chromium installation",
+        "service startup/readiness and pnpm test:e2e",
+        "artifact upload",
+        "Docker Compose stop"
+      ],
+      "workflow_source": {
+        "path": ".github/workflows/ci.yaml",
+        "commit": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+        "url": "https://github.com/monkeyozZ/ozz-ci-test/blob/5abe480bd12f4517e6b5beb7e3d7030856450c61/.github/workflows/ci.yaml"
+      },
+      "test_counts": {
+        "node": null,
+        "unit": null,
+        "integration": null,
+        "e2e": null
+      },
+      "test_count_basis": "REST proves successful completion of workflow steps, not exact test counts. No third-run job log or artifact contents were read. Neither previous-run counts nor local Playwright list output are used as this run execution counts.",
+      "job_log_access": {
+        "requested_for_this_run": false,
+        "raw_log_read_by_this_report_author": false,
+        "credentials_read_by_this_report_author": false,
+        "artifact_contents_downloaded_by_this_report_author": false
+      }
+    }
+  ],
+  "test_counts": {
+    "node": null,
+    "unit": null,
+    "integration": null,
+    "e2e": null
+  },
+  "resolved_history": [
+    {
+      "kind": "approval-service",
+      "previous_status": "blocked-on-approval-service",
+      "status": "resolved",
+      "historical_event": {
+        "status": "not-executed",
+        "blocker": "blocked-on-approval-service",
+        "provenance": {
+          "source": "parent-agent task instruction",
+          "source_agent": "/root",
+          "reported_status": "blocked-on-approval-service",
+          "reported_push_executed": false,
+          "reported_failure": "The managed sandbox denied network access. The requested escalated push was not executed because automatic approval review returned HTTP 404: 不支持codex-auto-review.",
+          "reported_user_follow_up": "The parent agent asked the user to adjust permissions or repair the approval service.",
+          "independently_network_checked_for_this_draft": false
+        }
+      },
+      "resolution": "The user adjusted authorization; a subsequent authorized push succeeded and the exact-head push-triggered second workflow run was observed.",
+      "push_result_reported_by_parent": {
+        "tool_session_id": 54301,
+        "exit_code": 0,
+        "fast_forward": "main 5befe2d..0f71b3d"
+      },
+      "resolution_evidence_id": "second-run",
+      "service_internal_repair_verified": false
+    }
+  ],
+  "monitoring": {
+    "scope": "Third workflow run 40842129629, exact head 5abe480bd12f4517e6b5beb7e3d7030856450c61, attempt 1; public REST metadata only.",
+    "public_rest_requests": 8,
+    "remote_mutations": 0,
+    "workflow_reruns_requested": 0,
+    "credentials_read": false,
+    "artifact_contents_downloaded": false,
+    "observation_receipts": [
+      {
+        "id": "third-observation-001",
+        "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/observation-001-receipt.json",
+        "sha256": "49c316c96251d44d974f70df6385409dd387b9b01d2940d7448f0072743c4812",
+        "bytes": 6096,
+        "kind": "local-receipt"
+      },
+      {
+        "id": "third-observation-002",
+        "path_relative_to_run_directory": "actions-watch-revision-03-20261029T082828Z-ac9f4394/observation-002-receipt.json",
+        "sha256": "348fc153efd6c7d635b0e28a0e1e6909381de61cccc58f92563c6790c4d8756e",
+        "bytes": 6772,
+        "kind": "local-receipt"
+      }
+    ]
+  },
+  "counts_apply_only_to_run_id": 40842129629,
+  "post_monitoring_diagnostics": {
+    "recorded_at": "2026-10-29T08:13:23.733154+00:00",
+    "run_id": 40837555726,
+    "head_sha": "0f71b3db8c2b87740357da2c89801c486338af95",
+    "job_id": 123325808392,
+    "diagnosis_evidence_id": "second-run-selected-job-diagnosis",
+    "source_log_digest_scope": "The source log hash and byte count are reported by diagnosis.json; this report author did not read or independently hash the raw log.",
+    "new_network_requests_by_report_author": 0
+  },
+  "follow_up": {
+    "status": "third-run-completed-successfully",
+    "correction_commit_sha": "5abe480bd12f4517e6b5beb7e3d7030856450c61",
+    "run_id": 40842129629,
+    "remaining_ci_execution_required": false,
+    "exact_third_run_test_counts_available": false
+  },
+  "local_successor_history": [
+    {
+      "commit": "0f71b3db8c2b87740357da2c89801c486338af95",
+      "parent": "5befe2df60ce3971b980bd14287974e19f9962b5",
+      "tree": "94de6a910a50fe717a7de44edcfa821e0af31f99",
+      "created_at": "2026-10-29T07:35:47.929048+00:00",
+      "changed": [
+        "apps/console/tests/local-lab/g-mvp-recovery-https.mjs"
+      ],
+      "receipt_status": "local-commit-created-not-pushed",
+      "checks_recorded_by_local_commit_receipt": {
+        "repositoryLint": "passed",
+        "repositoryFormat": "passed",
+        "scriptSyntax": "passed",
+        "realRecoveryProbeExecuted": false
+      },
+      "known_value_scan": {
+        "status": "passed",
+        "candidate_files": 853,
+        "inventories": 5,
+        "inventory_files_read": 73,
+        "known_patterns": 118,
+        "files_with_known_values": 0,
+        "coverage": {
+          "explicitExistingInventoryValuesOnly": true,
+          "unrecoverableProcessMemoryCovered": false,
+          "expiredInMemorySessionAndCsrfValuesCovered": false,
+          "unknownSecretsCovered": false
+        },
+        "secret_values_returned": false
+      },
+      "push": {
+        "status": "succeeded",
+        "head_sha": "0f71b3db8c2b87740357da2c89801c486338af95",
+        "head_confirmed": true,
+        "parent_report": {
+          "source_agent": "/root",
+          "tool_session_id": 54301,
+          "exit_code": 0,
+          "fast_forward": "main 5befe2d..0f71b3d"
+        },
+        "remote_confirmation": {
+          "run_id": 40837555726,
+          "head_sha": "0f71b3db8c2b87740357da2c89801c486338af95",
+          "event": "push",
+          "branch": "main",
+          "evidence_id": "second-run"
+        }
+      },
+      "remote_run": {
+        "status": "completed",
+        "run_id": 40837555726,
+        "run_attempt": 1,
+        "head_sha": "0f71b3db8c2b87740357da2c89801c486338af95",
+        "conclusion": "failure",
+        "actions_url": "https://github.com/monkeyozZ/ozz-ci-test/actions/runs/40837555726",
+        "provenance": "Exact-head public GitHub REST run and job metadata."
+      },
+      "receipt_status_scope": "Historical snapshot at local commit creation; current remote state is recorded by push and remote_run below."
+    }
+  ],
+  "monitoring_history": [
+    {
+      "scope": "Second workflow run 40837555726, exact head 0f71b3db8c2b87740357da2c89801c486338af95, attempt 1; public REST metadata only.",
+      "public_rest_requests": 16,
+      "remote_mutations": 0,
+      "workflow_reruns_requested": 0,
+      "credentials_read": false,
+      "artifact_contents_downloaded": false,
+      "observation_receipts": [
+        {
+          "id": "second-observation-001",
+          "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-001-receipt.json",
+          "sha256": "b5b8faa84faf5a545da18228f6b535b524ccbad26437b50da14ac7b690476290",
+          "bytes": 6096,
+          "kind": "local-receipt"
+        },
+        {
+          "id": "second-observation-002",
+          "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-002-receipt.json",
+          "sha256": "fe3c0a13caace6c54ee4c9485703d153881d953fc87577860adda0f0be02ed2d",
+          "bytes": 6096,
+          "kind": "local-receipt"
+        },
+        {
+          "id": "second-observation-003",
+          "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-003-receipt.json",
+          "sha256": "bac8418f50a9bcb317fb1341cdd663aa803218777d613b9179a59269d8ecee5a",
+          "bytes": 6096,
+          "kind": "local-receipt"
+        },
+        {
+          "id": "second-observation-004",
+          "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-004-receipt.json",
+          "sha256": "f79213627a899cf403058db332d87fafaff58a1dd46162385b4b97c50d3fdd33",
+          "bytes": 6268,
+          "kind": "local-receipt"
+        },
+        {
+          "id": "second-observation-005",
+          "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-005-receipt.json",
+          "sha256": "0ed643dc60cfd52248a5cd1f1a44bcd05eb8a311afdbf604efb7584325667277",
+          "bytes": 6311,
+          "kind": "local-receipt"
+        },
+        {
+          "id": "second-observation-006",
+          "path_relative_to_run_directory": "actions-watch-revision-02-20261029T074803Z-be5d8035/observation-006-receipt.json",
+          "sha256": "f9cb94bf42bbc28cec0afaed75ebde0a60d9f25e3738fd3d5322c4245a418072",
+          "bytes": 6772,
+          "kind": "local-receipt"
+        }
+      ]
+    }
+  ],
+  "publication": {
+    "externalFinalValidation": ".local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json"
+  }
+}

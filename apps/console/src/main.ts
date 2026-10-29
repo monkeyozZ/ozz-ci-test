@@ -5,6 +5,7 @@ import { queryClient } from '@/lib/query';
 import { onUnauthorized } from '@/lib/api';
 import { useAuthStore } from '@/stores/auth';
 import { hasUnsavedChanges } from '@/composables/useDirtyForm';
+import { creationNavigationLocked } from '@/composables/useCreationDialogState';
 import { router } from './router';
 import App from './App.vue';
 import './styles.css';
@@ -21,7 +22,7 @@ onUnauthorized(() => {
   void router.replace({ name: 'login', query: { returnTo, expired: '1' } });
 });
 window.addEventListener('beforeunload', (event) => {
-  if (hasUnsavedChanges()) {
+  if (hasUnsavedChanges() || creationNavigationLocked.value) {
     event.preventDefault();
     event.returnValue = '';
   }

@@ -1,5 +1,5 @@
 import type { Database, Template, TemplateId, Volume } from '../../src/components/storage/types';
-import type { Service, DeploymentDetail } from '../../src/components/services/types';
+import type { Service, DeploymentDetail, Configuration } from '../../src/components/services/types';
 
 /** Controlled interface data only. These identities never target a real cluster. */
 export const s5Ids = {
@@ -272,6 +272,8 @@ export function makeTemplate(id: TemplateId = 'postgresql'): Template {
   };
 }
 export type S5Service = Service & {
+  source: { kind: 'image' };
+  configuration: Configuration;
   controller: { kind: 'Deployment' | 'StatefulSet'; strategy: string };
   template: { id: string; version: string } | null;
   databaseInstanceId: string | null;
@@ -298,6 +300,7 @@ export function makeService(overrides: Partial<S5Service> = {}): S5Service {
     slug: 'application-fixture',
     description: '受控界面验证，未连接真实基础设施。',
     kind: 'application',
+    source: { kind: 'image' },
     projectId: s5Ids.project,
     environmentId: s5Ids.environment,
     clusterId: s5Ids.cluster,
@@ -317,6 +320,7 @@ export function makeService(overrides: Partial<S5Service> = {}): S5Service {
       deploymentId: '52000000-0000-4000-8000-000000000001',
       configRevision: 3,
       configuration,
+      source: { kind: 'image' },
       image: null,
       appliedAt: timestamp(),
     },
@@ -337,7 +341,10 @@ export function makeService(overrides: Partial<S5Service> = {}): S5Service {
   };
 }
 
-export function makeDeployment(overrides: Partial<DeploymentDetail> = {}): DeploymentDetail {
+type S5Deployment = Omit<DeploymentDetail, 'snapshot'> & {
+  snapshot: Extract<DeploymentDetail['snapshot'], { version: 1 | 2 }>;
+};
+export function makeDeployment(overrides: Partial<S5Deployment> = {}): S5Deployment {
   const service = makeService();
   const volume = makeVolume();
   const database = makeDatabase();
@@ -361,6 +368,13 @@ export function makeDeployment(overrides: Partial<DeploymentDetail> = {}): Deplo
     serviceId: s5Ids.service,
     configRevision: 3,
     mutationRevision: 1,
+    sourceRevisionId: null,
+    reuseArtifactId: null,
+    artifactId: null,
+    initiatorKind: 'admin',
+    webhookDeliveryId: null,
+    webhookTargetId: null,
+    build: null,
     snapshot: {
       version: 2,
       serviceId: service.id,

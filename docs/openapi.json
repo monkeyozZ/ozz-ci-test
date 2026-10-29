@@ -11,9 +11,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "health"
-        ]
+        "tags": ["health"]
       }
     },
     "/api/health/ready": {
@@ -26,9 +24,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "health"
-        ]
+        "tags": ["health"]
       }
     },
     "/api/integrations/github": {
@@ -86,9 +82,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       },
       "post": {
         "description": "只保存PAT引用，不注册Webhook",
@@ -122,9 +116,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/github/{id}": {
@@ -160,9 +152,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       },
       "patch": {
         "operationId": "updateGithubConnection",
@@ -206,9 +196,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/github/{id}/verify": {
@@ -254,9 +242,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/github/{id}/repositories": {
@@ -301,9 +287,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/github/{id}/repositories/{repositoryId}/branches": {
@@ -357,9 +341,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/github/{id}/repositories/{repositoryId}/webhook": {
@@ -431,9 +413,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/registries": {
@@ -491,9 +471,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       },
       "post": {
         "operationId": "createRegistryConnection",
@@ -526,9 +504,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/registries/{id}": {
@@ -564,9 +540,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       },
       "patch": {
         "operationId": "updateRegistryConnection",
@@ -610,9 +584,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/registries/{id}/verify": {
@@ -675,9 +647,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/builders": {
@@ -735,9 +705,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       },
       "post": {
         "operationId": "createBuilder",
@@ -770,9 +738,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/builders/{id}": {
@@ -808,9 +774,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       },
       "patch": {
         "operationId": "updateBuilder",
@@ -854,9 +818,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/integrations/builders/{id}/verify": {
@@ -902,9 +864,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "integrations"
-        ]
+        "tags": ["integrations"]
       }
     },
     "/api/services/{id}/git-source": {
@@ -940,9 +900,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       },
       "put": {
         "operationId": "updateServiceGitSource",
@@ -986,9 +944,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       }
     },
     "/api/services/{id}/git-source/policy": {
@@ -1034,9 +990,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       }
     },
     "/api/services/{id}/git-source/preview": {
@@ -1082,9 +1036,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       }
     },
     "/api/services/{id}/pending-commits": {
@@ -1152,9 +1104,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       }
     },
     "/api/webhook-deliveries": {
@@ -1221,9 +1171,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       }
     },
     "/api/webhook-deliveries/{id}": {
@@ -1259,9 +1207,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       }
     },
     "/api/webhook-deliveries/{id}/targets": {
@@ -1329,9 +1275,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       }
     },
     "/api/webhook-rejections": {
@@ -1398,9 +1342,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "git"
-        ]
+        "tags": ["git"]
       }
     },
     "/api/webhooks/github/{repositoryId}/{callbackId}": {
@@ -1486,9 +1428,7 @@
           }
         },
         "summary": "",
-        "tags": [
-          "webhooks"
-        ]
+        "tags": ["webhooks"]
       }
     },
     "/api/services": {
@@ -1585,26 +1525,16 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       },
       "post": {
         "operationId": "createService",
         "parameters": [
           {
             "name": "idempotency-key",
-            "required": true,
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Idempotency-Key",
-            "in": "header",
-            "description": "模板创建必填；重复请求返回原创建结果",
             "required": false,
+            "in": "header",
+            "description": "模板创建必填；镜像和 Git 创建可使用同一键重试，重复请求返回原创建结果",
             "schema": {
               "type": "string"
             }
@@ -1650,9 +1580,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/parse-env": {
@@ -1699,9 +1627,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/{id}": {
@@ -1749,9 +1675,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       },
       "patch": {
         "operationId": "updateService",
@@ -1807,9 +1731,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       },
       "delete": {
         "operationId": "deleteService",
@@ -1881,9 +1803,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/{id}/deployments": {
@@ -1957,9 +1877,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/{id}/restart": {
@@ -2033,9 +1951,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/{id}/stop": {
@@ -2109,9 +2025,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/{id}/resume": {
@@ -2185,9 +2099,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/{id}/pods": {
@@ -2235,9 +2147,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/{id}/metrics": {
@@ -2285,9 +2195,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/services/{id}/logs": {
@@ -2399,9 +2307,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "services"
-        ]
+        "tags": ["services"]
       }
     },
     "/api/deployments": {
@@ -2482,13 +2388,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": [
-                "queued",
-                "running",
-                "succeeded",
-                "failed",
-                "cancelled"
-              ]
+              "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
             }
           },
           {
@@ -2524,9 +2424,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "deployments"
-        ]
+        "tags": ["deployments"]
       }
     },
     "/api/deployments/{id}": {
@@ -2568,9 +2466,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "deployments"
-        ]
+        "tags": ["deployments"]
       }
     },
     "/api/deployments/{id}/logs": {
@@ -2636,9 +2532,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "deployments"
-        ]
+        "tags": ["deployments"]
       }
     },
     "/api/deployments/{id}/build-logs": {
@@ -2721,9 +2615,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "deployments"
-        ]
+        "tags": ["deployments"]
       }
     },
     "/api/deployments/{id}/cancel": {
@@ -2765,9 +2657,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "deployments"
-        ]
+        "tags": ["deployments"]
       }
     },
     "/api/deployments/{id}/retry": {
@@ -2835,9 +2725,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "deployments"
-        ]
+        "tags": ["deployments"]
       }
     },
     "/api/platform-settings": {
@@ -2874,9 +2762,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       },
       "patch": {
         "operationId": "updatePlatformSettings",
@@ -2921,9 +2807,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/clusters/{id}/networking": {
@@ -2971,9 +2855,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       },
       "patch": {
         "operationId": "updateClusterNetworking",
@@ -3029,9 +2911,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/clusters/{id}/networking/check": {
@@ -3105,9 +2985,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/clusters/{id}/networking/install-cert-manager": {
@@ -3181,9 +3059,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/services/{id}/networking": {
@@ -3231,9 +3107,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/services/{id}/domains": {
@@ -3307,9 +3181,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/domains": {
@@ -3414,9 +3286,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/domains/{id}": {
@@ -3464,9 +3334,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       },
       "delete": {
         "operationId": "unbindDomain",
@@ -3538,9 +3406,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/domains/{id}/sync": {
@@ -3614,9 +3480,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/domains/{id}/production": {
@@ -3690,9 +3554,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/domains/{id}/reconcile": {
@@ -3766,9 +3628,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "networking"
-        ]
+        "tags": ["networking"]
       }
     },
     "/api/clusters/{id}/storage": {
@@ -3816,9 +3676,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/volumes": {
@@ -3932,9 +3790,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       },
       "post": {
         "operationId": "createVolume",
@@ -3996,9 +3852,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/volumes/{id}": {
@@ -4046,9 +3900,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       },
       "delete": {
         "operationId": "destroyVolume",
@@ -4120,9 +3972,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/volumes/{id}/sync": {
@@ -4196,9 +4046,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/volumes/{id}/deletion-preview": {
@@ -4256,9 +4104,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/volumes/{id}/maintenance/enter": {
@@ -4332,9 +4178,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/volumes/{id}/maintenance/exit": {
@@ -4408,9 +4252,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/services/{id}/volume-mounts": {
@@ -4458,9 +4300,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       },
       "post": {
         "operationId": "saveServiceVolumeMount",
@@ -4516,9 +4356,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/services/{id}/volume-mounts/{mountId}": {
@@ -4585,9 +4423,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/volumes/{id}/manual-data-records": {
@@ -4633,10 +4469,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": [
-                "backup",
-                "restore"
-              ]
+              "enum": ["backup", "restore"]
             }
           }
         ],
@@ -4670,9 +4503,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       },
       "post": {
         "operationId": "createManualDataRecord",
@@ -4728,9 +4559,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "storage"
-        ]
+        "tags": ["storage"]
       }
     },
     "/api/databases": {
@@ -4836,9 +4665,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "databases"
-        ]
+        "tags": ["databases"]
       }
     },
     "/api/databases/{id}": {
@@ -4886,9 +4713,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "databases"
-        ]
+        "tags": ["databases"]
       }
     },
     "/api/services/{id}/database": {
@@ -4936,9 +4761,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "databases"
-        ]
+        "tags": ["databases"]
       }
     },
     "/api/services/{id}/database-bindings": {
@@ -4986,9 +4809,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "databases"
-        ]
+        "tags": ["databases"]
       },
       "post": {
         "operationId": "saveServiceDatabaseBinding",
@@ -5044,9 +4865,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "databases"
-        ]
+        "tags": ["databases"]
       }
     },
     "/api/services/{id}/database-bindings/preview": {
@@ -5104,9 +4923,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "databases"
-        ]
+        "tags": ["databases"]
       }
     },
     "/api/services/{id}/database-bindings/{bindingId}": {
@@ -5173,9 +4990,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "databases"
-        ]
+        "tags": ["databases"]
       }
     },
     "/api/services/{id}/deletion-preview": {
@@ -5233,9 +5048,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "databases"
-        ]
+        "tags": ["databases"]
       }
     },
     "/api/templates": {
@@ -5280,10 +5093,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": [
-                "application",
-                "database"
-              ]
+              "enum": ["application", "database"]
             }
           }
         ],
@@ -5317,9 +5127,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "templates"
-        ]
+        "tags": ["templates"]
       }
     },
     "/api/templates/{id}": {
@@ -5332,13 +5140,7 @@
             "in": "path",
             "schema": {
               "type": "string",
-              "enum": [
-                "docker",
-                "node-example",
-                "static-example",
-                "postgresql",
-                "redis"
-              ]
+              "enum": ["docker", "node-example", "static-example", "postgresql", "redis"]
             }
           },
           {
@@ -5381,9 +5183,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "templates"
-        ]
+        "tags": ["templates"]
       }
     },
     "/api/templates/{id}/preview": {
@@ -5397,13 +5197,7 @@
             "in": "path",
             "schema": {
               "type": "string",
-              "enum": [
-                "docker",
-                "node-example",
-                "static-example",
-                "postgresql",
-                "redis"
-              ]
+              "enum": ["docker", "node-example", "static-example", "postgresql", "redis"]
             }
           }
         ],
@@ -5447,9 +5241,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "templates"
-        ]
+        "tags": ["templates"]
       }
     },
     "/api/auth/login": {
@@ -5479,9 +5271,7 @@
           }
         },
         "summary": "管理员登录",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       }
     },
     "/api/auth/me": {
@@ -5506,9 +5296,7 @@
           }
         ],
         "summary": "当前管理员与会话校验",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       }
     },
     "/api/auth/logout": {
@@ -5526,9 +5314,7 @@
           }
         ],
         "summary": "撤销当前会话",
-        "tags": [
-          "auth"
-        ]
+        "tags": ["auth"]
       }
     },
     "/api/projects": {
@@ -5600,13 +5386,21 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       },
       "post": {
         "operationId": "createProject",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "idempotency-key",
+            "required": false,
+            "in": "header",
+            "description": "重试同一份创建请求时保留此键，返回原项目和默认环境的创建结果",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -5631,6 +5425,9 @@
           "401": {
             "description": "需要有效的管理员会话"
           },
+          "409": {
+            "description": "标识已被使用或幂等键对应另一份创建请求"
+          },
           "422": {
             "description": "输入校验失败，响应为 application/problem+json"
           }
@@ -5641,9 +5438,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       }
     },
     "/api/projects/{id}": {
@@ -5685,9 +5480,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       },
       "patch": {
         "operationId": "updateProject",
@@ -5740,9 +5533,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       },
       "delete": {
         "operationId": "deleteProject",
@@ -5789,9 +5580,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "projects"
-        ]
+        "tags": ["projects"]
       }
     },
     "/api/environments": {
@@ -5863,9 +5652,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "environments"
-        ]
+        "tags": ["environments"]
       },
       "post": {
         "operationId": "createEnvironment",
@@ -5904,9 +5691,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "environments"
-        ]
+        "tags": ["environments"]
       }
     },
     "/api/environments/{id}": {
@@ -5948,9 +5733,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "environments"
-        ]
+        "tags": ["environments"]
       },
       "patch": {
         "operationId": "updateEnvironment",
@@ -6003,9 +5786,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "environments"
-        ]
+        "tags": ["environments"]
       },
       "delete": {
         "operationId": "deleteEnvironment",
@@ -6052,9 +5833,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "environments"
-        ]
+        "tags": ["environments"]
       }
     },
     "/api/servers/{id}/discover-host-key": {
@@ -6114,9 +5893,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       }
     },
     "/api/servers/{id}/trust-host-key": {
@@ -6168,9 +5945,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       }
     },
     "/api/servers/{id}/preflight": {
@@ -6230,9 +6005,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       }
     },
     "/api/servers/{id}/initialize": {
@@ -6292,9 +6065,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       }
     },
     "/api/servers/{id}/nodes": {
@@ -6368,9 +6139,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       }
     },
     "/api/servers": {
@@ -6434,9 +6203,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       },
       "post": {
         "operationId": "createServer",
@@ -6475,9 +6242,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       }
     },
     "/api/servers/{id}": {
@@ -6519,9 +6284,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       },
       "patch": {
         "operationId": "updateServer",
@@ -6574,9 +6337,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       },
       "delete": {
         "operationId": "deleteServer",
@@ -6623,9 +6384,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "servers"
-        ]
+        "tags": ["servers"]
       }
     },
     "/api/clusters/{id}/connection-preview": {
@@ -6677,9 +6436,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       }
     },
     "/api/clusters/{id}/connect": {
@@ -6739,9 +6496,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       }
     },
     "/api/clusters/{id}/sync": {
@@ -6801,9 +6556,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       }
     },
     "/api/clusters/{id}/nodes": {
@@ -6877,9 +6630,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       }
     },
     "/api/clusters": {
@@ -6943,9 +6694,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       },
       "post": {
         "operationId": "createCluster",
@@ -6984,9 +6733,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       }
     },
     "/api/clusters/{id}": {
@@ -7028,9 +6775,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       },
       "patch": {
         "operationId": "updateCluster",
@@ -7083,9 +6828,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       },
       "delete": {
         "operationId": "deleteCluster",
@@ -7132,9 +6875,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "clusters"
-        ]
+        "tags": ["clusters"]
       }
     },
     "/api/secrets": {
@@ -7216,9 +6957,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "secrets"
-        ]
+        "tags": ["secrets"]
       },
       "post": {
         "operationId": "createSecret",
@@ -7257,9 +6996,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "secrets"
-        ]
+        "tags": ["secrets"]
       }
     },
     "/api/secrets/{id}": {
@@ -7301,9 +7038,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "secrets"
-        ]
+        "tags": ["secrets"]
       },
       "delete": {
         "operationId": "deleteSecret",
@@ -7350,9 +7085,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "secrets"
-        ]
+        "tags": ["secrets"]
       }
     },
     "/api/operations": {
@@ -7424,13 +7157,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": [
-                "queued",
-                "running",
-                "succeeded",
-                "failed",
-                "cancelled"
-              ]
+              "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
             }
           }
         ],
@@ -7467,9 +7194,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "operations"
-        ]
+        "tags": ["operations"]
       }
     },
     "/api/operations/worker-status": {
@@ -7509,9 +7234,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "operations"
-        ]
+        "tags": ["operations"]
       }
     },
     "/api/operations/diagnostics": {
@@ -7571,9 +7294,7 @@
           }
         ],
         "summary": "创建无远端副作用的持久队列诊断",
-        "tags": [
-          "operations"
-        ]
+        "tags": ["operations"]
       }
     },
     "/api/operations/{id}": {
@@ -7622,9 +7343,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "operations"
-        ]
+        "tags": ["operations"]
       }
     },
     "/api/operations/{id}/logs": {
@@ -7697,9 +7416,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "operations"
-        ]
+        "tags": ["operations"]
       }
     },
     "/api/operations/{id}/retry": {
@@ -7756,9 +7473,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "operations"
-        ]
+        "tags": ["operations"]
       }
     },
     "/api/operations/{id}/cancel": {
@@ -7807,9 +7522,7 @@
           }
         ],
         "summary": "",
-        "tags": [
-          "operations"
-        ]
+        "tags": ["operations"]
       }
     }
   },
@@ -7844,11 +7557,7 @@
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "unverified",
-              "verified",
-              "failed"
-            ]
+            "enum": ["unverified", "verified", "failed"]
           },
           "checkedAt": {
             "type": "string",
@@ -7860,11 +7569,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "state",
-          "checkedAt",
-          "errorCode"
-        ]
+        "required": ["state", "checkedAt", "errorCode"]
       },
       "GitHubAccountDto": {
         "type": "object",
@@ -7876,10 +7581,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "login"
-        ]
+        "required": ["id", "login"]
       },
       "GitHubConnectionDto": {
         "type": "object",
@@ -7893,9 +7595,7 @@
           },
           "authorization": {
             "type": "string",
-            "enum": [
-              "fine_grained_pat"
-            ]
+            "enum": ["fine_grained_pat"]
           },
           "credentialRefId": {
             "type": "string",
@@ -7948,10 +7648,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "nextCursor",
-          "hasMore"
-        ]
+        "required": ["nextCursor", "hasMore"]
       },
       "GitHubConnectionListDto": {
         "type": "object",
@@ -7966,10 +7663,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "GitHubConnectionCreateDto": {
         "type": "object",
@@ -7984,10 +7678,7 @@
             "description": "Fine-grained PAT 的 git 类型秘密引用"
           }
         },
-        "required": [
-          "name",
-          "credentialRefId"
-        ]
+        "required": ["name", "credentialRefId"]
       },
       "GitHubConnectionEnvelopeDto": {
         "type": "object",
@@ -7996,9 +7687,7 @@
             "$ref": "#/components/schemas/GitHubConnectionDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "GitHubConnectionUpdateDto": {
         "type": "object",
@@ -8018,9 +7707,7 @@
             "format": "uuid"
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "RevisionDto": {
         "type": "object",
@@ -8032,9 +7719,7 @@
             "description": "本次编辑所依据的资源 revision；过期时返回 409"
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "RepositoryHookDto": {
         "type": "object",
@@ -8065,14 +7750,7 @@
             "format": "uuid"
           }
         },
-        "required": [
-          "state",
-          "hookId",
-          "callbackUrl",
-          "verifiedAt",
-          "errorCode",
-          "operationId"
-        ]
+        "required": ["state", "hookId", "callbackUrl", "verifiedAt", "errorCode", "operationId"]
       },
       "GitRepositoryDto": {
         "type": "object",
@@ -8133,10 +7811,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "GitBranchDto": {
         "type": "object",
@@ -8151,11 +7826,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "ref",
-          "commitSha"
-        ]
+        "required": ["name", "ref", "commitSha"]
       },
       "GitBranchListDto": {
         "type": "object",
@@ -8170,10 +7841,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "RegisterWebhookDto": {
         "type": "object",
@@ -8190,10 +7858,7 @@
             "description": "独立 webhook 类型秘密引用；注册/更新实际 GitHub hook"
           }
         },
-        "required": [
-          "revision",
-          "secretRefId"
-        ]
+        "required": ["revision", "secretRefId"]
       },
       "DiagnosticInputDto": {
         "type": "object",
@@ -8205,9 +7870,7 @@
             "maximum": 5000
           }
         },
-        "required": [
-          "durationMs"
-        ]
+        "required": ["durationMs"]
       },
       "InfrastructureInputDto": {
         "type": "object",
@@ -8273,25 +7936,18 @@
             "type": "string"
           }
         },
-        "required": [
-          "targetId",
-          "connectionRevision"
-        ]
+        "required": ["targetId", "connectionRevision"]
       },
       "DiagnosticResultDto": {
         "type": "object",
         "properties": {
           "check": {
             "type": "string",
-            "enum": [
-              "database-roundtrip"
-            ]
+            "enum": ["database-roundtrip"]
           },
           "database": {
             "type": "string",
-            "enum": [
-              "ok"
-            ]
+            "enum": ["ok"]
           },
           "operationId": {
             "type": "string",
@@ -8302,21 +7958,14 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "check",
-          "database",
-          "operationId",
-          "completedAt"
-        ]
+        "required": ["check", "database", "operationId", "completedAt"]
       },
       "HostKeyResultDto": {
         "type": "object",
         "properties": {
           "check": {
             "type": "string",
-            "enum": [
-              "ssh-host-key"
-            ]
+            "enum": ["ssh-host-key"]
           },
           "host": {
             "type": "string"
@@ -8335,23 +7984,14 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "check",
-          "host",
-          "port",
-          "fingerprint",
-          "algorithm",
-          "observedAt"
-        ]
+        "required": ["check", "host", "port", "fingerprint", "algorithm", "observedAt"]
       },
       "PreflightResultDto": {
         "type": "object",
         "properties": {
           "check": {
             "type": "string",
-            "enum": [
-              "server-preflight"
-            ]
+            "enum": ["server-preflight"]
           },
           "serverId": {
             "type": "string",
@@ -8374,22 +8014,14 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "check",
-          "serverId",
-          "blockers",
-          "warnings",
-          "observedAt"
-        ]
+        "required": ["check", "serverId", "blockers", "warnings", "observedAt"]
       },
       "InitializationResultDto": {
         "type": "object",
         "properties": {
           "check": {
             "type": "string",
-            "enum": [
-              "server-initialize"
-            ]
+            "enum": ["server-initialize"]
           },
           "serverId": {
             "type": "string",
@@ -8412,9 +8044,7 @@
           },
           "secretsEncryption": {
             "type": "string",
-            "enum": [
-              "enabled"
-            ]
+            "enum": ["enabled"]
           },
           "resumed": {
             "type": "boolean"
@@ -8436,10 +8066,7 @@
         "properties": {
           "check": {
             "type": "string",
-            "enum": [
-              "cluster-connect",
-              "cluster-sync"
-            ]
+            "enum": ["cluster-connect", "cluster-sync"]
           },
           "clusterId": {
             "type": "string",
@@ -8457,13 +8084,7 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "check",
-          "clusterId",
-          "version",
-          "nodeCount",
-          "observedAt"
-        ]
+        "required": ["check", "clusterId", "version", "nodeCount", "observedAt"]
       },
       "ServiceTaskTargetDto": {
         "type": "object",
@@ -8530,34 +8151,18 @@
             }
           }
         },
-        "required": [
-          "serviceId",
-          "mutationRevision",
-          "snapshotId",
-          "target"
-        ]
+        "required": ["serviceId", "mutationRevision", "snapshotId", "target"]
       },
       "WorkloadResourceReceiptDto": {
         "type": "object",
         "properties": {
           "action": {
             "type": "string",
-            "enum": [
-              "created",
-              "replaced",
-              "verified",
-              "deleted"
-            ]
+            "enum": ["created", "replaced", "verified", "deleted"]
           },
           "kind": {
             "type": "string",
-            "enum": [
-              "Namespace",
-              "Deployment",
-              "StatefulSet",
-              "Service",
-              "Secret"
-            ]
+            "enum": ["Namespace", "Deployment", "StatefulSet", "Service", "Secret"]
           },
           "name": {
             "type": "string"
@@ -8611,19 +8216,13 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "Deployment",
-              "StatefulSet"
-            ]
+            "enum": ["Deployment", "StatefulSet"]
           },
           "uid": {
             "type": "string"
           }
         },
-        "required": [
-          "kind",
-          "uid"
-        ]
+        "required": ["kind", "uid"]
       },
       "WorkloadRolloutDto": {
         "type": "object",
@@ -8686,14 +8285,7 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "Namespace",
-              "Deployment",
-              "StatefulSet",
-              "Service",
-              "Secret",
-              "Pod"
-            ]
+            "enum": ["Namespace", "Deployment", "StatefulSet", "Service", "Secret", "Pod"]
           },
           "name": {
             "type": "string"
@@ -8702,24 +8294,14 @@
             "type": "string"
           }
         },
-        "required": [
-          "kind",
-          "name",
-          "reason"
-        ]
+        "required": ["kind", "name", "reason"]
       },
       "WorkloadResourceDto": {
         "type": "object",
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "Namespace",
-              "Deployment",
-              "StatefulSet",
-              "Service",
-              "Secret"
-            ]
+            "enum": ["Namespace", "Deployment", "StatefulSet", "Service", "Secret"]
           },
           "name": {
             "type": "string"
@@ -8742,12 +8324,7 @@
           },
           "state": {
             "type": "string",
-            "enum": [
-              "verified",
-              "missing",
-              "drifted",
-              "unknown"
-            ]
+            "enum": ["verified", "missing", "drifted", "unknown"]
           },
           "reason": {
             "type": "string",
@@ -8923,18 +8500,11 @@
           },
           "kind": {
             "type": "string",
-            "enum": [
-              "Deployment",
-              "StatefulSet"
-            ]
+            "enum": ["Deployment", "StatefulSet"]
           },
           "strategy": {
             "type": "string",
-            "enum": [
-              "RollingUpdate",
-              "Recreate",
-              "OnDelete"
-            ]
+            "enum": ["RollingUpdate", "Recreate", "OnDelete"]
           },
           "currentRevision": {
             "type": "string",
@@ -8975,19 +8545,13 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "ReplicaSet",
-              "StatefulSet"
-            ]
+            "enum": ["ReplicaSet", "StatefulSet"]
           },
           "uid": {
             "type": "string"
           }
         },
-        "required": [
-          "kind",
-          "uid"
-        ]
+        "required": ["kind", "uid"]
       },
       "WorkloadContainerResourcesDto": {
         "type": "object",
@@ -9001,20 +8565,14 @@
             "nullable": true
           }
         },
-        "required": [
-          "cpuCores",
-          "memoryBytes"
-        ]
+        "required": ["cpuCores", "memoryBytes"]
       },
       "WorkloadMetricsDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "unknown"
-            ]
+            "enum": ["available", "unknown"]
           },
           "cpuCores": {
             "type": "number",
@@ -9034,13 +8592,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "state",
-          "cpuCores",
-          "memoryBytes",
-          "observedAt",
-          "windowSeconds"
-        ]
+        "required": ["state", "cpuCores", "memoryBytes", "observedAt", "windowSeconds"]
       },
       "WorkloadContainerDto": {
         "type": "object",
@@ -9065,12 +8617,7 @@
           },
           "state": {
             "type": "string",
-            "enum": [
-              "waiting",
-              "running",
-              "terminated",
-              "unknown"
-            ]
+            "enum": ["waiting", "running", "terminated", "unknown"]
           },
           "reason": {
             "type": "string",
@@ -9141,13 +8688,7 @@
           },
           "phase": {
             "type": "string",
-            "enum": [
-              "Pending",
-              "Running",
-              "Succeeded",
-              "Failed",
-              "Unknown"
-            ]
+            "enum": ["Pending", "Running", "Succeeded", "Failed", "Unknown"]
           },
           "ready": {
             "type": "boolean",
@@ -9213,11 +8754,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "Normal",
-              "Warning",
-              "Unknown"
-            ]
+            "enum": ["Normal", "Warning", "Unknown"]
           },
           "objectUid": {
             "type": "string"
@@ -9269,12 +8806,7 @@
           },
           "configurationState": {
             "type": "string",
-            "enum": [
-              "consistent",
-              "drifted",
-              "missing",
-              "unknown"
-            ]
+            "enum": ["consistent", "drifted", "missing", "unknown"]
           },
           "drift": {
             "type": "array",
@@ -9323,10 +8855,7 @@
           },
           "eventsState": {
             "type": "string",
-            "enum": [
-              "available",
-              "unknown"
-            ]
+            "enum": ["available", "unknown"]
           },
           "eventsTruncated": {
             "type": "boolean"
@@ -9364,12 +8893,7 @@
         "properties": {
           "action": {
             "type": "string",
-            "enum": [
-              "stop",
-              "resume",
-              "restart",
-              "delete"
-            ]
+            "enum": ["stop", "resume", "restart", "delete"]
           },
           "mutationRevision": {
             "type": "number"
@@ -9397,23 +8921,14 @@
             "$ref": "#/components/schemas/WorkloadObservationDto"
           }
         },
-        "required": [
-          "action",
-          "mutationRevision",
-          "resources",
-          "rollout",
-          "completedAt"
-        ]
+        "required": ["action", "mutationRevision", "resources", "rollout", "completedAt"]
       },
       "ServiceNoRemoteResultDto": {
         "type": "object",
         "properties": {
           "action": {
             "type": "string",
-            "enum": [
-              "stop",
-              "delete"
-            ]
+            "enum": ["stop", "delete"]
           },
           "serviceId": {
             "type": "string",
@@ -9421,26 +8936,17 @@
           },
           "remoteEffects": {
             "type": "string",
-            "enum": [
-              "none"
-            ]
+            "enum": ["none"]
           }
         },
-        "required": [
-          "action",
-          "serviceId",
-          "remoteEffects"
-        ]
+        "required": ["action", "serviceId", "remoteEffects"]
       },
       "StagingVerificationDto": {
         "type": "object",
         "properties": {
           "authority": {
             "type": "string",
-            "enum": [
-              "letsencrypt",
-              "local_test"
-            ]
+            "enum": ["letsencrypt", "local_test"]
           },
           "certificateObservedAt": {
             "type": "string",
@@ -9455,12 +8961,7 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "authority",
-          "certificateObservedAt",
-          "certificateNotAfter",
-          "dnsObservedAt"
-        ]
+        "required": ["authority", "certificateObservedAt", "certificateNotAfter", "dnsObservedAt"]
       },
       "DomainTaskTargetDto": {
         "type": "object",
@@ -9556,10 +9057,7 @@
           },
           "certificateEnvironment": {
             "type": "string",
-            "enum": [
-              "staging",
-              "production"
-            ]
+            "enum": ["staging", "production"]
           },
           "stagingVerification": {
             "$ref": "#/components/schemas/StagingVerificationDto"
@@ -9585,13 +9083,7 @@
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "unconfigured",
-              "matched",
-              "mismatch",
-              "not_found",
-              "error"
-            ]
+            "enum": ["unconfigured", "matched", "mismatch", "not_found", "error"]
           },
           "observedAt": {
             "type": "string",
@@ -9697,11 +9189,7 @@
         "properties": {
           "authority": {
             "type": "string",
-            "enum": [
-              "letsencrypt",
-              "local_test",
-              "unknown"
-            ]
+            "enum": ["letsencrypt", "local_test", "unknown"]
           },
           "state": {
             "type": "string",
@@ -9724,10 +9212,7 @@
           },
           "environment": {
             "type": "string",
-            "enum": [
-              "staging",
-              "production"
-            ]
+            "enum": ["staging", "production"]
           },
           "certificateName": {
             "type": "string"
@@ -9784,13 +9269,7 @@
           },
           "action": {
             "type": "string",
-            "enum": [
-              "bind",
-              "sync",
-              "reconcile",
-              "unbind",
-              "production"
-            ]
+            "enum": ["bind", "sync", "reconcile", "unbind", "production"]
           },
           "completedAt": {
             "type": "string",
@@ -9824,15 +9303,7 @@
             ]
           }
         },
-        "required": [
-          "domainId",
-          "hostname",
-          "action",
-          "completedAt",
-          "dns",
-          "route",
-          "certificate"
-        ]
+        "required": ["domainId", "hostname", "action", "completedAt", "dns", "route", "certificate"]
       },
       "ClusterNetworkingOperationInputDto": {
         "type": "object",
@@ -9873,10 +9344,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "code",
-          "message"
-        ]
+        "required": ["code", "message"]
       },
       "NetworkingCapabilitiesDto": {
         "type": "object",
@@ -9887,31 +9355,18 @@
           },
           "ingressClass": {
             "type": "string",
-            "enum": [
-              "ready",
-              "missing",
-              "unknown"
-            ]
+            "enum": ["ready", "missing", "unknown"]
           },
           "ingressClassName": {
             "type": "string"
           },
           "traefikMiddleware": {
             "type": "string",
-            "enum": [
-              "ready",
-              "missing",
-              "unknown"
-            ]
+            "enum": ["ready", "missing", "unknown"]
           },
           "certManager": {
             "type": "string",
-            "enum": [
-              "ready",
-              "missing",
-              "incompatible",
-              "unknown"
-            ]
+            "enum": ["ready", "missing", "incompatible", "unknown"]
           },
           "certManagerVersion": {
             "type": "string",
@@ -9919,11 +9374,7 @@
           },
           "permissions": {
             "type": "string",
-            "enum": [
-              "ready",
-              "insufficient",
-              "unknown"
-            ]
+            "enum": ["ready", "insufficient", "unknown"]
           },
           "issues": {
             "type": "array",
@@ -9954,10 +9405,7 @@
             "$ref": "#/components/schemas/NetworkingCapabilitiesDto"
           }
         },
-        "required": [
-          "clusterId",
-          "capabilities"
-        ]
+        "required": ["clusterId", "capabilities"]
       },
       "VolumeOperationTargetDto": {
         "type": "object",
@@ -10012,10 +9460,7 @@
           },
           "reclaimPolicy": {
             "type": "string",
-            "enum": [
-              "Delete",
-              "Retain"
-            ],
+            "enum": ["Delete", "Retain"],
             "nullable": true
           },
           "previewDigest": {
@@ -10025,13 +9470,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "volumeId",
-          "pvcUid",
-          "reclaimPolicy",
-          "previewDigest",
-          "volumeName"
-        ]
+        "required": ["volumeId", "pvcUid", "reclaimPolicy", "previewDigest", "volumeName"]
       },
       "VolumeOperationInputDto": {
         "type": "object",
@@ -10057,12 +9496,7 @@
             "$ref": "#/components/schemas/VolumeTaskConfirmationDto"
           }
         },
-        "required": [
-          "volumeId",
-          "volumeRevision",
-          "mutationRevision",
-          "target"
-        ]
+        "required": ["volumeId", "volumeRevision", "mutationRevision", "target"]
       },
       "VolumeOperationResultDto": {
         "type": "object",
@@ -10086,10 +9520,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "volumeId",
-          "state"
-        ]
+        "required": ["volumeId", "state"]
       },
       "WebhookRegistrationInputDto": {
         "type": "object",
@@ -10103,9 +9534,7 @@
           },
           "action": {
             "type": "string",
-            "enum": [
-              "register_webhook"
-            ]
+            "enum": ["register_webhook"]
           },
           "hookSecretRefId": {
             "type": "string",
@@ -10115,13 +9544,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "integrationId",
-          "revision",
-          "action",
-          "hookSecretRefId",
-          "callbackUrl"
-        ]
+        "required": ["integrationId", "revision", "action", "hookSecretRefId", "callbackUrl"]
       },
       "WebhookRegistrationResultDto": {
         "type": "object",
@@ -10135,16 +9558,10 @@
           },
           "registered": {
             "type": "boolean",
-            "enum": [
-              true
-            ]
+            "enum": [true]
           }
         },
-        "required": [
-          "repositoryId",
-          "hookId",
-          "registered"
-        ]
+        "required": ["repositoryId", "hookId", "registered"]
       },
       "RegistryProbeInputDto": {
         "type": "object",
@@ -10158,41 +9575,28 @@
           },
           "action": {
             "type": "string",
-            "enum": [
-              "validate_registry"
-            ]
+            "enum": ["validate_registry"]
           },
           "probeRepository": {
             "type": "string"
           }
         },
-        "required": [
-          "integrationId",
-          "revision",
-          "action",
-          "probeRepository"
-        ]
+        "required": ["integrationId", "revision", "action", "probeRepository"]
       },
       "RegistryProbeResultDto": {
         "type": "object",
         "properties": {
           "push": {
             "type": "boolean",
-            "enum": [
-              true
-            ]
+            "enum": [true]
           },
           "pull": {
             "type": "boolean",
-            "enum": [
-              true
-            ]
+            "enum": [true]
           },
           "pullCannotPush": {
             "type": "boolean",
-            "enum": [
-              true
-            ]
+            "enum": [true]
           },
           "probeReference": {
             "type": "string"
@@ -10252,14 +9656,7 @@
           },
           "scope": {
             "type": "string",
-            "enum": [
-              "control_plane",
-              "server",
-              "cluster",
-              "service",
-              "volume",
-              "integration"
-            ]
+            "enum": ["control_plane", "server", "cluster", "service", "volume", "integration"]
           },
           "serverId": {
             "type": "string",
@@ -10278,13 +9675,7 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "queued",
-              "running",
-              "succeeded",
-              "failed",
-              "cancelled"
-            ]
+            "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
           },
           "input": {
             "oneOf": [
@@ -10434,9 +9825,7 @@
             "$ref": "#/components/schemas/OperationDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "RegistryConnectionDto": {
         "type": "object",
@@ -10507,10 +9896,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "RegistryConnectionCreateDto": {
         "type": "object",
@@ -10536,13 +9922,7 @@
             "format": "uuid"
           }
         },
-        "required": [
-          "name",
-          "authority",
-          "namespace",
-          "pushCredentialRefId",
-          "pullCredentialRefId"
-        ]
+        "required": ["name", "authority", "namespace", "pushCredentialRefId", "pullCredentialRefId"]
       },
       "RegistryConnectionEnvelopeDto": {
         "type": "object",
@@ -10551,9 +9931,7 @@
             "$ref": "#/components/schemas/RegistryConnectionDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "RegistryConnectionUpdateDto": {
         "type": "object",
@@ -10577,9 +9955,7 @@
             "format": "uuid"
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "BuilderProfileDto": {
         "type": "object",
@@ -10600,41 +9976,25 @@
             "type": "number"
           }
         },
-        "required": [
-          "buildkitVersion",
-          "frontendDigest",
-          "instanceId",
-          "profileRevision"
-        ]
+        "required": ["buildkitVersion", "frontendDigest", "instanceId", "profileRevision"]
       },
       "BuildPlatformDto": {
         "type": "object",
         "properties": {
           "os": {
             "type": "string",
-            "enum": [
-              "linux"
-            ]
+            "enum": ["linux"]
           },
           "architecture": {
             "type": "string",
-            "enum": [
-              "amd64",
-              "arm64"
-            ]
+            "enum": ["amd64", "arm64"]
           },
           "variant": {
             "type": "string",
-            "enum": [
-              "v1",
-              "v8"
-            ]
+            "enum": ["v1", "v8"]
           }
         },
-        "required": [
-          "os",
-          "architecture"
-        ]
+        "required": ["os", "architecture"]
       },
       "BuilderCapabilitiesDto": {
         "type": "object",
@@ -10751,10 +10111,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "BuilderProfileInputDto": {
         "type": "object",
@@ -10768,10 +10125,7 @@
             "pattern": "^sha256:[0-9a-f]{64}$"
           }
         },
-        "required": [
-          "buildkitVersion",
-          "frontendDigest"
-        ]
+        "required": ["buildkitVersion", "frontendDigest"]
       },
       "BuilderCreateDto": {
         "type": "object",
@@ -10816,9 +10170,7 @@
             "$ref": "#/components/schemas/BuilderDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "BuilderUpdateDto": {
         "type": "object",
@@ -10848,9 +10200,7 @@
             "$ref": "#/components/schemas/BuilderProfileInputDto"
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "ServicePortDto": {
         "type": "object",
@@ -10861,10 +10211,7 @@
           },
           "protocol": {
             "type": "string",
-            "enum": [
-              "http",
-              "tcp"
-            ]
+            "enum": ["http", "tcp"]
           },
           "containerPort": {
             "type": "number",
@@ -10877,12 +10224,7 @@
             "maximum": 65535
           }
         },
-        "required": [
-          "name",
-          "protocol",
-          "containerPort",
-          "servicePort"
-        ]
+        "required": ["name", "protocol", "containerPort", "servicePort"]
       },
       "ServiceResourceQuantityDto": {
         "type": "object",
@@ -10896,10 +10238,7 @@
             "minimum": 1
           }
         },
-        "required": [
-          "cpuMillis",
-          "memoryMiB"
-        ]
+        "required": ["cpuMillis", "memoryMiB"]
       },
       "ServiceResourcesDto": {
         "type": "object",
@@ -10911,20 +10250,14 @@
             "$ref": "#/components/schemas/ServiceResourceQuantityDto"
           }
         },
-        "required": [
-          "requests",
-          "limits"
-        ]
+        "required": ["requests", "limits"]
       },
       "ServiceProbeDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "http",
-              "tcp"
-            ]
+            "enum": ["http", "tcp"]
           },
           "port": {
             "type": "string",
@@ -10978,9 +10311,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "ServiceConfigurationDto": {
         "type": "object",
@@ -11139,14 +10470,10 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "image"
-            ]
+            "enum": ["image"]
           }
         },
-        "required": [
-          "kind"
-        ]
+        "required": ["kind"]
       },
       "GitRepositoryIdentityDto": {
         "type": "object",
@@ -11162,11 +10489,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "repositoryId",
-          "githubRepositoryId",
-          "fullNameAtCapture"
-        ]
+        "required": ["repositoryId", "githubRepositoryId", "fullNameAtCapture"]
       },
       "FixedBuildSecretDto": {
         "type": "object",
@@ -11185,12 +10508,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "mountId",
-          "secretRefId",
-          "secretKey",
-          "contentRevision"
-        ]
+        "required": ["mountId", "secretRefId", "secretKey", "contentRevision"]
       },
       "FixedBuilderProfileDto": {
         "type": "object",
@@ -11235,20 +10553,14 @@
             "type": "string"
           }
         },
-        "required": [
-          "registryConnectionId",
-          "authority",
-          "repository"
-        ]
+        "required": ["registryConnectionId", "authority", "repository"]
       },
       "GitSourceRevisionDto": {
         "type": "object",
         "properties": {
           "version": {
             "type": "number",
-            "enum": [
-              1
-            ]
+            "enum": [1]
           },
           "id": {
             "type": "string",
@@ -11263,9 +10575,7 @@
           },
           "provider": {
             "type": "string",
-            "enum": [
-              "github"
-            ]
+            "enum": ["github"]
           },
           "githubConnectionId": {
             "type": "string",
@@ -11340,9 +10650,7 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "github"
-            ]
+            "enum": ["github"]
           },
           "sourceId": {
             "type": "string",
@@ -11358,37 +10666,21 @@
             "type": "number"
           }
         },
-        "required": [
-          "kind",
-          "sourceId",
-          "currentRevision",
-          "autoDeploy",
-          "policyRevision"
-        ]
+        "required": ["kind", "sourceId", "currentRevision", "autoDeploy", "policyRevision"]
       },
       "ServiceControllerConfigurationDto": {
         "type": "object",
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "Deployment",
-              "StatefulSet"
-            ]
+            "enum": ["Deployment", "StatefulSet"]
           },
           "strategy": {
             "type": "string",
-            "enum": [
-              "RollingUpdate",
-              "Recreate",
-              "OnDelete"
-            ]
+            "enum": ["RollingUpdate", "Recreate", "OnDelete"]
           }
         },
-        "required": [
-          "kind",
-          "strategy"
-        ]
+        "required": ["kind", "strategy"]
       },
       "ServiceTemplateIdentityDto": {
         "type": "object",
@@ -11400,10 +10692,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "version"
-        ]
+        "required": ["id", "version"]
       },
       "ServiceContextDto": {
         "type": "object",
@@ -11419,11 +10708,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "slug"
-        ]
+        "required": ["id", "name", "slug"]
       },
       "ServiceClusterContextDto": {
         "type": "object",
@@ -11440,12 +10725,7 @@
           },
           "connectionStatus": {
             "type": "string",
-            "enum": [
-              "unverified",
-              "connected",
-              "unreachable",
-              "unknown"
-            ]
+            "enum": ["unverified", "connected", "unreachable", "unknown"]
           },
           "lastObservedAt": {
             "type": "string",
@@ -11453,22 +10733,14 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "slug",
-          "connectionStatus",
-          "lastObservedAt"
-        ]
+        "required": ["id", "name", "slug", "connectionStatus", "lastObservedAt"]
       },
       "GitSourceSnapshotDto": {
         "type": "object",
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "github"
-            ]
+            "enum": ["github"]
           },
           "revision": {
             "$ref": "#/components/schemas/GitSourceRevisionDto"
@@ -11479,27 +10751,18 @@
             "maxLength": 40
           }
         },
-        "required": [
-          "kind",
-          "revision",
-          "commitSha"
-        ]
+        "required": ["kind", "revision", "commitSha"]
       },
       "ImagePlatformDto": {
         "type": "object",
         "properties": {
           "os": {
             "type": "string",
-            "enum": [
-              "linux"
-            ]
+            "enum": ["linux"]
           },
           "architecture": {
             "type": "string",
-            "enum": [
-              "amd64",
-              "arm64"
-            ]
+            "enum": ["amd64", "arm64"]
           },
           "variant": {
             "type": "string"
@@ -11514,22 +10777,14 @@
             "type": "string"
           }
         },
-        "required": [
-          "os",
-          "architecture",
-          "manifestDigest",
-          "manifestMediaType",
-          "configDigest"
-        ]
+        "required": ["os", "architecture", "manifestDigest", "manifestMediaType", "configDigest"]
       },
       "ResolvedImageDto": {
         "type": "object",
         "properties": {
           "version": {
             "type": "number",
-            "enum": [
-              1
-            ]
+            "enum": [1]
           },
           "inputReference": {
             "type": "string"
@@ -11656,10 +10911,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "operation",
-              "deployment"
-            ]
+            "enum": ["operation", "deployment"]
           },
           "id": {
             "type": "string",
@@ -11667,24 +10919,13 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "queued",
-              "running",
-              "succeeded",
-              "failed",
-              "cancelled"
-            ]
+            "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
           },
           "kind": {
             "type": "string"
           }
         },
-        "required": [
-          "type",
-          "id",
-          "status",
-          "kind"
-        ]
+        "required": ["type", "id", "status", "kind"]
       },
       "ServiceResponseDto": {
         "type": "object",
@@ -11787,20 +11028,11 @@
           },
           "desiredState": {
             "type": "string",
-            "enum": [
-              "running",
-              "stopped"
-            ]
+            "enum": ["running", "stopped"]
           },
           "configurationState": {
             "type": "string",
-            "enum": [
-              "unpublished",
-              "consistent",
-              "partial",
-              "drifted",
-              "unknown"
-            ]
+            "enum": ["unpublished", "consistent", "partial", "drifted", "unknown"]
           },
           "runtimeState": {
             "type": "string",
@@ -11924,9 +11156,7 @@
             "$ref": "#/components/schemas/ServiceResponseDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "BuildSecretInputDto": {
         "type": "object",
@@ -11944,19 +11174,14 @@
             "maxLength": 128
           }
         },
-        "required": [
-          "mountId",
-          "secretRefId"
-        ]
+        "required": ["mountId", "secretRefId"]
       },
       "GitSourceInputDto": {
         "type": "object",
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "github"
-            ]
+            "enum": ["github"]
           },
           "repositoryId": {
             "type": "string",
@@ -12040,10 +11265,7 @@
             "$ref": "#/components/schemas/GitSourceInputDto"
           }
         },
-        "required": [
-          "revision",
-          "source"
-        ]
+        "required": ["revision", "source"]
       },
       "GitPolicyUpdateDto": {
         "type": "object",
@@ -12062,34 +11284,24 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "revision",
-          "policyRevision",
-          "autoDeploy"
-        ]
+        "required": ["revision", "policyRevision", "autoDeploy"]
       },
       "BranchHeadSelectionDto": {
         "type": "object",
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "branch_head"
-            ]
+            "enum": ["branch_head"]
           }
         },
-        "required": [
-          "kind"
-        ]
+        "required": ["kind"]
       },
       "CommitSelectionDto": {
         "type": "object",
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "commit"
-            ]
+            "enum": ["commit"]
           },
           "commitSha": {
             "type": "string",
@@ -12097,29 +11309,21 @@
             "maxLength": 40
           }
         },
-        "required": [
-          "kind",
-          "commitSha"
-        ]
+        "required": ["kind", "commitSha"]
       },
       "PendingTargetSelectionDto": {
         "type": "object",
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "pending_target"
-            ]
+            "enum": ["pending_target"]
           },
           "webhookTargetId": {
             "type": "string",
             "format": "uuid"
           }
         },
-        "required": [
-          "kind",
-          "webhookTargetId"
-        ]
+        "required": ["kind", "webhookTargetId"]
       },
       "GitPreviewRequestDto": {
         "type": "object",
@@ -12152,10 +11356,7 @@
             }
           }
         },
-        "required": [
-          "revision",
-          "selection"
-        ]
+        "required": ["revision", "selection"]
       },
       "GitSnapshotTargetDto": {
         "type": "object",
@@ -12298,9 +11499,7 @@
         "properties": {
           "version": {
             "type": "number",
-            "enum": [
-              1
-            ]
+            "enum": [1]
           },
           "bindingId": {
             "type": "string",
@@ -12340,10 +11539,7 @@
           },
           "engine": {
             "type": "string",
-            "enum": [
-              "postgresql",
-              "redis"
-            ]
+            "enum": ["postgresql", "redis"]
           },
           "databaseName": {
             "type": "string",
@@ -12365,10 +11561,7 @@
           },
           "profile": {
             "type": "string",
-            "enum": [
-              "fields",
-              "url"
-            ]
+            "enum": ["fields", "url"]
           },
           "mapping": {
             "$ref": "#/components/schemas/DatabaseOutputMappingDto"
@@ -12401,9 +11594,7 @@
         "properties": {
           "version": {
             "type": "number",
-            "enum": [
-              3
-            ]
+            "enum": [3]
           },
           "serviceId": {
             "type": "string",
@@ -12443,9 +11634,7 @@
             "type": "object",
             "additionalProperties": false,
             "nullable": true,
-            "enum": [
-              null
-            ]
+            "enum": [null]
           },
           "databaseBindings": {
             "type": "array",
@@ -12457,9 +11646,7 @@
             "type": "object",
             "additionalProperties": false,
             "nullable": true,
-            "enum": [
-              null
-            ]
+            "enum": [null]
           }
         },
         "required": [
@@ -12492,10 +11679,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "code",
-          "message"
-        ]
+        "required": ["code", "message"]
       },
       "GitPublicationPreviewDto": {
         "type": "object",
@@ -12527,10 +11711,7 @@
           },
           "desiredState": {
             "type": "string",
-            "enum": [
-              "running",
-              "stopped"
-            ]
+            "enum": ["running", "stopped"]
           },
           "webhookTargetId": {
             "type": "string",
@@ -12575,9 +11756,7 @@
             "$ref": "#/components/schemas/GitPublicationPreviewDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "WebhookTargetDto": {
         "type": "object",
@@ -12624,13 +11803,7 @@
           },
           "state": {
             "type": "string",
-            "enum": [
-              "waiting",
-              "pending",
-              "ignored",
-              "orphaned",
-              "enqueued"
-            ]
+            "enum": ["waiting", "pending", "ignored", "orphaned", "enqueued"]
           },
           "reason": {
             "type": "string"
@@ -12691,10 +11864,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "WebhookDeliveryDto": {
         "type": "object",
@@ -12705,9 +11875,7 @@
           },
           "provider": {
             "type": "string",
-            "enum": [
-              "github"
-            ]
+            "enum": ["github"]
           },
           "externalDeliveryId": {
             "type": "string"
@@ -12778,10 +11946,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "WebhookDeliveryDetailDto": {
         "type": "object",
@@ -12792,9 +11957,7 @@
           },
           "provider": {
             "type": "string",
-            "enum": [
-              "github"
-            ]
+            "enum": ["github"]
           },
           "externalDeliveryId": {
             "type": "string"
@@ -12870,9 +12033,7 @@
             "$ref": "#/components/schemas/WebhookDeliveryDetailDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "WebhookRejectionDto": {
         "type": "object",
@@ -12892,12 +12053,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "repositoryId",
-          "bucket",
-          "reason",
-          "count"
-        ]
+        "required": ["repositoryId", "bucket", "reason", "count"]
       },
       "WebhookRejectionListDto": {
         "type": "object",
@@ -12915,11 +12071,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "data",
-          "truncated",
-          "retentionHours"
-        ]
+        "required": ["data", "truncated", "retentionHours"]
       },
       "WebhookReceiptDto": {
         "type": "object",
@@ -12935,11 +12087,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "deliveryId",
-          "duplicate",
-          "targetCount"
-        ]
+        "required": ["deliveryId", "duplicate", "targetCount"]
       },
       "ServiceListDto": {
         "type": "object",
@@ -12954,10 +12102,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "ServiceVariableInputDto": {
         "type": "object",
@@ -12984,9 +12129,7 @@
             "maxLength": 128
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "ServiceConfigurationInputDto": {
         "type": "object",
@@ -13056,9 +12199,7 @@
             }
           }
         },
-        "required": [
-          "image"
-        ]
+        "required": ["image"]
       },
       "GitRuntimeConfigurationInputDto": {
         "type": "object",
@@ -13160,13 +12301,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "enum": [
-              "docker",
-              "node-example",
-              "static-example",
-              "postgresql",
-              "redis"
-            ]
+            "enum": ["docker", "node-example", "static-example", "postgresql", "redis"]
           },
           "version": {
             "type": "string",
@@ -13177,11 +12312,7 @@
             "$ref": "#/components/schemas/TemplateParametersDto"
           }
         },
-        "required": [
-          "id",
-          "version",
-          "parameters"
-        ]
+        "required": ["id", "version", "parameters"]
       },
       "CreateServiceDto": {
         "type": "object",
@@ -13252,11 +12383,7 @@
             ]
           }
         },
-        "required": [
-          "name",
-          "slug",
-          "environmentId"
-        ]
+        "required": ["name", "slug", "environmentId"]
       },
       "ParseEnvironmentDto": {
         "type": "object",
@@ -13267,9 +12394,7 @@
             "writeOnly": true
           }
         },
-        "required": [
-          "text"
-        ]
+        "required": ["text"]
       },
       "ImportedEnvironmentVariableDto": {
         "type": "object",
@@ -13287,12 +12412,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "name",
-          "value",
-          "secret",
-          "line"
-        ]
+        "required": ["name", "value", "secret", "line"]
       },
       "EnvironmentImportIssueDto": {
         "type": "object",
@@ -13307,11 +12427,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "line",
-          "code",
-          "message"
-        ]
+        "required": ["line", "code", "message"]
       },
       "EnvironmentImportDto": {
         "type": "object",
@@ -13329,10 +12445,7 @@
             }
           }
         },
-        "required": [
-          "variables",
-          "issues"
-        ]
+        "required": ["variables", "issues"]
       },
       "EnvironmentImportEnvelopeDto": {
         "type": "object",
@@ -13341,9 +12454,7 @@
             "$ref": "#/components/schemas/EnvironmentImportDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "UpdateServiceDto": {
         "type": "object",
@@ -13388,9 +12499,7 @@
             ]
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "DeployServiceDto": {
         "type": "object",
@@ -13415,18 +12524,14 @@
             "description": "明确用完整快照修复部分应用或配置漂移"
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "ServiceDatabaseSnapshotDto": {
         "type": "object",
         "properties": {
           "version": {
             "type": "number",
-            "enum": [
-              1
-            ]
+            "enum": [1]
           },
           "databaseInstanceId": {
             "type": "string",
@@ -13438,10 +12543,7 @@
           },
           "engine": {
             "type": "string",
-            "enum": [
-              "postgresql",
-              "redis"
-            ]
+            "enum": ["postgresql", "redis"]
           },
           "majorVersion": {
             "type": "number"
@@ -13454,13 +12556,7 @@
           },
           "templateId": {
             "type": "string",
-            "enum": [
-              "docker",
-              "node-example",
-              "static-example",
-              "postgresql",
-              "redis"
-            ]
+            "enum": ["docker", "node-example", "static-example", "postgresql", "redis"]
           },
           "templateVersion": {
             "type": "string"
@@ -13514,10 +12610,7 @@
         "properties": {
           "version": {
             "type": "number",
-            "enum": [
-              1,
-              2
-            ]
+            "enum": [1, 2]
           },
           "serviceId": {
             "type": "string",
@@ -13606,10 +12699,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "serviceId",
-          "mutationRevision"
-        ]
+        "required": ["serviceId", "mutationRevision"]
       },
       "DeploymentTargetDto": {
         "type": "object",
@@ -13660,11 +12750,7 @@
         "properties": {
           "version": {
             "type": "number",
-            "enum": [
-              1,
-              2,
-              3
-            ]
+            "enum": [1, 2, 3]
           },
           "published": {
             "$ref": "#/components/schemas/WorkloadRolloutDto"
@@ -13684,13 +12770,7 @@
             "$ref": "#/components/schemas/WorkloadObservationDto"
           }
         },
-        "required": [
-          "version",
-          "published",
-          "image",
-          "serviceDns",
-          "appliedAt"
-        ]
+        "required": ["version", "published", "image", "serviceDns", "appliedAt"]
       },
       "DeploymentFailureWorkloadDto": {
         "type": "object",
@@ -13834,18 +12914,11 @@
           },
           "kind": {
             "type": "string",
-            "enum": [
-              "Deployment",
-              "StatefulSet"
-            ]
+            "enum": ["Deployment", "StatefulSet"]
           },
           "strategy": {
             "type": "string",
-            "enum": [
-              "RollingUpdate",
-              "Recreate",
-              "OnDelete"
-            ]
+            "enum": ["RollingUpdate", "Recreate", "OnDelete"]
           },
           "currentRevision": {
             "type": "string",
@@ -13895,12 +12968,7 @@
           },
           "state": {
             "type": "string",
-            "enum": [
-              "waiting",
-              "running",
-              "terminated",
-              "unknown"
-            ]
+            "enum": ["waiting", "running", "terminated", "unknown"]
           },
           "reason": {
             "type": "string",
@@ -13945,13 +13013,7 @@
           },
           "phase": {
             "type": "string",
-            "enum": [
-              "Pending",
-              "Running",
-              "Succeeded",
-              "Failed",
-              "Unknown"
-            ]
+            "enum": ["Pending", "Running", "Succeeded", "Failed", "Unknown"]
           },
           "ready": {
             "type": "boolean",
@@ -14019,11 +13081,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "drift",
-          "resources",
-          "pods"
-        ]
+        "required": ["drift", "resources", "pods"]
       },
       "DeploymentFailureObservationDto": {
         "type": "object",
@@ -14045,12 +13103,7 @@
           },
           "configurationState": {
             "type": "string",
-            "enum": [
-              "consistent",
-              "drifted",
-              "missing",
-              "unknown"
-            ]
+            "enum": ["consistent", "drifted", "missing", "unknown"]
           },
           "drift": {
             "maxItems": 128,
@@ -14117,26 +13170,15 @@
           },
           "kind": {
             "type": "string",
-            "enum": [
-              "image_deploy",
-              "git_deploy"
-            ]
+            "enum": ["image_deploy", "git_deploy"]
           },
           "scope": {
             "type": "string",
-            "enum": [
-              "service"
-            ]
+            "enum": ["service"]
           },
           "status": {
             "type": "string",
-            "enum": [
-              "queued",
-              "running",
-              "succeeded",
-              "failed",
-              "cancelled"
-            ]
+            "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
           },
           "phase": {
             "type": "string"
@@ -14182,10 +13224,7 @@
           },
           "initiatorKind": {
             "type": "string",
-            "enum": [
-              "admin",
-              "webhook"
-            ]
+            "enum": ["admin", "webhook"]
           },
           "webhookDeliveryId": {
             "type": "string",
@@ -14320,9 +13359,7 @@
             "$ref": "#/components/schemas/DeploymentResponseDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "ServicePodsDto": {
         "type": "object",
@@ -14345,12 +13382,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "pods",
-          "observedAt",
-          "stale",
-          "truncated"
-        ]
+        "required": ["pods", "observedAt", "stale", "truncated"]
       },
       "ServicePodsEnvelopeDto": {
         "type": "object",
@@ -14359,19 +13391,14 @@
             "$ref": "#/components/schemas/ServicePodsDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "ServiceMetricsDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "unknown"
-            ]
+            "enum": ["available", "unknown"]
           },
           "cpuCores": {
             "type": "number",
@@ -14394,14 +13421,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "state",
-          "cpuCores",
-          "memoryBytes",
-          "observedAt",
-          "windowSeconds",
-          "stale"
-        ]
+        "required": ["state", "cpuCores", "memoryBytes", "observedAt", "windowSeconds", "stale"]
       },
       "ServiceMetricsEnvelopeDto": {
         "type": "object",
@@ -14410,9 +13430,7 @@
             "$ref": "#/components/schemas/ServiceMetricsDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "DeploymentListDto": {
         "type": "object",
@@ -14427,24 +13445,17 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "NoBuildArtifactDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "none"
-            ]
+            "enum": ["none"]
           }
         },
-        "required": [
-          "state"
-        ]
+        "required": ["state"]
       },
       "BuildArtifactDestinationDto": {
         "type": "object",
@@ -14456,20 +13467,14 @@
             "type": "string"
           }
         },
-        "required": [
-          "authority",
-          "repository"
-        ]
+        "required": ["authority", "repository"]
       },
       "RetainedBuildArtifactDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "oci",
-              "registry"
-            ]
+            "enum": ["oci", "registry"]
           },
           "id": {
             "type": "string",
@@ -14569,10 +13574,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "generation",
-          "ownershipEpoch"
-        ]
+        "required": ["generation", "ownershipEpoch"]
       },
       "BuildRunDto": {
         "type": "object",
@@ -14603,12 +13605,7 @@
           },
           "executionState": {
             "type": "string",
-            "enum": [
-              "prepared",
-              "open",
-              "never_submitted",
-              "ended"
-            ]
+            "enum": ["prepared", "open", "never_submitted", "ended"]
           },
           "executionClosedAt": {
             "type": "string",
@@ -14723,12 +13720,7 @@
             }
           }
         },
-        "required": [
-          "sourceRevisionId",
-          "reuseArtifactId",
-          "runs",
-          "artifact"
-        ]
+        "required": ["sourceRevisionId", "reuseArtifactId", "runs", "artifact"]
       },
       "DeploymentStageDto": {
         "type": "object",
@@ -14749,14 +13741,7 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "queued",
-              "running",
-              "succeeded",
-              "failed",
-              "cancelled",
-              "skipped"
-            ]
+            "enum": ["queued", "running", "succeeded", "failed", "cancelled", "skipped"]
           },
           "startedAt": {
             "type": "string",
@@ -14793,26 +13778,15 @@
           },
           "kind": {
             "type": "string",
-            "enum": [
-              "image_deploy",
-              "git_deploy"
-            ]
+            "enum": ["image_deploy", "git_deploy"]
           },
           "scope": {
             "type": "string",
-            "enum": [
-              "service"
-            ]
+            "enum": ["service"]
           },
           "status": {
             "type": "string",
-            "enum": [
-              "queued",
-              "running",
-              "succeeded",
-              "failed",
-              "cancelled"
-            ]
+            "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
           },
           "phase": {
             "type": "string"
@@ -14858,10 +13832,7 @@
           },
           "initiatorKind": {
             "type": "string",
-            "enum": [
-              "admin",
-              "webhook"
-            ]
+            "enum": ["admin", "webhook"]
           },
           "webhookDeliveryId": {
             "type": "string",
@@ -15013,9 +13984,7 @@
             "$ref": "#/components/schemas/DeploymentDetailDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "TaskLogDto": {
         "type": "object",
@@ -15030,11 +13999,7 @@
           },
           "level": {
             "type": "string",
-            "enum": [
-              "info",
-              "warn",
-              "error"
-            ]
+            "enum": ["info", "warn", "error"]
           },
           "message": {
             "type": "string"
@@ -15047,13 +14012,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "sequence",
-          "timestamp",
-          "level",
-          "message",
-          "attempt"
-        ]
+        "required": ["sequence", "timestamp", "level", "message", "attempt"]
       },
       "DeploymentLogsDto": {
         "type": "object",
@@ -15069,9 +14028,7 @@
           },
           "source": {
             "type": "string",
-            "enum": [
-              "deployment"
-            ]
+            "enum": ["deployment"]
           },
           "available": {
             "type": "boolean"
@@ -15079,24 +14036,13 @@
           "unavailableReason": {
             "type": "string",
             "nullable": true,
-            "enum": [
-              "not_started",
-              "expired",
-              "not_available"
-            ]
+            "enum": ["not_started", "expired", "not_available"]
           },
           "truncated": {
             "type": "boolean"
           }
         },
-        "required": [
-          "data",
-          "page",
-          "source",
-          "available",
-          "unavailableReason",
-          "truncated"
-        ]
+        "required": ["data", "page", "source", "available", "unavailableReason", "truncated"]
       },
       "BuildLogChunkDto": {
         "type": "object",
@@ -15118,13 +14064,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "sequence",
-          "phase",
-          "timestamp",
-          "content",
-          "truncated"
-        ]
+        "required": ["sequence", "phase", "timestamp", "content", "truncated"]
       },
       "BuildLogPageDto": {
         "type": "object",
@@ -15140,9 +14080,7 @@
           },
           "source": {
             "type": "string",
-            "enum": [
-              "builder"
-            ]
+            "enum": ["builder"]
           },
           "available": {
             "type": "boolean"
@@ -15150,11 +14088,7 @@
           "unavailableReason": {
             "type": "string",
             "nullable": true,
-            "enum": [
-              "expired",
-              "not_available",
-              "not_started"
-            ]
+            "enum": ["expired", "not_available", "not_started"]
           },
           "truncated": {
             "type": "boolean"
@@ -15207,12 +14141,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "revision",
-          "appsDomainSuffix",
-          "acmeEmail",
-          "updatedAt"
-        ]
+        "required": ["revision", "appsDomainSuffix", "acmeEmail", "updatedAt"]
       },
       "PlatformSettingsEnvelopeDto": {
         "type": "object",
@@ -15221,9 +14150,7 @@
             "$ref": "#/components/schemas/PlatformSettingsDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "UpdatePlatformSettingsDto": {
         "type": "object",
@@ -15242,11 +14169,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "revision",
-          "appsDomainSuffix",
-          "acmeEmail"
-        ]
+        "required": ["revision", "appsDomainSuffix", "acmeEmail"]
       },
       "ClusterNetworkingDto": {
         "type": "object",
@@ -15279,9 +14202,7 @@
           },
           "ingressClassName": {
             "type": "string",
-            "enum": [
-              "traefik"
-            ]
+            "enum": ["traefik"]
           },
           "capabilities": {
             "nullable": true,
@@ -15321,9 +14242,7 @@
             "$ref": "#/components/schemas/ClusterNetworkingDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "UpdateClusterNetworkingDto": {
         "type": "object",
@@ -15348,12 +14267,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "revision",
-          "subdomain",
-          "entryAddresses",
-          "cnameTarget"
-        ]
+        "required": ["revision", "subdomain", "entryAddresses", "cnameTarget"]
       },
       "InitialNetworkingRevisionDto": {
         "type": "object",
@@ -15364,9 +14278,7 @@
             "maximum": 2147483647
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "NetworkIdentityDto": {
         "type": "object",
@@ -15382,11 +14294,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "slug"
-        ]
+        "required": ["id", "name", "slug"]
       },
       "EligibleHttpPortDto": {
         "type": "object",
@@ -15400,9 +14308,7 @@
           },
           "protocol": {
             "type": "string",
-            "enum": [
-              "http"
-            ]
+            "enum": ["http"]
           },
           "containerPort": {
             "type": "number"
@@ -15428,10 +14334,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "operation",
-              "deployment"
-            ]
+            "enum": ["operation", "deployment"]
           },
           "id": {
             "type": "string",
@@ -15444,12 +14347,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "type",
-          "id",
-          "kind",
-          "status"
-        ]
+        "required": ["type", "id", "kind", "status"]
       },
       "DomainDto": {
         "type": "object",
@@ -15463,9 +14361,7 @@
           },
           "kind": {
             "type": "string",
-            "enum": [
-              "default"
-            ]
+            "enum": ["default"]
           },
           "serviceId": {
             "type": "string",
@@ -15491,17 +14387,11 @@
           },
           "desiredState": {
             "type": "string",
-            "enum": [
-              "active",
-              "deleting"
-            ]
+            "enum": ["active", "deleting"]
           },
           "certificateEnvironment": {
             "type": "string",
-            "enum": [
-              "staging",
-              "production"
-            ]
+            "enum": ["staging", "production"]
           },
           "dns": {
             "nullable": true,
@@ -15658,9 +14548,7 @@
             "$ref": "#/components/schemas/ServiceNetworkingDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "CreateDomainDto": {
         "type": "object",
@@ -15676,10 +14564,7 @@
             "format": "uuid"
           }
         },
-        "required": [
-          "revision",
-          "portId"
-        ]
+        "required": ["revision", "portId"]
       },
       "DomainListDto": {
         "type": "object",
@@ -15694,10 +14579,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "DomainEnvelopeDto": {
         "type": "object",
@@ -15706,9 +14588,7 @@
             "$ref": "#/components/schemas/DomainDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "StorageClassDto": {
         "type": "object",
@@ -15724,18 +14604,12 @@
           },
           "bindingMode": {
             "type": "string",
-            "enum": [
-              "Immediate",
-              "WaitForFirstConsumer"
-            ],
+            "enum": ["Immediate", "WaitForFirstConsumer"],
             "nullable": true
           },
           "reclaimPolicy": {
             "type": "string",
-            "enum": [
-              "Delete",
-              "Retain"
-            ],
+            "enum": ["Delete", "Retain"],
             "nullable": true
           },
           "default": {
@@ -15753,10 +14627,7 @@
           },
           "hardQuotaSupport": {
             "type": "string",
-            "enum": [
-              "unsupported",
-              "unknown"
-            ]
+            "enum": ["unsupported", "unknown"]
           },
           "allowVolumeExpansion": {
             "type": "boolean"
@@ -15781,21 +14652,14 @@
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "ready",
-              "missing",
-              "unknown"
-            ]
+            "enum": ["ready", "missing", "unknown"]
           },
           "version": {
             "type": "string",
             "nullable": true
           }
         },
-        "required": [
-          "state",
-          "version"
-        ]
+        "required": ["state", "version"]
       },
       "StorageIssueDto": {
         "type": "object",
@@ -15807,10 +14671,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "code",
-          "message"
-        ]
+        "required": ["code", "message"]
       },
       "StorageCapabilitiesDto": {
         "type": "object",
@@ -15833,11 +14694,7 @@
           },
           "permissions": {
             "type": "string",
-            "enum": [
-              "ready",
-              "insufficient",
-              "unknown"
-            ]
+            "enum": ["ready", "insufficient", "unknown"]
           },
           "issues": {
             "type": "array",
@@ -15912,9 +14769,7 @@
             "$ref": "#/components/schemas/ClusterStorageDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "StorageIdentityDto": {
         "type": "object",
@@ -15930,11 +14785,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "slug"
-        ]
+        "required": ["id", "name", "slug"]
       },
       "VolumePvcDto": {
         "type": "object",
@@ -15952,25 +14803,13 @@
           },
           "phase": {
             "type": "string",
-            "enum": [
-              "Pending",
-              "Bound",
-              "Lost",
-              "Unknown",
-              "Missing"
-            ]
+            "enum": ["Pending", "Bound", "Lost", "Unknown", "Missing"]
           },
           "deleting": {
             "type": "boolean"
           }
         },
-        "required": [
-          "name",
-          "uid",
-          "resourceVersion",
-          "phase",
-          "deleting"
-        ]
+        "required": ["name", "uid", "resourceVersion", "phase", "deleting"]
       },
       "VolumePvDto": {
         "type": "object",
@@ -15990,10 +14829,7 @@
           },
           "reclaimPolicy": {
             "type": "string",
-            "enum": [
-              "Delete",
-              "Retain"
-            ],
+            "enum": ["Delete", "Retain"],
             "nullable": true
           },
           "storageClassName": {
@@ -16033,11 +14869,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "name",
-          "uid",
-          "ready"
-        ]
+        "required": ["name", "uid", "ready"]
       },
       "VolumeUsageDto": {
         "type": "object",
@@ -16056,11 +14888,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "usedBytes",
-          "nodeAvailableBytes",
-          "observedAt"
-        ]
+        "required": ["usedBytes", "nodeAvailableBytes", "observedAt"]
       },
       "VolumeSummaryDto": {
         "type": "object",
@@ -16084,13 +14912,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "id",
-          "name",
-          "slug",
-          "revision",
-          "destroyedAt"
-        ]
+        "required": ["id", "name", "slug", "revision", "destroyedAt"]
       },
       "VolumeMountDto": {
         "type": "object",
@@ -16166,11 +14988,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "kind",
-          "name",
-          "uid"
-        ]
+        "required": ["kind", "name", "uid"]
       },
       "StoragePodMountDto": {
         "type": "object",
@@ -16255,26 +15073,14 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "desired",
-          "published",
-          "actual",
-          "truncated"
-        ]
+        "required": ["desired", "published", "actual", "truncated"]
       },
       "VolumeObservationDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "pending",
-              "ready",
-              "missing",
-              "drifted",
-              "unknown",
-              "destroyed"
-            ]
+            "enum": ["pending", "ready", "missing", "drifted", "unknown", "destroyed"]
           },
           "observedAt": {
             "type": "string",
@@ -16292,13 +15098,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "state",
-          "observedAt",
-          "stale",
-          "code",
-          "message"
-        ]
+        "required": ["state", "observedAt", "stale", "code", "message"]
       },
       "VolumeMaintenanceDto": {
         "type": "object",
@@ -16309,20 +15109,11 @@
           },
           "purpose": {
             "type": "string",
-            "enum": [
-              "backup",
-              "restore"
-            ]
+            "enum": ["backup", "restore"]
           },
           "state": {
             "type": "string",
-            "enum": [
-              "entering",
-              "active",
-              "exiting",
-              "failed",
-              "closed"
-            ]
+            "enum": ["entering", "active", "exiting", "failed", "closed"]
           },
           "revision": {
             "type": "number"
@@ -16373,10 +15164,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "operation",
-              "deployment"
-            ]
+            "enum": ["operation", "deployment"]
           },
           "id": {
             "type": "string",
@@ -16389,12 +15177,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "type",
-          "id",
-          "kind",
-          "status"
-        ]
+        "required": ["type", "id", "kind", "status"]
       },
       "RetainedDatabaseDto": {
         "type": "object",
@@ -16486,21 +15269,14 @@
             "type": "string"
           }
         },
-        "required": [
-          "from",
-          "to",
-          "description"
-        ]
+        "required": ["from", "to", "description"]
       },
       "ManualDataRecordDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "backup",
-              "restore"
-            ]
+            "enum": ["backup", "restore"]
           },
           "backupId": {
             "type": "string",
@@ -16520,11 +15296,7 @@
           },
           "engine": {
             "type": "string",
-            "enum": [
-              "postgresql",
-              "redis",
-              "files"
-            ]
+            "enum": ["postgresql", "redis", "files"]
           },
           "engineVersion": {
             "type": "string"
@@ -16560,11 +15332,7 @@
           },
           "integrity": {
             "type": "string",
-            "enum": [
-              "passed",
-              "failed",
-              "unknown"
-            ]
+            "enum": ["passed", "failed", "unknown"]
           },
           "verificationSteps": {
             "maxItems": 20,
@@ -16575,11 +15343,7 @@
           },
           "result": {
             "type": "string",
-            "enum": [
-              "passed",
-              "failed",
-              "incomplete"
-            ]
+            "enum": ["passed", "failed", "incomplete"]
           },
           "evidenceReferences": {
             "maxItems": 20,
@@ -16607,9 +15371,7 @@
           },
           "verificationSource": {
             "type": "string",
-            "enum": [
-              "operator_reported"
-            ]
+            "enum": ["operator_reported"]
           },
           "durationMs": {
             "type": "number"
@@ -16710,18 +15472,11 @@
           },
           "hardQuotaSupport": {
             "type": "string",
-            "enum": [
-              "unsupported",
-              "unknown"
-            ]
+            "enum": ["unsupported", "unknown"]
           },
           "desiredState": {
             "type": "string",
-            "enum": [
-              "active",
-              "destroying",
-              "destroyed"
-            ]
+            "enum": ["active", "destroying", "destroyed"]
           },
           "retained": {
             "type": "boolean"
@@ -16745,12 +15500,7 @@
           },
           "locality": {
             "type": "string",
-            "enum": [
-              "waiting_for_consumer",
-              "verified",
-              "unavailable",
-              "unknown"
-            ]
+            "enum": ["waiting_for_consumer", "verified", "unavailable", "unknown"]
           },
           "nodes": {
             "type": "array",
@@ -16890,10 +15640,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "VolumeEnvelopeDto": {
         "type": "object",
@@ -16902,9 +15649,7 @@
             "$ref": "#/components/schemas/VolumeDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "CreateVolumeDto": {
         "type": "object",
@@ -16927,13 +15672,7 @@
             "example": "1073741824"
           }
         },
-        "required": [
-          "environmentId",
-          "name",
-          "slug",
-          "storageClassName",
-          "requestedBytes"
-        ]
+        "required": ["environmentId", "name", "slug", "storageClassName", "requestedBytes"]
       },
       "VolumeCreationDto": {
         "type": "object",
@@ -16946,10 +15685,7 @@
             "$ref": "#/components/schemas/OperationDto"
           }
         },
-        "required": [
-          "volumeId",
-          "operation"
-        ]
+        "required": ["volumeId", "operation"]
       },
       "VolumeCreationEnvelopeDto": {
         "type": "object",
@@ -16958,9 +15694,7 @@
             "$ref": "#/components/schemas/VolumeCreationDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "VolumeDeletionPreviewDto": {
         "type": "object",
@@ -16988,10 +15722,7 @@
           },
           "reclaimPolicy": {
             "type": "string",
-            "enum": [
-              "Delete",
-              "Retain"
-            ],
+            "enum": ["Delete", "Retain"],
             "nullable": true
           },
           "observedAt": {
@@ -17053,9 +15784,7 @@
             "$ref": "#/components/schemas/VolumeDeletionPreviewDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "VolumeDeletionConfirmationDto": {
         "type": "object",
@@ -17070,10 +15799,7 @@
           },
           "reclaimPolicy": {
             "type": "string",
-            "enum": [
-              "Delete",
-              "Retain"
-            ],
+            "enum": ["Delete", "Retain"],
             "nullable": true
           },
           "previewDigest": {
@@ -17083,13 +15809,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "volumeId",
-          "pvcUid",
-          "reclaimPolicy",
-          "previewDigest",
-          "volumeName"
-        ]
+        "required": ["volumeId", "pvcUid", "reclaimPolicy", "previewDigest", "volumeName"]
       },
       "DestroyVolumeDto": {
         "type": "object",
@@ -17104,10 +15824,7 @@
             "$ref": "#/components/schemas/VolumeDeletionConfirmationDto"
           }
         },
-        "required": [
-          "revision",
-          "confirmation"
-        ]
+        "required": ["revision", "confirmation"]
       },
       "EnterVolumeMaintenanceDto": {
         "type": "object",
@@ -17120,16 +15837,10 @@
           },
           "purpose": {
             "type": "string",
-            "enum": [
-              "backup",
-              "restore"
-            ]
+            "enum": ["backup", "restore"]
           }
         },
-        "required": [
-          "revision",
-          "purpose"
-        ]
+        "required": ["revision", "purpose"]
       },
       "ExitVolumeMaintenanceDto": {
         "type": "object",
@@ -17145,10 +15856,7 @@
             "format": "uuid"
           }
         },
-        "required": [
-          "revision",
-          "maintenanceId"
-        ]
+        "required": ["revision", "maintenanceId"]
       },
       "VolumeMountCollectionDto": {
         "type": "object",
@@ -17166,11 +15874,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "data",
-          "serviceRevision",
-          "configRevision"
-        ]
+        "required": ["data", "serviceRevision", "configRevision"]
       },
       "SaveVolumeMountDto": {
         "type": "object",
@@ -17195,13 +15899,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "revision",
-          "volumeId",
-          "volumeRevision",
-          "mountPath",
-          "readOnly"
-        ]
+        "required": ["revision", "volumeId", "volumeRevision", "mountPath", "readOnly"]
       },
       "ManualDataRecordListDto": {
         "type": "object",
@@ -17216,20 +15914,14 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "CreateManualDataRecordDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "backup",
-              "restore"
-            ]
+            "enum": ["backup", "restore"]
           },
           "backupId": {
             "type": "string",
@@ -17249,11 +15941,7 @@
           },
           "engine": {
             "type": "string",
-            "enum": [
-              "postgresql",
-              "redis",
-              "files"
-            ]
+            "enum": ["postgresql", "redis", "files"]
           },
           "engineVersion": {
             "type": "string"
@@ -17289,11 +15977,7 @@
           },
           "integrity": {
             "type": "string",
-            "enum": [
-              "passed",
-              "failed",
-              "unknown"
-            ]
+            "enum": ["passed", "failed", "unknown"]
           },
           "verificationSteps": {
             "maxItems": 20,
@@ -17304,11 +15988,7 @@
           },
           "result": {
             "type": "string",
-            "enum": [
-              "passed",
-              "failed",
-              "incomplete"
-            ]
+            "enum": ["passed", "failed", "incomplete"]
           },
           "evidenceReferences": {
             "maxItems": 20,
@@ -17347,9 +16027,7 @@
             "$ref": "#/components/schemas/ManualDataRecordDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "DatabaseTemplateIdentityDto": {
         "type": "object",
@@ -17361,10 +16039,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "version"
-        ]
+        "required": ["id", "version"]
       },
       "DatabaseServiceIdentityDto": {
         "type": "object",
@@ -17380,11 +16055,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "slug"
-        ]
+        "required": ["id", "name", "slug"]
       },
       "DatabaseVolumeDto": {
         "type": "object",
@@ -17449,13 +16120,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "active",
-          "revision",
-          "fencedAt",
-          "lockedFields",
-          "reason"
-        ]
+        "required": ["active", "revision", "fencedAt", "lockedFields", "reason"]
       },
       "DatabaseInitializationDto": {
         "type": "object",
@@ -17473,11 +16138,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "state",
-          "initializedAt",
-          "pvcUid"
-        ]
+        "required": ["state", "initializedAt", "pvcUid"]
       },
       "DatabaseCredentialReferenceDto": {
         "type": "object",
@@ -17490,10 +16151,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "refId",
-          "contentRevision"
-        ]
+        "required": ["refId", "contentRevision"]
       },
       "DatabaseConnectionDto": {
         "type": "object",
@@ -17518,30 +16176,17 @@
           },
           "visibility": {
             "type": "string",
-            "enum": [
-              "cluster_private"
-            ]
+            "enum": ["cluster_private"]
           }
         },
-        "required": [
-          "host",
-          "port",
-          "username",
-          "database",
-          "redisDatabase",
-          "visibility"
-        ]
+        "required": ["host", "port", "username", "database", "redisDatabase", "visibility"]
       },
       "DatabaseAuthenticationObservationDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "ready",
-              "failed",
-              "unknown"
-            ]
+            "enum": ["ready", "failed", "unknown"]
           },
           "authenticated": {
             "type": "boolean"
@@ -17552,11 +16197,7 @@
           },
           "persistence": {
             "type": "string",
-            "enum": [
-              "postgres_wal",
-              "redis_aof_everysec",
-              "unknown"
-            ]
+            "enum": ["postgres_wal", "redis_aof_everysec", "unknown"]
           },
           "podUid": {
             "type": "string",
@@ -17611,13 +16252,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "serviceId",
-          "name",
-          "desired",
-          "published",
-          "inFlight"
-        ]
+        "required": ["serviceId", "name", "desired", "published", "inFlight"]
       },
       "DatabaseDto": {
         "type": "object",
@@ -17631,10 +16266,7 @@
           },
           "engine": {
             "type": "string",
-            "enum": [
-              "postgresql",
-              "redis"
-            ]
+            "enum": ["postgresql", "redis"]
           },
           "majorVersion": {
             "type": "number"
@@ -17756,10 +16388,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "DatabaseEnvelopeDto": {
         "type": "object",
@@ -17768,9 +16397,7 @@
             "$ref": "#/components/schemas/DatabaseDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "DatabaseBindingProviderDto": {
         "type": "object",
@@ -17785,21 +16412,13 @@
           },
           "engine": {
             "type": "string",
-            "enum": [
-              "postgresql",
-              "redis"
-            ]
+            "enum": ["postgresql", "redis"]
           },
           "ready": {
             "type": "boolean"
           }
         },
-        "required": [
-          "serviceId",
-          "name",
-          "engine",
-          "ready"
-        ]
+        "required": ["serviceId", "name", "engine", "ready"]
       },
       "DataIssueDto": {
         "type": "object",
@@ -17816,20 +16435,10 @@
           },
           "blocks": {
             "type": "string",
-            "enum": [
-              "save",
-              "deploy",
-              "both",
-              "none"
-            ]
+            "enum": ["save", "deploy", "both", "none"]
           }
         },
-        "required": [
-          "code",
-          "message",
-          "field",
-          "blocks"
-        ]
+        "required": ["code", "message", "field", "blocks"]
       },
       "DatabaseBindingDto": {
         "type": "object",
@@ -17847,10 +16456,7 @@
           },
           "profile": {
             "type": "string",
-            "enum": [
-              "fields",
-              "url"
-            ]
+            "enum": ["fields", "url"]
           },
           "mapping": {
             "$ref": "#/components/schemas/DatabaseOutputMappingDto"
@@ -17900,11 +16506,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "data",
-          "serviceRevision",
-          "configRevision"
-        ]
+        "required": ["data", "serviceRevision", "configRevision"]
       },
       "DatabaseBindingInputDto": {
         "type": "object",
@@ -17921,21 +16523,13 @@
           },
           "profile": {
             "type": "string",
-            "enum": [
-              "fields",
-              "url"
-            ]
+            "enum": ["fields", "url"]
           },
           "mapping": {
             "$ref": "#/components/schemas/DatabaseOutputMappingDto"
           }
         },
-        "required": [
-          "revision",
-          "databaseInstanceId",
-          "profile",
-          "mapping"
-        ]
+        "required": ["revision", "databaseInstanceId", "profile", "mapping"]
       },
       "DatabaseBindingVariableDto": {
         "type": "object",
@@ -17945,33 +16539,17 @@
           },
           "output": {
             "type": "string",
-            "enum": [
-              "host",
-              "port",
-              "database",
-              "user",
-              "password",
-              "db",
-              "url"
-            ]
+            "enum": ["host", "port", "database", "user", "password", "db", "url"]
           },
           "secret": {
             "type": "boolean"
           },
           "change": {
             "type": "string",
-            "enum": [
-              "add",
-              "replace"
-            ]
+            "enum": ["add", "replace"]
           }
         },
-        "required": [
-          "name",
-          "output",
-          "secret",
-          "change"
-        ]
+        "required": ["name", "output", "secret", "change"]
       },
       "DatabaseBindingPreviewDto": {
         "type": "object",
@@ -17982,10 +16560,7 @@
           },
           "profile": {
             "type": "string",
-            "enum": [
-              "fields",
-              "url"
-            ]
+            "enum": ["fields", "url"]
           },
           "mapping": {
             "$ref": "#/components/schemas/DatabaseOutputMappingDto"
@@ -18022,9 +16597,7 @@
             "$ref": "#/components/schemas/DatabaseBindingPreviewDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "ServiceRetainedVolumeDto": {
         "type": "object",
@@ -18046,12 +16619,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "id",
-          "name",
-          "pvcUid",
-          "databaseInstanceId"
-        ]
+        "required": ["id", "name", "pvcUid", "databaseInstanceId"]
       },
       "ServiceDeletionPreviewDto": {
         "type": "object",
@@ -18101,9 +16669,7 @@
             "$ref": "#/components/schemas/ServiceDeletionPreviewDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "TemplateImageDto": {
         "type": "object",
@@ -18121,10 +16687,7 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": [
-                "arm64",
-                "amd64"
-              ]
+              "enum": ["arm64", "amd64"]
             }
           },
           "verifiedAt": {
@@ -18132,27 +16695,14 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "reference",
-          "digest",
-          "version",
-          "platforms",
-          "verifiedAt"
-        ]
+        "required": ["reference", "digest", "version", "platforms", "verifiedAt"]
       },
       "TemplateParameterDto": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "enum": [
-              "image",
-              "port",
-              "requestedBytes",
-              "username",
-              "databaseName",
-              "redisDatabase"
-            ]
+            "enum": ["image", "port", "requestedBytes", "username", "databaseName", "redisDatabase"]
           },
           "label": {
             "type": "string"
@@ -18162,11 +16712,7 @@
           },
           "type": {
             "type": "string",
-            "enum": [
-              "string",
-              "integer",
-              "bytes"
-            ]
+            "enum": ["string", "integer", "bytes"]
           },
           "required": {
             "type": "boolean"
@@ -18207,36 +16753,21 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "Deployment",
-              "StatefulSet"
-            ]
+            "enum": ["Deployment", "StatefulSet"]
           },
           "strategy": {
             "type": "string",
-            "enum": [
-              "RollingUpdate",
-              "Recreate"
-            ]
+            "enum": ["RollingUpdate", "Recreate"]
           }
         },
-        "required": [
-          "kind",
-          "strategy"
-        ]
+        "required": ["kind", "strategy"]
       },
       "TemplateDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "enum": [
-              "docker",
-              "node-example",
-              "static-example",
-              "postgresql",
-              "redis"
-            ]
+            "enum": ["docker", "node-example", "static-example", "postgresql", "redis"]
           },
           "version": {
             "type": "string"
@@ -18249,10 +16780,7 @@
           },
           "category": {
             "type": "string",
-            "enum": [
-              "application",
-              "database"
-            ]
+            "enum": ["application", "database"]
           },
           "sourceUrl": {
             "type": "string",
@@ -18321,10 +16849,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "TemplateEnvelopeDto": {
         "type": "object",
@@ -18333,9 +16858,7 @@
             "$ref": "#/components/schemas/TemplateDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "TemplatePreviewInputDto": {
         "type": "object",
@@ -18357,60 +16880,41 @@
             "$ref": "#/components/schemas/TemplateParametersDto"
           }
         },
-        "required": [
-          "environmentId",
-          "version",
-          "parameters"
-        ]
+        "required": ["environmentId", "version", "parameters"]
       },
       "TemplateIdentityDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "enum": [
-              "docker",
-              "node-example",
-              "static-example",
-              "postgresql",
-              "redis"
-            ]
+            "enum": ["docker", "node-example", "static-example", "postgresql", "redis"]
           },
           "version": {
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "version"
-        ]
+        "required": ["id", "version"]
       },
       "TemplatePlannedVolumeDto": {
         "type": "object",
         "properties": {
           "purpose": {
             "type": "string",
-            "enum": [
-              "database_data"
-            ]
+            "enum": ["database_data"]
           },
           "requestedBytes": {
             "type": "string"
           },
           "storageClassName": {
             "type": "string",
-            "enum": [
-              "local-path"
-            ]
+            "enum": ["local-path"]
           },
           "mountPath": {
             "type": "string"
           },
           "hardQuotaSupport": {
             "type": "string",
-            "enum": [
-              "unsupported"
-            ]
+            "enum": ["unsupported"]
           }
         },
         "required": [
@@ -18426,21 +16930,14 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "database"
-            ]
+            "enum": ["database"]
           },
           "generated": {
             "type": "boolean",
-            "enum": [
-              true
-            ]
+            "enum": [true]
           }
         },
-        "required": [
-          "kind",
-          "generated"
-        ]
+        "required": ["kind", "generated"]
       },
       "TemplatePreviewDto": {
         "type": "object",
@@ -18508,9 +17005,7 @@
             "$ref": "#/components/schemas/TemplatePreviewDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "LoginDto": {
         "type": "object",
@@ -18528,10 +17023,7 @@
             "maxLength": 256
           }
         },
-        "required": [
-          "username",
-          "password"
-        ]
+        "required": ["username", "password"]
       },
       "AuthUserDto": {
         "type": "object",
@@ -18544,10 +17036,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "id",
-          "username"
-        ]
+        "required": ["id", "username"]
       },
       "AuthSessionDto": {
         "type": "object",
@@ -18566,12 +17055,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "user",
-          "csrfToken",
-          "expiresAt",
-          "restoreMode"
-        ]
+        "required": ["user", "csrfToken", "expiresAt", "restoreMode"]
       },
       "AuthSessionResponse": {
         "type": "object",
@@ -18580,9 +17064,7 @@
             "$ref": "#/components/schemas/AuthSessionDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "ClusterSummaryDto": {
         "type": "object",
@@ -18598,12 +17080,7 @@
           },
           "connectionStatus": {
             "type": "string",
-            "enum": [
-              "unverified",
-              "connected",
-              "unreachable",
-              "unknown"
-            ],
+            "enum": ["unverified", "connected", "unreachable", "unknown"],
             "description": "真实连接观察状态；元数据登记不会标记为在线"
           },
           "lastObservedAt": {
@@ -18612,13 +17089,7 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "slug",
-          "connectionStatus",
-          "lastObservedAt"
-        ]
+        "required": ["id", "name", "slug", "connectionStatus", "lastObservedAt"]
       },
       "ProjectResponseDto": {
         "type": "object",
@@ -18680,10 +17151,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "CreateProjectDto": {
         "type": "object",
@@ -18709,11 +17177,7 @@
             "maxLength": 1000
           }
         },
-        "required": [
-          "name",
-          "slug",
-          "clusterId"
-        ]
+        "required": ["name", "slug", "clusterId"]
       },
       "ProjectEnvelopeDto": {
         "type": "object",
@@ -18722,9 +17186,7 @@
             "$ref": "#/components/schemas/ProjectResponseDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "UpdateProjectDto": {
         "type": "object",
@@ -18746,9 +17208,7 @@
             "maxLength": 1000
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "EnvironmentResponseDto": {
         "type": "object",
@@ -18817,10 +17277,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "CreateEnvironmentDto": {
         "type": "object",
@@ -18846,11 +17303,7 @@
             "maxLength": 1000
           }
         },
-        "required": [
-          "name",
-          "slug",
-          "projectId"
-        ]
+        "required": ["name", "slug", "projectId"]
       },
       "EnvironmentEnvelopeDto": {
         "type": "object",
@@ -18859,9 +17312,7 @@
             "$ref": "#/components/schemas/EnvironmentResponseDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "UpdateEnvironmentDto": {
         "type": "object",
@@ -18883,9 +17334,7 @@
             "maxLength": 1000
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "TrustHostKeyDto": {
         "type": "object",
@@ -18910,12 +17359,7 @@
             "maxLength": 500
           }
         },
-        "required": [
-          "revision",
-          "discoveryOperationId",
-          "fingerprint",
-          "source"
-        ]
+        "required": ["revision", "discoveryOperationId", "fingerprint", "source"]
       },
       "SshHostKeyDto": {
         "type": "object",
@@ -18967,10 +17411,7 @@
         "properties": {
           "protocol": {
             "type": "string",
-            "enum": [
-              "tcp",
-              "udp"
-            ]
+            "enum": ["tcp", "udp"]
           },
           "port": {
             "type": "number",
@@ -18982,11 +17423,7 @@
             "description": "本机监听状态，不代表公网可达或防火墙已放行"
           }
         },
-        "required": [
-          "protocol",
-          "port",
-          "listening"
-        ]
+        "required": ["protocol", "port", "listening"]
       },
       "SshK3sObservationDto": {
         "type": "object",
@@ -19005,19 +17442,11 @@
           "installationPhase": {
             "type": "string",
             "nullable": true,
-            "enum": [
-              "prepared",
-              "installed",
-              "ready"
-            ]
+            "enum": ["prepared", "installed", "ready"]
           },
           "secretsEncryption": {
             "type": "string",
-            "enum": [
-              "enabled",
-              "disabled",
-              "unknown"
-            ]
+            "enum": ["enabled", "disabled", "unknown"]
           }
         },
         "required": [
@@ -19049,11 +17478,7 @@
           },
           "architecture": {
             "type": "string",
-            "enum": [
-              "arm64",
-              "amd64",
-              "unsupported"
-            ]
+            "enum": ["arm64", "amd64", "unsupported"]
           },
           "kernel": {
             "type": "string"
@@ -19107,11 +17532,7 @@
           },
           "firewall": {
             "type": "string",
-            "enum": [
-              "active",
-              "inactive",
-              "unknown"
-            ]
+            "enum": ["active", "inactive", "unknown"]
           },
           "k3s": {
             "$ref": "#/components/schemas/SshK3sObservationDto"
@@ -19263,12 +17684,7 @@
           },
           "connectionStatus": {
             "type": "string",
-            "enum": [
-              "unverified",
-              "connected",
-              "unreachable",
-              "unknown"
-            ],
+            "enum": ["unverified", "connected", "unreachable", "unknown"],
             "description": "预检观察状态，未预检时为 unverified"
           },
           "lastObservedAt": {
@@ -19309,9 +17725,7 @@
             "$ref": "#/components/schemas/ServerResponseDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "InitializeServerDto": {
         "type": "object",
@@ -19338,84 +17752,46 @@
             "description": "控制面可访问的 HTTPS Kubernetes API 地址，必须通过 SAN 校验"
           }
         },
-        "required": [
-          "revision",
-          "clusterId",
-          "nodeName",
-          "apiEndpoint"
-        ]
+        "required": ["revision", "clusterId", "nodeName", "apiEndpoint"]
       },
       "KubernetesNodeAddressDto": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "InternalIP",
-              "ExternalIP",
-              "Hostname"
-            ]
+            "enum": ["InternalIP", "ExternalIP", "Hostname"]
           },
           "address": {
             "type": "string"
           }
         },
-        "required": [
-          "type",
-          "address"
-        ]
+        "required": ["type", "address"]
       },
       "KubernetesNodeConditionsDto": {
         "type": "object",
         "properties": {
           "ready": {
             "type": "string",
-            "enum": [
-              "true",
-              "false",
-              "unknown"
-            ]
+            "enum": ["true", "false", "unknown"]
           },
           "diskPressure": {
             "type": "string",
-            "enum": [
-              "true",
-              "false",
-              "unknown"
-            ]
+            "enum": ["true", "false", "unknown"]
           },
           "memoryPressure": {
             "type": "string",
-            "enum": [
-              "true",
-              "false",
-              "unknown"
-            ]
+            "enum": ["true", "false", "unknown"]
           },
           "pidPressure": {
             "type": "string",
-            "enum": [
-              "true",
-              "false",
-              "unknown"
-            ]
+            "enum": ["true", "false", "unknown"]
           },
           "networkUnavailable": {
             "type": "string",
-            "enum": [
-              "true",
-              "false",
-              "unknown"
-            ]
+            "enum": ["true", "false", "unknown"]
           }
         },
-        "required": [
-          "ready",
-          "diskPressure",
-          "memoryPressure",
-          "pidPressure",
-          "networkUnavailable"
-        ]
+        "required": ["ready", "diskPressure", "memoryPressure", "pidPressure", "networkUnavailable"]
       },
       "KubernetesResourceValuesDto": {
         "type": "object",
@@ -19442,22 +17818,14 @@
             "minimum": 0
           }
         },
-        "required": [
-          "cpuCores",
-          "memoryBytes",
-          "ephemeralStorageBytes",
-          "pods"
-        ]
+        "required": ["cpuCores", "memoryBytes", "ephemeralStorageBytes", "pods"]
       },
       "KubernetesNodeMetricsDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "unknown"
-            ]
+            "enum": ["available", "unknown"]
           },
           "cpuCores": {
             "type": "number",
@@ -19481,13 +17849,7 @@
             "minimum": 0
           }
         },
-        "required": [
-          "state",
-          "cpuCores",
-          "memoryBytes",
-          "observedAt",
-          "windowSeconds"
-        ]
+        "required": ["state", "cpuCores", "memoryBytes", "observedAt", "windowSeconds"]
       },
       "NodeClusterSummaryDto": {
         "type": "object",
@@ -19504,12 +17866,7 @@
           },
           "connectionStatus": {
             "type": "string",
-            "enum": [
-              "unverified",
-              "connected",
-              "unreachable",
-              "unknown"
-            ]
+            "enum": ["unverified", "connected", "unreachable", "unknown"]
           },
           "lastObservedAt": {
             "type": "string",
@@ -19517,13 +17874,7 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "slug",
-          "connectionStatus",
-          "lastObservedAt"
-        ]
+        "required": ["id", "name", "slug", "connectionStatus", "lastObservedAt"]
       },
       "NodeResponseDto": {
         "type": "object",
@@ -19667,10 +18018,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "ServerListDto": {
         "type": "object",
@@ -19685,10 +18033,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "CreateServerDto": {
         "type": "object",
@@ -19730,11 +18075,7 @@
             }
           }
         },
-        "required": [
-          "name",
-          "host",
-          "sshUser"
-        ]
+        "required": ["name", "host", "sshUser"]
       },
       "UpdateServerDto": {
         "type": "object",
@@ -19779,9 +18120,7 @@
             }
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "ConnectionPreviewRequestDto": {
         "type": "object",
@@ -19801,9 +18140,7 @@
             "maxLength": 2048
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "KubernetesCertificateSummaryDto": {
         "type": "object",
@@ -19820,21 +18157,14 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "fingerprint",
-          "notBefore",
-          "expiresAt"
-        ]
+        "required": ["fingerprint", "notBefore", "expiresAt"]
       },
       "KubernetesCredentialSummaryDto": {
         "type": "object",
         "properties": {
           "authentication": {
             "type": "string",
-            "enum": [
-              "client_certificate",
-              "token"
-            ]
+            "enum": ["client_certificate", "token"]
           },
           "clientCertificate": {
             "nullable": true,
@@ -19858,11 +18188,7 @@
           },
           "expirationSource": {
             "type": "string",
-            "enum": [
-              "client_certificate",
-              "token_claim",
-              "unknown"
-            ],
+            "enum": ["client_certificate", "token_claim", "unknown"],
             "description": "token_claim 是尚待远端认证的令牌声明，不能当作已验证凭证"
           },
           "notBefore": {
@@ -19915,9 +18241,7 @@
             "$ref": "#/components/schemas/ConnectionPreviewDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "ConnectClusterDto": {
         "type": "object",
@@ -19942,9 +18266,7 @@
             "description": "预览并明确确认的新 CA SHA256 摘要"
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "KubernetesIdentityDto": {
         "type": "object",
@@ -19956,10 +18278,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "kubeSystemUid",
-          "caFingerprint"
-        ]
+        "required": ["kubeSystemUid", "caFingerprint"]
       },
       "KubernetesPermissionCheckDto": {
         "type": "object",
@@ -19988,11 +18307,7 @@
           },
           "evidence": {
             "type": "string",
-            "enum": [
-              "successful_request",
-              "self_subject_access_review",
-              "unknown"
-            ]
+            "enum": ["successful_request", "self_subject_access_review", "unknown"]
           },
           "errorCode": {
             "type": "string",
@@ -20025,10 +18340,7 @@
             }
           }
         },
-        "required": [
-          "clusterWideAdmin",
-          "checks"
-        ]
+        "required": ["clusterWideAdmin", "checks"]
       },
       "KubernetesNodeSnapshotDto": {
         "type": "object",
@@ -20130,12 +18442,7 @@
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "unavailable",
-              "forbidden",
-              "unknown"
-            ]
+            "enum": ["available", "unavailable", "forbidden", "unknown"]
           },
           "errorCode": {
             "type": "string",
@@ -20147,11 +18454,7 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "state",
-          "errorCode",
-          "observedAt"
-        ]
+        "required": ["state", "errorCode", "observedAt"]
       },
       "KubernetesIngressClassDto": {
         "type": "object",
@@ -20166,23 +18469,14 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "name",
-          "controller",
-          "isDefault"
-        ]
+        "required": ["name", "controller", "isDefault"]
       },
       "KubernetesIngressCapabilityDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "unavailable",
-              "forbidden",
-              "unknown"
-            ]
+            "enum": ["available", "unavailable", "forbidden", "unknown"]
           },
           "classes": {
             "type": "array",
@@ -20195,35 +18489,22 @@
             "nullable": true
           }
         },
-        "required": [
-          "state",
-          "classes",
-          "errorCode"
-        ]
+        "required": ["state", "classes", "errorCode"]
       },
       "KubernetesTraefikCapabilityDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "unavailable",
-              "forbidden",
-              "unknown"
-            ]
+            "enum": ["available", "unavailable", "forbidden", "unknown"]
           },
           "namespace": {
             "type": "string",
-            "enum": [
-              "kube-system"
-            ]
+            "enum": ["kube-system"]
           },
           "deployment": {
             "type": "string",
-            "enum": [
-              "traefik"
-            ]
+            "enum": ["traefik"]
           },
           "ready": {
             "type": "boolean",
@@ -20275,18 +18556,12 @@
           "volumeBindingMode": {
             "type": "string",
             "nullable": true,
-            "enum": [
-              "Immediate",
-              "WaitForFirstConsumer"
-            ]
+            "enum": ["Immediate", "WaitForFirstConsumer"]
           },
           "reclaimPolicy": {
             "type": "string",
             "nullable": true,
-            "enum": [
-              "Delete",
-              "Retain"
-            ]
+            "enum": ["Delete", "Retain"]
           },
           "allowVolumeExpansion": {
             "type": "boolean",
@@ -20307,12 +18582,7 @@
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "unavailable",
-              "forbidden",
-              "unknown"
-            ]
+            "enum": ["available", "unavailable", "forbidden", "unknown"]
           },
           "classes": {
             "type": "array",
@@ -20325,11 +18595,7 @@
             "nullable": true
           }
         },
-        "required": [
-          "state",
-          "classes",
-          "errorCode"
-        ]
+        "required": ["state", "classes", "errorCode"]
       },
       "KubernetesCapabilitiesDto": {
         "type": "object",
@@ -20347,26 +18613,14 @@
             "$ref": "#/components/schemas/KubernetesMetricsCapabilityDto"
           }
         },
-        "required": [
-          "ingress",
-          "traefik",
-          "storage",
-          "metrics"
-        ]
+        "required": ["ingress", "traefik", "storage", "metrics"]
       },
       "KubernetesWorkloadSnapshotDto": {
         "type": "object",
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "Deployment",
-              "StatefulSet",
-              "DaemonSet",
-              "Job",
-              "CronJob",
-              "Pod"
-            ]
+            "enum": ["Deployment", "StatefulSet", "DaemonSet", "Job", "CronJob", "Pod"]
           },
           "namespace": {
             "type": "string"
@@ -20430,23 +18684,11 @@
         "properties": {
           "kind": {
             "type": "string",
-            "enum": [
-              "Deployment",
-              "StatefulSet",
-              "DaemonSet",
-              "Job",
-              "CronJob",
-              "Pod"
-            ]
+            "enum": ["Deployment", "StatefulSet", "DaemonSet", "Job", "CronJob", "Pod"]
           },
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "unavailable",
-              "forbidden",
-              "unknown"
-            ]
+            "enum": ["available", "unavailable", "forbidden", "unknown"]
           },
           "listedCount": {
             "type": "number",
@@ -20462,24 +18704,14 @@
             "nullable": true
           }
         },
-        "required": [
-          "kind",
-          "state",
-          "listedCount",
-          "truncated",
-          "errorCode"
-        ]
+        "required": ["kind", "state", "listedCount", "truncated", "errorCode"]
       },
       "KubernetesWorkloadObservationDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "available",
-              "partial",
-              "unknown"
-            ]
+            "enum": ["available", "partial", "unknown"]
           },
           "items": {
             "type": "array",
@@ -20498,33 +18730,21 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "state",
-          "items",
-          "collections",
-          "observedAt"
-        ]
+        "required": ["state", "items", "collections", "observedAt"]
       },
       "KubernetesSecretsEncryptionDto": {
         "type": "object",
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "unknown"
-            ]
+            "enum": ["unknown"]
           },
           "evidence": {
             "type": "string",
-            "enum": [
-              "not_available_via_standard_api"
-            ]
+            "enum": ["not_available_via_standard_api"]
           }
         },
-        "required": [
-          "state",
-          "evidence"
-        ]
+        "required": ["state", "evidence"]
       },
       "KubernetesInspectionDto": {
         "type": "object",
@@ -20671,12 +18891,7 @@
           },
           "connectionStatus": {
             "type": "string",
-            "enum": [
-              "unverified",
-              "connected",
-              "unreachable",
-              "unknown"
-            ]
+            "enum": ["unverified", "connected", "unreachable", "unknown"]
           },
           "lastObservedAt": {
             "type": "string",
@@ -20725,10 +18940,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "CreateClusterDto": {
         "type": "object",
@@ -20765,10 +18977,7 @@
             "description": "kind=kubeconfig 的凭证引用"
           }
         },
-        "required": [
-          "name",
-          "slug"
-        ]
+        "required": ["name", "slug"]
       },
       "ClusterEnvelopeDto": {
         "type": "object",
@@ -20777,9 +18986,7 @@
             "$ref": "#/components/schemas/ClusterResponseDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "UpdateClusterDto": {
         "type": "object",
@@ -20816,9 +19023,7 @@
             "description": "S1 仅允许修改未绑定项目的未验证登记"
           }
         },
-        "required": [
-          "revision"
-        ]
+        "required": ["revision"]
       },
       "SecretResponseDto": {
         "type": "object",
@@ -20889,10 +19094,7 @@
             "$ref": "#/components/schemas/PageInfoDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "CreateSecretDto": {
         "type": "object",
@@ -20927,11 +19129,7 @@
             "format": "date-time"
           }
         },
-        "required": [
-          "name",
-          "kind",
-          "payload"
-        ]
+        "required": ["name", "kind", "payload"]
       },
       "SecretEnvelopeDto": {
         "type": "object",
@@ -20940,9 +19138,7 @@
             "$ref": "#/components/schemas/SecretResponseDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "OperationPageDto": {
         "type": "object",
@@ -20955,10 +19151,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "nextCursor",
-          "hasMore"
-        ]
+        "required": ["nextCursor", "hasMore"]
       },
       "OperationListDto": {
         "type": "object",
@@ -20973,10 +19166,7 @@
             "$ref": "#/components/schemas/OperationPageDto"
           }
         },
-        "required": [
-          "data",
-          "page"
-        ]
+        "required": ["data", "page"]
       },
       "WorkerHeartbeatDto": {
         "type": "object",
@@ -21026,23 +19216,14 @@
         "properties": {
           "status": {
             "type": "string",
-            "enum": [
-              "ready",
-              "degraded",
-              "offline",
-              "paused"
-            ]
+            "enum": ["ready", "degraded", "offline", "paused"]
           },
           "restoreLocked": {
             "type": "boolean"
           },
           "queue": {
             "type": "string",
-            "enum": [
-              "connected",
-              "disconnected",
-              "unknown"
-            ]
+            "enum": ["connected", "disconnected", "unknown"]
           },
           "queuedCount": {
             "type": "number",
@@ -21081,9 +19262,7 @@
             "$ref": "#/components/schemas/WorkerStatusDto"
           }
         },
-        "required": [
-          "data"
-        ]
+        "required": ["data"]
       },
       "DiagnosticRequestDto": {
         "type": "object",
@@ -21111,9 +19290,7 @@
           },
           "source": {
             "type": "string",
-            "enum": [
-              "operation"
-            ]
+            "enum": ["operation"]
           },
           "available": {
             "type": "boolean"
@@ -21121,24 +19298,13 @@
           "unavailableReason": {
             "type": "string",
             "nullable": true,
-            "enum": [
-              "not_started",
-              "expired",
-              "not_available"
-            ]
+            "enum": ["not_started", "expired", "not_available"]
           },
           "truncated": {
             "type": "boolean"
           }
         },
-        "required": [
-          "data",
-          "page",
-          "source",
-          "available",
-          "unavailableReason",
-          "truncated"
-        ]
+        "required": ["data", "page", "source", "available", "unavailableReason", "truncated"]
       }
     }
   }

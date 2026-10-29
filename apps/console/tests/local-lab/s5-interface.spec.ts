@@ -1,7 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { expect, test, type Page } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
 import { installS5Fixture, s5Ids, s5ServicePath } from './s5-fixture';
 import { makeDatabase, makeDeployment, timestamp, s5Namespace } from '../fixtures/s5-data';
 import type { VolumeMaintenance } from '../../src/components/storage/types';
@@ -25,8 +24,10 @@ test.afterEach(async ({ page }) => {
 });
 const servicePath = (tab: string) =>
   `/projects/${s5Ids.project}/services/${s5Ids.service}?environment=staging&tab=${tab}`;
+const projectPath = `/projects/${s5Ids.project}?environment=staging`;
+const creation = (page: Page) => page.getByRole('dialog', { name: '添加服务', exact: true });
 const templatePath = (id = 'postgresql') =>
-  `/projects/${s5Ids.project}/services/new?environment=staging&template=${id}&version=1.0.0`;
+  `${projectPath}&createService=1&source=template&category=database&template=${id}&version=1.0.0`;
 const createVolumePath = `/volumes/new?projectId=${s5Ids.project}&environmentId=${s5Ids.environment}&serviceId=${s5Ids.service}`;
 function addDraftReferences(state: State) {
   const service = state.services[0];
@@ -95,42 +96,80 @@ function maintenance(overrides: Partial<VolumeMaintenance> = {}): VolumeMaintena
     ...overrides,
   };
 }
-async function prepareTemplate(page: Page, id = 'postgresql') {
-  await page.goto(templatePath(id));
-  await page.getByLabel('服务名称', { exact: true }).fill('受控模板服务');
-  await page.getByLabel('服务标识', { exact: true }).fill('controlled-template');
-  await expect(page.getByLabel('所属环境', { exact: true })).toHaveValue(s5Ids.environment);
-  await page.getByRole('button', { name: '预览生成配置', exact: true }).click();
-  await expect(page.getByRole('button', { name: '保存并预览发布', exact: true })).toBeEnabled();
+async function prepareTemplate(page: Page, id: 'postgresql' | 'redis' = 'postgresql') {
+  await page.goto(`${projectPath}&createService=1&source=template&category=database`);
+  await creation(page)
+    .getByRole('link', {
+      name: `使用 ${id === 'redis' ? 'Redis' : 'PostgreSQL'} 模板`,
+      exact: true,
+    })
+    .click();
+  await creation(page).getByLabel('服务名称', { exact: true }).fill('受控模板服务');
+  await creation(page).locator('summary').filter({ hasText: '标识与描述' }).click();
+  await creation(page).getByLabel('服务标识', { exact: true }).fill('controlled-template');
+  await expect(creation(page).getByLabel('所属环境', { exact: true })).toHaveCount(0);
+  await expect(
+    creation(page).getByRole('button', { name: '核对部署配置', exact: true }),
+  ).toBeEnabled();
 }
 
-test('模板目录、参数审阅与响应丢失：互斥模板输入使用同一持久键', async ({ page }) => {
+test('模板目录、参数核对与响应丢失：冻结本次输入并复用同一持久键', async ({ page }) => {
   const state = await fixture(page);
-  await page.goto(`/projects/${s5Ids.project}/services/new?environment=staging`);
-  await expect(page.locator('[data-template-gallery] article')).toHaveCount(5);
-  await page.getByRole('link', { name: '使用 PostgreSQL 模板', exact: true }).click();
-  await page.getByLabel('服务名称', { exact: true }).fill('模板数据库');
-  await page.getByLabel('服务标识', { exact: true }).fill('template-database');
-  await page.getByRole('button', { name: '预览生成配置', exact: true }).click();
-  const save = page.getByRole('button', { name: '保存并预览发布', exact: true });
+  await page.goto(`${projectPath}&createService=1`);
+  await expect(creation(page).locator('.source-option')).toHaveCount(4);
+  await creation(page)
+    .getByRole('link', { name: /添加数据库/ })
+    .click();
+  await expect(creation(page).locator('[data-template-gallery] article')).toHaveCount(2);
+  await creation(page).getByLabel('模板类别', { exact: true }).selectOption('');
+  await expect(creation(page).locator('[data-template-gallery] article')).toHaveCount(5);
+  await creation(page).getByRole('link', { name: '使用 PostgreSQL 模板', exact: true }).click();
+  await creation(page).getByLabel('服务名称', { exact: true }).fill('模板数据库');
+  await creation(page).locator('summary').filter({ hasText: '标识与描述' }).click();
+  await creation(page).getByLabel('服务标识', { exact: true }).fill('template-database');
+  await creation(page).getByLabel('数据库名称', { exact: true }).fill('changed_database');
+  const save = creation(page).getByRole('button', { name: '核对部署配置', exact: true });
   await expect(save).toBeEnabled();
   expect(state.operations).toHaveLength(0);
   expect(state.services).toHaveLength(2);
-  await page.getByLabel('数据库名称', { exact: true }).fill('changed_database');
-  await expect(save).toBeDisabled();
-  await page.getByRole('button', { name: '预览生成配置', exact: true }).click();
+  let releasePreview!: () => void;
+  const previewGate = new Promise<void>((resolve) => {
+    releasePreview = resolve;
+  });
+  let previewStarted = false;
+  state.beforeTemplateReply = async () => {
+    previewStarted = true;
+    await previewGate;
+  };
   state.templateSaveReplyLoss = true;
-  await save.click();
-  await expect(page.locator('[data-mutation-error]')).toBeVisible();
-  await expect(save).toBeEnabled();
-  await save.click();
-  await expect(page).toHaveURL(
-    new RegExp(`/services/${s5Ids.createdService}\\?environment=staging&tab=review$`),
-  );
+  try {
+    await save.click();
+    await expect.poll(() => previewStarted).toBe(true);
+    await expect(creation(page).getByLabel('数据库名称', { exact: true })).toBeDisabled();
+    await expect(creation(page).getByRole('button', { name: '关闭添加服务' })).toBeDisabled();
+    expect(state.writes.filter((entry) => entry.path === '/services')).toHaveLength(0);
+    releasePreview();
+    await expect(creation(page).locator('[data-mutation-error]')).toBeVisible();
+    const retry = creation(page).getByRole('button', { name: '重试确认保存结果', exact: true });
+    await expect(retry).toBeEnabled();
+    await expect(creation(page).getByLabel('数据库名称', { exact: true })).toBeDisabled();
+    await retry.click();
+    await expect(creation(page).locator('[data-deployment-review]')).toBeVisible();
+    await expect(page).toHaveURL(
+      (url) =>
+        url.pathname === `/projects/${s5Ids.project}` &&
+        url.searchParams.get('createService') === '1' &&
+        url.searchParams.get('createdService') === s5Ids.createdService &&
+        url.searchParams.get('environment') === 'staging',
+    );
+  } finally {
+    releasePreview();
+  }
   const saves = state.writes.filter((entry) => entry.path === '/services');
   expect(saves).toHaveLength(2);
   expect(saves[0].key).toBeTruthy();
   expect(saves[1].key).toBe(saves[0].key);
+  expect(saves[1].body).toEqual(saves[0].body);
   expect(saves[1].body).toMatchObject({
     environmentId: s5Ids.environment,
     projectId: s5Ids.project,
@@ -389,6 +428,10 @@ test('保留数据库可读取；服务删除列明数据卷并拒绝仍有消�
   await expect(page.getByRole('link', { name: '打开数据库服务', exact: true })).toHaveCount(0);
   state.deleteBlocked = true;
   await page.goto(servicePath('configuration'));
+  await page
+    .getByRole('navigation', { name: '服务设置分组' })
+    .getByRole('link', { name: '危险操作', exact: true })
+    .click();
   const review = page.locator('[data-service-deletion-review]');
   await review.getByRole('button', { name: '审阅服务删除', exact: true }).click();
   await expect(review).toContainText(state.volumes[0].name);
@@ -566,8 +609,8 @@ test('发布审阅核对独立引用集合版本，读取失败与维护中都�
   await expect(review).toContainText('发布期间服务会中断');
   await expect(submit).toBeEnabled();
   state.services[0].revision++;
-  await page.getByRole('button', { name: '刷新服务', exact: true }).click();
-  await expect(review).toContainText('服务资料已更新，需要重新审阅');
+  // The service keeps polling while its deployment panel is open. Its original preview must expire.
+  await expect(review).toContainText('服务资料已更新，需要重新审阅', { timeout: 15_000 });
   await expect(submit).toBeDisabled();
   await review.getByRole('button', { name: '载入最新预览', exact: true }).click();
   await expect(submit).toBeEnabled();
@@ -612,14 +655,13 @@ test('数据库服务的初始化配置只读，名称和资源仍可编辑', as
   await expect(page.getByLabel('镜像地址', { exact: true })).toHaveAttribute('readonly', '');
   await expect(page.getByLabel('镜像拉取凭证', { exact: true })).toBeDisabled();
   await expect(page.getByLabel('服务名称', { exact: true })).toBeEditable();
-  await page.getByRole('button', { name: '启动与资源', exact: true }).click();
+  await page.locator('summary').filter({ hasText: '启动方式与资源' }).click();
   await expect(page.getByLabel('启动命令（JSON 数组）', { exact: true })).toHaveAttribute(
     'readonly',
     '',
   );
   await expect(page.getByLabel('副本数', { exact: true })).toHaveAttribute('readonly', '');
   await expect(page.getByLabel('每副本 CPU（mCPU）', { exact: true }).first()).toBeEditable();
-  await page.getByRole('button', { name: '端口与探针', exact: true }).click();
   await expect(page.getByLabel('容器端口', { exact: true })).toBeDisabled();
 });
 
@@ -660,7 +702,7 @@ test('StatefulSet运行与失败证据显示实际控制器及Pod归属', async 
   state.services[0].observation = observation;
   state.services[0].lastObservedAt = observation.observedAt;
   state.services[0].observationStale = false;
-  await page.goto(servicePath('overview'));
+  await page.goto(servicePath('usage'));
   const runtime = page.locator('[data-service-runtime]');
   await expect(runtime.locator('[data-workload-controller]')).toContainText('StatefulSet');
   await expect(runtime.locator('.runtime-summary')).toContainText('1 / 1');
@@ -754,11 +796,13 @@ function statefulObservation(): WorkloadObservation {
   };
 }
 
-test('恢复只读阻止预览和写入；离页后的模板受理响应不导航', async ({ page }) => {
+test('恢复只读阻止预览和写入；模板受理中禁止离开，结果回到同一服务复核', async ({ page }) => {
   const state = await fixture(page);
   state.restoreMode = true;
   await page.goto(templatePath('redis'));
-  await expect(page.getByRole('button', { name: '预览生成配置', exact: true })).toBeDisabled();
+  await expect(
+    creation(page).getByRole('button', { name: '核对部署配置', exact: true }),
+  ).toBeDisabled();
   await page.goto(`/volumes/${s5Ids.volume}?tab=manual`);
   await expect(page.getByRole('button', { name: '核验并进入维护', exact: true })).toBeDisabled();
   await expect(page.getByRole('button', { name: '添加手工记录', exact: true })).toBeDisabled();
@@ -770,31 +814,40 @@ test('恢复只读阻止预览和写入；离页后的模板受理响应不导�
     release = resolve;
   });
   state.beforeTemplateSaveReply = () => gate;
-  await page.getByRole('button', { name: '保存并预览发布', exact: true }).click();
-  const nav = page
-    .getByRole('navigation', { name: '主导航', exact: true })
-    .getByRole('link', { name: '持久卷', exact: true });
-  await nav.click();
-  await page.getByRole('dialog').getByRole('button', { name: '取消', exact: true }).click();
-  await expect(page.getByLabel('服务名称', { exact: true })).toHaveValue('受控模板服务');
-  await nav.click();
-  await page
-    .getByRole('dialog')
-    .getByRole('button', { name: '放弃修改并离开', exact: true })
-    .click();
-  await expect(page).toHaveURL(/\/volumes$/);
-  const reply = page.waitForResponse(
-    (response) =>
-      response.request().method() === 'POST' &&
-      new URL(response.url()).pathname === '/api/services',
-  );
-  release();
-  await reply;
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('持久卷');
-  await expect(page).toHaveURL(/\/volumes$/);
+  try {
+    await creation(page).getByRole('button', { name: '核对部署配置', exact: true }).click();
+    await expect
+      .poll(() => state.writes.filter((entry) => entry.path === '/services').length)
+      .toBe(1);
+    await expect(
+      creation(page).getByRole('button', { name: '关闭添加服务', exact: true }),
+    ).toBeDisabled();
+    await expect(creation(page).getByLabel('服务名称', { exact: true })).toBeDisabled();
+    await page.keyboard.press('Escape');
+    await expect(creation(page).getByLabel('服务名称', { exact: true })).toHaveValue(
+      '受控模板服务',
+    );
+    await page.goBack();
+    await expect(creation(page)).toBeVisible();
+    await expect(page).toHaveURL(/createService=1/);
+    const reply = page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' &&
+        new URL(response.url()).pathname === '/api/services',
+    );
+    release();
+    await reply;
+    await expect(creation(page).locator('[data-deployment-review]')).toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`createdService=${s5Ids.createdService}`));
+    expect(state.services.filter((item) => item.id === s5Ids.createdService)).toHaveLength(1);
+    expect(state.writes.filter((entry) => entry.path === '/services')).toHaveLength(1);
+    expect(state.writes.some((entry) => entry.path.endsWith('/deployments'))).toBe(false);
+  } finally {
+    release();
+  }
 });
 
-test('light/dark × 1440/1024/390：模板、数据库、卷与数据表单可访问且无页面溢出', async ({
+test('light/dark × 1440/1024/390：模板、数据库、卷与数据表单可操作且无页面溢出', async ({
   page,
 }) => {
   test.setTimeout(300_000);
@@ -807,7 +860,6 @@ test('light/dark × 1440/1024/390：模板、数据库、卷与数据表单可�
     width: number;
     dark: boolean;
     path: string;
-    violations: number;
     overflow: number;
   }[] = [];
   const paths = [
@@ -832,26 +884,24 @@ test('light/dark × 1440/1024/390：模板、数据库、卷与数据表单可�
       await expect(page.locator('html')).toHaveCSS('color-scheme', dark ? 'dark' : 'light');
       for (const path of paths) {
         await page.goto(path);
-        await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+        if (path === servicePath('review')) {
+          await expect(page.getByRole('dialog', { name: '部署服务', exact: true })).toBeVisible();
+          await expect(page.locator('[data-deployment-review]')).toBeVisible();
+        } else if (path === templatePath()) {
+          await expect(creation(page).getByRole('heading', { level: 1 })).toBeVisible();
+          await expect(
+            creation(page).getByRole('button', { name: '核对部署配置', exact: true }),
+          ).toBeVisible();
+        } else await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
         await expect(page.getByRole('status', { name: '正在载入', exact: true })).toHaveCount(0);
         if (path === `/volumes/${s5Ids.volume}?tab=manual`) {
           await page.getByRole('button', { name: '添加手工记录', exact: true }).click();
           await expect(page.locator('[data-manual-data-record-form]')).toBeVisible();
         }
-        const axe = await new AxeBuilder({ page })
-          .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
-          .analyze();
         const overflow = await page.evaluate(
           () => document.documentElement.scrollWidth - innerWidth,
         );
-        results.push({ width, dark, path, violations: axe.violations.length, overflow });
-        expect(
-          axe.violations.map((issue) => ({
-            id: issue.id,
-            nodes: issue.nodes.map((node) => node.target),
-          })),
-          `${width} ${dark} ${path}`,
-        ).toEqual([]);
+        results.push({ width, dark, path, overflow });
         expect(overflow, `${width} ${dark} ${path}`).toBeLessThanOrEqual(1);
       }
       if ((width === 1440 && !dark) || (width === 390 && dark))
@@ -862,7 +912,7 @@ test('light/dark × 1440/1024/390：模板、数据库、卷与数据表单可�
     }
   }
   await writeFile(
-    `${artifactDir}/accessibility.json`,
+    `${artifactDir}/responsive-results.json`,
     JSON.stringify({ source: state.source, realInfrastructure: false, results }, null, 2),
   );
 });

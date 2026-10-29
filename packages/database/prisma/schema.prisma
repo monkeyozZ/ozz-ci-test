@@ -796,7 +796,7 @@ model DeploymentDatabaseReference {
   @@index([databaseInstanceId])
 }
 
-// Used by synchronous, multi-object commands (template drafts), not task queues.
+// Used by synchronous project/service creation, including template drafts, not task queues.
 // Public response only: no generated credential material is ever stored here.
 model CommandReceipt {
   id               String @id @default(uuid()) @db.Uuid

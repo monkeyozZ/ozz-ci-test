@@ -650,6 +650,20 @@ describe('S5 template drafts and generated database identities', () => {
       });
       expect(conflict.statusCode).toBe(409);
       expect(conflict.json().code).toBe('IDEMPOTENCY_CONFLICT');
+      const changedSource = await app.inject({
+        method: 'POST',
+        url: '/api/services',
+        headers: { ...session.headers, 'idempotency-key': key },
+        payload: {
+          environmentId: input.environmentId,
+          name: 'Image instead of the original database',
+          slug: 'another-image-service',
+          configuration: { image: 'nginx:1.27' },
+        },
+      });
+      expect(changedSource.statusCode, changedSource.body).toBe(409);
+      expect(changedSource.json().code).toBe('IDEMPOTENCY_CONFLICT');
+      expect(await db.service.count()).toBe(1);
       expect(await db.databaseInstance.count()).toBe(1);
     },
   );

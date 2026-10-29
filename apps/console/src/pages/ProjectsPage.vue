@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { Plus, Search, ArrowUpRight, Layers3, RefreshCw, FolderKanban } from '@lucide/vue';
+import { Plus, Search, ArrowUpRight, Layers3, RefreshCw, FolderKanban, Package } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import QueryState from '@/components/QueryState.vue';
@@ -36,9 +36,12 @@ const filtered = computed(() =>
   <div class="page-head">
     <div>
       <h1>我的项目</h1>
-      <p>从项目进入环境，查看它们固定使用的承载目标。</p>
+      <p>把应用和它需要的数据库放在一起。</p>
     </div>
     <div class="actions">
+      <Button variant="ghost" as-child
+        ><RouterLink to="/settings?tab=resources"><Package />所有资源</RouterLink></Button
+      >
       <Button
         variant="outline"
         size="icon"
@@ -83,7 +86,7 @@ const filtered = computed(() =>
         <RouterLink
           v-for="project in filtered"
           :key="project.id"
-          :to="`/projects/${project.id}`"
+          :to="{ path: `/projects/${project.id}`, query: { openService: '1' } }"
           class="project-card"
         >
           <div class="flex items-start justify-between gap-3">
@@ -122,7 +125,7 @@ const filtered = computed(() =>
       <EmptyState
         :icon="FolderKanban"
         title="从第一个项目开始"
-        description="先选择已登记的集群，再创建项目。production 环境会一同建立。"
+        description="选择一个部署位置，接着添加应用或数据库。"
         ><Button v-if="!auth.restoreMode" as-child
           ><RouterLink to="/projects/new"><Plus />创建项目</RouterLink></Button
         ></EmptyState

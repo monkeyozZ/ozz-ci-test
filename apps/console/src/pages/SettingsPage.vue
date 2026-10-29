@@ -14,6 +14,14 @@ import {
   Eye,
   EyeOff,
   RefreshCw,
+  Package,
+  Layers3,
+  Database,
+  HardDrive,
+  Globe,
+  History,
+  Activity,
+  ChevronRight,
 } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -36,6 +44,61 @@ const isViewActive = useViewScope();
 const route = useRoute();
 const showNetworking = computed(() => route.query.tab === 'network');
 const showGit = computed(() => route.query.tab === 'git');
+const showResources = computed(() => route.query.tab === 'resources');
+const resourceGroups = [
+  {
+    title: '应用与数据',
+    items: [
+      {
+        to: '/services',
+        label: '全部服务',
+        description: '跨项目查看应用、来源与运行状态。',
+        icon: Package,
+      },
+      {
+        to: '/templates',
+        label: '服务模板',
+        description: 'Docker、应用示例、PostgreSQL 与 Redis。',
+        icon: Layers3,
+      },
+      {
+        to: '/databases',
+        label: '数据库',
+        description: '连接引用、维护与备份记录。',
+        icon: Database,
+      },
+      {
+        to: '/volumes',
+        label: '持久卷',
+        description: '使用中的数据卷与服务删除后保留的数据。',
+        icon: HardDrive,
+      },
+      {
+        to: '/domains',
+        label: '域名与网络',
+        description: '域名路由、DNS 和证书检查。',
+        icon: Globe,
+      },
+    ],
+  },
+  {
+    title: '发布与运行',
+    items: [
+      {
+        to: '/deployments',
+        label: '部署与 Git 事件',
+        description: '发布结果、构建记录与 Webhook 事件。',
+        icon: History,
+      },
+      {
+        to: '/operations',
+        label: '操作任务',
+        description: '查看诊断、停启及其他运维任务。',
+        icon: Activity,
+      },
+    ],
+  },
+];
 const settingsNavigation = useActiveTabVisibility(() => route.query.tab);
 const auth = useAuthStore();
 const ui = useUiStore();
@@ -191,8 +254,8 @@ watch(
 <template>
   <div class="page-head">
     <div>
-      <h1>设置与凭证</h1>
-      <p>管理平台入口、Git 与构建集成、外观偏好和连接凭证。</p>
+      <h1>设置</h1>
+      <p>管理连接、发布集成与工作区资源。</p>
     </div>
   </div>
   <nav ref="settingsNavigation" class="page-tabs" aria-label="设置页面">
@@ -208,8 +271,14 @@ watch(
     <RouterLink
       to="/settings"
       class="page-tab"
-      :aria-current="!showNetworking && !showGit ? 'page' : undefined"
+      :aria-current="!showNetworking && !showGit && !showResources ? 'page' : undefined"
       >外观与凭证</RouterLink
+    >
+    <RouterLink
+      to="/settings?tab=resources"
+      class="page-tab"
+      :aria-current="showResources ? 'page' : undefined"
+      >资源与任务</RouterLink
     >
   </nav>
   <div v-if="showNetworking" class="stack">
@@ -217,6 +286,19 @@ watch(
     <ClusterNetworkingSettings />
   </div>
   <GitBuildIntegrations v-else-if="showGit" />
+  <div v-else-if="showResources" class="stack max-w-4xl">
+    <section v-for="group in resourceGroups" :key="group.title">
+      <h2 class="mb-4">{{ group.title }}</h2>
+      <RouterLink v-for="item in group.items" :key="item.to" :to="item.to" class="resource-entry">
+        <component :is="item.icon" class="size-5 text-muted-foreground" />
+        <div class="min-w-0 flex-1">
+          <h3>{{ item.label }}</h3>
+          <p class="meta mt-1">{{ item.description }}</p>
+        </div>
+        <ChevronRight class="size-4 text-muted-foreground" />
+      </RouterLink>
+    </section>
+  </div>
   <div v-else class="stack">
     <section class="panel">
       <div class="section-head">
@@ -491,6 +573,17 @@ watch(
   </div>
 </template>
 <style scoped>
+.resource-entry {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+.resource-entry:hover {
+  background: var(--secondary);
+}
 .theme-options {
   display: flex;
   flex-wrap: wrap;

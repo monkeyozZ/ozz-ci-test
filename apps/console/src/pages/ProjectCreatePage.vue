@@ -2,7 +2,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useMutation } from '@tanstack/vue-query';
-import { ChevronRight, Plus, Layers3, Check, Info, LoaderCircle } from '@lucide/vue';
+import { ChevronRight, Plus, Layers3, Info, LoaderCircle } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -10,13 +10,13 @@ import QueryState from '@/components/QueryState.vue';
 import EmptyState from '@/components/EmptyState.vue';
 import MutationError from '@/components/MutationError.vue';
 import StatusBadge from '@/components/StatusBadge.vue';
-import { api } from '@/lib/api';
-import { useCollection, invalidateCollection } from '@/lib/query';
+import { api, ApiError } from '@/lib/api';
+import { useCollection, invalidateCollection, queryClient } from '@/lib/query';
 import { useDirtyForm } from '@/composables/useDirtyForm';
 import { useUiStore } from '@/stores/ui';
 import { useViewScope } from '@/composables/useViewScope';
 import { useAuthStore } from '@/stores/auth';
-import { idempotencyKey, slugify } from '@/lib/utils';
+import { idempotencyKey, resourceSlug } from '@/lib/utils';
 import type { Cluster, Project } from '@/lib/types';
 const isViewActive = useViewScope();
 const route = useRoute();
@@ -24,10 +24,12 @@ const router = useRouter();
 const ui = useUiStore();
 const auth = useAuthStore();
 const clusters = useCollection<Cluster>('/clusters');
+const key = idempotencyKey();
+const suffix = key.replace(/-/g, '').slice(0, 6);
 const form = reactive({
   clusterId: String(route.query.clusterId ?? ''),
   name: '',
-  slug: '',
+  slug: resourceSlug('', suffix, 'project'),
   description: '',
 });
 const { dirty, markClean } = useDirtyForm(form, '新项目');
@@ -35,28 +37,92 @@ const slugEdited = ref(false);
 watch(
   () => form.name,
   (name) => {
-    if (!slugEdited.value) form.slug = slugify(name);
+    if (!slugEdited.value) form.slug = resourceSlug(name, suffix, 'project');
   },
 );
 const selected = computed(() =>
   clusters.items.value.find((cluster) => cluster.id === form.clusterId),
 );
-const key = idempotencyKey();
+const uncertain = ref(false);
+const createdProject = ref<Project | null>(null);
+const composing = ref(false);
+let compositionEndedAt = 0;
+let payload: typeof form | undefined;
+watch(
+  [clusters.items, clusters.isFetching],
+  () => {
+    if (
+      !form.clusterId &&
+      clusters.items.value.length === 1 &&
+      !clusters.hasNextPage.value &&
+      !clusters.error.value
+    ) {
+      form.clusterId = clusters.items.value[0]!.id;
+      if (!form.name && !form.description && !slugEdited.value) markClean();
+    } else if (
+      form.clusterId &&
+      !selected.value &&
+      clusters.hasNextPage.value &&
+      !clusters.isFetching.value &&
+      !clusters.error.value
+    ) {
+      void clusters.fetchNextPage({ cancelRefetch: false });
+    }
+  },
+  { immediate: true },
+);
+async function openFirstService(project: Project) {
+  await router.push({
+    path: `/projects/${project.id}/services/new`,
+    query: { environment: 'production', first: '1' },
+  });
+}
 const create = useMutation({
-  mutationFn: () =>
-    api.create<Project>(
-      '/projects',
-      { ...form, description: form.description.trim() || undefined },
-      key,
-    ),
+  mutationFn: () => api.create<Project>('/projects', payload!, key),
   onSuccess: async (project) => {
+    createdProject.value = project;
+    uncertain.value = false;
     markClean();
+    queryClient.setQueryData(['project', project.id], project);
     await invalidateCollection('/projects');
     if (!isViewActive()) return;
-    ui.toast('项目已创建，production 环境已保存。');
-    await router.push(`/projects/${project.id}`);
+    ui.toast('项目已创建，添加第一个服务。');
+    await openFirstService(project);
+  },
+  onError: (error) => {
+    uncertain.value =
+      !createdProject.value &&
+      (!(error instanceof ApiError) || error.status === 0 || error.status >= 500);
   },
 });
+function submit() {
+  if (
+    create.isPending.value ||
+    auth.restoreMode ||
+    (!selected.value && !uncertain.value && !createdProject.value) ||
+    composing.value ||
+    Date.now() - compositionEndedAt < 80
+  )
+    return;
+  if (createdProject.value) {
+    void openFirstService(createdProject.value);
+    return;
+  }
+  if (!uncertain.value || !payload)
+    payload = {
+      ...form,
+      name: form.name.trim() || `新项目 ${suffix.slice(0, 4)}`,
+      description: form.description.trim(),
+    };
+  create.mutate();
+}
+function revealInvalid(event: Event) {
+  let details = (event.target as HTMLElement).closest('details');
+  while (details) {
+    details.open = true;
+    details = details.parentElement?.closest('details') ?? null;
+  }
+}
 </script>
 <template>
   <nav class="breadcrumbs" aria-label="面包屑">
@@ -67,15 +133,24 @@ const create = useMutation({
   <div class="page-head">
     <div>
       <h1>创建项目</h1>
-      <p>先选择承载目标，再填写项目信息。</p>
+      <p>选择部署位置，创建后直接添加服务。</p>
     </div>
     <span v-if="dirty" class="badge">尚未保存</span>
   </div>
-  <div class="split">
-    <form class="stack" @submit.prevent="create.mutate()">
+  <div class="max-w-3xl mx-auto">
+    <form
+      class="stack"
+      @submit.prevent="submit"
+      @invalid.capture="revealInvalid"
+      @compositionstart="composing = true"
+      @compositionend="
+        composing = false;
+        compositionEndedAt = Date.now();
+      "
+    >
       <section class="panel">
         <div class="section-head">
-          <h2><span class="step-number">1</span>选择承载目标</h2>
+          <h2>选择部署位置</h2>
           <Button v-if="!auth.restoreMode" as-child variant="outline" size="sm"
             ><RouterLink :to="{ path: '/clusters/new', query: { returnTo: '/projects/new' } }"
               ><Plus />登记集群</RouterLink
@@ -90,7 +165,7 @@ const create = useMutation({
           <fieldset
             v-if="clusters.items.value.length"
             class="target-list"
-            :disabled="create.isPending.value || auth.restoreMode"
+            :disabled="create.isPending.value || uncertain || auth.restoreMode"
           >
             <legend class="sr-only">选择一个已登记集群</legend>
             <label
@@ -136,81 +211,91 @@ const create = useMutation({
         <div v-if="selected" class="notice mt-4">
           <Info />
           <p>
-            项目创建后固定使用 <strong>{{ selected.name }}</strong
-            >，所有环境继承该目标。{{
-              selected.connectionStatus === 'unverified' ? '连接与运行能力仍待验证。' : ''
-            }}
+            项目内的服务将部署到 <strong>{{ selected.name }}</strong
+            >。{{ selected.connectionStatus === 'unverified' ? '连接与运行能力仍待验证。' : '' }}
           </p>
         </div>
       </section>
       <section class="panel">
-        <h2 class="mb-6"><span class="step-number">2</span>项目信息</h2>
-        <fieldset class="stack" :disabled="create.isPending.value || auth.restoreMode">
-          <div class="form-grid">
-            <div class="field">
-              <label for="project-name">项目名称</label
-              ><Input
-                id="project-name"
-                v-model="form.name"
-                required
-                maxlength="100"
-                autocomplete="off"
-                placeholder="例如：我的博客"
-              />
-            </div>
-            <div class="field">
-              <label for="project-slug">项目标识</label
-              ><Input
-                id="project-slug"
-                v-model="form.slug"
-                required
-                maxlength="63"
-                pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
-                autocomplete="off"
-                placeholder="my-blog"
-                aria-describedby="project-slug-hint"
-                @input="slugEdited = true"
-              />
-              <p id="project-slug-hint" class="field-hint">
-                小写字母、数字与连字符，保存后保持固定。
-              </p>
-            </div>
-          </div>
+        <fieldset class="stack" :disabled="create.isPending.value || uncertain || auth.restoreMode">
           <div class="field">
-            <label for="project-description">描述 <span class="meta">（选填）</span></label
-            ><Textarea
-              id="project-description"
-              v-model="form.description"
-              maxlength="1000"
-              rows="3"
+            <label for="project-name">项目名称 <span class="meta">（选填）</span></label
+            ><Input
+              id="project-name"
+              v-model="form.name"
+              maxlength="100"
+              autocomplete="off"
+              :placeholder="`新项目 ${suffix.slice(0, 4)}`"
             />
+            <p class="field-hint">留空会使用默认名称，之后可以修改。</p>
           </div>
-          <p class="meta flex items-center gap-2">
-            <Check class="size-4" />一并创建默认 production 环境。
-          </p>
+          <details class="advanced-project">
+            <summary>更多设置</summary>
+            <div class="stack mt-5">
+              <div class="field">
+                <label for="project-slug">项目标识</label
+                ><Input
+                  id="project-slug"
+                  v-model="form.slug"
+                  required
+                  maxlength="63"
+                  pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
+                  autocomplete="off"
+                  placeholder="my-blog"
+                  aria-describedby="project-slug-hint"
+                  @input="slugEdited = true"
+                />
+                <p id="project-slug-hint" class="field-hint">
+                  小写字母、数字与连字符，保存后保持固定。
+                </p>
+              </div>
+              <div class="field">
+                <label for="project-description">描述 <span class="meta">（选填）</span></label
+                ><Textarea
+                  id="project-description"
+                  v-model="form.description"
+                  maxlength="1000"
+                  rows="3"
+                />
+              </div>
+            </div>
+          </details>
         </fieldset>
+        <div v-if="uncertain" class="notice notice-warning mt-4">
+          <Info />
+          <p>创建结果暂未确认。重试会核对同一次请求，避免重复创建。</p>
+        </div>
         <MutationError class="mt-4" :error="create.error.value" />
         <div class="form-footer">
           <Button as-child variant="outline"><RouterLink to="/projects">取消</RouterLink></Button
-          ><Button type="submit" :disabled="create.isPending.value || !selected || auth.restoreMode"
+          ><Button
+            type="submit"
+            :disabled="
+              create.isPending.value ||
+              (!selected && !uncertain && !createdProject) ||
+              auth.restoreMode
+            "
             ><LoaderCircle v-if="create.isPending.value" class="animate-spin" />{{
-              create.isPending.value ? '正在创建…' : '创建项目'
+              create.isPending.value
+                ? '正在创建…'
+                : uncertain
+                  ? '重试确认创建结果'
+                  : createdProject
+                    ? '添加第一个服务'
+                    : '创建项目'
             }}</Button
           >
         </div>
       </section>
     </form>
-    <aside class="creation-aside">
-      <Layers3 class="size-5 text-primary mb-4" />
-      <h2>一个项目，一处承载目标</h2>
-      <p class="mt-3 muted">production 与 staging 使用同一集群，分别保存各自的环境配置。</p>
-      <div class="my-6 h-px bg-border" />
-      <h3>需要不同集群？</h3>
-      <p class="mt-2 muted">分别创建项目，让资源归属和操作范围保持清晰。</p>
-    </aside>
   </div>
 </template>
 <style scoped>
+.advanced-project summary {
+  cursor: pointer;
+  color: var(--muted-foreground);
+  padding: 0.5rem 0;
+}
 .step-number {
   display: inline-grid;
   place-items: center;

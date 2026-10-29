@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { creationStepQuery } from '@/composables/useCreationDialogState';
 import { Package, Plus, RefreshCw, Search, ArrowUpRight, Activity } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,6 +26,7 @@ const props = withDefaults(
   { heading: '服务', showContext: false },
 );
 const auth = useAuthStore();
+const route = useRoute();
 const search = ref('');
 const filters = computed(() => ({
   ...(props.projectId ? { projectId: props.projectId } : {}),
@@ -35,8 +38,11 @@ const collection = useCollection<Service>('/services', filters, true, { refetchI
 const createLocation = computed(() =>
   props.projectId && props.environmentId && props.environmentSlug
     ? {
-        path: `/projects/${props.projectId}/services/new`,
-        query: { environment: props.environmentSlug },
+        path:
+          route.params.projectId === props.projectId ? route.path : `/projects/${props.projectId}`,
+        query: creationStepQuery(route.params.projectId === props.projectId ? route.query : {}, {
+          environment: props.environmentSlug,
+        }),
       }
     : null,
 );
@@ -46,7 +52,9 @@ const createLocation = computed(() =>
     <div class="section-head">
       <div>
         <h2>{{ heading }}</h2>
-        <p class="meta mt-1">已载入 {{ collection.items.value.length }} 个服务</p>
+        <p v-if="collection.items.value.length" class="meta mt-1">
+          已载入 {{ collection.items.value.length }} 个服务
+        </p>
       </div>
       <div class="actions">
         <Button
@@ -56,7 +64,9 @@ const createLocation = computed(() =>
           :disabled="collection.isFetching.value"
           @click="collection.refetch()"
           ><RefreshCw /></Button
-        ><Button v-if="createLocation && !auth.restoreMode" as-child
+        ><Button
+          v-if="createLocation && !auth.restoreMode && (collection.items.value.length || search)"
+          as-child
           ><RouterLink :to="createLocation"><Plus />添加服务</RouterLink></Button
         >
       </div>
@@ -137,12 +147,10 @@ const createLocation = computed(() =>
       <EmptyState
         v-else
         :icon="Package"
-        :title="search ? '没有匹配的服务' : '在这个环境中部署第一个服务'"
-        :description="
-          search ? '试试其他名称或标识。' : '从一个 Docker 镜像开始，配置会继承项目的固定集群。'
-        "
+        :title="search ? '没有匹配的服务' : '添加第一个服务'"
+        :description="search ? '试试其他名称或标识。' : '从 GitHub、Docker 镜像或模板开始。'"
         ><Button v-if="createLocation && !auth.restoreMode && !search" as-child
-          ><RouterLink :to="createLocation"><Plus />从镜像添加服务</RouterLink></Button
+          ><RouterLink :to="createLocation"><Plus />添加服务</RouterLink></Button
         ></EmptyState
       >
       <Button

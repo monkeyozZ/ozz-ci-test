@@ -1,4 +1,10 @@
-import { createCipheriv, createDecipheriv, randomBytes } from 'node:crypto';
+import {
+  createCipheriv,
+  createDecipheriv,
+  createHmac,
+  randomBytes,
+  timingSafeEqual,
+} from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -62,6 +68,34 @@ export function readMasterKeys(file: string): MasterKeys {
 
 export class SecretCipher {
   constructor(private readonly masterKeys: MasterKeys) {}
+
+  /** Request fingerprints use a separate derived key and unambiguous purpose boundary. */
+  private fingerprintForKey(key: Buffer, purpose: string, value: string): Buffer {
+    const fingerprintKey = createHmac('sha256', key)
+      .update('ozz.request-fingerprint.key.v1')
+      .digest();
+    return createHmac('sha256', fingerprintKey)
+      .update(JSON.stringify([purpose, value]))
+      .digest();
+  }
+
+  requestFingerprint(purpose: string, value: string): string {
+    return this.fingerprintForKey(
+      this.masterKeys.keys.get(this.masterKeys.activeVersion)!,
+      purpose,
+      value,
+    ).toString('hex');
+  }
+
+  /** Retained decryption keys also keep earlier request receipts replayable after rotation. */
+  matchesRequestFingerprint(purpose: string, value: string, fingerprint: string): boolean {
+    if (!/^[0-9a-f]{64}$/.test(fingerprint)) return false;
+    const expected = Buffer.from(fingerprint, 'hex');
+    for (const key of this.masterKeys.keys.values()) {
+      if (timingSafeEqual(this.fingerprintForKey(key, purpose, value), expected)) return true;
+    }
+    return false;
+  }
 
   encrypt(kind: string, payload: Record<string, unknown>) {
     const keyVersion = this.masterKeys.activeVersion;

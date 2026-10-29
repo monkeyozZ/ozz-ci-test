@@ -39,6 +39,23 @@ export function slugify(value: string) {
     .slice(0, 63);
 }
 
+/** Generate an identifier from a name and a suffix kept for the lifetime of the draft. */
+export function resourceSlug(value: string, suffix: string, prefix = 'service') {
+  const fallback =
+    slugify(prefix)
+      .replace(/^[^a-z]+/, '')
+      .replace(/-+$/, '') || 'service';
+  const tail = suffix
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '')
+    .slice(0, 12);
+  let name = slugify(value).replace(/-+$/, '') || fallback;
+  if (!/^[a-z]/.test(name)) name = `${fallback}-${name}`;
+  const length = 63 - (tail ? tail.length + 1 : 0);
+  const base = name.slice(0, length).replace(/-+$/, '');
+  return tail ? `${base}-${tail}` : base;
+}
+
 export function idempotencyKey() {
   return crypto.randomUUID();
 }

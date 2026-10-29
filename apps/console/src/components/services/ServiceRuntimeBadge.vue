@@ -4,7 +4,7 @@ import { Check, CircleHelp, CirclePause, AlertCircle, Clock3, PackageOpen } from
 import { useObservationClock } from '@/components/infrastructure/useObservationClock';
 import { sampleFreshness } from '@/components/infrastructure/format';
 import type { Service } from './types';
-const props = defineProps<{ service: Service }>();
+const props = defineProps<{ service: Service; compact?: boolean }>();
 const now = useObservationClock();
 const status = computed(() =>
   props.service.runtimeState !== 'unpublished' &&
@@ -25,5 +25,19 @@ const states = {
 const state = computed(() => states[status.value]);
 </script>
 <template>
-  <span :class="['badge', state.tone]"><component :is="state.icon" />{{ state.text }}</span>
+  <span
+    :class="['badge', state.tone, { 'compact-badge': compact }]"
+    :title="compact ? state.text : undefined"
+    ><component :is="state.icon" /><span :class="{ 'sr-only': compact }">{{
+      state.text
+    }}</span></span
+  >
 </template>
+<style scoped>
+.compact-badge {
+  padding: 0.125rem;
+  background: transparent;
+  border: 0;
+  flex-shrink: 0;
+}
+</style>

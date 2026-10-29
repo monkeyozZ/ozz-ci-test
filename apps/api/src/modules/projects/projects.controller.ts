@@ -1,7 +1,20 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Headers,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import {
   ApiCookieAuth,
   ApiCreatedResponse,
+  ApiHeader,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation,
@@ -17,6 +30,7 @@ import {
   UpdateProjectDto,
 } from './project.dto.js';
 import { ProjectsService } from './projects.service.js';
+import { infrastructureActor, type InfrastructureRequest } from '../infrastructure/actor.js';
 
 @ApiTags('projects')
 @ApiCookieAuth()
@@ -35,9 +49,19 @@ export class ProjectsController {
 
   @Post()
   @ApiOperation({ operationId: 'createProject' })
+  @ApiHeader({
+    name: 'idempotency-key',
+    required: false,
+    description: '重试同一份创建请求时保留此键，返回原项目和默认环境的创建结果',
+  })
   @ApiCreatedResponse({ type: ProjectEnvelopeDto })
-  create(@Body() input: CreateProjectDto): Promise<ProjectEnvelopeDto> {
-    return this.service.create(input);
+  @ApiResponse({ status: 409, description: '标识已被使用或幂等键对应另一份创建请求' })
+  create(
+    @Body() input: CreateProjectDto,
+    @Req() request: InfrastructureRequest,
+    @Headers('idempotency-key') key?: string,
+  ): Promise<ProjectEnvelopeDto> {
+    return this.service.create(input, infrastructureActor(request), key);
   }
 
   @Get(':id')

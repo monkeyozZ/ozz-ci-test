@@ -40,6 +40,8 @@
     "test:manual-data": "node --test tests/manual-data/*.test.mjs",
     "test:integration": "pnpm build && node --env-file=.env node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts",
     "test:e2e": "node scripts/run-console-e2e.mjs",
+    "test:console-fixtures": "pnpm --filter @ozz/console exec playwright test --config tests/fixtures-ci.playwright.config.ts",
+    "test:prototype": "node designs/console-v3/verification/full-index-browser.mjs",
     "check": "pnpm db:generate && pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test:unit"
   },
   "devDependencies": {

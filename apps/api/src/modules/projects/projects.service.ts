@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { createHash } from 'node:crypto';
 import { withWritableControlPlane } from '@ozz/control-plane/recovery';
+import { validateIdempotencyKey, type OperationActor } from '@ozz/control-plane/tasks';
 import { Prisma, PrismaService } from '@ozz/database';
 import { observedConnectionStatus } from '@ozz/control-plane/infrastructure';
 import { Problem } from '../../common/problem.js';
 import {
   CreateProjectDto,
+  ProjectEnvelopeDto,
   ProjectQueryDto,
   ProjectResponseDto,
   UpdateProjectDto,
@@ -78,9 +81,40 @@ export class ProjectsService {
     return { data: present(project) };
   }
 
-  create(input: CreateProjectDto) {
-    return metadataMutation(() =>
-      withWritableControlPlane(this.db, async (tx) => {
+  create(input: CreateProjectDto, actor?: OperationActor, key?: unknown) {
+    return metadataMutation(async () => {
+      const idempotencyKey = key === undefined ? null : validateIdempotencyKey(key);
+      if (idempotencyKey && !actor?.id)
+        throw new Problem(401, 'AUTH_REQUIRED', '需要有效的管理员会话。');
+      const scope = `project-create:${actor?.id ?? ''}`;
+      const requestHash = createHash('sha256')
+        .update(
+          JSON.stringify({
+            name: input.name,
+            slug: input.slug,
+            description: input.description ?? null,
+            clusterId: input.clusterId,
+          }),
+        )
+        .digest('hex');
+      return withWritableControlPlane(this.db, async (tx) => {
+        if (idempotencyKey) {
+          await tx.$executeRaw(
+            Prisma.sql`SELECT pg_advisory_xact_lock(hashtext(${scope}), hashtext(${idempotencyKey}))`,
+          );
+          const receipt = await tx.commandReceipt.findUnique({
+            where: { idempotencyScope_idempotencyKey: { idempotencyScope: scope, idempotencyKey } },
+          });
+          if (receipt) {
+            if (receipt.requestHash !== requestHash)
+              throw new Problem(
+                409,
+                'IDEMPOTENCY_CONFLICT',
+                '该幂等键已经用于另一份项目创建请求。',
+              );
+            return receipt.resultJson as unknown as ProjectEnvelopeDto;
+          }
+        }
         requireRecord(
           await tx.cluster.findUnique({ where: { id: input.clusterId }, select: { id: true } }),
           '目标集群',
@@ -95,9 +129,19 @@ export class ProjectsService {
           },
           include: INCLUDE_TARGET,
         });
-        return { data: present(project) };
-      }),
-    );
+        const result = { data: present(project) };
+        if (idempotencyKey)
+          await tx.commandReceipt.create({
+            data: {
+              idempotencyScope: scope,
+              idempotencyKey,
+              requestHash,
+              resultJson: result as unknown as Prisma.InputJsonValue,
+            },
+          });
+        return result;
+      });
+    });
   }
 
   update(id: string, input: UpdateProjectDto) {

@@ -1,12 +1,12 @@
 # G-MVP 本地联合验收最小剩余矩阵
 
-日期：2026-10-29。状态：**本地联合验收进行中。L01–L07 的具名本地范围已有通过证据，L08 真实读屏受 macOS 自动化权限阻止，仍待验。** [联合恢复](acceptance/g-mvp-recovery-joint-timing.md)完成 A 镜像/B Git 身份抽检、当前逻辑快照验证、Builder/K3s 对账及同进程完整 RTO 21.560 秒；精确物理快照 RPO 保持未知。[L07](acceptance/S6-deployment.md)的四镜像、Builder 安装包、生产安装/鉴权、两集群接入及升级回退结果保持原版本。当前资源观测与 71 项证据索引见[G-MVP 本地汇总](acceptance/G-MVP.md)；读屏尝试与状态恢复见[读屏报告](acceptance/g-mvp-screen-reader.md)；本次公开字节及临时入口核验以[外置收据](../.local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json)为准，S7 保持设计阶段。
+日期：2026-10-29。状态：**L01–L08 当前本地范围的具名证据已汇合；L08 保留资源、安全与证据核验，真实读屏部分按用户 2026-10-29 的范围决定排除。** [联合恢复](acceptance/g-mvp-recovery-joint-timing.md)完成 A 镜像/B Git 身份抽检、当前逻辑快照验证、Builder/K3s 对账及同进程完整 RTO 21.560 秒；精确物理快照 RPO 保持未知。[L07](acceptance/S6-deployment.md)的四镜像、Builder 安装包、生产安装/鉴权、两集群接入及升级回退结果保持原版本。当前资源观测与 71 项证据索引见[G-MVP 本地汇总](acceptance/G-MVP.md)；历史读屏失败与状态恢复见[读屏报告](acceptance/g-mvp-screen-reader.md)。此前公开字节及临时入口核验见[历史外置收据](../.local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json)，不覆盖本次新字节；第三轮[工程 CI](acceptance/g-mvp-ci.md)已通过，N07 在当前已交付范围记为 `pass`。本次最终字节以[外置收据](../.local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json)为准，S7 保持设计阶段。
 
 依据：[开发计划 GM.01–GM.05、P0 故障矩阵](development-plan.md)、[PRD §12.1 与 N01–N08](prd.md)、[本地优先/VPS 计划](local-test-and-vps-plan.md)及 S1–S6 验收记录。正式 G-MVP 仍要求完整 P0 和对应外部关口；本地联合验收可先形成独立证据包，不能将尚未具备的公网/云端证据改名为已通过。
 
 ## 1. 结论与最小策略
 
-S1–S5 不需要重新执行一遍。它们已分别证明真实 SSH/K3s 接入、双集群归属、镜像发布与服务操作、本地 TLS/证书故障、数据库连接、数据保留及 A→新 B 目标恢复。S6 的构建、运行故障、控制面恢复、联合计时和最终 Linux 发布/升级回退也已有对应实测；需要继续的是 **取得系统自动化授权后的真实读屏，以及外部 X01–X05 的真实资源验证**。本次公开字节扫描与临时入口关闭由独立外置收据记录。精确物理快照时刻不可由当前工具观测，保留逻辑快照和时间上下界，不把未知值写成零。
+S1–S5 不需要重新执行一遍。它们已分别证明真实 SSH/K3s 接入、双集群归属、镜像发布与服务操作、本地 TLS/证书故障、数据库连接、数据保留及 A→新 B 目标恢复。S6 的构建、运行故障、控制面恢复、联合计时和最终 Linux 发布/升级回退也已有对应实测；当前源码的工程检查已由第三轮 CI 完成；本次公开字节以对应新收据核验，**外部 X01–X05 继续等待真实资源验证**。用户于 2026-10-29 排除无障碍、辅助技术、真实读屏与 WCAG 合规（`excluded-by-user`），不再安排读屏补验；普通键盘/焦点、IME、响应式、缩放及反馈要求继续适用。历史读屏失败保留失败状态，L08 的资源、安全与证据工作保留。本次公开字节扫描须使用与最终文件逐字节对应的新收据。精确物理快照时刻不可由当前工具观测，保留逻辑快照和时间上下界，不把未知值写成零。
 
 复用按“版本＋测试层＋行为”进行：旧源码结果是历史基线，不能加总成当前源码的一次全套通过；受控协议/真实 PostgreSQL 不冒充真实进程或真实公网。若同一待测项被即将完成的 S6 证据覆盖，直接引用，取消重复执行。只有后续修改、失败或证据范围不足才补跑对应检查。
 
@@ -16,7 +16,7 @@ S1–S5 不需要重新执行一遍。它们已分别证明真实 SSH/K3s 接入
 | GM.02 镜像/Git→HTTPS | R03/R04、L01–L03、L06 | 固定源码、实际产物、真实 UI 和 stopped/running push 直接复用；joint-04 准备及四个运行窗口的 A 镜像/B Git 身份、严格 TLS 和内容抽检已汇合 | X02、X03 |
 | GM.03 数据与服务操作         | R03/R05、L03–L05 | 复用 Git 停止/恢复、Builder 故障、OOM/部分应用和 C 节点/PVC 的独立结果，汇总对应要求                                                 | X04 的物理故障域/数据恢复 |
 | GM.04 控制面故障/旧备份/升级 | R01/R05/R07、L06/L07 | 旧/最终备份、对账、恢复后 HTTPS、L07 升级回退与失败门禁已有证据；joint-04 新增逻辑快照验证、时间上下界和含 Builder/K3s 的完整同进程 RTO | X01/X04/X05 |
-| GM.05 安全/性能/UX/交付 | R01–R07、L04/L07/L08 | Builder 边界、最终包、生产鉴权及各版本安全证据已索引；当前资源仅为短时只读样本，L08 真实读屏受系统自动化权限阻止，本次最终公开字节扫描以外置收据为准 | X01–X05 对应未测范围 |
+| GM.05 安全/性能/UX/交付 | R01–R07、L04/L07/L08 | Builder 边界、最终包、生产鉴权及各版本安全证据已索引；当前资源仅为短时只读样本，L08 的读屏部分已由用户排除，资源/安全/证据核验保留；第三轮 [CI](acceptance/g-mvp-ci.md) 已通过，N07 为 `pass`；GM.05 本地证据可收口，正式状态仍为 `partial`。本次最终字节以[外置收据](../.local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json)为准 | X01–X05 对应未测范围 |
 
 ## 2. 可以直接汇总的既有证据
 
@@ -45,7 +45,7 @@ S5 的三类恢复从开始导入到正式验证为 16.305/17.585/15.811 秒，�
 | L05 OOM、部分应用与 C 节点/PVC 已分别通过        | OOM 历史诊断和 partial→拒绝重启→实际停止→拒绝恢复→显式修复已通过。C 整机停止后恢复，11 项检查确认原卷和数据保留，9 次 B 采样保持 Ready                                                                                                                                                                                                                                                                                                          | [运行故障](acceptance/g-mvp-workload-fault-local-results.json)、[C 节点结果](acceptance/g-mvp-node-persistence-local-results.json)。五个 B 样本及 C 专用样本均已实际停止；原卷、失败记录保留。C 的网络拉取失败、同 digest 缓存辅助、启动探针修正及新发布分别记录；A/B/K3s/Pebble 未重启                                                                                                                                                                                    |
 | L06 恢复、对账、HTTPS 与联合计时已通过 | 原 13 项恢复检查、旧/最终备份与原库对账、全停及重启后共 56 次应用/数据库读取保持独立。[joint-04](acceptance/g-mvp-recovery-joint-timing.md)完成当前空闲快照的实际恢复、只读 HTTPS、Builder/K3s 对账与新 generation 诊断；完整 RTO 21.559829042 秒，原站返还 13.992611750 秒另列，总窗 35.584209583 秒 | [旧恢复](acceptance/g-mvp-recovery-local-lab.md)、[独立元数据计时](acceptance/g-mvp-recovery-timing-results.json)及 joint-03 失败与跨进程返还均保留，不合并计时。逻辑快照可验证，精确物理 RPO 未知；旧任务终态化及整条 Builder 登记丢失仍无现场样本 |
 | L07 最终冻结、Linux 发布与升级回退已通过 | [最终交付报告](acceptance/S6-deployment.md)：同一冻结源码的四个 ARM64 镜像与 Builder 包；干净 Compose 完成 9 个迁移、8 项检查，生产鉴权和 A/B 严格 TLS 接入通过；四镜像包检查、OCI/Registry roundtrip 与实际 Docker digest pull 通过；S5→S6 升级、备份回退和失败门禁完成七阶段、六项检查 | [机器结果](acceptance/s6-deployment-results.json)绑定原收据、两类 manifest digest 与源包。roundtrip 阶段复用 25 个已有 blob、0 个新增上传如实记录；S5/旧失败与历史资源保持。最终 C 保留 340 镜像/106 容器/34 卷，专用 Docker 停止，Registry ACL 与 CA 目录原状态恢复。回退耗时不替代 L06 完整 RTO |
-| L08 资源与证据已汇合，真实读屏待授权补验 | L07 生产 Secure Cookie/Origin/CSRF 和源包、Builder 包、OCI 层扫描保持各自显式库存范围；[71 项索引](acceptance/g-mvp-local-results.json)汇合具名证据，[当前资源](acceptance/g-mvp-runtime-resources.md)记录约 20 秒内 5 次只读样本，区分 API/Worker、Builder Node、service cgroup 与整 VM | [reader-04](acceptance/g-mvp-screen-reader.md)实际开启旁白，首项朗读因自动化未授权（-1744）失败，0 条有效朗读、另 11 项未执行，真实朗读仍未通过；已恢复原生关闭状态、四项偏好和原前台，释放九把锁。[原读屏尝试](../apps/console/tests/artifacts/g-mvp-ui-final/README.md)和本轮全部失败保留，不能据此认定产品缺陷。旧秘密扫描不覆盖本次新字节，最终扫描以外置收据为准；短采样不证明目标容量 |
+| L08 资源、安全与证据收口；读屏部分已排除 | L07 生产 Secure Cookie/Origin/CSRF 和源包、Builder 包、OCI 层扫描保持各自显式库存范围；[71 项索引](acceptance/g-mvp-local-results.json)汇合具名证据，[当前资源](acceptance/g-mvp-runtime-resources.md)记录约 20 秒内 5 次只读样本，区分 API/Worker、Builder Node、service cgroup 与整 VM | 历史 [reader-04](acceptance/g-mvp-screen-reader.md)实际开启旁白，首项朗读因自动化未授权（-1744）失败，0 条有效朗读、另 11 项未执行；已恢复原生关闭状态、四项偏好和原前台，释放九把锁。[原读屏尝试](../apps/console/tests/artifacts/g-mvp-ui-final/README.md)及后续全部失败继续保留，不改为通过，也不据此认定产品缺陷；读屏部分现为 `excluded-by-user`，不再补验。旧秘密扫描不覆盖本次新字节，本次最终字节以[外置收据](../.local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json)为准；短采样不证明目标容量 |
 
 L05 的界限需保留：S3 已真实验证健康超时与 Worker SIGKILL，S5 已真实验证 API 暂停与 Pod 重建；这些各自有效，但不分别证明 OOM、整机节点掉线或 Secret/Service/controller 的实际部分应用。可使用同一个专用失败服务完成多个相关结果，不影响保留用户资源。
 
@@ -76,7 +76,7 @@ RPO 分别报告控制面最后一致备份时间与数据备份的实际恢复�
 
 ## 5. 最短执行顺序、限制与最终交付
 
-下一次现场验证须先具备旁白自动化权限，再补齐 **L08 真实读屏**。本轮已完成的尝试及状态恢复见[读屏报告](acceptance/g-mvp-screen-reader.md)，最终公开字节与临时入口状态以[外置核验收据](../.local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json)为准。L01–L07 的具名通过范围直接复用，[本地报告](acceptance/G-MVP.md)与 71 项机器索引已形成。2026-10-26 的[完整工程检查](acceptance/g-mvp-engineering-results.json)保持历史证据；Builder 单页清单缓存的[18 项窄回归及源码/安装产物绑定](acceptance/g-mvp-inventory-cache-engineering-results.json)、Worker 入口三个子进程回归与最终 Compose、快照观测工具的单测/PG 检查各自绑定版本，不合称一次全量通过。如后续再改产品代码，只补受影响检查。运行进程和 VM 状态在实际窗口前重新核对；真实读屏先确认桌面已解锁、系统开关和完整恢复路径。
+按用户 2026-10-29 的范围决定，L08 不再要求真实读屏；[读屏报告](acceptance/g-mvp-screen-reader.md)只保留历史尝试与恢复证据。保留的资源、安全与证据索引已按当前范围汇合；最终公开字节以[本次外置收据](../.local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json)为准。[历史外置核验收据](../.local/g-mvp-final-review-20261029-21720acd-e7bf-490b-ad7d-f03884ce0e1f/final-validation.json)不覆盖本次修订。L01–L07 的具名通过范围直接复用，[本地报告](acceptance/G-MVP.md)与 71 项机器索引已形成。2026-10-26 的[完整工程检查](acceptance/g-mvp-engineering-results.json)保持历史证据；Builder 单页清单缓存的[18 项窄回归及源码/安装产物绑定](acceptance/g-mvp-inventory-cache-engineering-results.json)、Worker 入口三个子进程回归与最终 Compose、快照观测工具的单测/PG 检查各自绑定版本，不合称一次全量通过。第三轮 [CI](acceptance/g-mvp-ci.md) 在提交 `5abe480bd12f4517e6b5beb7e3d7030856450c61` 上完成，run `40842129629` 的 21 个步骤全部成功；首轮 `40834582691` 的 lint 失败和第二轮 `40837555726` 的浏览器验证失败继续保留。原始回执与各轮边界见[CI 机器结果](acceptance/g-mvp-ci-results.json)，本轮具体测试数量不由静态发现列表推算。如后续再改产品代码，只补受影响检查；需要新的实际运行窗口时，重新核对相应进程和 VM 状态。
 
 后续公共 runtime、VM/Builder/Redis/API/Worker 启停、迁移与故障注入仍由 root 协调窗口。已完成的 Webhook 和 UI 流程直接引用既有结果；保留 state、幂等键、历史失败和全部 BuildRun。禁止通过改 DB 状态、预制产物、清空卷或重装原集群取得通过。
 
@@ -84,4 +84,4 @@ RPO 分别报告控制面最后一致备份时间与数据备份的实际恢复�
 
 已生成[本地报告](acceptance/G-MVP.md)与[71 项机器索引](acceptance/g-mvp-local-results.json)：逐项列 F01–F25、GM.01–GM.05、E01–E20/E26–E30 中的 P0 部分、N01–N08、UX01–UX08；记录版本/源码摘要、测试层、资源身份、耗时、证据路径及未测范围。原 83 条证据记录保留，证据条数不作测试总数。E21/E22、环境复制/NetworkPolicy、回滚/终端及其他 P1 增量不塞入本次 P0 通过条件。
 
-只有全部本地项完成后，报告才可写“本地联合验收完成，外部 X 项待验”；正式 G-MVP 通过仍须满足其全部条件。**L01–L07 的具名本地范围已有真实结果；L08 真实读屏因系统自动化未授权仍未通过，本次公开字节扫描与入口关闭以外置收据为准。精确物理快照 RPO 保持未知，外部 X 项等待真实资源。当前不宣称 S6 总验收或 G-MVP 已完成，S7 仍为设计阶段。**
+只有当前范围内全部本地项完成后，报告才可写“本地联合验收完成，外部 X 项待验”；正式 G-MVP 通过仍须满足其全部条件。**L01–L08 当前本地范围的具名证据已汇合；L08 保留资源、安全与证据核验，读屏部分已按用户决定排除，历史失败仍为失败。第三轮 CI 已通过，N07 在当前已交付范围记为 `pass`；GM.05 本地证据可收口，正式状态仍为 `partial`。本次最终字节以[外置收据](../.local/g-mvp-scope-ci-publication-20261029-5fcd1fb4-1af5-4f0b-8eb6-262f76824771/final-validation.json)为准。精确物理快照 RPO 保持未知，外部 X 项等待真实资源。当前不宣称 S6 总验收或 G-MVP 已完成，S7 仍为设计阶段。**

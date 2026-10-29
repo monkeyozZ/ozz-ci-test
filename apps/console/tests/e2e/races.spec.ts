@@ -14,16 +14,16 @@ test('同项目切换页签时，确认放弃会真正清除旧草稿', async ({
     await page.goto(`/projects/${project.id}?tab=settings`);
     await page.getByLabel('项目名称', { exact: true }).fill('应当放弃的中文草稿');
     await page
-      .getByRole('navigation', { name: '项目页面' })
-      .getByRole('link', { name: '环境', exact: true })
+      .getByRole('navigation', { name: '项目设置页面', exact: true })
+      .getByRole('link', { name: '环境管理', exact: true })
       .click();
     await page
       .getByRole('dialog')
       .getByRole('button', { name: '放弃修改并离开', exact: true })
       .click();
     await page
-      .getByRole('navigation', { name: '项目页面' })
-      .getByRole('link', { name: '项目设置', exact: true })
+      .getByRole('navigation', { name: '项目设置页面', exact: true })
+      .getByRole('link', { name: '项目资料', exact: true })
       .click();
     await expect(page.getByRole('dialog')).toHaveCount(0);
     await expect(page.getByLabel('项目名称', { exact: true })).toHaveValue(tag);

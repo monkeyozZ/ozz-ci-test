@@ -86,18 +86,40 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
     throw new ApiError(response.status, problem);
   }
   if (response.status === 204) return undefined as T;
-  const data = (await response.json()) as T;
+  let data: T;
+  try {
+    data = (await response.json()) as T;
+  } catch {
+    if (epoch !== sessionEpoch) throw new DOMException('会话已切换', 'AbortError');
+    if (options.signal?.aborted) throw new DOMException('已取消读取', 'AbortError');
+    throw unconfirmedResponse();
+  }
   if (epoch !== sessionEpoch) throw new DOMException('会话已切换', 'AbortError');
   return data;
 }
+function unconfirmedResponse() {
+  return new ApiError(0, {
+    code: 'RESPONSE_UNCONFIRMED',
+    detail: '未收到完整的控制面响应，请重试确认结果。',
+  });
+}
+async function envelope<T>(path: string, options: RequestOptions): Promise<T> {
+  const result = await request<Envelope<T>>(path, options);
+  if (
+    !result ||
+    typeof result !== 'object' ||
+    !Object.hasOwn(result, 'data') ||
+    result.data === undefined
+  )
+    throw unconfirmedResponse();
+  return result.data;
+}
 export const api = {
-  get: async <T>(path: string, signal?: AbortSignal) =>
-    (await request<Envelope<T>>(path, { signal })).data,
+  get: <T>(path: string, signal?: AbortSignal) => envelope<T>(path, { signal }),
   list: <T>(path: string, signal?: AbortSignal) => request<Page<T>>(path, { signal }),
-  create: async <T>(path: string, body: unknown, key?: string) =>
-    (await request<Envelope<T>>(path, { method: 'POST', body, idempotencyKey: key })).data,
-  update: async <T>(path: string, body: unknown) =>
-    (await request<Envelope<T>>(path, { method: 'PATCH', body })).data,
+  create: <T>(path: string, body: unknown, key?: string) =>
+    envelope<T>(path, { method: 'POST', body, idempotencyKey: key }),
+  update: <T>(path: string, body: unknown) => envelope<T>(path, { method: 'PATCH', body }),
   delete: (path: string, revision?: number) =>
     request<void>(revision ? `${path}?revision=${revision}` : path, { method: 'DELETE' }),
 };

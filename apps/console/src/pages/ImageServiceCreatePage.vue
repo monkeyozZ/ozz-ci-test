@@ -1,94 +1,127 @@
 <script setup lang="ts">
-import { computed, nextTick, onScopeDispose, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useMutation, useQuery } from '@tanstack/vue-query';
-import { ChevronRight, Layers3, LoaderCircle, ArrowRight, Info } from '@lucide/vue';
+import { computed, onScopeDispose, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { ArrowRight, Info, LoaderCircle } from '@lucide/vue';
 import { Button } from '@/components/ui/button';
 import QueryState from '@/components/QueryState.vue';
-import StatusBadge from '@/components/StatusBadge.vue';
 import ServiceConfigurationEditor from '@/components/services/ServiceConfigurationEditor.vue';
 import ServiceMutationError from '@/components/services/ServiceMutationError.vue';
-import {
-  draftConfiguration,
-  serviceDraft,
-  serviceLocation,
-} from '@/components/services/presentation';
+import ConfigurationReview from '@/components/services/ConfigurationReview.vue';
+import ServiceCreationFrame from '@/components/services/ServiceCreationFrame.vue';
+import { draftConfiguration, serviceDraft, taskLocation } from '@/components/services/presentation';
 import type { Service } from '@/components/services/types';
 import { api } from '@/lib/api';
-import { invalidateCollection, queryClient, useCollection } from '@/lib/query';
-import { slugify } from '@/lib/utils';
-import type { Environment, Project } from '@/lib/types';
-import { useAuthStore } from '@/stores/auth';
+import { invalidateCollection } from '@/lib/query';
 import { useDirtyForm } from '@/composables/useDirtyForm';
-import { useViewScope } from '@/composables/useViewScope';
+import { useServiceCreationContext } from '@/composables/useServiceCreationContext';
+import { revealCreationError, useServiceCreationFlow } from '@/composables/useServiceCreationFlow';
+import { useUiStore } from '@/stores/ui';
+import { creationStepQuery, useCreationBusy } from '@/composables/useCreationDialogState';
+
 const route = useRoute();
-const router = useRouter();
-const auth = useAuthStore();
-const active = useViewScope();
+const ui = useUiStore();
 const projectId = String(route.params.projectId);
 const environmentSlug = computed(() =>
   typeof route.query.environment === 'string' ? route.query.environment : 'production',
 );
-const project = useQuery({
-  queryKey: ['project', projectId],
-  queryFn: ({ signal }) => api.get<Project>(`/projects/${projectId}`, signal),
-});
-const environments = useCollection<Environment>('/environments', { projectId });
-const environment = computed(() =>
-  environments.items.value.find((value) => value.slug === environmentSlug.value),
-);
+const place = useServiceCreationContext(() => ({
+  projectId,
+  environmentSlug: environmentSlug.value,
+  environmentId:
+    typeof route.query.environmentId === 'string' ? route.query.environmentId : undefined,
+  invalid: ['environment', 'environmentId'].some(
+    (key) => route.query[key] != null && typeof route.query[key] !== 'string',
+  ),
+}));
+const flow = useServiceCreationFlow(place.context, { kind: 'image' });
 const form = ref(serviceDraft());
-const guard = useDirtyForm(form, '新服务配置');
-const localError = ref<Error | null>(null);
+const guard = useDirtyForm(form, '服务配置');
 const editor = ref<InstanceType<typeof ServiceConfigurationEditor>>();
-let generatedSlug = '';
-watch(
-  () => form.value.name,
-  (name) => {
-    if (!form.value.slug || form.value.slug === generatedSlug) {
-      generatedSlug = slugify(name);
-      form.value.slug = generatedSlug;
-    }
-  },
+const formElement = ref<HTMLFormElement>();
+const localError = ref<unknown>(null);
+const sourceLocation = computed(() => ({
+  path: route.path,
+  query: creationStepQuery(route.query),
+}));
+const review = computed(() => flow.phase.value === 'review');
+const reviewBusy = ref(false);
+useCreationBusy(() => flow.saving.value || reviewBusy.value, flow.uncertain);
+const unverified = computed(
+  () => place.context.value?.project.cluster.connectionStatus === 'unverified',
 );
-const save = useMutation({
-  gcTime: 0,
-  mutationFn: (input: {
-    environmentId: string;
-    projectId: string;
-    name: string;
-    slug: string;
-    description: string;
-    registryCredentialRefId: string | null;
-    configuration: ReturnType<typeof draftConfiguration>;
-  }) => api.create<Service>('/services', input),
-  onSuccess: async (service) => {
-    form.value = serviceDraft(service);
-    guard.markClean();
-    queryClient.setQueryData(['service', service.id], service);
-    await invalidateCollection('/services');
-    if (!active()) return;
-    await router.push(serviceLocation(service, 'review'));
-  },
-});
-async function submit() {
-  if (!environment.value || save.isPending.value || auth.restoreMode) return;
+
+function loadForm(service: Service) {
+  form.value = serviceDraft(service);
+  guard.markClean();
   localError.value = null;
-  if (editor.value?.validate && !(await editor.value.validate())) return;
+}
+watch(
+  flow.service,
+  (service) => {
+    if (service && !guard.dirty.value) loadForm(service);
+  },
+  { immediate: true },
+);
+async function back() {
+  if (!flow.service.value || reviewBusy.value || flow.saving.value) return;
+  if (review.value) {
+    loadForm(flow.service.value);
+    flow.edit();
+    return;
+  }
+  if (
+    guard.dirty.value &&
+    !(await ui.confirm({
+      title: '放弃这次配置修改？',
+      description: '返回已保存配置的部署预览。',
+      confirmText: '返回预览',
+    }))
+  )
+    return;
+  loadForm(flow.service.value);
+  await flow.showReview();
+}
+async function submit() {
+  if (
+    !place.context.value ||
+    flow.saving.value ||
+    (unverified.value && !flow.hasSavedService.value)
+  )
+    return;
+  localError.value = null;
+  const submittedPath = route.fullPath;
   try {
-    save.mutate({
-      environmentId: environment.value.id,
-      projectId,
-      name: form.value.name.trim(),
-      slug: form.value.slug,
-      description: form.value.description,
-      registryCredentialRefId: form.value.registryCredentialRefId || null,
-      configuration: draftConfiguration(form.value),
+    if (!flow.uncertain.value && !(await editor.value?.validate())) return;
+    if (!flow.active() || route.fullPath !== submittedPath) return;
+    const value = await flow.save({
+      create: () => ({
+        environmentId: place.context.value!.environment.id,
+        projectId,
+        name: form.value.name.trim(),
+        slug: form.value.slug,
+        description: form.value.description,
+        registryCredentialRefId: form.value.registryCredentialRefId || null,
+        configuration: draftConfiguration(form.value),
+      }),
+      update: (service) =>
+        api.update<Service>(`/services/${service.id}`, {
+          revision: form.value.revision,
+          name: form.value.name.trim(),
+          description: form.value.description,
+          registryCredentialRefId: form.value.registryCredentialRefId || null,
+          configuration: draftConfiguration(form.value),
+        }),
     });
+    if (!value) {
+      if (flow.active()) await revealCreationError(formElement.value, flow.saveError.value);
+      return;
+    }
+    loadForm(value);
+    await flow.showReview();
+    await invalidateCollection('/services');
   } catch (error) {
-    localError.value = error instanceof Error ? error : new Error('请检查配置。');
-    await nextTick();
-    document.querySelector<HTMLElement>('[data-mutation-error]')?.focus();
+    localError.value = error;
+    await revealCreationError(formElement.value, error);
   }
 }
 onScopeDispose(() => {
@@ -96,103 +129,95 @@ onScopeDispose(() => {
 });
 </script>
 <template>
-  <nav class="breadcrumbs" aria-label="面包屑">
-    <RouterLink to="/projects" class="text-link">项目</RouterLink><ChevronRight /><RouterLink
-      :to="{ path: `/projects/${projectId}`, query: { environment: environmentSlug } }"
-      class="text-link"
-      >{{ project.data.value?.name || '所属项目' }}</RouterLink
-    ><ChevronRight /><span>{{ environmentSlug }}</span
-    ><ChevronRight /><span>添加服务</span>
-  </nav>
-  <div class="page-head">
-    <div>
-      <h1>从镜像添加服务</h1>
-      <p>先保存配置，再审阅并发布到当前项目环境。</p>
-    </div>
-  </div>
-  <QueryState
-    :pending="project.isPending.value || environments.isPending.value"
-    :error="project.error.value || environments.error.value"
-    @retry="
-      project.refetch();
-      environments.refetch();
+  <ServiceCreationFrame
+    :title="review ? '核对部署配置' : '部署 Docker 镜像'"
+    :context="place.context.value"
+    :show-environment="place.showEnvironment.value"
+    :back-to="!flow.hasSavedService.value ? sourceLocation : undefined"
+    :back-label="review ? '返回配置' : flow.hasSavedService.value ? '返回预览' : '选择来源'"
+    :back-disabled="
+      flow.saving.value || flow.uncertain.value || reviewBusy || !!flow.service.value?.activeTask
     "
+    @back="back"
   >
-    <template v-if="project.data.value && environment">
-      <div class="service-placement mb-6">
-        <span class="badge badge-primary"
-          >{{ project.data.value.name }} / {{ environment.name }}</span
-        ><Layers3 class="size-4" /><RouterLink
-          :to="`/clusters/${project.data.value.clusterId}`"
-          class="text-link"
-          >{{ project.data.value.cluster.name }}</RouterLink
-        ><span class="meta">来自项目</span
-        ><StatusBadge
-          :status="project.data.value.cluster.connectionStatus"
-          :observed-at="project.data.value.cluster.lastObservedAt"
+    <QueryState
+      :pending="place.pending.value || flow.loading.value"
+      :error="place.error.value || flow.loadError.value"
+      @retry="
+        place.refetch();
+        flow.refetch();
+      "
+    >
+      <template v-if="place.context.value">
+        <ConfigurationReview
+          v-if="review && flow.service.value"
+          :service="flow.service.value"
+          @busy-change="reviewBusy = $event"
+          @submitted="flow.submitted"
         />
-      </div>
-      <div
-        v-if="project.data.value.cluster.connectionStatus === 'unverified'"
-        class="notice notice-warning mb-6"
-      >
-        <Info />
-        <p>
-          集群尚未验证，可以先填写配置；保存服务前请完成<RouterLink
-            :to="`/clusters/${project.data.value.clusterId}`"
-            class="text-link"
-            >集群连接</RouterLink
-          >。
-        </p>
-      </div>
-      <form class="panel" novalidate @submit.prevent="submit">
-        <ServiceConfigurationEditor
-          ref="editor"
-          v-model="form"
-          creating
-          :disabled="save.isPending.value || auth.restoreMode"
-        /><ServiceMutationError class="mt-6" :error="localError || save.error.value" />
-        <div class="form-footer">
-          <Button as-child variant="outline"
-            ><RouterLink
-              :to="{ path: `/projects/${projectId}`, query: { environment: environmentSlug } }"
-              >返回项目</RouterLink
-            ></Button
-          ><Button
-            type="submit"
-            :disabled="
-              save.isPending.value ||
-              auth.restoreMode ||
-              project.data.value.cluster.connectionStatus === 'unverified'
-            "
-            ><LoaderCircle v-if="save.isPending.value" class="animate-spin" />{{
-              save.isPending.value ? '正在保存…' : '保存并预览发布'
-            }}<ArrowRight v-if="!save.isPending.value"
-          /></Button>
-        </div>
-      </form>
-    </template>
-    <div v-else class="notice notice-warning">
-      <Info />
-      <div>
-        <strong>当前环境不可用</strong>
-        <p>链接中的环境不属于已载入的项目环境，请先核对后再创建服务。</p>
-        <Button
-          v-if="environments.hasNextPage.value"
-          variant="outline"
-          class="mt-3"
-          @click="environments.fetchNextPage()"
-          >载入更多环境</Button
+        <form
+          v-else-if="!flow.hasSavedService.value || flow.service.value"
+          ref="formElement"
+          class="panel"
+          novalidate
+          @submit.prevent="submit"
+          @compositionstart="flow.compositionStart"
+          @compositionend="flow.compositionEnd"
+          @keydown="flow.guardEnter"
         >
-      </div>
-    </div>
-  </QueryState>
+          <div v-if="unverified && !flow.hasSavedService.value" class="notice notice-warning mb-6">
+            <Info />
+            <p>
+              先完成<RouterLink
+                :to="`/clusters/${place.context.value.project.clusterId}`"
+                class="text-link"
+                >部署目标连接</RouterLink
+              >，即可保存服务。
+            </p>
+          </div>
+          <div v-if="flow.uncertain.value" class="notice mb-6">
+            <Info />
+            <p>保存结果尚未确认。配置已保留，重试会核对同一次创建。</p>
+          </div>
+          <div v-if="flow.service.value?.activeTask" class="notice mb-6">
+            <Info />
+            <p>
+              服务已有任务正在执行。<RouterLink
+                :to="taskLocation(flow.service.value.activeTask)"
+                class="text-link"
+                >查看当前任务</RouterLink
+              >
+            </p>
+          </div>
+          <ServiceConfigurationEditor
+            ref="editor"
+            v-model="form"
+            compact
+            :creating="!flow.hasSavedService.value"
+            :disabled="flow.fieldsLocked.value"
+          />
+          <ServiceMutationError :error="localError || flow.saveError.value" class="mt-6" />
+          <p v-if="!flow.hasSavedService.value" class="meta mt-5">
+            先保存为服务草稿，再核对并部署。
+          </p>
+          <div class="form-footer">
+            <Button
+              type="submit"
+              :disabled="flow.writesLocked.value || (unverified && !flow.hasSavedService.value)"
+            >
+              <LoaderCircle v-if="flow.saving.value" class="animate-spin" />
+              {{
+                flow.saving.value
+                  ? '正在保存…'
+                  : flow.uncertain.value
+                    ? '重试确认保存结果'
+                    : '核对部署配置'
+              }}
+              <ArrowRight v-if="!flow.saving.value" />
+            </Button>
+          </div>
+        </form>
+      </template>
+    </QueryState>
+  </ServiceCreationFrame>
 </template>
-<style scoped>
-.service-placement {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.625rem;
-}
-</style>

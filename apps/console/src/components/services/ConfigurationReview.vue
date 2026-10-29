@@ -32,7 +32,10 @@ const props = defineProps<{
   retryOf?: DeploymentDetail;
   pendingTargetId?: string;
 }>();
-const emit = defineEmits<{ submitted: [deployment: Deployment] }>();
+const emit = defineEmits<{
+  submitted: [deployment: Deployment];
+  'busy-change': [busy: boolean];
+}>();
 const auth = useAuthStore();
 const active = useViewScope();
 const now = useObservationClock();
@@ -264,7 +267,11 @@ const deploy = useMutation({
       invalidateGitService(reviewed.value.id),
       invalidateStorage(reviewed.value.id),
     ]);
-    if (active()) emit('submitted', value);
+    if (active()) {
+      // Acceptance and query reconciliation are complete; allow the result navigation.
+      emit('busy-change', false);
+      emit('submitted', value);
+    }
   },
 });
 const allowed = computed(
@@ -284,6 +291,11 @@ const allowed = computed(
     (!needsStart.value || start.value) &&
     (!needsRepair.value || repair.value),
 );
+watch(
+  () => prepare.isPending.value || deploy.isPending.value,
+  (busy) => emit('busy-change', busy),
+  { immediate: true, flush: 'sync' },
+);
 function submit() {
   if (
     !allowed.value ||
@@ -297,7 +309,10 @@ function submit() {
     ...(needsPreview.value && preview.value ? { previewId: preview.value.id } : {}),
   });
 }
-onScopeDispose(() => previewAbort?.abort());
+onScopeDispose(() => {
+  previewAbort?.abort();
+  emit('busy-change', false);
+});
 </script>
 <template>
   <section class="panel" data-deployment-review>

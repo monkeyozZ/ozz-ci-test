@@ -1,8 +1,8 @@
 # Ozz 全量 UI 页面、状态与交互覆盖清单
 
-日期：2026-10-25（Asia/Shanghai）。用途：供 Stitch 按页面家族设计、组织状态变体和串联交互，再映射到 Vue / shadcn-vue / Tailwind CSS 实现。
+设计记录日期：2026-10-25（Asia/Shanghai）；范围修订：2026-10-29。用途：供 Stitch 按页面家族设计、组织状态变体和串联交互，再映射到 Vue / shadcn-vue / Tailwind CSS 实现。
 
-依据：[完整 PRD](prd.md)的 F01–F50、N01–N08、UX01–UX08，以及本轮用户明确的项目优先流程。本文件是覆盖清单，页面设计、原型交互和真实实现分别记录完成情况，不能由一张静态稿推断任务已实现。
+依据：[完整 PRD](prd.md)的 F01–F50、N01–N08、UX01–UX08，以及本轮用户明确的项目优先流程。本文件是覆盖清单，页面设计、原型交互和真实实现分别记录完成情况，不能由一张静态稿推断任务已实现。2026-10-29 用户已排除无障碍、辅助技术、真实读屏与 WCAG 合规的当前要求和验收门槛（`excluded-by-user`）；本清单保留普通键盘/焦点、IME、响应式、缩放与反馈要求，既有实现及历史证据保留。
 
 当前原型包含 **63 个页面＋[Z00 统一路由](../designs/console-v2/reviewed/Z00.html)**，按下文 **78 个 P0/P1 设计场景、12 条任务流程**组织；页面数包含移动、深色变体及单列的 P2 概念页，不等于独立业务功能数。实际页面、状态选择器和边界见[覆盖矩阵](../designs/console-v2/coverage-matrix.md)。63 页与 Z00 均已上传；实际屏幕 ID 与链接见 [Stitch 映射表](../designs/console-v2/stitch-screen-map.md)和[最终在线屏幕索引](../designs/console-v2/final-screen-index.json)，从 [Z00 在线原型](https://stitch.withgoogle.com/preview/10685771573457769661?node-id=3906615778218573374)开始跨页体验。
 
@@ -199,7 +199,7 @@ UI 编号标识设计场景，可以是独立页面、工作区页签、抽屉�
 | 平台恢复模式 | 全局持续显示只读/恢复锁，明确未恢复的写入能力；未知受管资源和更高 revision 不被静默覆盖 |
 | 明暗主题 | Light、Dark、System；首屏不闪错主题，弹层/日志/图表/终端的主题继承和对比度一致 |
 | 窄屏与缩放 | 1440、1024、390 CSS px 与 200% 缩放；导航收起，主上下文不丢失，宽表格/日志独立滚动，主要操作可触达 |
-| 键盘与读屏 | Tab 顺序、焦点可见、弹层焦点恢复、图标名称、状态文本；异步更新不抢焦点或持续轰炸读屏播报 |
+| 键盘与焦点 | Tab 顺序、焦点可见、弹层焦点恢复、图标名称、状态文本；异步更新不抢焦点或反复打断当前操作 |
 | 动效与性能 | 常规反馈遵守 PRD UX08，减少动效偏好有效；长任务不制造虚假进度，日志缓冲/DOM 有界，前端与 API 指标分别验收 |
 
 ## 5. 必须串联的任务闭环
@@ -313,7 +313,7 @@ UI 编号标识设计场景，可以是独立页面、工作区页签、抽屉�
 | 基础入口补充 | A03 → B01/B02 保留 create/web-next；A01 真空态与搜索无结果分开，两条均通过 | [最终基础结果](../designs/console-v2/verification/final-foundation-de-results.json) |
 | P04/P05 补充 | 7/7；PR 创建/更新、TTL/配额/能力与失败保留，升级备份/预检、候选报告、未知与最终失败 | [浏览器结果](../designs/console-v2/verification/p2-followup-browser-results.json)、[具体步骤](../designs/console-v2/p2-followup-browser-flows.json) |
 
-这些结果验证的是演示页面的校验、状态转换与跨页上下文。**设计验证不等于真实平台验收**：没有据此确认实际部署、SSH/Kubernetes 操作、外部 DNS/TLS、SQL 读写、备份可恢复性或数据切换完成。真实接口、任务幂等、数据正确性、性能及未覆盖的读屏/缩放要求，仍按 PRD 的实现验收标准分别记录。
+这些结果验证的是演示页面的校验、状态转换与跨页上下文。**设计验证不等于真实平台验收**：没有据此确认实际部署、SSH/Kubernetes 操作、外部 DNS/TLS、SQL 读写、备份可恢复性或数据切换完成。真实接口、任务幂等、数据正确性、性能及缩放等常规体验要求，仍按修订后 PRD 的实现验收标准分别记录。
 
 Stitch 最终交付已包含 64 个当前屏幕，画布与上传索引已回读核对。用户 Chrome 中的 [12 条代表路径](../designs/console-v2/verification/stitch-browser-results.json)和 [7 条 P2 流程](../designs/console-v2/verification/stitch-p2-browser-results.json)保存实际屏幕 ID 与结果；它们仍是交互原型验证，S1 应用实现尚未开始。
 
