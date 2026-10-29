@@ -4,6 +4,7 @@ dist/
 pnpm-lock.yaml
 packages/database/prisma/migrations/
 packages/api-client/src/schema.ts
+docs/openapi.json
 packages/infrastructure/assets/
 **/tests/artifacts/
 tests/probes/results/
